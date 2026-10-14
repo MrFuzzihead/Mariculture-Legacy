@@ -3,10 +3,13 @@ package mariculture.core.config;
 import static mariculture.core.helpers.ConfigHelper.getBoolean;
 import static mariculture.core.helpers.ConfigHelper.setCategory;
 import static mariculture.core.helpers.ConfigHelper.setConfig;
-import mariculture.core.lib.Modules;
+
 import net.minecraftforge.common.config.Configuration;
 
+import mariculture.core.lib.Modules;
+
 public class Vanilla {
+
     public static boolean VANILLA_STATS;
     public static boolean VANILLA_POOR;
     public static boolean VANILLA_TEXTURES;

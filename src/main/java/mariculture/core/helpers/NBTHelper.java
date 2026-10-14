@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class NBTHelper {
+
     public static NBTTagCompound getPlayerData(EntityPlayer player) {
         NBTTagCompound data = player.getEntityData();
         if (!data.hasKey(EntityPlayer.PERSISTED_NBT_TAG)) {
@@ -19,7 +20,7 @@ public class NBTHelper {
         if (tag == null) {
             tag = new NBTTagCompound();
         }
-        
+
         tag.setString("Name", Item.itemRegistry.getNameForObject(stack.getItem()));
         tag.setInteger("Count", stack.stackSize);
         tag.setInteger("Damage", (short) stack.getItemDamage());
@@ -35,8 +36,9 @@ public class NBTHelper {
         if (tag == null) {
             tag = new NBTTagCompound();
         }
-        
-        if (tag.getString("Name").equals("")) return null;
+
+        if (tag.getString("Name")
+            .equals("")) return null;
         Item item = (Item) Item.itemRegistry.getObject(tag.getString("Name"));
         int count = tag.getInteger("Count");
         int damage = tag.getInteger("Damage");

@@ -10,6 +10,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class EntityFLUDDSquirt extends EntityThrowable {
+
     private boolean damage = false;
     public float size = 1F;
 
@@ -44,7 +45,7 @@ public class EntityFLUDDSquirt extends EntityThrowable {
             } else {
                 source = new EntityDamageSource("fludd", this).setProjectile();
             }
-            
+
             thingHit.entityHit.attackEntityFrom(source, 10);
         }
 

@@ -3,11 +3,13 @@ package mariculture.plugins.minetweaker.util;
 import java.util.Collection;
 import java.util.Iterator;
 
-import minetweaker.IUndoableAction;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
+import minetweaker.IUndoableAction;
+
 public abstract class CollectionRemoveAction implements IUndoableAction {
+
     protected final String description;
     protected final Collection list;
 
@@ -54,7 +56,7 @@ public abstract class CollectionRemoveAction implements IUndoableAction {
             }
         }
     }
-    
+
     public abstract boolean matches(Object object);
 
     @Override
@@ -68,15 +70,17 @@ public abstract class CollectionRemoveAction implements IUndoableAction {
     }
 
     public String getRecipeInfo() {
-        return stack != null? stack.getDisplayName(): "Unknown Recipe";
+        return stack != null ? stack.getDisplayName() : "Unknown Recipe";
     }
 
     @Override
     public String describe() {
         if (recipe instanceof ItemStack)
             return "Removing " + description + " Recipe for :" + ((ItemStack) recipe).getDisplayName();
-        else if (recipe instanceof FluidStack)
-            return "Removing " + description + " Recipe for :" + ((FluidStack) recipe).getFluid().getLocalizedName();
+        else if (recipe instanceof FluidStack) return "Removing " + description
+            + " Recipe for :"
+            + ((FluidStack) recipe).getFluid()
+                .getLocalizedName();
         else return "Removing " + description + " Recipe for :" + getRecipeInfo();
     }
 
@@ -84,8 +88,10 @@ public abstract class CollectionRemoveAction implements IUndoableAction {
     public String describeUndo() {
         if (recipe instanceof ItemStack)
             return "Restoring " + description + " Recipe for :" + ((ItemStack) recipe).getDisplayName();
-        else if (recipe instanceof FluidStack)
-            return "Restoring " + description + " Recipe for :" + ((FluidStack) recipe).getFluid().getLocalizedName();
+        else if (recipe instanceof FluidStack) return "Restoring " + description
+            + " Recipe for :"
+            + ((FluidStack) recipe).getFluid()
+                .getLocalizedName();
         else return "Restoring " + description + " Recipe for :" + getRecipeInfo();
     }
 

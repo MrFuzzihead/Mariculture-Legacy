@@ -2,14 +2,16 @@ package mariculture.magic.enchantments;
 
 import java.util.Random;
 
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.player.EntityPlayer;
+
 import mariculture.core.helpers.EnchantHelper;
 import mariculture.core.util.MCTranslate;
 import mariculture.lib.helpers.ClientHelper;
 import mariculture.magic.Magic;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class EnchantmentGlide extends EnchantmentJewelry {
+
     public EnchantmentGlide(final int i, final int weight, final EnumEnchantmentType type) {
         super(i, weight, type);
         setName("glide");
@@ -33,11 +35,19 @@ public class EnchantmentGlide extends EnchantmentJewelry {
     }
 
     public static void activate(EntityPlayer player) {
-        if (hasGlide > 0 && player.motionY < 0.0F && !player.isOnLadder() && !player.handleWaterMovement() && !player.isSneaking() && toggleOn == 1) {
+        if (hasGlide > 0 && player.motionY < 0.0F
+            && !player.isOnLadder()
+            && !player.handleWaterMovement()
+            && !player.isSneaking()
+            && toggleOn == 1) {
             player.motionY /= 1.6F;
-        } else if (hasGlide > 1 && toggleOn == 2 && player.motionY < 0.0F && !player.isOnLadder() && !player.handleWaterMovement() && !player.isSneaking()) {
-            player.motionY /= 0.85F;
-        }
+        } else if (hasGlide > 1 && toggleOn == 2
+            && player.motionY < 0.0F
+            && !player.isOnLadder()
+            && !player.handleWaterMovement()
+            && !player.isSneaking()) {
+                player.motionY /= 0.85F;
+            }
     }
 
     public static void set(final int glide) {

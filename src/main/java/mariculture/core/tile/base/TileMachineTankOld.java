@@ -3,6 +3,13 @@ package mariculture.core.tile.base;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
+
 import mariculture.api.core.IUpgradable;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.config.Machines.Ticks;
@@ -16,29 +23,25 @@ import mariculture.core.util.IMachine;
 import mariculture.core.util.IProgressable;
 import mariculture.core.util.IRedstoneControlled;
 import mariculture.core.util.Tank;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
 
-public abstract class TileMachineTankOld extends TileStorageTank implements IUpgradable, IMachine, ISidedInventory, IRedstoneControlled, IEjectable, IProgressable {
+public abstract class TileMachineTankOld extends TileStorageTank
+    implements IUpgradable, IMachine, ISidedInventory, IRedstoneControlled, IEjectable, IProgressable {
+
     protected BlockTransferHelper helper;
-    //General Tick
+    // General Tick
     private int machineTick = 0;
-    //Upgrade Stats
+    // Upgrade Stats
     protected int purity = 0;
     protected int heat = 0;
     protected int storage = 0;
     protected int speed = 0;
     protected int rf = 0;
-    //Tile Configuration
+    // Tile Configuration
     protected EjectSetting setting;
     protected RedstoneMode mode;
-    //GUI INT offset
+    // GUI INT offset
     protected int offset = 6;
-    //Machine vars
+    // Machine vars
     protected int max;
     protected boolean canWork;
     protected int processed = 0;
@@ -152,14 +155,13 @@ public abstract class TileMachineTankOld extends TileStorageTank implements IUpg
 
     public void autoeject() {
         if (output.length > 0 && onTick(Ticks.ITEM_EJECT_TICK)) if (setting.canEject(EjectSetting.ITEM)) {
-            for (int i : output)
-                if (inventory[i] != null) {
-                    ItemStack ejecting = inventory[i].copy();
-                    inventory[i] = null;
-                    if (ejecting != null) {
-                        helper.insertStack(ejecting, output);
-                    }
+            for (int i : output) if (inventory[i] != null) {
+                ItemStack ejecting = inventory[i].copy();
+                inventory[i] = null;
+                if (ejecting != null) {
+                    helper.insertStack(ejecting, output);
                 }
+            }
         }
 
         if (rate.length > 0 && onTick(Ticks.FLUID_EJECT_TICK)) {
@@ -204,7 +206,11 @@ public abstract class TileMachineTankOld extends TileStorageTank implements IUpg
 
     @Override
     public boolean hasChanged() {
-        return lastMode != mode.ordinal() || lastSetting != setting.ordinal() || lastProcessed != processed || lastFluidID != tank.getFluidID() || lastFluidAmount != tank.getFluidAmount() || lastFluidCapacity != tank.getCapacity();
+        return lastMode != mode.ordinal() || lastSetting != setting.ordinal()
+            || lastProcessed != processed
+            || lastFluidID != tank.getFluidID()
+            || lastFluidAmount != tank.getFluidAmount()
+            || lastFluidCapacity != tank.getCapacity();
     }
 
     @Override
@@ -215,7 +221,10 @@ public abstract class TileMachineTankOld extends TileStorageTank implements IUpg
         lastFluidID = tank.getFluidID();
         lastFluidAmount = tank.getFluidAmount();
         lastFluidCapacity = tank.getCapacity();
-        return new ArrayList(Arrays.asList(new Integer[] { lastMode, lastSetting, lastProcessed, lastFluidID, lastFluidAmount, lastFluidCapacity }));
+        return new ArrayList(
+            Arrays.asList(
+                new Integer[] { lastMode, lastSetting, lastProcessed, lastFluidID, lastFluidAmount,
+                    lastFluidCapacity }));
     }
 
     @Override
@@ -247,10 +256,10 @@ public abstract class TileMachineTankOld extends TileStorageTank implements IUpg
     public void setEjectSetting(EjectSetting setting) {
         this.setting = setting;
     }
-    
+
     @Override
     public boolean canEject(ForgeDirection dir) {
-    	return true;
+        return true;
     }
 
     @Override

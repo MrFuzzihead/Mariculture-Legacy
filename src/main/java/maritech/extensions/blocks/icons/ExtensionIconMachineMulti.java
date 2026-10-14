@@ -1,18 +1,21 @@
 package maritech.extensions.blocks.icons;
 
 import static maritech.lib.SpecialIcons.incubatorIcons;
-import mariculture.core.Core;
-import mariculture.core.lib.MachineMultiMeta;
-import maritech.tile.TileIncubator;
-import maritech.util.IIconExtension;
+
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.Core;
+import mariculture.core.lib.MachineMultiMeta;
+import maritech.tile.TileIncubator;
+import maritech.util.IIconExtension;
 
 public class ExtensionIconMachineMulti implements IIconExtension {
+
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getInventoryIcon(int meta, int side, IIcon icon) {

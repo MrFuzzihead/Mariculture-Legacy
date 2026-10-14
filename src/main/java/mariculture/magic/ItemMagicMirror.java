@@ -1,9 +1,5 @@
 package mariculture.magic;
 
-import mariculture.core.Core;
-import mariculture.core.lib.DropletMeta;
-import mariculture.core.lib.Modules;
-import mariculture.fishery.Fishery;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -11,7 +7,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
+import mariculture.core.Core;
+import mariculture.core.lib.DropletMeta;
+import mariculture.core.lib.Modules;
+import mariculture.fishery.Fishery;
+
 public class ItemMagicMirror extends ItemMirror {
+
     int enchantability;
     int minLevel;
     int maxLevel;
@@ -27,7 +29,10 @@ public class ItemMagicMirror extends ItemMirror {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         stack = get(stack);
-        return StatCollector.translateToLocal(getUnlocalizedName(stack).replace("item.", "mariculture.")) + " (" + stack.getTagCompound().getIntArray("Levels")[2] + ")";
+        return StatCollector.translateToLocal(getUnlocalizedName(stack).replace("item.", "mariculture.")) + " ("
+            + stack.getTagCompound()
+                .getIntArray("Levels")[2]
+            + ")";
     }
 
     public ItemStack get(ItemStack stack) {
@@ -75,7 +80,9 @@ public class ItemMagicMirror extends ItemMirror {
     @Override
     public boolean getIsRepairable(ItemStack stack1, ItemStack stack2) {
         if (stack1.getItem() == Magic.magicMirror) return stack2.getItem() == Core.pearls;
-        return Modules.isActive(Modules.fishery) ? stack2.getItem() == Fishery.droplet && stack2.getItemDamage() == DropletMeta.MAGIC : stack2.getItem() == Items.ghast_tear;
+        return Modules.isActive(Modules.fishery)
+            ? stack2.getItem() == Fishery.droplet && stack2.getItemDamage() == DropletMeta.MAGIC
+            : stack2.getItem() == Items.ghast_tear;
     }
 
     @Override

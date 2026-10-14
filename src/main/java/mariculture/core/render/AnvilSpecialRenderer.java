@@ -1,7 +1,5 @@
 package mariculture.core.render;
 
-import mariculture.core.tile.TileAnvil;
-import mariculture.core.util.EntityFakeItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemBlock;
@@ -13,9 +11,12 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.tile.TileAnvil;
+import mariculture.core.util.EntityFakeItem;
 
 @SideOnly(Side.CLIENT)
 public class AnvilSpecialRenderer extends TileEntitySpecialRenderer {
+
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTick) {
         TileAnvil anvil = (TileAnvil) tile;

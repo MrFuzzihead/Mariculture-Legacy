@@ -4,6 +4,19 @@ import static maritech.lib.MTModInfo.AFTER;
 import static maritech.lib.MTModInfo.JAVAPATH;
 import static maritech.lib.MTModInfo.MODID;
 import static maritech.lib.MTModInfo.MODNAME;
+
+import net.minecraftforge.common.MinecraftForge;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLConstructionEvent;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.blocks.BlockMachine;
 import mariculture.core.blocks.BlockMachineMulti;
@@ -15,6 +28,7 @@ import mariculture.core.blocks.items.ItemBlockRenderedMachine;
 import mariculture.core.blocks.items.ItemBlockRenderedMachineMulti;
 import mariculture.core.items.ItemCrafting;
 import mariculture.core.lib.Modules;
+import mariculture.core.lib.Tags;
 import maritech.extensions.blocks.ExtensionMachine;
 import maritech.extensions.blocks.ExtensionMachineMulti;
 import maritech.extensions.blocks.ExtensionRenderedMachine;
@@ -36,20 +50,10 @@ import maritech.handlers.ItemEvents;
 import maritech.handlers.RegistryEvents;
 import maritech.plugins.BloodMagic;
 import maritech.plugins.Enchiridion;
-import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLConstructionEvent;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = MODID, name = MODNAME, dependencies = AFTER)
+@Mod(modid = MODID, name = MODNAME, version = Tags.VERSION, dependencies = AFTER)
 public class MariTech {
+
     @SidedProxy(clientSide = JAVAPATH + "MTClientProxy", serverSide = JAVAPATH + "MTCommonProxy")
     public static MTCommonProxy proxy;
 
@@ -74,15 +78,21 @@ public class MariTech {
         ItemEvents.register(ItemCrafting.class, new ExtensionCrafting());
         BlockEvents.register(BlockMachine.class, ItemBlockMachine.class, new ExtensionMachine());
         BlockEvents.register(BlockMachineMulti.class, ItemBlockMachineMulti.class, new ExtensionMachineMulti());
-        BlockEvents.register(BlockRenderedMachine.class, ItemBlockRenderedMachine.class, new ExtensionRenderedMachine());
-        BlockEvents.register(BlockRenderedMachineMulti.class, ItemBlockRenderedMachineMulti.class, new ExtensionRenderedMachineMulti());
+        BlockEvents
+            .register(BlockRenderedMachine.class, ItemBlockRenderedMachine.class, new ExtensionRenderedMachine());
+        BlockEvents.register(
+            BlockRenderedMachineMulti.class,
+            ItemBlockRenderedMachineMulti.class,
+            new ExtensionRenderedMachineMulti());
     }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         if (Modules.isActive(Modules.factory)) {
             MinecraftForge.EVENT_BUS.register(new FLUDDEvents());
-            FMLCommonHandler.instance().bus().register(new FLUDDEvents());
+            FMLCommonHandler.instance()
+                .bus()
+                .register(new FLUDDEvents());
         }
 
         MinecraftForge.EVENT_BUS.register(new GuiEvents());
@@ -98,7 +108,7 @@ public class MariTech {
         if (Loader.isModLoaded("AWWayofTime")) {
             BloodMagic.init();
         }
-        
+
         if (Loader.isModLoaded("Enchiridion")) {
             Enchiridion.init();
         }

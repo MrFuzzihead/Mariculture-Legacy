@@ -4,12 +4,15 @@ import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletAqua;
 import static mariculture.core.lib.MCLib.dropletFrozen;
 import static mariculture.core.lib.MCLib.dropletWater;
+
+import net.minecraft.world.World;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
-import net.minecraft.world.World;
 
 public class FishWalleye extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 3;
@@ -54,7 +57,7 @@ public class FishWalleye extends FishSpecies {
     public int getWaterRequired() {
         return 100;
     }
-   
+
     @Override
     public void addFishProducts() {
         addProduct(dropletWater, 8.5D);
@@ -76,7 +79,7 @@ public class FishWalleye extends FishSpecies {
     public double getCatchChance(World world, int height) {
         return 20D;
     }
-    
+
     @Override
     public double getCaughtAliveChance(World world, int height) {
         return 65D;

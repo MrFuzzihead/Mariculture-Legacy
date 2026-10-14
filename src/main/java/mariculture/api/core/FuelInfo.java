@@ -3,11 +3,12 @@ package mariculture.api.core;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class FuelInfo {
-    //Maximum Temperature this fuel can take you up to
+
+    // Maximum Temperature this fuel can take you up to
     public int maxTemp;
-    //Maximum each 'unit' can burn up to (a unit for liquids is 16 mB)
+    // Maximum each 'unit' can burn up to (a unit for liquids is 16 mB)
     public int maxTempPer;
-    //Number of ticks, this fuel will last per unit by default
+    // Number of ticks, this fuel will last per unit by default
     public int ticksPer;
 
     public FuelInfo() {}

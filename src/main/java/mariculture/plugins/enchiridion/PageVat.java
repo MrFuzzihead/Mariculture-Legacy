@@ -12,6 +12,7 @@ import enchiridion.api.XMLHelper;
 import enchiridion.api.pages.PageParser;
 
 public class PageVat extends PageParser {
+
     String input, fluid1, fluid2, fluid3, output, colorIn, colorOut, fluid1Type, fluid2Type, fluid3Type;
     int numInput, vol1, vol2, vol3, numOutput, time;
 
@@ -38,19 +39,22 @@ public class PageVat extends PageParser {
         if (!fluid1.equals("")) {
             Element e = XMLHelper.getNode(xml, "fluid1");
             vol1 = XMLHelper.getAttribAsInteger(e, "vol", 1000);
-            fluid1Type = XMLHelper.getAttribute(e, "type").equals("") ? "mB" : " " + XMLHelper.getAttribute(e, "type");
+            fluid1Type = XMLHelper.getAttribute(e, "type")
+                .equals("") ? "mB" : " " + XMLHelper.getAttribute(e, "type");
         }
 
         if (!fluid2.equals("")) {
             Element e = XMLHelper.getNode(xml, "fluid2");
             vol2 = XMLHelper.getAttribAsInteger(e, "vol", 1000);
-            fluid2Type = XMLHelper.getAttribute(e, "type").equals("") ? "mB" : " " + XMLHelper.getAttribute(e, "type");
+            fluid2Type = XMLHelper.getAttribute(e, "type")
+                .equals("") ? "mB" : " " + XMLHelper.getAttribute(e, "type");
         }
 
         if (!fluid3.equals("")) {
             Element e = XMLHelper.getNode(xml, "fluid3");
             vol3 = XMLHelper.getAttribAsInteger(e, "vol", 1000);
-            fluid3Type = XMLHelper.getAttribute(e, "type").equals("") ? "mB" : " " + XMLHelper.getAttribute(e, "type");
+            fluid3Type = XMLHelper.getAttribute(e, "type")
+                .equals("") ? "mB" : " " + XMLHelper.getAttribute(e, "type");
         }
 
         time = XMLHelper.getElementAsInteger(xml, "time", 10);
@@ -58,11 +62,13 @@ public class PageVat extends PageParser {
 
     @Override
     public void parse() {
-        gui.getMC().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+        gui.getMC()
+            .getTextureManager()
+            .bindTexture(TextureMap.locationBlocksTexture);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         /** Drawing the Tank on the left **/
 
-        //Fluid 1
+        // Fluid 1
         if (!fluid1.equals("")) {
             IIcon icon = DisplayRegistry.getFluidIcon(fluid1);
             drawFluidStack(x + 6, y + 28, icon, 7, 16);
@@ -94,7 +100,9 @@ public class PageVat extends PageParser {
 
         /** End Left Tank Begin Right Tank **/
 
-        gui.getMC().getTextureManager().bindTexture(elements);
+        gui.getMC()
+            .getTextureManager()
+            .bindTexture(elements);
         gui.drawTexturedModalRect(x, y, 58, 0, 58, 62);
         gui.drawTexturedModalRect(x + 84, y, 58, 0, 58, 62);
         gui.drawTexturedModalRect(x + 62, y + 20, 2, 63, 22, 14);

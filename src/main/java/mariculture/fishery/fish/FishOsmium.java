@@ -2,11 +2,13 @@ package mariculture.fishery.fish;
 
 import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletOsmium;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
 
 public class FishOsmium extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 10;
@@ -21,7 +23,7 @@ public class FishOsmium extends FishSpecies {
     public Salinity getSalinityBase() {
         return Salinity.FRESH;
     }
-    
+
     @Override
     public int getSalinityTolerance() {
         return 0;
@@ -41,22 +43,22 @@ public class FishOsmium extends FishSpecies {
     public int getFertility() {
         return 5000;
     }
-    
+
     @Override
     public int getBaseProductivity() {
         return 0;
     }
-    
+
     @Override
     public double getFishOilVolume() {
         return 0.0D;
     }
-    
+
     @Override
     public int getFoodStat() {
         return -1;
     }
-    
+
     @Override
     public int getFishMealSize() {
         return 0;

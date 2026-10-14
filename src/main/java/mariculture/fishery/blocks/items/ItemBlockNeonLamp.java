@@ -1,13 +1,14 @@
 package mariculture.fishery.blocks.items;
 
-import mariculture.core.blocks.base.ItemBlockMariculture;
-import mariculture.core.lib.PearlColor;
-import mariculture.core.util.MCTranslate;
-import mariculture.lib.util.Text;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.blocks.base.ItemBlockMariculture;
+import mariculture.core.lib.PearlColor;
+import mariculture.core.util.MCTranslate;
+
 public class ItemBlockNeonLamp extends ItemBlockMariculture {
+
     public ItemBlockNeonLamp(Block block) {
         super(block);
     }
@@ -43,14 +44,14 @@ public class ItemBlockNeonLamp extends ItemBlockMariculture {
                 return "lamp";
         }
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         String translate = MCTranslate.translate("pearl.color." + PearlColor.get(stack.getItemDamage()) + ".lamp");
-        if(!translate.equals("mariculture.pearl.color." + PearlColor.get(stack.getItemDamage()) + ".lamp")) {
+        if (!translate.equals("mariculture.pearl.color." + PearlColor.get(stack.getItemDamage()) + ".lamp")) {
             return translate;
         }
-        
+
         String format = MCTranslate.translate("lamps.format");
         format = format.replace("%C", MCTranslate.translate("pearl.color." + PearlColor.get(stack.getItemDamage())));
         format = format.replace("%N", MCTranslate.translate("lamps.neon"));

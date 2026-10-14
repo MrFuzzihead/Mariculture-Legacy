@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
+
 import mariculture.Mariculture;
 import mariculture.api.core.IAnvilHandler.RecipeAnvil;
 import mariculture.api.core.MaricultureHandlers;
@@ -26,14 +31,9 @@ import mariculture.fishery.Fishery;
 import mariculture.fishery.items.ItemDroplet;
 import mariculture.plugins.Plugins.Plugin;
 import mariculture.world.WorldPlus;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
-
-import com.pahimar.ee3.exchange.OreStack;
 
 public class PluginEE3 extends Plugin {
+
     public PluginEE3(String name) {
         super(name);
     }
@@ -55,28 +55,28 @@ public class PluginEE3 extends Plugin {
             addPreAssignedEnergyValue(new ItemStack(Core.water, 1, WaterMeta.OYSTER), 24576F);
             addPreAssignedEnergyValue(new ItemStack(Core.sands, 1, GroundMeta.ANCIENT), 1F);
             addPreAssignedEnergyValue(new ItemStack(Core.rocks, 1, RockMeta.CORAL_ROCK), 1F);
-            //addPreAssignedEnergyValue(new OreStack("oreCopper"), 135F);
+            // addPreAssignedEnergyValue(new OreStack("oreCopper"), 135F);
             addPreAssignedEnergyValue(new ItemStack(Core.rocks, 1, RockMeta.COPPER), 135F);
-           // addPreAssignedEnergyValue(new OreStack("oreAluminum"), 315F);
-           // addPreAssignedEnergyValue(new OreStack("oreAluminium"), 315F);
+            // addPreAssignedEnergyValue(new OreStack("oreAluminum"), 315F);
+            // addPreAssignedEnergyValue(new OreStack("oreAluminium"), 315F);
             addPreAssignedEnergyValue(new ItemStack(Core.rocks, 1, RockMeta.BAUXITE), 315F);
-           // addPreAssignedEnergyValue(new OreStack("oreRutile"), 6144F);
+            // addPreAssignedEnergyValue(new OreStack("oreRutile"), 6144F);
             addPreAssignedEnergyValue(new ItemStack(Core.rocks, 1, RockMeta.RUTILE), 6144F);
-            //addPreAssignedEnergyValue(new OreStack("limestone"), 1F);
-            //addPreAssignedEnergyValue(new OreStack("blockLimestone"), 1F);
+            // addPreAssignedEnergyValue(new OreStack("limestone"), 1F);
+            // addPreAssignedEnergyValue(new OreStack("blockLimestone"), 1F);
             addPreAssignedEnergyValue(new ItemStack(Core.limestone, 1, LimestoneMeta.RAW), 1F);
             addPreAssignedEnergyValue(new ItemStack(Core.limestone, 1, LimestoneMeta.SMOOTH), 1F);
             addPreAssignedEnergyValue(new ItemStack(Core.pearls, 1, OreDictionary.WILDCARD_VALUE), 24F);
-            //addPreAssignedEnergyValue(new OreStack("ingotCopper"), 135F);
+            // addPreAssignedEnergyValue(new OreStack("ingotCopper"), 135F);
             addPreAssignedEnergyValue(new ItemStack(Core.materials, 1, MaterialsMeta.INGOT_COPPER), 135F);
-            //addPreAssignedEnergyValue(new OreStack("ingotAluminum"), 315F);
-           // addPreAssignedEnergyValue(new OreStack("ingotAluminium"), 315F);
+            // addPreAssignedEnergyValue(new OreStack("ingotAluminum"), 315F);
+            // addPreAssignedEnergyValue(new OreStack("ingotAluminium"), 315F);
             addPreAssignedEnergyValue(new ItemStack(Core.materials, 1, MaterialsMeta.INGOT_ALUMINUM), 315F);
-            //addPreAssignedEnergyValue(new OreStack("ingotRutile"), 6144F);
+            // addPreAssignedEnergyValue(new OreStack("ingotRutile"), 6144F);
             addPreAssignedEnergyValue(new ItemStack(Core.materials, 1, MaterialsMeta.INGOT_RUTILE), 6144F);
-            //addPreAssignedEnergyValue(new OreStack("ingotMagnesium"), 32F);
+            // addPreAssignedEnergyValue(new OreStack("ingotMagnesium"), 32F);
             addPreAssignedEnergyValue(new ItemStack(Core.materials, 1, MaterialsMeta.INGOT_MAGNESIUM), 32F);
-            //addPreAssignedEnergyValue(new OreStack("ingotTitanium"), 8192F);
+            // addPreAssignedEnergyValue(new OreStack("ingotTitanium"), 8192F);
             addPreAssignedEnergyValue(new ItemStack(Core.materials, 1, MaterialsMeta.INGOT_TITANIUM), 8192F);
 
             if (Modules.isActive(Modules.fishery)) {
@@ -137,17 +137,21 @@ public class PluginEE3 extends Plugin {
             }
 
             /** Register all nugget casting recipes **/
-            for (RecipeCasting nugget : MaricultureHandlers.casting.getNuggetRecipes().values()) {
-                if (nugget.output != null && nugget.fluid != null) addRecipe(nugget.output, Arrays.asList(nugget.fluid));
+            for (RecipeCasting nugget : MaricultureHandlers.casting.getNuggetRecipes()
+                .values()) {
+                if (nugget.output != null && nugget.fluid != null)
+                    addRecipe(nugget.output, Arrays.asList(nugget.fluid));
             }
 
             /** Register all ingot casting recipes **/
-            for (RecipeCasting ingot : MaricultureHandlers.casting.getIngotRecipes().values()) {
+            for (RecipeCasting ingot : MaricultureHandlers.casting.getIngotRecipes()
+                .values()) {
                 if (ingot.output != null && ingot.fluid != null) addRecipe(ingot.output, Arrays.asList(ingot.fluid));
             }
 
             /** Register all block casting recipes **/
-            for (RecipeCasting block : MaricultureHandlers.casting.getBlockRecipes().values()) {
+            for (RecipeCasting block : MaricultureHandlers.casting.getBlockRecipes()
+                .values()) {
                 if (block.output != null && block.fluid != null) addRecipe(block.output, Arrays.asList(block.fluid));
             }
 
@@ -169,7 +173,8 @@ public class PluginEE3 extends Plugin {
             }
 
             /** Register all anvil recipes **/
-            for (RecipeAnvil anvil : MaricultureHandlers.anvil.getRecipes().values()) {
+            for (RecipeAnvil anvil : MaricultureHandlers.anvil.getRecipes()
+                .values()) {
                 if (anvil.output != null && anvil.input != null) addRecipe(anvil.output, Arrays.asList(anvil.input));
             }
 

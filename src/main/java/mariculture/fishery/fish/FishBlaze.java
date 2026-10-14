@@ -7,11 +7,6 @@ import static mariculture.core.lib.MCLib.dropletNether;
 
 import java.util.ArrayList;
 
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
-import mariculture.core.util.Fluids;
 import net.minecraft.block.Block;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +14,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.util.Fluids;
+
 public class FishBlaze extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 75;

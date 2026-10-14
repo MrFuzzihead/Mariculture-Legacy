@@ -1,5 +1,8 @@
 package mariculture.plugins;
 
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+
 import mariculture.core.handlers.CrucibleHandler;
 import mariculture.core.helpers.OreDicHelper;
 import mariculture.plugins.Plugins.Plugin;
@@ -9,10 +12,9 @@ import mariculture.plugins.minetweaker.Crucible;
 import mariculture.plugins.minetweaker.Fishing;
 import mariculture.plugins.minetweaker.Vat;
 import minetweaker.MineTweakerAPI;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
 public class PluginMineTweaker3 extends Plugin {
+
     public PluginMineTweaker3(String name) {
         super(name);
     }
@@ -25,7 +27,7 @@ public class PluginMineTweaker3 extends Plugin {
         } else if (object instanceof String) {
             return (String) object;
         }
-        
+
         return "null";
     }
 

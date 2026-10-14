@@ -3,6 +3,11 @@ package mariculture.core.tile.base;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import mariculture.api.core.IUpgradable;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.config.Machines.Ticks;
@@ -14,26 +19,24 @@ import mariculture.core.util.IEjectable;
 import mariculture.core.util.IMachine;
 import mariculture.core.util.IProgressable;
 import mariculture.core.util.IRedstoneControlled;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
 
-public abstract class TileMachine extends TileStorage implements IUpgradable, IMachine, ISidedInventory, IRedstoneControlled, IEjectable, IProgressable {
-    //Transfer Helper
+public abstract class TileMachine extends TileStorage
+    implements IUpgradable, IMachine, ISidedInventory, IRedstoneControlled, IEjectable, IProgressable {
+
+    // Transfer Helper
     protected BlockTransferHelper helper;
-    //Upgrade Stats
+    // Upgrade Stats
     protected int purity = 0;
     protected int heat = 0;
     protected int storage = 0;
     protected int speed = 0;
     protected int rf = 0;
-    //Tile Configuration
+    // Tile Configuration
     protected EjectSetting setting;
     protected RedstoneMode mode;
-    //GUI INT offset
+    // GUI INT offset
     protected int offset = 3;
-    //Machine vars
+    // Machine vars
     protected int max;
     protected boolean canWork;
     protected int processed = 0;
@@ -46,7 +49,7 @@ public abstract class TileMachine extends TileStorage implements IUpgradable, IM
         output = new int[0];
     }
 
-    //Returns true if a valid tick to operate
+    // Returns true if a valid tick to operate
     public boolean onTick(int i) {
         return worldObj.getTotalWorldTime() % i == 0;
     }
@@ -78,7 +81,7 @@ public abstract class TileMachine extends TileStorage implements IUpgradable, IM
         return new ItemStack[] { inventory[0], inventory[1], inventory[2] };
     }
 
-    //Whether this machine canWork or not, gets called everytime there is a change to an inventory slot
+    // Whether this machine canWork or not, gets called everytime there is a change to an inventory slot
     public boolean canWork() {
         return false;
     }
@@ -104,7 +107,7 @@ public abstract class TileMachine extends TileStorage implements IUpgradable, IM
 
     public abstract void process();
 
-    //Called whenever the machine is active
+    // Called whenever the machine is active
     public void updateMachine() {
         if (canWork) {
             processed += speed;
@@ -118,32 +121,31 @@ public abstract class TileMachine extends TileStorage implements IUpgradable, IM
         }
     }
 
-    //Called at all times
+    // Called at all times
     public void update() {
         autoeject();
     }
 
-    //Called by the update method, to autoeject any items that are install inside the machine
+    // Called by the update method, to autoeject any items that are install inside the machine
     public void autoeject() {
         if (output.length > 0 && onTick(Ticks.ITEM_EJECT_TICK)) if (setting.canEject(EjectSetting.ITEM)) {
-            for (int i : output)
-                if (inventory[i] != null) {
-                    ItemStack ejecting = inventory[i].copy();
-                    inventory[i] = null;
-                    if (ejecting != null) {
-                        helper.insertStack(ejecting, output);
-                        updateCanWork();
-                    }
+            for (int i : output) if (inventory[i] != null) {
+                ItemStack ejecting = inventory[i].copy();
+                inventory[i] = null;
+                if (ejecting != null) {
+                    helper.insertStack(ejecting, output);
+                    updateCanWork();
                 }
+            }
         }
     }
 
-    //Updates the canWork system, called whenever something changes
+    // Updates the canWork system, called whenever something changes
     public final void updateCanWork() {
         canWork = canWork();
     }
 
-    //Whether there is room to eject from this machine or not
+    // Whether there is room to eject from this machine or not
     public boolean hasRoom(ItemStack stack) {
         if (setting.canEject(EjectSetting.ITEM)) return true;
         for (Integer i : output) {
@@ -169,22 +171,22 @@ public abstract class TileMachine extends TileStorage implements IUpgradable, IM
                 break;
         }
     }
-    
+
     protected int lastMode;
     protected int lastSetting;
     protected int lastProcessed;
-    
+
     @Override
     public boolean hasChanged() {
         return lastMode != mode.ordinal() || lastSetting != setting.ordinal() || lastProcessed != processed;
     }
-    
+
     @Override
     public ArrayList<Integer> getGUIData() {
         lastMode = mode.ordinal();
         lastSetting = setting.ordinal();
         lastProcessed = processed;
-        
+
         return new ArrayList(Arrays.asList(new Integer[] { lastMode, lastSetting, lastProcessed }));
     }
 
@@ -220,10 +222,10 @@ public abstract class TileMachine extends TileStorage implements IUpgradable, IM
         this.setting = setting;
         updateCanWork();
     }
-    
+
     @Override
     public boolean canEject(ForgeDirection dir) {
-    	return true;
+        return true;
     }
 
     @Override

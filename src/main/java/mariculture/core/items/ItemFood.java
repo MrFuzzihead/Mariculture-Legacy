@@ -1,24 +1,26 @@
 package mariculture.core.items;
 
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.Core;
-import mariculture.core.lib.Extra;
-import mariculture.core.lib.FoodMeta;
-import mariculture.core.lib.Modules;
-import mariculture.lib.helpers.ItemHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.common.Optional;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.Core;
+import mariculture.core.lib.Extra;
+import mariculture.core.lib.FoodMeta;
+import mariculture.core.lib.Modules;
+import mariculture.lib.helpers.ItemHelper;
 import squeek.applecore.api.food.FoodValues;
 import squeek.applecore.api.food.IEdible;
 import squeek.applecore.api.food.ItemFoodProxy;
-import cpw.mods.fml.common.Optional;
 
 @Optional.Interface(iface = "squeek.applecore.api.food.IEdible", modid = "AppleCore")
 public class ItemFood extends ItemMCMeta implements IEdible {
+
     @Optional.Method(modid = "AppleCore")
     @Override
     public FoodValues getFoodValues(ItemStack stack) {
@@ -29,7 +31,8 @@ public class ItemFood extends ItemMCMeta implements IEdible {
 
     @Optional.Method(modid = "AppleCore")
     public void onEatenCompatibility(ItemStack stack, EntityPlayer player) {
-        player.getFoodStats().func_151686_a(new ItemFoodProxy(this), stack);
+        player.getFoodStats()
+            .func_151686_a(new ItemFoodProxy(this), stack);
     }
 
     private int getFoodLevel(int dmg) {
@@ -123,19 +126,22 @@ public class ItemFood extends ItemMCMeta implements IEdible {
     public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player) {
         int meta = stack.getItemDamage();
         if (meta == FoodMeta.DEBUG_FOOD) {
-            player.getFoodStats().addExhaustion(100);
-            player.getFoodStats().addStats(-10, 0F);
+            player.getFoodStats()
+                .addExhaustion(100);
+            player.getFoodStats()
+                .addStats(-10, 0F);
             return stack;
         } else {
             if (!player.capabilities.isCreativeMode) --stack.stackSize;
             ItemStack bowl = getLeftovers(meta);
             if (bowl != null && stack.stackSize > 0) ItemHelper.addToPlayerInventory(player, bowl);
-            if(Extra.NERF_FOOD) {
+            if (Extra.NERF_FOOD) {
                 onEatenCompatibility(stack, player);
             } else {
                 int level = getFoodLevel(stack.getItemDamage());
                 float sat = getFoodSaturation(stack.getItemDamage());
-                player.getFoodStats().addStats(level, sat);
+                player.getFoodStats()
+                    .addStats(level, sat);
             }
 
             world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);

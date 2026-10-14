@@ -5,21 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.api.fishery.IMutationModifier;
-import maritech.tile.TileIncubator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.api.rituals.IMasterRitualStone;
 import WayofTime.alchemicalWizardry.api.rituals.RitualComponent;
 import WayofTime.alchemicalWizardry.api.rituals.RitualEffect;
 import WayofTime.alchemicalWizardry.api.soulNetwork.LifeEssenceNetwork;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import mariculture.api.fishery.IMutationModifier;
+import maritech.tile.TileIncubator;
 
 public class RitualOfTheBloodRiver extends RitualEffect {
+
     @Override
     public List<RitualComponent> getRitualComponentList() {
         ArrayList<RitualComponent> ritual = new ArrayList();
@@ -57,9 +59,9 @@ public class RitualOfTheBloodRiver extends RitualEffect {
         ritual.add(new RitualComponent(-1, 3, 3, RitualComponent.WATER));
         return ritual;
     }
-       
+
     private static final HashMap<IMasterRitualStone, MasterStoneModifier> modifierMap = new HashMap();
-    
+
     public MasterStoneModifier getModifierForStone(IMasterRitualStone stone) {
         MasterStoneModifier modifier = modifierMap.get(stone);
         if (modifier != null) return modifier;
@@ -72,7 +74,8 @@ public class RitualOfTheBloodRiver extends RitualEffect {
 
     @Override
     public void performEffect(IMasterRitualStone ritual) {
-        if (ritual.getWorld().getTotalWorldTime() % 20 == 0) {            
+        if (ritual.getWorld()
+            .getTotalWorldTime() % 20 == 0) {
             String owner = ritual.getOwner();
             World worldSave = MinecraftServer.getServer().worldServers[0];
             LifeEssenceNetwork data = (LifeEssenceNetwork) worldSave.loadItemData(LifeEssenceNetwork.class, owner);
@@ -88,7 +91,7 @@ public class RitualOfTheBloodRiver extends RitualEffect {
             int x = ritual.getXCoord();
             int y = ritual.getYCoord();
             int z = ritual.getZCoord();
-            
+
             boolean changed = getModifierForStone(ritual).update(owner, world, x, y, z, currentEssence);
             if (changed) {
                 data.currentEssence = currentEssence - getCostPerRefresh();
@@ -96,34 +99,34 @@ public class RitualOfTheBloodRiver extends RitualEffect {
             }
         }
     }
-    
-    
+
     public class MasterStoneModifier implements IMutationModifier {
+
         public boolean isActive = false;
         private TileIncubator incubator;
-        
+
         private TileIncubator getIncubator(World world, int x, int y, int z) {
             if (incubator != null) return incubator;
-            
+
             TileEntity tile = world.getTileEntity(x, y + 1, z);
             if (tile instanceof TileIncubator) {
                 incubator = (TileIncubator) tile;
                 incubator.addMutationModifier(this);
                 return incubator;
             }
-            
+
             return null;
         }
-        
+
         @Override
         public double getValue() {
-            return isActive ? 3D: 0D;
+            return isActive ? 3D : 0D;
         }
-        
+
         public boolean update(String owner, World world, int x, int y, int z, int currentEssence) {
             TileIncubator incubator = getIncubator(world, x, y, z);
             if (incubator == null) return false;
-            
+
             if (currentEssence < getCostPerRefresh()) {
                 EntityPlayer entityOwner = SpellHelper.getPlayerForUsername(owner);
                 if (entityOwner == null) return false;
@@ -136,9 +139,10 @@ public class RitualOfTheBloodRiver extends RitualEffect {
                     int x2 = x + world.rand.nextInt(4) - 2;
                     int y2 = y + 1 + world.rand.nextInt(3);
                     int z2 = z + world.rand.nextInt(4) - 2;
-                    SpellHelper.sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 2, x, y, z);
+                    SpellHelper
+                        .sendIndexedParticleToAllAround(world, x, y, z, 20, world.provider.dimensionId, 2, x, y, z);
                 }
-                
+
                 return true;
             }
         }

@@ -2,22 +2,24 @@ package mariculture.factory.items;
 
 import java.util.List;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.items.ItemMCDamageable;
-import mariculture.core.lib.PlansMeta;
-import mariculture.lib.util.Text;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.items.ItemMCDamageable;
+import mariculture.core.lib.PlansMeta;
+import mariculture.lib.util.Text;
 
 public class ItemPlan extends ItemMCDamageable {
+
     private IIcon[] icons;
-    
+
     public ItemPlan() {
         super(64);
         setCreativeTab(MaricultureTab.tabFactory);
@@ -95,10 +97,11 @@ public class ItemPlan extends ItemMCDamageable {
 
         return icons[0];
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2").toLowerCase();
+        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2")
+            .toLowerCase();
         return Text.localize(getUnlocalizedName() + "." + name.replace("plan_", ""));
     }
 
@@ -115,7 +118,8 @@ public class ItemPlan extends ItemMCDamageable {
     public void registerIcons(IIconRegister iconRegister) {
         icons = new IIcon[PlansMeta.COUNT];
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = iconRegister.registerIcon(Mariculture.modid + ":" + getName(PlansMeta.setType(new ItemStack(this, 1, 0), i)));
+            icons[i] = iconRegister
+                .registerIcon(Mariculture.modid + ":" + getName(PlansMeta.setType(new ItemStack(this, 1, 0), i)));
         }
     }
 }

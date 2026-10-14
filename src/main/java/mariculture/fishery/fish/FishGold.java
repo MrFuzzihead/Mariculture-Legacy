@@ -3,13 +3,16 @@ package mariculture.fishery.fish;
 import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletWater;
 import static mariculture.core.lib.MCLib.goldNugget;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishGold extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 8;
@@ -84,7 +87,7 @@ public class FishGold extends FishSpecies {
     public double getCatchChance(World world, int height) {
         return 15D;
     }
-    
+
     @Override
     public double getCaughtAliveChance(World world, int height) {
         return world.isDaytime() ? 75D : 15D;

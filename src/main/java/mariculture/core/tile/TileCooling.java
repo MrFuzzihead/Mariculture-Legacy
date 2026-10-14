@@ -1,13 +1,5 @@
 package mariculture.core.tile;
 
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.api.core.RecipeCasting;
-import mariculture.api.core.Environment.Temperature;
-import mariculture.core.config.Machines;
-import mariculture.core.config.Machines.MachineSettings;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.tile.base.TileStorageTank;
-import mariculture.core.util.Tank;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,7 +9,16 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
+import mariculture.api.core.Environment.Temperature;
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.api.core.RecipeCasting;
+import mariculture.core.config.Machines.MachineSettings;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.tile.base.TileStorageTank;
+import mariculture.core.util.Tank;
+
 public abstract class TileCooling extends TileStorageTank implements ISidedInventory {
+
     public boolean canWork;
     public int freezeTick;
     private int cooling;
@@ -48,9 +49,12 @@ public abstract class TileCooling extends TileStorageTank implements ISidedInven
     @Override
     public void updateEntity() {
         if (!worldObj.isRemote) {
-            //Setup the cooling 
+            // Setup the cooling
             if (cooling <= 0) {
-                cooling = Math.max(1, Temperature.getCoolingSpeed(MaricultureHandlers.environment.getBiomeTemperature(worldObj, xCoord, yCoord, zCoord)));
+                cooling = Math.max(
+                    1,
+                    Temperature.getCoolingSpeed(
+                        MaricultureHandlers.environment.getBiomeTemperature(worldObj, xCoord, yCoord, zCoord)));
             }
 
             if (MachineSettings.COOLING_KICK_UP_BUTT > 0) {

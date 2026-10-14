@@ -1,14 +1,18 @@
 package mariculture.magic.enchantments;
 
-import mariculture.core.items.ItemPearl;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.items.ItemPearl;
+
 public class EnchantmentJewelry extends Enchantment {
-    /**Enchantment Levels
-    	* Step-Up = 1, Spider = 1, Speed = 1, Blink = 25, Glide = 1, Jump = 1, Fall = 1
-    	* Health = 30, Elemental = 35, Repair = 40, Never Hungry = 45, Resurrection = 50, Flight = 55  **/
+
+    /**
+     * Enchantment Levels
+     * Step-Up = 1, Spider = 1, Speed = 1, Blink = 25, Glide = 1, Jump = 1, Fall = 1
+     * Health = 30, Elemental = 35, Repair = 40, Never Hungry = 45, Resurrection = 50, Flight = 55
+     **/
     protected int minLevel;
     protected int maxLevel;
 

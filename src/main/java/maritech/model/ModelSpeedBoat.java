@@ -1,6 +1,5 @@
 package maritech.model;
 
-import maritech.entity.EntitySpeedBoat;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -8,7 +7,10 @@ import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 
 import org.lwjgl.opengl.GL11;
 
+import maritech.entity.EntitySpeedBoat;
+
 public class ModelSpeedBoat extends ModelBase {
+
     private ModelRenderer base;
     private ModelRenderer boatwindow;
     private ModelRenderer sidelrg1;

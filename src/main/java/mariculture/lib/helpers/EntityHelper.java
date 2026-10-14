@@ -3,9 +3,6 @@ package mariculture.lib.helpers;
 import java.util.List;
 import java.util.UUID;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.server.FMLServerHandler;
-import maritech.handlers.ScubaEvent;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -13,14 +10,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import maritech.handlers.ScubaEvent;
+
 public class EntityHelper {
-    //Whether the entity is currently in water or not
+
+    // Whether the entity is currently in water or not
     public static boolean isInWater(EntityLivingBase entity) {
         double d0 = entity.posY - 0.35F;
         int i = MathHelper.floor_double(entity.posX);
@@ -35,7 +35,7 @@ public class EntityHelper {
             } else return d0 < j + filled;
         } else return false;
     }
-    
+
     public static boolean isInWaterOrLavaWithEnchantment(EntityPlayer player, int slot) {
         double d0 = player.posY - 0.35F;
         int i = MathHelper.floor_double(player.posX);
@@ -43,17 +43,17 @@ public class EntityHelper {
         int k = MathHelper.floor_double(player.posZ);
         Block block = player.worldObj.getBlock(i, j, k);
         if (block != null) {
-        	if (ScubaEvent.canActivate(block.getMaterial(), player, slot)) {
-	            double filled = 1;
-	            if (filled < 0) {
-	                filled *= -1;
-	                return d0 > j + (1 - filled);
-	            } else return d0 < j + filled;
-        	} else return false;
+            if (ScubaEvent.canActivate(block.getMaterial(), player, slot)) {
+                double filled = 1;
+                if (filled < 0) {
+                    filled *= -1;
+                    return d0 > j + (1 - filled);
+                } else return d0 < j + filled;
+            } else return false;
         } else return false;
     }
 
-    //Whether the entity is in air
+    // Whether the entity is in air
     public static boolean isInAir(EntityLivingBase entity) {
         double d0 = entity.posY - 0.35F;
         int i = MathHelper.floor_double(entity.posX);
@@ -69,46 +69,51 @@ public class EntityHelper {
         } else return false;
     }
 
-    //Loops through all the animals in the specified dimension id
+    // Loops through all the animals in the specified dimension id
     public static EntityAnimal getAnimalFromUUID(int dimension, UUID uuid) {
         World world = ServerHelper.getWorld(dimension);
         for (int i = 0; i < world.loadedEntityList.size(); i++) {
             Entity entity = (Entity) world.loadedEntityList.get(i);
             if (entity instanceof EntityAnimal) {
-                if (entity.getPersistentID().equals(uuid)) {
+                if (entity.getPersistentID()
+                    .equals(uuid)) {
                     return (EntityAnimal) entity;
                 }
             }
         }
-    
+
         return null;
     }
 
-    //Returns the entity id from it's uuid
+    // Returns the entity id from it's uuid
     public static int getEntityIDFromUUID(UUID uuid) {
         for (WorldServer world : DimensionManager.getWorlds()) {
             for (int i = 0; i < world.loadedEntityList.size(); i++) {
                 Entity entity = (Entity) world.loadedEntityList.get(i);
                 if (entity instanceof EntityLivingBase) {
-                    if (entity.getPersistentID().equals(uuid)) {
+                    if (entity.getPersistentID()
+                        .equals(uuid)) {
                         return entity.getEntityId();
                     }
                 }
             }
         }
-    
+
         return 0;
     }
 
     /** Gets the player from the uuid **/
     public static EntityPlayerMP getPlayerFromUUID(UUID uuid) {
-        //Loops through every single player
-        for (EntityPlayer player : (List<EntityPlayer>) FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().playerEntityList) {
-            if (player.getPersistentID().equals(uuid)) {
-                return (EntityPlayerMP) player;
+        // Loops through every single player
+        for (EntityPlayerMP player : (List<EntityPlayerMP>) FMLCommonHandler.instance()
+            .getMinecraftServerInstance()
+            .getConfigurationManager().playerEntityList) {
+            if (player.getPersistentID()
+                .equals(uuid)) {
+                return player;
             }
         }
-    
+
         return null;
     }
 

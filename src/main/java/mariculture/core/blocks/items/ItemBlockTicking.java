@@ -1,11 +1,13 @@
 package mariculture.core.blocks.items;
 
-import mariculture.core.blocks.base.ItemBlockMariculture;
-import mariculture.core.lib.TickingMeta;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.blocks.base.ItemBlockMariculture;
+import mariculture.core.lib.TickingMeta;
+
 public class ItemBlockTicking extends ItemBlockMariculture {
+
     public ItemBlockTicking(Block block) {
         super(block);
     }

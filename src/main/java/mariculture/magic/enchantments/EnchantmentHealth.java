@@ -2,13 +2,15 @@ package mariculture.magic.enchantments;
 
 import java.util.HashMap;
 
-import mariculture.core.helpers.EnchantHelper;
-import mariculture.magic.Magic;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
+import mariculture.core.helpers.EnchantHelper;
+import mariculture.magic.Magic;
+
 public class EnchantmentHealth extends EnchantmentJewelry {
+
     public EnchantmentHealth(int i, int weight, EnumEnchantmentType type) {
         super(i, weight, type);
         setName("health");

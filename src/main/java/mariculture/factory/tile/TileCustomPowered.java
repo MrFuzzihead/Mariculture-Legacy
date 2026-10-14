@@ -1,13 +1,15 @@
 package mariculture.factory.tile;
 
-import mariculture.lib.helpers.PowerHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.energy.IEnergyReceiver;
+import mariculture.lib.helpers.PowerHelper;
 
 public class TileCustomPowered extends TileCustom implements IEnergyHandler {
+
     private int tick;
     private ForgeDirection cameFrom;
     private EnergyStorage storage = new EnergyStorage(25000);
@@ -37,7 +39,11 @@ public class TileCustomPowered extends TileCustom implements IEnergyHandler {
 
             if (handler != null) {
                 if (handler.canConnectEnergy(cameFrom)) {
-                    storage.modifyEnergyStored(-handler.receiveEnergy(cameFrom.getOpposite(), Math.min(storage.getMaxEnergyStored(), storage.getEnergyStored()), false));
+                    storage.modifyEnergyStored(
+                        -handler.receiveEnergy(
+                            cameFrom.getOpposite(),
+                            Math.min(storage.getMaxEnergyStored(), storage.getEnergyStored()),
+                            false));
                 }
             }
         }

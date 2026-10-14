@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import mariculture.api.fishery.Fishing;
-import mariculture.api.fishery.fish.FishSpecies;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -17,7 +15,11 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
+import mariculture.api.fishery.Fishing;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class ShapelessResetFishRecipe implements IRecipe {
+
     private ItemStack output = null;
     private ArrayList input = new ArrayList();
 
@@ -31,23 +33,22 @@ public class ShapelessResetFishRecipe implements IRecipe {
 
     public ShapelessResetFishRecipe(ItemStack result, Object... recipe) {
         output = result.copy();
-        for (Object in : recipe)
-            if (in instanceof ItemStack) {
-                input.add(((ItemStack) in).copy());
-            } else if (in instanceof Item) {
-                input.add(new ItemStack((Item) in));
-            } else if (in instanceof Block) {
-                input.add(new ItemStack((Block) in));
-            } else if (in instanceof String) {
-                input.add(OreDictionary.getOres((String) in));
-            } else {
-                String ret = "Invalid shapeless ore recipe: ";
-                for (Object tmp : recipe) {
-                    ret += tmp + ", ";
-                }
-                ret += output;
-                throw new RuntimeException(ret);
+        for (Object in : recipe) if (in instanceof ItemStack) {
+            input.add(((ItemStack) in).copy());
+        } else if (in instanceof Item) {
+            input.add(new ItemStack((Item) in));
+        } else if (in instanceof Block) {
+            input.add(new ItemStack((Block) in));
+        } else if (in instanceof String) {
+            input.add(OreDictionary.getOres((String) in));
+        } else {
+            String ret = "Invalid shapeless ore recipe: ";
+            for (Object tmp : recipe) {
+                ret += tmp + ", ";
             }
+            ret += output;
+            throw new RuntimeException(ret);
+        }
     }
 
     ShapelessResetFishRecipe(ShapelessRecipes recipe, Map<ItemStack, String> replacements) {
@@ -74,7 +75,8 @@ public class ShapelessResetFishRecipe implements IRecipe {
     }
 
     public ItemStack getRecipeOutput(FishSpecies fish, int gender) {
-        ItemStack stack = Fishing.fishHelper.makePureFish(fish).copy();
+        ItemStack stack = Fishing.fishHelper.makePureFish(fish)
+            .copy();
         Fish.gender.addDNA(stack, gender);
         Fish.gender.addLowerDNA(stack, gender);
         return stack;
@@ -136,7 +138,8 @@ public class ShapelessResetFishRecipe implements IRecipe {
     }
 
     private boolean checkItemEquals(ItemStack target, ItemStack input) {
-        return target.getItem() == input.getItem() && (target.getItemDamage() == OreDictionary.WILDCARD_VALUE || target.getItemDamage() == input.getItemDamage());
+        return target.getItem() == input.getItem() && (target.getItemDamage() == OreDictionary.WILDCARD_VALUE
+            || target.getItemDamage() == input.getItemDamage());
     }
 
     public ArrayList getInput() {

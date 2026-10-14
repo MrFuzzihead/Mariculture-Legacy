@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class BottleMeta {
+
     public static final int COUNT = 37;
 
     public static final int VOID = 0;

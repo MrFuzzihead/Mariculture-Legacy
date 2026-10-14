@@ -5,20 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
+import codechicken.nei.NEIServerUtils;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.GuiRecipe;
 import mariculture.Mariculture;
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.fish.FishProduct;
 import mariculture.api.fishery.fish.FishSpecies;
 import mariculture.core.util.MCTranslate;
 import mariculture.fishery.items.ItemFishy;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.GuiRecipe;
 
 public class NEIFishProductHandler extends NEIBase {
+
     public class ProductResult {
+
         public int x, y, bump, bump2;
         double chance;
         public PositionedStack stack;
@@ -34,6 +37,7 @@ public class NEIFishProductHandler extends NEIBase {
     }
 
     public class CachedProductRecipe extends CachedRecipe {
+
         PositionedStack input;
         List<ProductResult> outputs;
 
@@ -96,7 +100,8 @@ public class NEIFishProductHandler extends NEIBase {
             if (fish.getProductList() != null) {
                 for (FishProduct product : fish.getProductList()) {
                     if (NEIServerUtils.areStacksSameTypeCrafting(product.product, result)) {
-                        arecipes.add(new CachedProductRecipe(Fishing.fishHelper.makePureFish(fish), fish.getProductList()));
+                        arecipes
+                            .add(new CachedProductRecipe(Fishing.fishHelper.makePureFish(fish), fish.getProductList()));
                     }
                 }
             }
@@ -116,13 +121,14 @@ public class NEIFishProductHandler extends NEIBase {
     }
 
     @Override
-    public List<String> handleItemTooltip(GuiRecipe gui, ItemStack stack, List<String> currenttip, int id) {
+    public List<String> handleItemTooltip(GuiRecipe<?> gui, ItemStack stack, List<String> currenttip, int id) {
         if (stack != null) {
             CachedProductRecipe cache = (CachedProductRecipe) arecipes.get(id);
             if (cache != null) {
                 for (ProductResult r : cache.outputs) {
                     if (gui.isMouseOver(r.stack, id)) {
-                        currenttip.add(mariculture.lib.util.Text.ORANGE + r.chance + "% " + MCTranslate.translate("chance"));
+                        currenttip
+                            .add(mariculture.lib.util.Text.ORANGE + r.chance + "% " + MCTranslate.translate("chance"));
                     }
                 }
             }

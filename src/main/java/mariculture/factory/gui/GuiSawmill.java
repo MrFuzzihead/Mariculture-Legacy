@@ -1,16 +1,18 @@
 package mariculture.factory.gui;
 
+import net.minecraft.entity.player.InventoryPlayer;
+
 import mariculture.core.gui.GuiMariculture;
 import mariculture.core.gui.feature.FeatureArrow;
 import mariculture.core.gui.feature.FeatureEject;
 import mariculture.core.gui.feature.FeatureNotifications;
+import mariculture.core.gui.feature.FeatureNotifications.NotificationType;
 import mariculture.core.gui.feature.FeatureRedstone;
 import mariculture.core.gui.feature.FeatureUpgrades;
-import mariculture.core.gui.feature.FeatureNotifications.NotificationType;
 import mariculture.factory.tile.TileSawmill;
-import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiSawmill extends GuiMariculture {
+
     public TileSawmill tile;
 
     public GuiSawmill(InventoryPlayer player, TileSawmill tile) {
@@ -18,7 +20,10 @@ public class GuiSawmill extends GuiMariculture {
         this.tile = tile;
         features.add(new FeatureUpgrades());
         features.add(new FeatureArrow(tile, 119, 39));
-        features.add(new FeatureNotifications(tile, new NotificationType[] { NotificationType.NO_PLAN, NotificationType.MISSING_SIDE }));
+        features.add(
+            new FeatureNotifications(
+                tile,
+                new NotificationType[] { NotificationType.NO_PLAN, NotificationType.MISSING_SIDE }));
         features.add(new FeatureRedstone(tile));
         features.add(new FeatureEject(tile));
     }

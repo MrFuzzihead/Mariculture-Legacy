@@ -3,14 +3,17 @@ package mariculture.fishery.fish;
 import static mariculture.api.core.Environment.Salinity.SALINE;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletFrozen;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishCod extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 11;
@@ -61,7 +64,7 @@ public class FishCod extends FishSpecies {
     public double getFishOilVolume() {
         return 2.500D;
     }
-    
+
     @Override
     public ItemStack getLiquifiedProduct() {
         return new ItemStack(Items.leather);

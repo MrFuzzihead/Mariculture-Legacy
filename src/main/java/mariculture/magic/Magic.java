@@ -14,6 +14,19 @@ import static mariculture.core.lib.MCLib.waterBottle;
 
 import java.util.Map.Entry;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
+
+import cpw.mods.fml.common.Loader;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.api.core.MaricultureTab;
 import mariculture.core.Core;
@@ -59,20 +72,9 @@ import mariculture.magic.jewelry.parts.MaterialPearlSilver;
 import mariculture.magic.jewelry.parts.MaterialPearlWhite;
 import mariculture.magic.jewelry.parts.MaterialPearlYellow;
 import mariculture.plugins.bloodmagic.ItemMobMagnetBloodEdition;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.RecipeSorter;
-import net.minecraftforge.oredict.RecipeSorter.Category;
-import cpw.mods.fml.common.Loader;
 
 public class Magic extends RegistrationModule {
+
     public static JewelryMaterial dummyMaterial;
     public static JewelryMaterial pearlBlack;
     public static JewelryMaterial pearlBlue;
@@ -130,7 +132,8 @@ public class Magic extends RegistrationModule {
     public void registerItems() {
         basicMirror = new ItemMirror("mirror").setUnlocalizedName("mirror.basic");
         magicMirror = new ItemMagicMirror(1, 30, "magicMirror", 15, 1000).setUnlocalizedName("mirror.magic");
-        celestialMirror = new ItemMagicMirror(31, 60, "celestialMirror", 20, 10000).setUnlocalizedName("mirror.celestial");
+        celestialMirror = new ItemMagicMirror(31, 60, "celestialMirror", 20, 10000)
+            .setUnlocalizedName("mirror.celestial");
         ring = new ItemRing().setUnlocalizedName("ring");
         bracelet = new ItemBracelet().setUnlocalizedName("bracelet");
         necklace = new ItemNecklace().setUnlocalizedName("necklace");
@@ -139,15 +142,23 @@ public class Magic extends RegistrationModule {
         } else {
             magnet = new ItemMobMagnet(0).setUnlocalizedName("mobMagnet");
         }
-        
+
         placer = new ItemWaterPlacer(0).setUnlocalizedName("placer");
         water = new ItemInfiwater().setUnlocalizedName("infiwater");
     }
 
     @Override
     public void registerOther() {
-        RecipeSorter.register("mariculture:jewelryshaped", ShapedJewelryRecipe.class, Category.SHAPED, "after:minecraft:shaped before:minecraft:shapeless");
-        RecipeSorter.register("mariculture:jewelryshapeless", ShapelessJewelryRecipe.class, Category.SHAPELESS, "after:minecraft:shapeless");
+        RecipeSorter.register(
+            "mariculture:jewelryshaped",
+            ShapedJewelryRecipe.class,
+            Category.SHAPED,
+            "after:minecraft:shaped before:minecraft:shapeless");
+        RecipeSorter.register(
+            "mariculture:jewelryshapeless",
+            ShapelessJewelryRecipe.class,
+            Category.SHAPELESS,
+            "after:minecraft:shapeless");
 
         registerJewelry();
         registerEnchants();
@@ -159,7 +170,7 @@ public class Magic extends RegistrationModule {
     private void registerJewelry() {
         dummyBinding = new BindingDummy();
         dummyMaterial = new MaterialDummy();
-        //Real parts
+        // Real parts
         pearlBlack = new MaterialPearlBlack();
         pearlBlue = new MaterialPearlBlue();
         pearlBrown = new MaterialPearlBrown();
@@ -225,22 +236,33 @@ public class Magic extends RegistrationModule {
     public void registerRecipes() {
         addShaped(asStack(water), new Object[] { "PWP", "WBW", "PWP", 'P', pearls, 'W', waterBottle, 'B', bucket });
         addShaped(asStack(magnet), new Object[] { "III", "I I", "M M", 'I', "ingotIron", 'M', enderPearl });
-        addShaped(asStack(basicMirror), new Object[] { " AA", "APA", "SA ", 'A', "ingotAluminum", 'P', Blocks.glass_pane, 'S', "ingotIron" });
-        addShaped(asStack(magicMirror), new Object[] { "PMP", "BEB", "PBP", 'B', storageBookshelf, 'M', basicMirror, 'E', enchant, 'P', pearls });
-        addShaped(asStack(celestialMirror), new Object[] { "TST", "BMB", "GBG", 'B', storageBookshelf, 'M', magicMirror, 'S', netherStar, 'T', magicDrop, 'G', goldThread });
-        addShaped(asStack(placer), new Object[] { " L ", "LPL", " L ", 'L', Blocks.waterlily, 'P', asStack(Core.pearls, OreDictionary.WILDCARD_VALUE) });
+        addShaped(
+            asStack(basicMirror),
+            new Object[] { " AA", "APA", "SA ", 'A', "ingotAluminum", 'P', Blocks.glass_pane, 'S', "ingotIron" });
+        addShaped(
+            asStack(magicMirror),
+            new Object[] { "PMP", "BEB", "PBP", 'B', storageBookshelf, 'M', basicMirror, 'E', enchant, 'P', pearls });
+        addShaped(
+            asStack(celestialMirror),
+            new Object[] { "TST", "BMB", "GBG", 'B', storageBookshelf, 'M', magicMirror, 'S', netherStar, 'T',
+                magicDrop, 'G', goldThread });
+        addShaped(
+            asStack(placer),
+            new Object[] { " L ", "LPL", " L ", 'L', Blocks.waterlily, 'P',
+                asStack(Core.pearls, OreDictionary.WILDCARD_VALUE) });
         addJewelry((ItemJewelry) ring);
         addJewelry((ItemJewelry) bracelet);
         addJewelry((ItemJewelry) necklace);
-        
+
         if (Jewelry.ALTERNATIVE_CELESTIAL_RECIPE) {
-            addShaped(asStack(celestialMirror), new Object[] { "RWN", "BMB", "GBG", 'B', storageBookshelf, 'M', magicMirror, 
-                'R', JewelryHandler.createJewelry((ItemJewelry)ring, bindingBasic, pearlRed), 
-                'W', JewelryHandler.createJewelry((ItemJewelry)bracelet, bindingBasic, pearlBlack), 
-                'N', JewelryHandler.createJewelry((ItemJewelry)necklace, bindingBasic, pearlGold), 
-                'G', goldThread });
+            addShaped(
+                asStack(celestialMirror),
+                new Object[] { "RWN", "BMB", "GBG", 'B', storageBookshelf, 'M', magicMirror, 'R',
+                    JewelryHandler.createJewelry((ItemJewelry) ring, bindingBasic, pearlRed), 'W',
+                    JewelryHandler.createJewelry((ItemJewelry) bracelet, bindingBasic, pearlBlack), 'N',
+                    JewelryHandler.createJewelry((ItemJewelry) necklace, bindingBasic, pearlGold), 'G', goldThread });
         }
-        
+
         addDungeonChestLoot();
     }
 
@@ -257,14 +279,20 @@ public class Magic extends RegistrationModule {
                 JewelryBinding bind = binding.getValue();
                 JewelryMaterial mat = material.getValue();
                 ItemStack worked = JewelryHandler.createJewelry(item, bind, mat);
-                JewelryHandler.addJewelry(type, worked, bind.getCraftingItem(type), mat.getCraftingItem(type), (int) (bind.getHitsBase(type) * mat.getHitsModifier(type)));
+                JewelryHandler.addJewelry(
+                    type,
+                    worked,
+                    bind.getCraftingItem(type),
+                    mat.getCraftingItem(type),
+                    (int) (bind.getHitsBase(type) * mat.getHitsModifier(type)));
             }
         }
     }
 
     private void addDungeonChestLoot() {
         if (EnchantHelper.exists(oneRing)) {
-            ItemStack oneRing = JewelryHandler.createSpecial((ItemJewelry) ring, JewelryType.RING, mariculture.lib.util.Text.YELLOW + "One Ring");
+            ItemStack oneRing = JewelryHandler
+                .createSpecial((ItemJewelry) ring, JewelryType.RING, mariculture.lib.util.Text.YELLOW + "One Ring");
             if (oneRing != null) {
                 oneRing.addEnchantment(Magic.oneRing, 1);
                 ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(oneRing, 1, 1, 1));

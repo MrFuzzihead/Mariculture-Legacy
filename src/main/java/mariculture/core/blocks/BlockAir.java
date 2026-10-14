@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.Mariculture;
-import mariculture.core.Core;
-import mariculture.core.blocks.base.BlockMCBaseMeta;
-import mariculture.core.config.GeneralStuff;
-import mariculture.core.lib.AirMeta;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -24,10 +19,17 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.core.Core;
+import mariculture.core.blocks.base.BlockMCBaseMeta;
+import mariculture.core.config.GeneralStuff;
+import mariculture.core.lib.AirMeta;
 
 public class BlockAir extends BlockMCBaseMeta {
+
     public static ArrayList<Block> flammables = new ArrayList();
     public IIcon theIcon;
 
@@ -117,7 +119,8 @@ public class BlockAir extends BlockMCBaseMeta {
 
     @Override
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
-        return isNaturalGas(world, x, y, z) ? false : side == 1 ? true : super.shouldSideBeRendered(world, x, y, z, side);
+        return isNaturalGas(world, x, y, z) ? false
+            : side == 1 ? true : super.shouldSideBeRendered(world, x, y, z, side);
     }
 
     private boolean isNaturalGas(IBlockAccess world, int x, int y, int z) {

@@ -7,13 +7,6 @@ import static mariculture.core.lib.MCLib.zombie;
 
 import java.util.ArrayList;
 
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
-import mariculture.core.lib.BaitMeta;
-import mariculture.fishery.Fishery;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,7 +16,16 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.lib.BaitMeta;
+import mariculture.fishery.Fishery;
+
 public class FishUndead extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 22;

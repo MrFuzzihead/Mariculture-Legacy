@@ -1,11 +1,13 @@
 package mariculture.core.blocks.items;
 
-import mariculture.core.blocks.base.ItemBlockMariculture;
-import mariculture.core.lib.AirMeta;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.blocks.base.ItemBlockMariculture;
+import mariculture.core.lib.AirMeta;
+
 public class ItemBlockAir extends ItemBlockMariculture {
+
     public ItemBlockAir(Block block) {
         super(block);
     }

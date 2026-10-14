@@ -1,7 +1,5 @@
 package mariculture.fishery.render;
 
-import mariculture.core.util.EntityFakeItem;
-import mariculture.fishery.tile.TileFishTank;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -13,9 +11,12 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.util.EntityFakeItem;
+import mariculture.fishery.tile.TileFishTank;
 
 @SideOnly(Side.CLIENT)
 public class FishTankSpecialRenderer extends TileEntitySpecialRenderer {
+
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float partialTick) {
         TileFishTank tank = (TileFishTank) tile;

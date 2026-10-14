@@ -7,6 +7,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class FluidDicHandler {
+
     private static final HashMap<String, FluidDicEntry> entries = new HashMap();
 
     public static void register(String dictionaryName, String fluid, int ratio) {
@@ -15,8 +16,22 @@ public class FluidDicHandler {
 
     public static boolean areSameDicNames(FluidStack stack, FluidStack fluid) {
         if (stack != null && stack.getFluid() != null && fluid != null && fluid.getFluid() != null) {
-            String stackName = entries.get(stack.getFluid().getName()) != null ? entries.get(stack.getFluid().getName()).name : null;
-            String fluidName = entries.get(fluid.getFluid().getName()) != null ? entries.get(fluid.getFluid().getName()).name : "";
+            String stackName = entries.get(
+                stack.getFluid()
+                    .getName())
+                != null
+                    ? entries.get(
+                        stack.getFluid()
+                            .getName()).name
+                    : null;
+            String fluidName = entries.get(
+                fluid.getFluid()
+                    .getName())
+                != null
+                    ? entries.get(
+                        fluid.getFluid()
+                            .getName()).name
+                    : "";
             return stackName != null ? stackName.equals(fluidName) : false;
         } else return false;
     }
@@ -26,6 +41,7 @@ public class FluidDicHandler {
     }
 
     private static class FluidDicEntry {
+
         private String name;
         private int ratio;
 
@@ -39,7 +55,11 @@ public class FluidDicHandler {
         if (fluid != null && fluid.getFluid() != null) {
             int i = 0;
             for (Entry<String, FluidDicEntry> entr : FluidDicHandler.entries.entrySet()) {
-                if (entr.getKey().equals(fluid.getFluid().getName())) return i;
+                if (entr.getKey()
+                    .equals(
+                        fluid.getFluid()
+                            .getName()))
+                    return i;
 
                 i++;
             }
@@ -53,7 +73,10 @@ public class FluidDicHandler {
             boolean found = false;
             for (Entry<String, FluidDicEntry> entr : FluidDicHandler.entries.entrySet()) {
                 if (found && FluidRegistry.getFluid(entr.getKey()) != null) return entr.getKey();
-                if (entr.getKey().equals(fluid.getFluid().getName())) {
+                if (entr.getKey()
+                    .equals(
+                        fluid.getFluid()
+                            .getName())) {
                     found = true;
                 }
             }

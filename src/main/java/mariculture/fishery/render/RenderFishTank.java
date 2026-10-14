@@ -1,11 +1,11 @@
 package mariculture.fishery.render;
 
-import mariculture.core.render.RenderBase;
 import net.minecraftforge.fluids.FluidRegistry;
 
-import org.lwjgl.opengl.GL11;
+import mariculture.core.render.RenderBase;
 
 public class RenderFishTank extends RenderBase {
+
     public RenderFishTank() {}
 
     @Override

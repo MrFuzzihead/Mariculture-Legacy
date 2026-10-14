@@ -2,22 +2,6 @@ package mariculture.core.blocks;
 
 import java.util.Random;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.Core;
-import mariculture.core.blocks.base.BlockFunctional;
-import mariculture.core.config.Gardening;
-import mariculture.core.config.GeneralStuff;
-import mariculture.core.handlers.PearlGenHandler;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.lib.GuideMeta;
-import mariculture.core.lib.Modules;
-import mariculture.core.lib.RenderIds;
-import mariculture.core.lib.WaterMeta;
-import mariculture.core.render.RenderOyster;
-import mariculture.core.tile.TileOyster;
-import mariculture.lib.helpers.DirectionHelper;
-import mariculture.plugins.enchiridion.BookSpawnHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.BlockSoulSand;
@@ -34,10 +18,28 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.Core;
+import mariculture.core.blocks.base.BlockFunctional;
+import mariculture.core.config.Gardening;
+import mariculture.core.config.GeneralStuff;
+import mariculture.core.handlers.PearlGenHandler;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.lib.GuideMeta;
+import mariculture.core.lib.Modules;
+import mariculture.core.lib.RenderIds;
+import mariculture.core.lib.WaterMeta;
+import mariculture.core.render.RenderOyster;
+import mariculture.core.tile.TileOyster;
+import mariculture.lib.helpers.DirectionHelper;
+import mariculture.plugins.enchiridion.BookSpawnHelper;
 
 public class BlockWater extends BlockFunctional {
+
     public BlockWater() {
         super(Material.water);
         setTickRandomly(true);
@@ -93,7 +95,8 @@ public class BlockWater extends BlockFunctional {
 
     @Override
     public boolean canPlaceBlockAt(World world, int x, int y, int z) {
-        if (!BlockHelper.isWater(world, x, y + 1, z) || !world.isSideSolid(x, y - 1, z, ForgeDirection.UP)) return false;
+        if (!BlockHelper.isWater(world, x, y + 1, z) || !world.isSideSolid(x, y - 1, z, ForgeDirection.UP))
+            return false;
         else return true;
     }
 
@@ -105,23 +108,29 @@ public class BlockWater extends BlockFunctional {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7,
+        float par8, float par9) {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile == null || player.isSneaking()) return false;
 
         if (tile instanceof TileOyster) {
             TileOyster oyster = (TileOyster) tile;
             if (GeneralStuff.SPAWN_BOOKS && Modules.isActive(Modules.magic)) {
-                if (oyster.getStackInSlot(0) != null && oyster.getStackInSlot(0).getItem() == Core.pearls) {
+                if (oyster.getStackInSlot(0) != null && oyster.getStackInSlot(0)
+                    .getItem() == Core.pearls) {
                     BookSpawnHelper.spawn(player, GuideMeta.ENCHANTS);
                 }
             }
 
             if (!player.isSneaking()) if (!world.isRemote) {
                 if (player.getCurrentEquippedItem() != null) {
-                    if (player.getCurrentEquippedItem().getItem() == Item.getItemFromBlock(Blocks.sand)) {
+                    if (player.getCurrentEquippedItem()
+                        .getItem() == Item.getItemFromBlock(Blocks.sand)) {
                         if (oyster.getStackInSlot(0) == null) {
-                            oyster.setInventorySlotContents(0, player.getCurrentEquippedItem().copy());
+                            oyster.setInventorySlotContents(
+                                0,
+                                player.getCurrentEquippedItem()
+                                    .copy());
                             if (!player.capabilities.isCreativeMode) {
                                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
                             }
@@ -164,7 +173,9 @@ public class BlockWater extends BlockFunctional {
                     } else if (block instanceof BlockSand && world.getBlockMetadata(x, y - 1, z) == 1) {
                         oyster.setInventorySlotContents(0, new ItemStack(Blocks.sand, 1, 1));
                     } else if (block instanceof BlockPearlBlock) {
-                        oyster.setInventorySlotContents(0, new ItemStack(Core.pearls, 1, world.getBlockMetadata(x, y - 1, z)));
+                        oyster.setInventorySlotContents(
+                            0,
+                            new ItemStack(Core.pearls, 1, world.getBlockMetadata(x, y - 1, z)));
                     } else {
                         oyster.setInventorySlotContents(0, PearlGenHandler.getRandomPearl(rand));
                     }

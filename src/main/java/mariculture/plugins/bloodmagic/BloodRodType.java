@@ -2,17 +2,19 @@ package mariculture.plugins.bloodmagic;
 
 import java.util.Random;
 
-import mariculture.api.fishery.RodType;
-import mariculture.fishery.Fish;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import WayofTime.alchemicalWizardry.common.spell.complex.effect.SpellHelper;
+import mariculture.api.fishery.RodType;
+import mariculture.fishery.Fish;
 
 public class BloodRodType extends RodType {
+
     public BloodRodType(int quality, double junk, double good, double rare, int enchantment) {
         super("BLOOD", quality, junk, good, rare, enchantment);
     }

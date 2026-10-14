@@ -1,13 +1,15 @@
 package mariculture.core.blocks;
 
-import mariculture.core.blocks.base.BlockMCBaseMeta;
-import mariculture.core.lib.Modules;
-import mariculture.core.lib.RockMeta;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
+import mariculture.core.blocks.base.BlockMCBaseMeta;
+import mariculture.core.lib.Modules;
+import mariculture.core.lib.RockMeta;
+
 public class BlockRock extends BlockMCBaseMeta {
+
     public BlockRock() {
         super(Material.rock);
     }
@@ -54,7 +56,8 @@ public class BlockRock extends BlockMCBaseMeta {
     }
 
     @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
         switch (world.getBlockMetadata(x, y, z)) {
             case RockMeta.CORAL_ROCK:
                 return 15F;

@@ -2,6 +2,18 @@ package maritech.items;
 
 import java.util.List;
 
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.api.core.MaricultureTab;
 import mariculture.core.Core;
 import mariculture.core.items.ItemMCBaseArmor;
@@ -12,19 +24,9 @@ import maritech.handlers.ScubaMask;
 import maritech.lib.MTModInfo;
 import maritech.model.ModelFlippers;
 import maritech.util.MTTranslate;
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemArmorScuba extends ItemMCBaseArmor {
+
     private IIcon scubaOn;
 
     public ItemArmorScuba(ArmorMaterial material, int j, int k) {
@@ -39,7 +41,8 @@ public class ItemArmorScuba extends ItemMCBaseArmor {
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
         if (stack.getItem() == ExtensionDiving.swimfin) return MTModInfo.MODPATH + ":textures/armor/flippers.png";
-        if (stack.getItem() == ExtensionDiving.scubaSuit) return MTModInfo.MODPATH + ":" + "textures/armor/scuba" + "_2.png";
+        if (stack.getItem() == ExtensionDiving.scubaSuit)
+            return MTModInfo.MODPATH + ":" + "textures/armor/scuba" + "_2.png";
 
         return MTModInfo.MODPATH + ":" + "textures/armor/scuba" + "_1.png";
     }
@@ -56,7 +59,8 @@ public class ItemArmorScuba extends ItemMCBaseArmor {
             if (stack.hasTagCompound()) {
                 String display = MTTranslate.translate("landlights.format");
                 display = display.replace("%L", MTTranslate.translate("landlights"));
-                boolean landLightOn = stack.getTagCompound().getBoolean("ScubaMaskOnOutOfWater");
+                boolean landLightOn = stack.getTagCompound()
+                    .getBoolean("ScubaMaskOnOutOfWater");
                 if (landLightOn) {
                     display = display.replace("%O", Text.DARK_GREEN + MTTranslate.translate("on"));
                 } else {
@@ -75,7 +79,8 @@ public class ItemArmorScuba extends ItemMCBaseArmor {
 
     @Override
     public boolean getIsRepairable(ItemStack stack1, ItemStack stack2) {
-        if (stack1.getItem() != ExtensionDiving.scubaTank) return stack2.getItem() == Core.crafting && stack2.getItemDamage() == CraftingMeta.NEOPRENE;
+        if (stack1.getItem() != ExtensionDiving.scubaTank)
+            return stack2.getItem() == Core.crafting && stack2.getItemDamage() == CraftingMeta.NEOPRENE;
         return false;
     }
 
@@ -88,7 +93,9 @@ public class ItemArmorScuba extends ItemMCBaseArmor {
                 }
 
                 if (player.isSneaking()) {
-                    stack.stackTagCompound.setBoolean("ScubaMaskOnOutOfWater", !stack.stackTagCompound.getBoolean("ScubaMaskOnOutOfWater"));
+                    stack.stackTagCompound.setBoolean(
+                        "ScubaMaskOnOutOfWater",
+                        !stack.stackTagCompound.getBoolean("ScubaMaskOnOutOfWater"));
                 }
             }
         }
@@ -110,7 +117,8 @@ public class ItemArmorScuba extends ItemMCBaseArmor {
     public IIcon getIconIndex(ItemStack stack) {
         if (stack.getItem() == ExtensionDiving.scubaMask) {
             if (stack.hasTagCompound()) {
-                if (stack.getTagCompound().getBoolean("ScubaMaskOnOutOfWater")) {
+                if (stack.getTagCompound()
+                    .getBoolean("ScubaMaskOnOutOfWater")) {
                     return scubaOn;
                 }
             }

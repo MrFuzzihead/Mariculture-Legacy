@@ -4,8 +4,12 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.GuiRecipe;
 import mariculture.Mariculture;
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.IMutation.Mutation;
@@ -14,14 +18,11 @@ import mariculture.core.util.MCTranslate;
 import mariculture.fishery.Fish;
 import mariculture.fishery.FishyHelper;
 import mariculture.fishery.items.ItemFishy;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.GuiRecipe;
 
 public class NEIFishBreedingMutationHandler extends NEIBase {
+
     public class CachedBreedingRecipe extends CachedRecipe {
+
         Mutation mutation;
         PositionedStack mother;
         PositionedStack father;
@@ -54,8 +55,12 @@ public class NEIFishBreedingMutationHandler extends NEIBase {
             ArrayList<Mutation> mutations = Fishing.mutation.getMutations();
             for (Mutation mute : mutations) {
                 ItemStack baby = Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.baby));
-                ItemStack father = Fish.gender.addDNA(Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.father)), FishyHelper.MALE);
-                ItemStack mother = Fish.gender.addDNA(Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.mother)), FishyHelper.FEMALE);
+                ItemStack father = Fish.gender.addDNA(
+                    Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.father)),
+                    FishyHelper.MALE);
+                ItemStack mother = Fish.gender.addDNA(
+                    Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.mother)),
+                    FishyHelper.FEMALE);
                 arecipes.add(new CachedBreedingRecipe(mother, father, baby, mute));
             }
         } else {
@@ -70,8 +75,12 @@ public class NEIFishBreedingMutationHandler extends NEIBase {
             FishSpecies species = Fishing.fishHelper.getSpecies(mute.baby);
             if (isSpecies(result, species, true)) {
                 ItemStack baby = Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.baby));
-                ItemStack father = Fish.gender.addDNA(Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.father)), FishyHelper.MALE);
-                ItemStack mother = Fish.gender.addDNA(Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.mother)), FishyHelper.FEMALE);
+                ItemStack father = Fish.gender.addDNA(
+                    Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.father)),
+                    FishyHelper.MALE);
+                ItemStack mother = Fish.gender.addDNA(
+                    Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.mother)),
+                    FishyHelper.FEMALE);
                 arecipes.add(new CachedBreedingRecipe(mother, father, baby, mute));
             }
         }
@@ -96,8 +105,12 @@ public class NEIFishBreedingMutationHandler extends NEIBase {
             FishSpecies mSpecies = Fishing.fishHelper.getSpecies(mute.mother);
             if (isSpecies(ingredient, fSpecies, true) || isSpecies(ingredient, mSpecies, true)) {
                 ItemStack baby = Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.baby));
-                ItemStack father = Fish.gender.addDNA(Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.father)), FishyHelper.MALE);
-                ItemStack mother = Fish.gender.addDNA(Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.mother)), FishyHelper.FEMALE);
+                ItemStack father = Fish.gender.addDNA(
+                    Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.father)),
+                    FishyHelper.MALE);
+                ItemStack mother = Fish.gender.addDNA(
+                    Fishing.fishHelper.makePureFish(Fishing.fishHelper.getSpecies(mute.mother)),
+                    FishyHelper.FEMALE);
                 arecipes.add(new CachedBreedingRecipe(mother, father, baby, mute));
             }
         }
@@ -106,8 +119,14 @@ public class NEIFishBreedingMutationHandler extends NEIBase {
     @Override
     public void drawExtras(int id) {
         CachedBreedingRecipe cache = (CachedBreedingRecipe) arecipes.get(id);
-        Minecraft.getMinecraft().fontRenderer.drawString(mariculture.lib.util.Text.GREY + cache.mutation.chance + "%", 94, 34, 0);
-        Minecraft.getMinecraft().fontRenderer.drawSplitString(mariculture.lib.util.Text.BLACK + cache.mutation.requirement.getMutationInfo(), 0, 48, 165, 0);
+        Minecraft.getMinecraft().fontRenderer
+            .drawString(mariculture.lib.util.Text.GREY + cache.mutation.chance + "%", 94, 34, 0);
+        Minecraft.getMinecraft().fontRenderer.drawSplitString(
+            mariculture.lib.util.Text.BLACK + cache.mutation.requirement.getMutationInfo(),
+            0,
+            48,
+            165,
+            0);
     }
 
     @Override

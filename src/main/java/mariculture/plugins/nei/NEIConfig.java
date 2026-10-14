@@ -3,13 +3,14 @@ package mariculture.plugins.nei;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import mariculture.core.config.GeneralStuff;
-import mariculture.core.lib.Modules;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
+
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
+import mariculture.core.config.GeneralStuff;
+import mariculture.core.lib.Modules;
 
 public class NEIConfig implements IConfigureNEI {
 
@@ -42,9 +43,11 @@ public class NEIConfig implements IConfigureNEI {
             API.registerUsageHandler(new NEINuggetCasterRecipeHandler());
         }
 
-        FluidContainerData[] data = FluidContainerRegistry.getRegisteredFluidContainerData().clone();
+        FluidContainerData[] data = FluidContainerRegistry.getRegisteredFluidContainerData()
+            .clone();
         for (FluidContainerData container : data) {
-            String fluid = container.fluid.getFluid().getName();
+            String fluid = container.fluid.getFluid()
+                .getName();
             if (containers.containsKey("fluid")) {
                 ArrayList<ItemStack> list = containers.get(fluid);
                 list.add(container.filledContainer);

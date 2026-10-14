@@ -1,5 +1,18 @@
 package mariculture.core.helpers;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 import mariculture.api.core.FuelInfo;
 import mariculture.api.core.IAnvilHandler.RecipeAnvil;
 import mariculture.api.core.IFuelTickHandler;
@@ -14,33 +27,24 @@ import mariculture.core.lib.FoodMeta;
 import mariculture.core.lib.MaterialsMeta;
 import mariculture.core.lib.MetalRates;
 import mariculture.core.util.Fluids;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RecipeHelper {
+
     /** Returns an ItemStack **/
     public static ItemStack asStack(Object object) {
-        return object instanceof Block? new ItemStack((Block)object) : new ItemStack((Item)object);
+        return object instanceof Block ? new ItemStack((Block) object) : new ItemStack((Item) object);
     }
-    
+
     /** Create an itemstack from this item and damage **/
     public static ItemStack asStack(Object object, int damage) {
-        return object instanceof Block? new ItemStack((Block)object, 1, damage) : new ItemStack((Item)object, 1, damage);
+        return object instanceof Block ? new ItemStack((Block) object, 1, damage)
+            : new ItemStack((Item) object, 1, damage);
     }
-    
+
     /** Create and itemstack, from object, size and damage **/
     public static ItemStack asStack(Object object, int size, int damage) {
-        return object instanceof Block? new ItemStack((Block)object, size, damage) : new ItemStack((Item)object, size, damage);
+        return object instanceof Block ? new ItemStack((Block) object, size, damage)
+            : new ItemStack((Item) object, size, damage);
     }
 
     /** Returns an itemstack of the type specified with the size specified **/
@@ -57,27 +61,29 @@ public class RecipeHelper {
         ret.stackSize = amount;
         return ret;
     }
-    
-
 
     public static void addShaped(ItemStack result, Object[] input) {
-        CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(result, input));
+        CraftingManager.getInstance()
+            .getRecipeList()
+            .add(new ShapedOreRecipe(result, input));
     }
 
     public static void addShapeless(ItemStack result, Object[] input) {
-        CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(result, input));
+        CraftingManager.getInstance()
+            .getRecipeList()
+            .add(new ShapelessOreRecipe(result, input));
     }
-    
+
     public static void addAlchemy2x2Alternating(ItemStack result, ItemStack left, ItemStack right) {
-        addShaped(result, new Object[] { "CX", "XC", 'C', left, 'X', right});
+        addShaped(result, new Object[] { "CX", "XC", 'C', left, 'X', right });
     }
-    
+
     public static void addAlchemyLoop(ItemStack result, ItemStack item) {
-        addShaped(result, new Object[] { "CCC", "C C", "CCC", 'C', item});
+        addShaped(result, new Object[] { "CCC", "C C", "CCC", 'C', item });
     }
-    
+
     public static void addAlchemy2x2TopBottom(ItemStack result, ItemStack top, ItemStack bottom) {
-        addShaped(result, new Object[] { "CC", "XX", 'C', top, 'X', bottom});
+        addShaped(result, new Object[] { "CC", "XX", 'C', top, 'X', bottom });
     }
 
     public static void addSmelting(ItemStack output, ItemStack input, float xp) {
@@ -88,7 +94,8 @@ public class RecipeHelper {
         MaricultureHandlers.vat.addRecipe(new RecipeVat(input, FluidRegistry.getFluidStack(fluid, vol), output, time));
     }
 
-    public static void addVatItemRecipeResultFluid(ItemStack input, FluidStack inputFluid, FluidStack output, int time) {
+    public static void addVatItemRecipeResultFluid(ItemStack input, FluidStack inputFluid, FluidStack output,
+        int time) {
         MaricultureHandlers.vat.addRecipe(new RecipeVat(input, inputFluid, output, time));
     }
 
@@ -108,21 +115,35 @@ public class RecipeHelper {
         String nugget = "nugget" + metal;
         String ingot = "ingot" + metal;
         String block = "block" + metal;
-        if (OreDictionary.getOres(nugget).size() > 0) {
-            ItemStack nuggetItem = OreDictionary.getOres(nugget).get(0);
-            if (nuggetItem.getUnlocalizedName().contains("oreberry") && OreDictionary.getOres(nugget).size() > 1) {
-                nuggetItem = OreDictionary.getOres(nugget).get(1);
+        if (OreDictionary.getOres(nugget)
+            .size() > 0) {
+            ItemStack nuggetItem = OreDictionary.getOres(nugget)
+                .get(0);
+            if (nuggetItem.getUnlocalizedName()
+                .contains("oreberry")
+                && OreDictionary.getOres(nugget)
+                    .size() > 1) {
+                nuggetItem = OreDictionary.getOres(nugget)
+                    .get(1);
             }
-            
+
             RecipeHelper.addNuggetCasting(Fluids.getFluidStack(metal.toLowerCase(), MetalRates.NUGGET), nuggetItem);
         }
-        
-        if (OreDictionary.getOres(ingot).size() > 0) {
-            RecipeHelper.addIngotCasting(Fluids.getFluidStack(metal.toLowerCase(), MetalRates.INGOT), OreDictionary.getOres(ingot).get(0));
+
+        if (OreDictionary.getOres(ingot)
+            .size() > 0) {
+            RecipeHelper.addIngotCasting(
+                Fluids.getFluidStack(metal.toLowerCase(), MetalRates.INGOT),
+                OreDictionary.getOres(ingot)
+                    .get(0));
         }
-        
-        if (OreDictionary.getOres(block).size() > 0) {
-            RecipeHelper.addBlockCasting(Fluids.getFluidStack(metal.toLowerCase(), MetalRates.BLOCK), OreDictionary.getOres(block).get(0));
+
+        if (OreDictionary.getOres(block)
+            .size() > 0) {
+            RecipeHelper.addBlockCasting(
+                Fluids.getFluidStack(metal.toLowerCase(), MetalRates.BLOCK),
+                OreDictionary.getOres(block)
+                    .get(0));
         }
     }
 
@@ -134,11 +155,13 @@ public class RecipeHelper {
         MaricultureHandlers.vat.addRecipe(new RecipeVat(fluid1, fluid2, result, time));
     }
 
-    public static void addFluidAlloyResultItemNFluid(FluidStack fluid1, FluidStack fluid2, FluidStack newFluid, ItemStack result, int time) {
+    public static void addFluidAlloyResultItemNFluid(FluidStack fluid1, FluidStack fluid2, FluidStack newFluid,
+        ItemStack result, int time) {
         MaricultureHandlers.vat.addRecipe(new RecipeVat(fluid1, fluid2, newFluid, result, time));
     }
 
-    public static void addFluidAlloyNItemResultItem(FluidStack fluid1, FluidStack fluid2, ItemStack input, ItemStack result, int time) {
+    public static void addFluidAlloyNItemResultItem(FluidStack fluid1, FluidStack fluid2, ItemStack input,
+        ItemStack result, int time) {
         MaricultureHandlers.vat.addRecipe(new RecipeVat(input, fluid1, fluid2, result, time));
     }
 
@@ -186,32 +209,37 @@ public class RecipeHelper {
         addShaped(result, new Object[] { "###", "###", "###", '#', input });
     }
 
-    /** @param output - ItemStack
-     * @param item1 - 5 x this
-     * @param item2 - 4 x this */
+    /**
+     * @param output - ItemStack
+     * @param item1  - 5 x this
+     * @param item2  - 4 x this
+     */
     public static void addCrossHatchRecipe(ItemStack output, Object item1, Object item2) {
         addShaped(output, new Object[] { "CAC", "ACA", "CAC", 'C', item1, 'A', item2 });
     }
 
-    /** @param output - ItemStack
-     * @param wheel - Outer Rim
-     * @param spoke - Inner Piece */
+    /**
+     * @param output - ItemStack
+     * @param wheel  - Outer Rim
+     * @param spoke  - Inner Piece
+     */
     public static void addWheelRecipe(ItemStack output, Object wheel, Object spoke) {
         addShaped(output, new Object[] { " W ", "WSW", " W ", 'W', wheel, 'S', spoke });
     }
 
-    /** Adds a fuel to be used by the smelter
-     * 
-     * @param obj - Can be FluidStack, ItemStack or String
+    /**
+     * Adds a fuel to be used by the smelter
+     *
+     * @param obj      - Can be FluidStack, ItemStack or String
      * @param fuelInfo
      */
     public static void addFuel(Object obj, FuelInfo fuelInfo) {
         MaricultureHandlers.crucible.addFuel(obj, fuelInfo);
     }
-    
+
     public static void addTickHandlingFuel(Object obj, FuelInfo fuelInfo, IFuelTickHandler handler) {
-    	MaricultureHandlers.crucible.addFuel(obj, fuelInfo);
-    	MaricultureHandlers.crucible.addFuelHandler(obj, handler);
+        MaricultureHandlers.crucible.addFuel(obj, fuelInfo);
+        MaricultureHandlers.crucible.addFuelHandler(obj, handler);
     }
 
     public static void addCrushRecipe(ItemStack stack, Object string, boolean needAnvil) {
@@ -219,9 +247,11 @@ public class RecipeHelper {
             addShapeless(stack, new Object[] { string });
         }
         ItemStack result = null;
-        if (string instanceof String) if (OreDictionary.getOres((String) string).size() > 0) {
-            result = OreDictionary.getOres((String) string).get(0);
-        }
+        if (string instanceof String) if (OreDictionary.getOres((String) string)
+            .size() > 0) {
+                result = OreDictionary.getOres((String) string)
+                    .get(0);
+            }
 
         if (string instanceof ItemStack) {
             result = (ItemStack) string;
@@ -242,7 +272,7 @@ public class RecipeHelper {
     public static void addSoakRecipe(ItemStack input, ItemStack output, int time) {
         addVatItemRecipe(input, "water", 100, output, time);
     }
-    
+
     public static void addBookRecipe(ItemStack output, String input) {
         addShapeless(output, new Object[] { input, Items.book });
     }
@@ -257,10 +287,15 @@ public class RecipeHelper {
 
     public static void addFishSushi(ItemStack raw, int meal) {
         ItemStack kelp = new ItemStack(Core.food, 1, FoodMeta.KELP_WRAP);
-        if (OreDictionary.getOres("cropRice").size() > 0) {
-            addShaped(new ItemStack(Core.food, (int) Math.ceil(meal / 1.5), FoodMeta.SUSHI), new Object[] { "RKR", "KFK", "RKR", 'R', kelp, 'F', raw, 'K', "cropRice" });
+        if (OreDictionary.getOres("cropRice")
+            .size() > 0) {
+            addShaped(
+                new ItemStack(Core.food, (int) Math.ceil(meal / 1.5), FoodMeta.SUSHI),
+                new Object[] { "RKR", "KFK", "RKR", 'R', kelp, 'F', raw, 'K', "cropRice" });
         } else {
-            addShaped(new ItemStack(Core.food, (int) Math.ceil(meal / 1.5), FoodMeta.SUSHI), new Object[] { " K ", "KFK", " K ", 'K', kelp, 'F', raw });
+            addShaped(
+                new ItemStack(Core.food, (int) Math.ceil(meal / 1.5), FoodMeta.SUSHI),
+                new Object[] { " K ", "KFK", " K ", 'K', kelp, 'F', raw });
         }
     }
 
@@ -268,7 +303,9 @@ public class RecipeHelper {
         ItemStack kelp = new ItemStack(Core.food, 1, FoodMeta.KELP_WRAP);
         int number = (int) Math.ceil(meal / 2);
         int meta = number == 2 ? FoodMeta.MISO_SOUP_2 : number >= 3 ? FoodMeta.MISO_SOUP_3 : FoodMeta.MISO_SOUP_1;
-        RecipeHelper.addShapeless(new ItemStack(Core.food, 1, meta), new Object[] { Items.bowl, kelp, raw, Blocks.brown_mushroom, Blocks.red_mushroom });
+        RecipeHelper.addShapeless(
+            new ItemStack(Core.food, 1, meta),
+            new Object[] { Items.bowl, kelp, raw, Blocks.brown_mushroom, Blocks.red_mushroom });
     }
 
     public static void addFishMeal(ItemStack raw, int meal) {
@@ -277,7 +314,9 @@ public class RecipeHelper {
 
     public static ItemStack addUpgrade(int meta, Object[] input) {
         ItemStack result = new ItemStack(Core.upgrade, 1, meta);
-        CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(result, input));
+        CraftingManager.getInstance()
+            .getRecipeList()
+            .add(new ShapedOreRecipe(result, input));
         return result;
     }
 }

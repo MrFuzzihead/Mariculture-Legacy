@@ -1,11 +1,5 @@
 package mariculture.factory.gui;
 
-import mariculture.api.core.IItemUpgrade;
-import mariculture.core.gui.ContainerMachine;
-import mariculture.core.gui.SlotOutput;
-import mariculture.factory.blocks.BlockItemCustom;
-import mariculture.factory.items.ItemPlan;
-import mariculture.factory.tile.TileSawmill;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
@@ -14,7 +8,15 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
+import mariculture.api.core.IItemUpgrade;
+import mariculture.core.gui.ContainerMachine;
+import mariculture.core.gui.SlotOutput;
+import mariculture.factory.blocks.BlockItemCustom;
+import mariculture.factory.items.ItemPlan;
+import mariculture.factory.tile.TileSawmill;
+
 public class ContainerSawmill extends ContainerMachine {
+
     public TileSawmill tile;
 
     public ContainerSawmill(TileSawmill tile, InventoryPlayer playerInventory) {
@@ -59,12 +61,13 @@ public class ContainerSawmill extends ContainerMachine {
                     if (!mergeItemStack(stack, 3, 6, false)) return null;
                 } else if (stack.getItem() instanceof IItemUpgrade) {
                     if (!mergeItemStack(stack, 0, 3, false)) return null;
-                } else if (stack.getItem() instanceof ItemBlock && !(stack.getItem() instanceof BlockItemCustom) || stack.getItem() == Items.feather) {
-                    if (!mergeItemStack(stack, 6, 12, false)) // 6-11
-                    return null;
-                } else if (slotID >= size && slotID < low) {
-                    if (!mergeItemStack(stack, low, high, false)) return null;
-                } else if (slotID >= low && slotID < high && !mergeItemStack(stack, high, low, false)) return null;
+                } else if (stack.getItem() instanceof ItemBlock && !(stack.getItem() instanceof BlockItemCustom)
+                    || stack.getItem() == Items.feather) {
+                        if (!mergeItemStack(stack, 6, 12, false)) // 6-11
+                            return null;
+                    } else if (slotID >= size && slotID < low) {
+                        if (!mergeItemStack(stack, low, high, false)) return null;
+                    } else if (slotID >= low && slotID < high && !mergeItemStack(stack, high, low, false)) return null;
             } else if (!mergeItemStack(stack, size, high, false)) return null;
 
             if (stack.stackSize == 0) {
@@ -93,6 +96,7 @@ public class ContainerSawmill extends ContainerMachine {
     }
 
     private class SlotBlock extends Slot {
+
         private EntityPlayer thePlayer;
         private int field_75228_b;
 
@@ -118,6 +122,7 @@ public class ContainerSawmill extends ContainerMachine {
     }
 
     private class SlotPlan extends Slot {
+
         public SlotPlan(IInventory inv, int id, int x, int y) {
             super(inv, id, x, y);
         }

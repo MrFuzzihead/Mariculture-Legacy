@@ -1,0 +1,38 @@
+[
+  {
+    "modid": "${modId}",
+    "name": "${modName}",
+    "description": "~ Maritime Complex ~ Adds expanded fishing, new fish, oceans to explore, machines to assist, sea magic and more.",
+    "version": "${modVersion}",
+    "mcversion": "${minecraftVersion}",
+    "url": "https://github.com/MrFuzzihead/Mariculture-Legacy",
+    "updateUrl": "https://github.com/MrFuzzihead/Mariculture-Legacy/releases/latest",
+    "authorList": ["joshie"],
+    "credits": "Timebombtech (Logo), Poppycocks (Limestone Brick + Pearl Block textures)",
+    "logoFile": "mariculture_logo.png",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": false
+  },
+  {
+    "modid": "MariTech",
+    "name": "Marine Technology",
+    "description": "Expands Mariculture, adding higher tech solutions to problems you may face.",
+    "version": "${modVersion}",
+    "mcversion": "${minecraftVersion}",
+    "url": "https://github.com/MrFuzzihead/Mariculture-Legacy",
+    "updateUrl": "https://github.com/MrFuzzihead/Mariculture-Legacy/releases/latest",
+    "authorList": ["joshie"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": [],
+    "dependencies": ["Mariculture"],
+    "dependants": [],
+    "useDependencyInformation": false
+  }
+]

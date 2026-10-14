@@ -2,6 +2,17 @@ package mariculture.core.tile;
 
 import java.util.List;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.Core;
 import mariculture.core.config.Machines.Client;
@@ -19,18 +30,9 @@ import mariculture.core.util.Fluids;
 import mariculture.core.util.IFaceable;
 import mariculture.core.util.Tank;
 import mariculture.diving.Diving;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 
 public class TileAirPump extends TileStorageTank implements IEnergyReceiver, IFaceable {
+
     protected BlockTransferHelper helper;
     protected EnergyStorage storage = new EnergyStorage(2000);
     public ForgeDirection orientation = ForgeDirection.WEST;
@@ -49,11 +51,17 @@ public class TileAirPump extends TileStorageTank implements IEnergyReceiver, IFa
     }
 
     public void supplyWithAir(int value, double x, double y, double z) {
-        List playerList = worldObj.getEntitiesWithinAABB(EntityPlayer.class, worldObj.getTileEntity(xCoord, yCoord, zCoord).getBlockType().getCollisionBoundingBoxFromPool(worldObj, xCoord, yCoord, zCoord).expand(x, y, z));
+        List playerList = worldObj.getEntitiesWithinAABB(
+            EntityPlayer.class,
+            worldObj.getTileEntity(xCoord, yCoord, zCoord)
+                .getBlockType()
+                .getCollisionBoundingBoxFromPool(worldObj, xCoord, yCoord, zCoord)
+                .expand(x, y, z));
         if (!playerList.isEmpty()) {
             for (int i = 0; i < playerList.size(); i++) {
                 EntityPlayer player = (EntityPlayer) playerList.get(i);
-                if (PlayerHelper.hasArmor(player, ArmorSlot.TOP, Diving.divingTop) && PlayerHelper.hasArmor(player, ArmorSlot.HAT, Diving.divingHelmet)) {
+                if (PlayerHelper.hasArmor(player, ArmorSlot.TOP, Diving.divingTop)
+                    && PlayerHelper.hasArmor(player, ArmorSlot.HAT, Diving.divingHelmet)) {
                     if (player.isInsideOfMaterial(Material.water)) {
                         if (value == 300) {
                             player.setAir(300);
@@ -74,7 +82,8 @@ public class TileAirPump extends TileStorageTank implements IEnergyReceiver, IFa
                         if (fill(ForgeDirection.UP, Fluids.getFluidStack("natural_gas", 1000), false) >= 1000) {
                             if (!worldObj.isRemote) {
                                 fill(ForgeDirection.UP, Fluids.getFluidStack("natural_gas", 1000), true);
-                                return worldObj.setBlockToAir(x, y, z); //When we have collected one block, exit the loop
+                                return worldObj.setBlockToAir(x, y, z); // When we have collected one block, exit the
+                                                                        // loop
                             }
                         }
                     }
@@ -115,31 +124,31 @@ public class TileAirPump extends TileStorageTank implements IEnergyReceiver, IFa
             if (getEnergyStored(ForgeDirection.UP) > 0) {
                 tick++;
 
-                //Every 300 ticks supply air to players, if we have 100RF or more in the buffer
+                // Every 300 ticks supply air to players, if we have 100RF or more in the buffer
                 if ((Modules.isActive(Modules.diving)) && onTick(Ticks.PUMP_TICK_TIMER)) {
                     if (storage.getEnergyStored() >= 100) {
                         supplyWithAir(300, 64.0D, 128.0D, 64.0D);
 
-                        //Extract 100 RF everytime we supply air
+                        // Extract 100 RF everytime we supply air
                         storage.extractEnergy(100, false);
                         updateAnimation();
                     }
                 }
 
                 if (MaricultureHandlers.HIGH_TECH_ENABLED) {
-                    //If we have a redstone signal, and every second we should try to collect gas
+                    // If we have a redstone signal, and every second we should try to collect gas
                     if (onTick(Ticks.PUMP_GAS_TIMER)) {
                         if (storage.getEnergyStored() >= 100) {
                             if (suckUpGas()) {
                                 ejectFluids();
                             }
 
-                            //Extract 10 RF everytime we extract gas from the air
+                            // Extract 10 RF everytime we extract gas from the air
                             storage.extractEnergy(100, false);
                             updateAnimation();
                         }
 
-                        //Attempt to eject gas every 5 seconds
+                        // Attempt to eject gas every 5 seconds
                         if (onTick(Ticks.PUMP_GAS_EJECT_TIMER)) {
                             ejectFluids();
                         }
@@ -155,7 +164,7 @@ public class TileAirPump extends TileStorageTank implements IEnergyReceiver, IFa
     }
 
     private void updateAnimation() {
-        //If we aren't animating, start animating and send a packet
+        // If we aren't animating, start animating and send a packet
         if (!isAnimating) {
             isAnimating = true;
             if (!worldObj.isRemote) {

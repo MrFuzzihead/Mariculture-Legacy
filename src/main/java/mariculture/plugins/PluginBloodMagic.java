@@ -2,6 +2,17 @@ package mariculture.plugins;
 
 import static mariculture.api.fishery.Loot.Rarity.GOOD;
 import static mariculture.api.fishery.Loot.Rarity.JUNK;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+
+import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.Loot;
 import mariculture.api.fishery.Loot.Rarity;
@@ -15,16 +26,9 @@ import mariculture.plugins.Plugins.Plugin;
 import mariculture.plugins.bloodmagic.BloodRodType;
 import mariculture.plugins.bloodmagic.ItemBoundRod;
 import mariculture.plugins.enchiridion.ItemGuide;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.fluids.FluidRegistry;
-import WayofTime.alchemicalWizardry.api.bindingRegistry.BindingRegistry;
 
 public class PluginBloodMagic extends Plugin {
+
     public PluginBloodMagic(String name) {
         super(name);
     }
@@ -38,7 +42,10 @@ public class PluginBloodMagic extends Plugin {
     @Override
     public void preInit() {
         ItemGuide.BLOOD = true;
-        Fluids.add("blood", FluidRegistry.getFluid("life essence"), 250, true);
+        // GTNH Blood Magic registers this fluid as "LifeEssence"; older versions used "life essence".
+        Fluid blood = FluidRegistry.getFluid("LifeEssence");
+        if (blood == null) blood = FluidRegistry.getFluid("life essence");
+        Fluids.add("blood", blood, 250, true);
         if (Modules.isActive(Modules.fishery)) {
             rodBlood = new ItemBoundRod().setUnlocalizedName("rodBlood");
             Fishing.fishing.registerRod(rodBlood, BLOOD);
@@ -52,8 +59,10 @@ public class PluginBloodMagic extends Plugin {
     @Override
     public void init() {
         PluginEnchiridion.registerBookItem("blood_magic", GuideMeta.BLOOD_MAGIC);
-        RecipeHelper.addBookRecipe(new ItemStack(PluginEnchiridion.guides, 1, GuideMeta.BLOOD_MAGIC), getUndamaged("blankSlate"));
-        
+        RecipeHelper.addBookRecipe(
+            new ItemStack(PluginEnchiridion.guides, 1, GuideMeta.BLOOD_MAGIC),
+            getUndamaged("blankSlate"));
+
         if (Modules.isActive(Modules.fishery)) {
             demonBloodShard = getUndamaged("demonBloodShard");
             weakBloodShard = getUndamaged("weakBloodShard");
@@ -128,6 +137,6 @@ public class PluginBloodMagic extends Plugin {
 
     @Override
     public void postInit() {
-        
+
     }
 }

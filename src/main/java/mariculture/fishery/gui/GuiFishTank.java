@@ -2,8 +2,6 @@ package mariculture.fishery.gui;
 
 import java.util.List;
 
-import mariculture.core.gui.GuiMariculture;
-import mariculture.fishery.tile.TileFishTank;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -15,7 +13,11 @@ import net.minecraft.util.IIcon;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.gui.GuiMariculture;
+import mariculture.fishery.tile.TileFishTank;
+
 public class GuiFishTank extends GuiMariculture {
+
     private static final RenderItem fishyRender = new RenderTankItem();
     private TileFishTank tile;
 
@@ -24,9 +26,9 @@ public class GuiFishTank extends GuiMariculture {
 
         this.tile = tile;
     }
-    
+
     @Override
-    public void addItemToolTip(ItemStack stack, List<String> currenttip) {   
+    public void addItemToolTip(ItemStack stack, List<String> currenttip) {
         if (stack.stackSize > 999) {
             currenttip.add("");
             currenttip.add(stack.stackSize + " " + stack.getDisplayName());
@@ -54,7 +56,11 @@ public class GuiFishTank extends GuiMariculture {
             if (Container.func_94527_a(slot, itemstack1, true) && this.inventorySlots.canDragIntoSlot(slot)) {
                 itemstack = itemstack1.copy();
                 flag = true;
-                Container.func_94525_a(this.field_147008_s, this.field_146987_F, itemstack, slot.getStack() == null ? 0 : slot.getStack().stackSize);
+                Container.func_94525_a(
+                    this.field_147008_s,
+                    this.field_146987_F,
+                    itemstack,
+                    slot.getStack() == null ? 0 : slot.getStack().stackSize);
 
                 if (itemstack.stackSize > itemstack.getMaxStackSize()) {
                     s = EnumChatFormatting.YELLOW + "" + itemstack.getMaxStackSize();
@@ -80,7 +86,8 @@ public class GuiFishTank extends GuiMariculture {
             if (iicon != null) {
                 GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glEnable(GL11.GL_BLEND); // Forge: Blending needs to be enabled for this.
-                this.mc.getTextureManager().bindTexture(TextureMap.locationItemsTexture);
+                this.mc.getTextureManager()
+                    .bindTexture(TextureMap.locationItemsTexture);
                 this.drawTexturedModelRectFromIcon(i, j, iicon, 16, 16);
                 GL11.glDisable(GL11.GL_BLEND); // Forge: And clean that up
                 GL11.glEnable(GL11.GL_LIGHTING);
@@ -114,5 +121,5 @@ public class GuiFishTank extends GuiMariculture {
     public void drawForeground() {}
 
     @Override
-    public void drawBackground(int x, int y) { }
+    public void drawBackground(int x, int y) {}
 }

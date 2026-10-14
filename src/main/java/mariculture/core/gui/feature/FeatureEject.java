@@ -2,17 +2,19 @@ package mariculture.core.gui.feature;
 
 import java.util.List;
 
-import mariculture.core.gui.GuiMariculture;
-import mariculture.core.network.PacketClick;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.util.IEjectable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.gui.GuiMariculture;
+import mariculture.core.network.PacketClick;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.util.IEjectable;
+
 public class FeatureEject extends Feature {
+
     public IEjectable tile;
     public int x, y, z;
 
@@ -24,7 +26,11 @@ public class FeatureEject extends Feature {
     }
 
     public enum EjectSetting {
-        NONE, ITEM, FLUID, ITEMNFLUID;
+
+        NONE,
+        ITEM,
+        FLUID,
+        ITEMNFLUID;
 
         public static EjectSetting readFromNBT(NBTTagCompound nbt) {
             return EjectSetting.values()[nbt.getByte("EjectSetting")];
@@ -34,7 +40,8 @@ public class FeatureEject extends Feature {
             nbt.setByte("EjectSetting", (byte) setting.ordinal());
         }
 
-        //Mode = The mode that the machine is currently in, the TYPE is always ITEM or FLUID(the type of transfer ocurring)
+        // Mode = The mode that the machine is currently in, the TYPE is always ITEM or FLUID(the type of transfer
+        // ocurring)
         public static boolean canEject(EjectSetting mode, EjectSetting type) {
             switch (mode) {
                 case NONE:
@@ -79,7 +86,11 @@ public class FeatureEject extends Feature {
     @Override
     public void addTooltip(List tooltip, int mouseX, int mouseY) {
         if (mouseX >= 177 && mouseX <= 192 && mouseY >= 99 && mouseY <= 114) {
-            tooltip.add(mariculture.lib.util.Text.AQUA + StatCollector.translateToLocal("ejectmode." + tile.getEjectSetting().toString().toLowerCase()));
+            tooltip.add(
+                mariculture.lib.util.Text.AQUA + StatCollector.translateToLocal(
+                    "ejectmode." + tile.getEjectSetting()
+                        .toString()
+                        .toLowerCase()));
         }
     }
 

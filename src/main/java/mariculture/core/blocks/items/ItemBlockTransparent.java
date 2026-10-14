@@ -1,11 +1,13 @@
 package mariculture.core.blocks.items;
 
-import mariculture.core.blocks.base.ItemBlockMariculture;
-import mariculture.core.lib.TransparentMeta;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.blocks.base.ItemBlockMariculture;
+import mariculture.core.lib.TransparentMeta;
+
 public class ItemBlockTransparent extends ItemBlockMariculture {
+
     public ItemBlockTransparent(Block block) {
         super(block);
     }

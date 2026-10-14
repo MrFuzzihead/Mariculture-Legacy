@@ -3,16 +3,19 @@ package mariculture.plugins.enchiridion;
 import java.util.ArrayList;
 import java.util.List;
 
-import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.designer.recipe.RecipeHandlerShapedOre;
-import joshie.enchiridion.designer.recipe.WrappedStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
+import joshie.enchiridion.api.EnchiridionAPI;
+import joshie.enchiridion.designer.recipe.RecipeHandlerShapedOre;
+import joshie.enchiridion.designer.recipe.WrappedStack;
+
 public class RecipeHandlerCompact extends RecipeHandlerShapedOre {
+
     public RecipeHandlerCompact() {}
+
     public RecipeHandlerCompact(IRecipe recipe) {
         super(recipe);
     }
@@ -99,7 +102,9 @@ public class RecipeHandlerCompact extends RecipeHandlerShapedOre {
 
     @Override
     protected void drawBackground() {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(location);
+        Minecraft.getMinecraft()
+            .getTextureManager()
+            .bindTexture(location);
         EnchiridionAPI.draw.drawTexturedRect(0D, 0D, 0, 0, 58, 58, 1F);
     }
 }

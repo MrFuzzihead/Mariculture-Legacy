@@ -1,14 +1,16 @@
 package mariculture.factory.render;
 
+import net.minecraftforge.fluids.FluidStack;
+
 import mariculture.core.Core;
 import mariculture.core.lib.TankMeta;
 import mariculture.core.lib.WoodMeta;
 import mariculture.core.render.RenderBase;
 import mariculture.core.util.Tank;
 import mariculture.factory.tile.TileDictionaryFluid;
-import net.minecraftforge.fluids.FluidStack;
 
 public class RenderFluidDictionary extends RenderBase {
+
     public RenderFluidDictionary() {}
 
     private void renderFluid(Tank tank, double i1, double k1, double i2, double k2) {
@@ -16,7 +18,9 @@ public class RenderFluidDictionary extends RenderBase {
             FluidStack fluid = tank.getFluid();
             if (fluid != null) {
                 double height = fluid.amount * 1D / tank.getCapacity();
-                setTexture(fluid.getFluid().getIcon());
+                setTexture(
+                    fluid.getFluid()
+                        .getIcon());
                 renderFluidBlock(i1, 0, k1, i2, 1D, k2);
             }
         }
@@ -29,7 +33,9 @@ public class RenderFluidDictionary extends RenderBase {
             if (tank != null) if (tank.tank.getFluidAmount() > 0) {
                 FluidStack fluid = tank.tank.getFluid();
                 if (fluid != null) {
-                    setTexture(fluid.getFluid().getIcon());
+                    setTexture(
+                        fluid.getFluid()
+                            .getIcon());
                     renderFluidBlock(0.001, 0.001, 0.001, 0.999, 0.998, 0.999);
                 }
             }

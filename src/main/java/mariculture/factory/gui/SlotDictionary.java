@@ -1,9 +1,5 @@
 package mariculture.factory.gui;
 
-import mariculture.core.gui.ContainerStorage;
-import mariculture.core.gui.SlotFake;
-import mariculture.core.handlers.OreDicHandler;
-import mariculture.factory.items.ItemFilter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -12,7 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import mariculture.core.gui.ContainerStorage;
+import mariculture.core.gui.SlotFake;
+import mariculture.core.handlers.OreDicHandler;
+import mariculture.factory.items.ItemFilter;
+
 public class SlotDictionary extends SlotFake {
+
     public SlotDictionary(IInventory inv, int id, int x, int y) {
         super(inv, id, x, y);
     }
@@ -69,8 +71,10 @@ public class SlotDictionary extends SlotFake {
     public ItemStack handle(EntityPlayer player, int mouseButton, Slot slot) {
         ItemStack filterCheck = player.inventory.getItemStack();
         ItemStack filterInSlot = slot.getStack();
-        if (filterCheck != null && filterCheck.getItem() instanceof ItemFilter) return player.openContainer instanceof ContainerStorage ? null : filterCheck;
-        if (filterInSlot != null && filterInSlot.getItem() instanceof ItemFilter) return player.openContainer instanceof ContainerStorage ? null : filterInSlot;
+        if (filterCheck != null && filterCheck.getItem() instanceof ItemFilter)
+            return player.openContainer instanceof ContainerStorage ? null : filterCheck;
+        if (filterInSlot != null && filterInSlot.getItem() instanceof ItemFilter)
+            return player.openContainer instanceof ContainerStorage ? null : filterInSlot;
 
         if (mouseButton == 1 && filterCheck == null) {
             slot.putStack(null);

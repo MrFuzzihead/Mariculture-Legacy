@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ShapedJewelryRecipe implements IRecipe {
+
     // Added in for future ease of change, but hard coded for now.
     private static final int MAX_CRAFT_GRID_WIDTH = 3;
     private static final int MAX_CRAFT_GRID_HEIGHT = 3;
@@ -136,6 +137,7 @@ public class ShapedJewelryRecipe implements IRecipe {
     }
 
     public static class LinkedInteger {
+
         int enchant;
         int level;
 
@@ -156,10 +158,14 @@ public class ShapedJewelryRecipe implements IRecipe {
         for (int j = 0; j < craft.getSizeInventory(); j++) {
             ItemStack stack = craft.getStackInSlot(j);
             if (stack != null) {
-                LinkedHashMap<Integer, Integer> maps = (LinkedHashMap<Integer, Integer>) EnchantmentHelper.getEnchantments(stack);
+                LinkedHashMap<Integer, Integer> maps = (LinkedHashMap<Integer, Integer>) EnchantmentHelper
+                    .getEnchantments(stack);
                 for (Entry<Integer, Integer> i : maps.entrySet()) {
                     Enchantment enchant = Enchantment.enchantmentsList[i.getKey()];
-                    cache.add(new LinkedInteger(enchant.effectId, EnchantmentHelper.getEnchantmentLevel(enchant.effectId, stack)));
+                    cache.add(
+                        new LinkedInteger(
+                            enchant.effectId,
+                            EnchantmentHelper.getEnchantmentLevel(enchant.effectId, stack)));
                 }
             }
         }
@@ -238,7 +244,8 @@ public class ShapedJewelryRecipe implements IRecipe {
 
     private boolean checkItemEquals(ItemStack target, ItemStack input) {
         if (input == null && target != null || input != null && target == null) return false;
-        return target.getItem() == input.getItem() && (target.getItemDamage() == OreDictionary.WILDCARD_VALUE || target.getItemDamage() == input.getItemDamage());
+        return target.getItem() == input.getItem() && (target.getItemDamage() == OreDictionary.WILDCARD_VALUE
+            || target.getItemDamage() == input.getItemDamage());
     }
 
     public ShapedJewelryRecipe setMirrored(boolean mirror) {
@@ -250,7 +257,7 @@ public class ShapedJewelryRecipe implements IRecipe {
      * Returns the input for this recipe, any mod accessing this value should
      * never manipulate the values in this array as it will effect the recipe
      * itself.
-     * 
+     *
      * @return The recipes input vales.
      */
     public Object[] getInput() {

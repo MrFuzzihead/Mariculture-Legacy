@@ -2,12 +2,6 @@ package mariculture.core.items;
 
 import java.util.List;
 
-import mariculture.core.Core;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.lib.BottleMeta;
-import mariculture.core.lib.Modules;
-import mariculture.core.lib.TankMeta;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +15,15 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import mariculture.core.Core;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.lib.BottleMeta;
+import mariculture.core.lib.Modules;
+import mariculture.core.lib.TankMeta;
+import mariculture.core.util.MCTranslate;
+
 public class ItemBottle extends ItemMCMeta {
+
     @Override
     public boolean hasContainerItem(ItemStack stack) {
         return stack.getItemDamage() != BottleMeta.EMPTY && stack.getItemDamage() != BottleMeta.VOID;
@@ -98,7 +100,8 @@ public class ItemBottle extends ItemMCMeta {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+        float hitX, float hitY, float hitZ) {
         if (stack.getItemDamage() != BottleMeta.VOID) return false;
         Block block = world.getBlock(x, y, z);
         if (side == 1 && (block instanceof BlockFluidBase || block instanceof BlockLiquid)) {
@@ -128,13 +131,20 @@ public class ItemBottle extends ItemMCMeta {
 
         if (stack.stackSize == 0) return false;
         else if (!player.canPlayerEdit(x, y, z, side, stack)) return false;
-        else if (y == 255 && block.getMaterial().isSolid()) return false;
+        else if (y == 255 && block.getMaterial()
+            .isSolid()) return false;
         else if (world.canPlaceEntityOnSide(block, x, y, z, false, side, player, stack)) {
             int meta = TankMeta.BOTTLE;
             int metadata = block.onBlockPlaced(world, x, y, z, side, hitX, hitY, hitZ, meta);
 
             if (placeBlockAt(stack, player, world, x, y, z, side, hitX, hitY, hitZ, metadata)) {
-                world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, block.stepSound.func_150496_b(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                world.playSoundEffect(
+                    x + 0.5F,
+                    y + 0.5F,
+                    z + 0.5F,
+                    block.stepSound.func_150496_b(),
+                    (block.stepSound.getVolume() + 1.0F) / 2.0F,
+                    block.stepSound.getPitch() * 0.8F);
                 --stack.stackSize;
             }
 
@@ -142,7 +152,8 @@ public class ItemBottle extends ItemMCMeta {
         } else return false;
     }
 
-    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
+    public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+        float hitX, float hitY, float hitZ, int meta) {
         Block block = Core.tanks;
         if (!world.setBlock(x, y, z, block, meta, 3)) return false;
 
@@ -245,29 +256,41 @@ public class ItemBottle extends ItemMCMeta {
     public boolean isActive(int meta) {
         switch (meta) {
             case BottleMeta.BRONZE:
-                return OreDictionary.getOres("ingotBronze").size() > 0;
+                return OreDictionary.getOres("ingotBronze")
+                    .size() > 0;
             case BottleMeta.LEAD:
-                return OreDictionary.getOres("ingotLead").size() > 0;
+                return OreDictionary.getOres("ingotLead")
+                    .size() > 0;
             case BottleMeta.NICKEL:
-                return OreDictionary.getOres("ingotNickel").size() > 0;
+                return OreDictionary.getOres("ingotNickel")
+                    .size() > 0;
             case BottleMeta.SILVER:
-                return OreDictionary.getOres("ingotSilver").size() > 0;
+                return OreDictionary.getOres("ingotSilver")
+                    .size() > 0;
             case BottleMeta.STEEL:
-                return OreDictionary.getOres("ingotSteel").size() > 0;
+                return OreDictionary.getOres("ingotSteel")
+                    .size() > 0;
             case BottleMeta.TIN:
-                return OreDictionary.getOres("ingotTin").size() > 0;
+                return OreDictionary.getOres("ingotTin")
+                    .size() > 0;
             case BottleMeta.ZINC:
-                return OreDictionary.getOres("ingotZinc").size() > 0;
+                return OreDictionary.getOres("ingotZinc")
+                    .size() > 0;
             case BottleMeta.ARDITE:
-                return OreDictionary.getOres("ingotArdite").size() > 0;
+                return OreDictionary.getOres("ingotArdite")
+                    .size() > 0;
             case BottleMeta.COBALT:
-                return OreDictionary.getOres("ingotCobalt").size() > 0;
+                return OreDictionary.getOres("ingotCobalt")
+                    .size() > 0;
             case BottleMeta.PLATINUM:
-                return OreDictionary.getOres("ingotPlatinum").size() > 0;
+                return OreDictionary.getOres("ingotPlatinum")
+                    .size() > 0;
             case BottleMeta.OSMIUM:
-                return OreDictionary.getOres("ingotOsmium").size() > 0;
+                return OreDictionary.getOres("ingotOsmium")
+                    .size() > 0;
             case BottleMeta.ELECTRUM:
-                return OreDictionary.getOres("ingotElectrum").size() > 0;
+                return OreDictionary.getOres("ingotElectrum")
+                    .size() > 0;
             case BottleMeta.FISH_OIL:
                 return Modules.isActive(Modules.fishery);
             case BottleMeta.FISH_FOOD:

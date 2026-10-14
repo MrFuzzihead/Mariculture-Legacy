@@ -4,17 +4,20 @@ import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletRegen;
 import static mariculture.core.lib.MCLib.dropletWater;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.lib.MaricultureDamage;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.lib.MaricultureDamage;
+
 public class FishSiamese extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 24;
@@ -83,7 +86,7 @@ public class FishSiamese extends FishSpecies {
     public RodType getRodNeeded() {
         return RodType.SUPER;
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;

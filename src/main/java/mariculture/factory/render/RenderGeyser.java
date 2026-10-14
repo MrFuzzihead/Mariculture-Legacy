@@ -1,10 +1,12 @@
 package mariculture.factory.render;
 
-import mariculture.core.render.RenderBase;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.core.render.RenderBase;
+
 public class RenderGeyser extends RenderBase {
+
     public RenderGeyser() {}
 
     @Override

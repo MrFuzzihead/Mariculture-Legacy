@@ -1,12 +1,13 @@
 package mariculture.core.network;
 
-import mariculture.magic.MirrorHandler;
-import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.magic.MirrorHandler;
 
 public class PacketDamageJewelry implements IMessage, IMessageHandler<PacketDamageJewelry, IMessage> {
+
     public int enchant, damage;
 
     public PacketDamageJewelry() {}

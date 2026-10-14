@@ -7,15 +7,18 @@ import static mariculture.core.lib.MCLib.dropletExperience;
 import static mariculture.core.lib.MCLib.dropletMagic;
 import static mariculture.core.lib.MCLib.dropletWater;
 import static mariculture.core.lib.MCLib.vanillaFish;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishMinecraft extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 22;
@@ -109,12 +112,12 @@ public class FishMinecraft extends FishSpecies {
     public void onConsumed(World world, EntityPlayer player) {
         player.addExperience(8);
     }
-    
+
     @Override
     public void affectLiving(EntityLivingBase entity) {
-    	if (entity instanceof EntityPlayer) {
-    		((EntityPlayer)entity).addExperience(1);
-    	}
+        if (entity instanceof EntityPlayer) {
+            ((EntityPlayer) entity).addExperience(1);
+        }
     }
 
     @Override

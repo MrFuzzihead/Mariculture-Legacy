@@ -1,13 +1,5 @@
 package mariculture.core.blocks;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.Core;
-import mariculture.core.blocks.base.BlockFunctionalMulti;
-import mariculture.core.events.MaricultureEvents;
-import mariculture.core.lib.MachineMultiMeta;
-import mariculture.core.lib.RockMeta;
-import mariculture.core.tile.TileCrucible;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,10 +8,20 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.Core;
+import mariculture.core.blocks.base.BlockFunctionalMulti;
+import mariculture.core.events.MaricultureEvents;
+import mariculture.core.lib.MachineMultiMeta;
+import mariculture.core.lib.RockMeta;
+import mariculture.core.tile.TileCrucible;
 
 public class BlockMachineMulti extends BlockFunctionalMulti {
+
     private IIcon[] crucibleIcons;
 
     public BlockMachineMulti() {
@@ -49,17 +51,20 @@ public class BlockMachineMulti extends BlockFunctionalMulti {
 
         return MaricultureEvents.getBlockHardness(this, meta, hardness);
     }
-    
+
     @Override
-    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
-    	int meta = world.getBlockMetadata(x, y, z);
-    	return meta == MachineMultiMeta.CRUCIBLE? 50F: super.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
+    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
+        int meta = world.getBlockMetadata(x, y, z);
+        return meta == MachineMultiMeta.CRUCIBLE ? 50F
+            : super.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     @Override
     public IIcon getIcon(int side, int meta) {
         IIcon icon = null;
-        icon = side < 2 && meta == MachineMultiMeta.CRUCIBLE ? Core.rocks.getIcon(side, RockMeta.BASE_BRICK) : super.getIcon(side, meta);
+        icon = side < 2 && meta == MachineMultiMeta.CRUCIBLE ? Core.rocks.getIcon(side, RockMeta.BASE_BRICK)
+            : super.getIcon(side, meta);
         return MaricultureEvents.getInventoryIcon(this, meta, side, icon);
     }
 
@@ -85,13 +90,13 @@ public class BlockMachineMulti extends BlockFunctionalMulti {
 
     @Override
     public TileEntity createTileEntity(World world, int meta) {
-        if(meta == MachineMultiMeta.CRUCIBLE) return new TileCrucible();
+        if (meta == MachineMultiMeta.CRUCIBLE) return new TileCrucible();
         else return MaricultureEvents.getTileEntity(this, meta, null);
     }
 
     @Override
     public boolean isActive(int meta) {
-        if(meta == MachineMultiMeta.CRUCIBLE) return true;
+        if (meta == MachineMultiMeta.CRUCIBLE) return true;
         else return MaricultureEvents.isActive(this, meta, false);
     }
 
@@ -109,7 +114,7 @@ public class BlockMachineMulti extends BlockFunctionalMulti {
     public int getMetaCount() {
         return MachineMultiMeta.COUNT;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
@@ -117,9 +122,10 @@ public class BlockMachineMulti extends BlockFunctionalMulti {
         icons = new IIcon[getMetaCount()];
 
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = iconRegister.registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + name + getName(i));
+            icons[i] = iconRegister
+                .registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + name + getName(i));
         }
-        
+
         crucibleIcons = new IIcon[2];
         crucibleIcons[0] = iconRegister.registerIcon(Mariculture.modid + ":crucibleTop");
         crucibleIcons[1] = iconRegister.registerIcon(Mariculture.modid + ":crucibleBottom");

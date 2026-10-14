@@ -2,18 +2,25 @@ package mariculture.core.gui.feature;
 
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-
-import mariculture.core.gui.GuiMariculture;
-import mariculture.core.util.ITank;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
+import org.lwjgl.opengl.GL11;
+
+import mariculture.core.gui.GuiMariculture;
+import mariculture.core.util.ITank;
+
 public class FeatureTank extends Feature {
+
     public enum TankSize {
-        SINGLE, DOUBLE, VAT, CASTER, BLOCK_CASTER, NUGGET_CASTER
+        SINGLE,
+        DOUBLE,
+        VAT,
+        CASTER,
+        BLOCK_CASTER,
+        NUGGET_CASTER
     }
 
     private ITank tank;
@@ -70,8 +77,18 @@ public class FeatureTank extends Feature {
                 gui.drawTexturedModelRectFromIcon(x + xPoz, y + yPoz + 58 - i - start, liquidIcon, 16, 16 - (16 - i));
 
                 if (size.equals(TankSize.DOUBLE)) {
-                    gui.drawTexturedModelRectFromIcon(x + xPoz + 10, y + yPoz + 58 - i - start, liquidIcon, 16, 16 - (16 - i));
-                    gui.drawTexturedModelRectFromIcon(x + xPoz + 18, y + yPoz + 58 - i - start, liquidIcon, 16, 16 - (16 - i));
+                    gui.drawTexturedModelRectFromIcon(
+                        x + xPoz + 10,
+                        y + yPoz + 58 - i - start,
+                        liquidIcon,
+                        16,
+                        16 - (16 - i));
+                    gui.drawTexturedModelRectFromIcon(
+                        x + xPoz + 18,
+                        y + yPoz + 58 - i - start,
+                        liquidIcon,
+                        16,
+                        16 - (16 - i));
                 }
 
                 start = start + 16;

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import net.minecraft.item.ItemStack;
+
 import mariculture.api.fishery.Loot;
 import mariculture.api.fishery.Loot.Rarity;
 import mariculture.api.fishery.RodType;
@@ -12,13 +14,13 @@ import minetweaker.IUndoableAction;
 import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.minecraft.MineTweakerMC;
-import net.minecraft.item.ItemStack;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.mariculture.Fishing")
 public class Fishing {
+
     private static RodType getRodTypeFromString(String name) {
         for (RodType type : RodType.rodTypes) {
             if (type.name.equalsIgnoreCase(name)) return type;
@@ -27,23 +29,27 @@ public class Fishing {
         return RodType.DIRE;
     }
 
-    //Adding Fishing Loot
+    // Adding Fishing Loot
     @ZenMethod
-    public static void addJunk(IItemStack loot, double chance, @Optional String type, @Optional boolean exact, @Optional int[] dimension) {
+    public static void addJunk(IItemStack loot, double chance, @Optional String type, @Optional boolean exact,
+        @Optional int[] dimension) {
         addLoot(MineTweakerMC.getItemStack(loot), chance, type, exact, dimension, Rarity.JUNK);
     }
 
     @ZenMethod
-    public static void addGood(IItemStack loot, double chance, @Optional String type, @Optional boolean exact, @Optional int[] dimension) {
+    public static void addGood(IItemStack loot, double chance, @Optional String type, @Optional boolean exact,
+        @Optional int[] dimension) {
         addLoot(MineTweakerMC.getItemStack(loot), chance, type, exact, dimension, Rarity.GOOD);
     }
 
     @ZenMethod
-    public static void addRare(IItemStack loot, double chance, @Optional String type, @Optional boolean exact, @Optional int[] dimension) {
+    public static void addRare(IItemStack loot, double chance, @Optional String type, @Optional boolean exact,
+        @Optional int[] dimension) {
         addLoot(MineTweakerMC.getItemStack(loot), chance, type, exact, dimension, Rarity.RARE);
     }
 
-    private static void addLoot(ItemStack stack, double chance, String type, boolean exact, int[] dimension, Rarity rarity) {
+    private static void addLoot(ItemStack stack, double chance, String type, boolean exact, int[] dimension,
+        Rarity rarity) {
         if (dimension == null || dimension.length == 0) dimension = new int[] { Short.MAX_VALUE };
         if (type == null) type = "dire";
         for (int dim : dimension) {
@@ -52,6 +58,7 @@ public class Fishing {
     }
 
     private static class AddLoot implements IUndoableAction {
+
         private final Loot loot;
 
         public AddLoot(Loot loot) {
@@ -60,12 +67,14 @@ public class Fishing {
 
         @Override
         public void apply() {
-            FishingHandler.fishing_loot.get(loot.rarity).add(loot);
+            FishingHandler.fishing_loot.get(loot.rarity)
+                .add(loot);
         }
 
         @Override
         public void undo() {
-            FishingHandler.fishing_loot.get(loot.rarity).remove(loot);
+            FishingHandler.fishing_loot.get(loot.rarity)
+                .remove(loot);
         }
 
         @Override
@@ -75,12 +84,18 @@ public class Fishing {
 
         @Override
         public String describe() {
-            return "Adding " + loot.loot.getDisplayName() + " to mariculture fishing loot with rarity: " + loot.rarity.name().toLowerCase();
+            return "Adding " + loot.loot.getDisplayName()
+                + " to mariculture fishing loot with rarity: "
+                + loot.rarity.name()
+                    .toLowerCase();
         }
 
         @Override
         public String describeUndo() {
-            return "Removing" + loot.loot.getDisplayName() + " from mariculture fishing loot with rarity: " + loot.rarity.name().toLowerCase();
+            return "Removing" + loot.loot.getDisplayName()
+                + " from mariculture fishing loot with rarity: "
+                + loot.rarity.name()
+                    .toLowerCase();
         }
 
         @Override
@@ -89,13 +104,14 @@ public class Fishing {
         }
     }
 
-    //Removing Fishing Loot, will remove it from every single list
+    // Removing Fishing Loot, will remove it from every single list
     @ZenMethod
     public static void removeLoot(IItemStack loot) {
         MineTweakerAPI.apply(new RemoveLoot(MineTweakerMC.getItemStack(loot)));
     }
 
     private static class RemoveLoot implements IUndoableAction {
+
         private HashMap<Rarity, Loot> loot;
         private final ItemStack stack;
 
@@ -112,9 +128,10 @@ public class Fishing {
             apply(Rarity.RARE);
         }
 
-        //Performs the apply function on all rarity types
+        // Performs the apply function on all rarity types
         public void apply(Rarity rarity) {
-            Iterator<Loot> it = FishingHandler.fishing_loot.get(rarity).iterator();
+            Iterator<Loot> it = FishingHandler.fishing_loot.get(rarity)
+                .iterator();
             while (it.hasNext()) {
                 Loot loot = it.next();
                 if (loot.loot.isItemEqual(stack)) {
@@ -131,10 +148,11 @@ public class Fishing {
             }
         }
 
-        //Undoes the action on the applicable rarities
+        // Undoes the action on the applicable rarities
         public void undo(Rarity rarity, Loot loot) {
             if (loot != null) {
-                FishingHandler.fishing_loot.get(rarity).add(loot);
+                FishingHandler.fishing_loot.get(rarity)
+                    .add(loot);
             }
         }
 

@@ -1,13 +1,15 @@
 package mariculture.magic.enchantments;
 
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.player.EntityPlayer;
+
 import mariculture.core.config.Enchantments;
 import mariculture.core.helpers.EnchantHelper;
 import mariculture.lib.helpers.ClientHelper;
 import mariculture.magic.Magic;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class EnchantmentSpeed extends EnchantmentJewelry {
+
     public EnchantmentSpeed(int i, int weight, EnumEnchantmentType type) {
         super(i, weight, type);
         setName("speed");
@@ -24,7 +26,10 @@ public class EnchantmentSpeed extends EnchantmentJewelry {
     private static int damageTicker = 0;
 
     public static void activate(EntityPlayer player) {
-        if (runSpeed > 0 && player.onGround && !player.isInWater() && player.isSprinting() && ClientHelper.isForwardPressed()) {
+        if (runSpeed > 0 && player.onGround
+            && !player.isInWater()
+            && player.isSprinting()
+            && ClientHelper.isForwardPressed()) {
             player.moveFlying(0F, 1.0F, runSpeed);
 
             damageTicker++;

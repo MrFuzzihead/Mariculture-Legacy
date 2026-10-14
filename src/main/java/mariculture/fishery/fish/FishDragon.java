@@ -5,17 +5,20 @@ import static mariculture.core.lib.MCLib.dragonEgg;
 import static mariculture.core.lib.MCLib.dropletAir;
 import static mariculture.core.lib.MCLib.dropletEnder;
 import static mariculture.core.lib.MCLib.enderPearl;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.util.Fluids;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.util.Fluids;
+
 public class FishDragon extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 49;
@@ -65,12 +68,12 @@ public class FishDragon extends FishSpecies {
     public int getWaterRequired() {
         return 400;
     }
-    
+
     @Override
     public Block getWater1() {
         return Fluids.getFluidBlock("ender");
     }
-    
+
     @Override
     public Block getWater2() {
         return Fluids.getFluidBlock("ender");
@@ -111,7 +114,8 @@ public class FishDragon extends FishSpecies {
 
     @Override
     public void onConsumed(World world, EntityPlayer player) {
-        player.getFoodStats().addStats(12, 0.5F);
+        player.getFoodStats()
+            .addStats(12, 0.5F);
         world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
         player.addPotionEffect(new PotionEffect(Potion.nightVision.id, 2000, 0));
     }

@@ -1,12 +1,14 @@
 package mariculture.diving;
 
-import mariculture.core.helpers.PlayerHelper;
-import mariculture.core.lib.ArmorSlot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 
+import mariculture.core.helpers.PlayerHelper;
+import mariculture.core.lib.ArmorSlot;
+
 public class DivingBoots {
+
     public static void init(EntityPlayer player) {
         if (player.isInWater() && !player.capabilities.isFlying) {
             if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindForward)) {

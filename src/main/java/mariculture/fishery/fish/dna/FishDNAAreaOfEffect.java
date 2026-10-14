@@ -1,12 +1,14 @@
 package mariculture.fishery.fish.dna;
 
-import mariculture.api.fishery.fish.FishDNA;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.config.FishMechanics.FussyFish;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.api.fishery.fish.FishDNA;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.config.FishMechanics.FussyFish;
+
 public class FishDNAAreaOfEffect extends FishDNA {
+
     public ForgeDirection dir;
 
     public FishDNAAreaOfEffect(ForgeDirection dir) {
@@ -15,23 +17,26 @@ public class FishDNAAreaOfEffect extends FishDNA {
 
     @Override
     public String getName() {
-        return getClass().getSimpleName().substring(7) + dir.name();
+        return getClass().getSimpleName()
+            .substring(7) + dir.name();
     }
 
     @Override
     public String getDNAName(ItemStack stack) {
-        int type = stack.getTagCompound().getInteger(getHigherString());
-        for (FishDNA dna : types)
-            if (type >= dna.minimum && type <= dna.maximum) return mariculture.lib.util.Text.localize("mariculture.fish.data.aoe." + dna.name);
+        int type = stack.getTagCompound()
+            .getInteger(getHigherString());
+        for (FishDNA dna : types) if (type >= dna.minimum && type <= dna.maximum)
+            return mariculture.lib.util.Text.localize("mariculture.fish.data.aoe." + dna.name);
 
         return "";
     }
 
     @Override
     public String getLowerDNAName(ItemStack stack) {
-        int type = stack.getTagCompound().getInteger(getLowerString());
-        for (FishDNA dna : types)
-            if (type >= dna.minimum && type <= dna.maximum) return mariculture.lib.util.Text.localize("mariculture.fish.data.aoe." + dna.name);
+        int type = stack.getTagCompound()
+            .getInteger(getLowerString());
+        for (FishDNA dna : types) if (type >= dna.minimum && type <= dna.maximum)
+            return mariculture.lib.util.Text.localize("mariculture.fish.data.aoe." + dna.name);
 
         return "";
     }
@@ -40,11 +45,12 @@ public class FishDNAAreaOfEffect extends FishDNA {
     public Integer getDNAFromSpecies(FishSpecies species) {
         return species.getAreaOfEffectBonus(dir);
     }
-    
+
     @Override
     public int getCopyChance() {
         return 40;
     }
+
     public Integer sanitize(Integer i) {
         return Math.min(32, Math.max(-4, i));
     }

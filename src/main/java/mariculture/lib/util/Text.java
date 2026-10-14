@@ -3,6 +3,7 @@ package mariculture.lib.util;
 import net.minecraft.util.StatCollector;
 
 public class Text {
+
     private final static String prfx = "\u00a7";
     public static final String BLACK = prfx + "0";
     public static final String DARK_BLUE = prfx + "1";
@@ -36,11 +37,12 @@ public class Text {
         String theName;
         String[] aName = name.split("\\.");
         if (aName.length == 2) {
-            theName = aName[0] + aName[1].substring(0, 1).toUpperCase() + aName[1].substring(1);
+            theName = aName[0] + aName[1].substring(0, 1)
+                .toUpperCase() + aName[1].substring(1);
         } else {
             theName = name;
         }
-        
+
         return theName;
     }
 }

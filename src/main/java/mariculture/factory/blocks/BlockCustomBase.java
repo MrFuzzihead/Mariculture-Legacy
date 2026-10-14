@@ -2,8 +2,6 @@ package mariculture.factory.blocks;
 
 import java.util.Random;
 
-import mariculture.core.blocks.base.BlockFunctional;
-import mariculture.factory.tile.TileCustom;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,10 +18,14 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.blocks.base.BlockFunctional;
+import mariculture.factory.tile.TileCustom;
 
 public class BlockCustomBase extends BlockFunctional {
+
     public BlockCustomBase(Material material) {
         super(material);
         setCreativeTab(null);
@@ -82,7 +84,8 @@ public class BlockCustomBase extends BlockFunctional {
     }
 
     @Override
-    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
         return BlockCustomHelper.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 

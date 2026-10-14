@@ -5,13 +5,16 @@ import static mariculture.core.lib.MCLib.dropletFrozen;
 import static mariculture.core.lib.MCLib.dropletRegen;
 import static mariculture.core.lib.MCLib.dropletWater;
 import static mariculture.core.lib.MCLib.redstone;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishHerring extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 14;

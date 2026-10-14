@@ -3,10 +3,6 @@ package mariculture.factory.blocks;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.core.lib.PlansMeta;
-import mariculture.factory.Factory;
-import mariculture.factory.tile.TileCustom;
-import mariculture.lib.util.IHasMetaBlock;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -25,10 +21,16 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.lib.PlansMeta;
+import mariculture.factory.Factory;
+import mariculture.factory.tile.TileCustom;
+import mariculture.lib.util.IHasMetaBlock;
 
 public class BlockCustomSlab extends BlockSlab implements IHasMetaBlock {
+
     public BlockCustomSlab(boolean isDouble) {
         super(isDouble, Material.piston);
         setLightOpacity(0);
@@ -83,7 +85,8 @@ public class BlockCustomSlab extends BlockSlab implements IHasMetaBlock {
     }
 
     @Override
-    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
         return BlockCustomHelper.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 

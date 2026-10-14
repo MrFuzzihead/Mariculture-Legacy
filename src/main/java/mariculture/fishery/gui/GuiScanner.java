@@ -1,18 +1,20 @@
 package mariculture.fishery.gui;
 
-import mariculture.api.fishery.Fishing;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.gui.GuiStorage;
-import mariculture.core.gui.InventoryStorage;
-import mariculture.core.gui.feature.FeatureScanner;
-import mariculture.fishery.Fish;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.api.fishery.Fishing;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.gui.GuiStorage;
+import mariculture.core.gui.InventoryStorage;
+import mariculture.core.gui.feature.FeatureScanner;
+import mariculture.fishery.Fish;
+
 public class GuiScanner extends GuiStorage {
+
     private ItemStack drop;
     private ItemStack fish;
 
@@ -37,7 +39,8 @@ public class GuiScanner extends GuiStorage {
     }
 
     private String getBoolean(int i) {
-        return i == 0 ? mariculture.lib.util.Text.localize("mariculture.fish.data.false") : mariculture.lib.util.Text.localize("mariculture.fish.data.true");
+        return i == 0 ? mariculture.lib.util.Text.localize("mariculture.fish.data.false")
+            : mariculture.lib.util.Text.localize("mariculture.fish.data.true");
     }
 
     @Override
@@ -50,8 +53,10 @@ public class GuiScanner extends GuiStorage {
         GL11.glTranslatef(-5F, 5F, 0F);
         FishSpecies active = FishSpecies.species.get(Fish.species.getDNA(fish));
         FishSpecies inactive = FishSpecies.species.get(Fish.species.getLowerDNA(fish));
-        String activeSpecies = active.isDominant() ? mariculture.lib.util.Text.ORANGE + active.getName() : mariculture.lib.util.Text.INDIGO + active.getName();
-        String inactiveSpecies = inactive.isDominant() ? mariculture.lib.util.Text.ORANGE + inactive.getName() : mariculture.lib.util.Text.INDIGO + inactive.getName();
+        String activeSpecies = active.isDominant() ? mariculture.lib.util.Text.ORANGE + active.getName()
+            : mariculture.lib.util.Text.INDIGO + active.getName();
+        String inactiveSpecies = inactive.isDominant() ? mariculture.lib.util.Text.ORANGE + inactive.getName()
+            : mariculture.lib.util.Text.INDIGO + inactive.getName();
         String[] lifespan = Fish.lifespan.getScannedDisplay(fish);
         String[] fertility = Fish.fertility.getScannedDisplay(fish);
         String[] production = Fish.production.getScannedDisplay(fish);

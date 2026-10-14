@@ -1,12 +1,13 @@
 package mariculture.core.network;
 
-import mariculture.lib.helpers.ClientHelper;
-import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.lib.helpers.ClientHelper;
 
 public class PacketCrack implements IMessage, IMessageHandler<PacketCrack, IMessage> {
+
     public int id, meta;
     public double x, y, z;
 
@@ -41,7 +42,14 @@ public class PacketCrack implements IMessage, IMessageHandler<PacketCrack, IMess
     @Override
     public IMessage onMessage(PacketCrack message, MessageContext ctx) {
         for (int i = 0; i < 8; i++) {
-            ClientHelper.getPlayer().worldObj.spawnParticle("blockcrack_" + message.id + "_" + message.meta, message.x + 0.5D, message.y + 0.85D, message.z + 0.5D, 0, 0, 0);
+            ClientHelper.getPlayer().worldObj.spawnParticle(
+                "blockcrack_" + message.id + "_" + message.meta,
+                message.x + 0.5D,
+                message.y + 0.85D,
+                message.z + 0.5D,
+                0,
+                0,
+                0);
         }
 
         return null;

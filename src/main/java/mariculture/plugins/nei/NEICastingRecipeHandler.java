@@ -6,10 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import mariculture.api.core.RecipeCasting;
-import mariculture.core.gui.feature.FeatureTank.TankSize;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.helpers.OreDicHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -19,9 +15,15 @@ import org.lwjgl.opengl.GL11;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
+import mariculture.api.core.RecipeCasting;
+import mariculture.core.gui.feature.FeatureTank.TankSize;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.helpers.OreDicHelper;
 
 public abstract class NEICastingRecipeHandler extends NEIBase {
+
     public class CachedCasterRecipe extends CachedRecipe {
+
         FluidStack fluid;
         PositionedStack output;
 
@@ -46,7 +48,7 @@ public abstract class NEICastingRecipeHandler extends NEIBase {
         if (outputId.equals(getOverlayIdentifier()) && getClass() == thisClass()) {
             HashMap<String, RecipeCasting> recipes = getRecipes();
             for (Entry<String, RecipeCasting> recipe : recipes.entrySet()) {
-                if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
+                if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
                 arecipes.add(new CachedCasterRecipe(recipe.getValue().fluid, recipe.getValue().output));
             }
         } else {
@@ -60,8 +62,9 @@ public abstract class NEICastingRecipeHandler extends NEIBase {
         if ((inputId.equals(getOverlayIdentifier()) || isFluidSearch) && getClass() == thisClass()) {
             HashMap<String, RecipeCasting> recipes = getRecipes();
             for (Entry<String, RecipeCasting> recipe : recipes.entrySet()) {
-                if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
-                if (!isFluidSearch || isFluidSearch && areFluidsEqual(recipe.getValue().fluid, (FluidStack) ingredients[0])) {
+                if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
+                if (!isFluidSearch
+                    || isFluidSearch && areFluidsEqual(recipe.getValue().fluid, (FluidStack) ingredients[0])) {
                     arecipes.add(new CachedCasterRecipe(recipe.getValue().fluid, recipe.getValue().output));
                 }
             }
@@ -74,8 +77,9 @@ public abstract class NEICastingRecipeHandler extends NEIBase {
     public void loadCraftingRecipes(ItemStack result) {
         HashMap<String, RecipeCasting> recipes = getRecipes();
         for (Entry<String, RecipeCasting> recipe : recipes.entrySet()) {
-            if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
-            if (OreDicHelper.convert(result).equals(OreDicHelper.convert(recipe.getValue().output))) {
+            if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
+            if (OreDicHelper.convert(result)
+                .equals(OreDicHelper.convert(recipe.getValue().output))) {
                 arecipes.add(new CachedCasterRecipe(recipe.getValue().fluid, recipe.getValue().output));
             }
         }
@@ -85,13 +89,17 @@ public abstract class NEICastingRecipeHandler extends NEIBase {
     public void loadUsageRecipes(ItemStack ingredient) {
         HashMap<String, RecipeCasting> recipes = getRecipes();
         for (Entry<String, RecipeCasting> recipe : recipes.entrySet()) {
-            if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
+            if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
             FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(ingredient);
             if (fluid == null || fluid.getFluid() == null) {
                 continue;
             }
 
-            if (fluid.getFluid().getName().equals(recipe.getValue().fluid.getFluid().getName())) {
+            if (fluid.getFluid()
+                .getName()
+                .equals(
+                    recipe.getValue().fluid.getFluid()
+                        .getName())) {
                 arecipes.add(new CachedCasterRecipe(recipe.getValue().fluid, recipe.getValue().output));
             }
         }
@@ -104,7 +112,7 @@ public abstract class NEICastingRecipeHandler extends NEIBase {
     }
 
     @Override
-    public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int id) {
+    public List<String> handleTooltip(GuiRecipe<?> gui, List<String> currenttip, int id) {
         currenttip = super.handleTooltip(gui, currenttip, id);
         Point mouse = getMouse(getGuiWidth(gui), getGuiHeight(gui));
         if (isOverItem(gui, id)) return currenttip;

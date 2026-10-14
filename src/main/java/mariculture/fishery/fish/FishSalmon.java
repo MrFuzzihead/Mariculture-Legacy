@@ -3,14 +3,17 @@ package mariculture.fishery.fish;
 import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletPlant;
 import static mariculture.core.lib.MCLib.dropletWater;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishSalmon extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 12;

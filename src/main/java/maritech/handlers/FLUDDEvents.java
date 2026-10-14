@@ -1,5 +1,16 @@
 package maritech.handlers;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.core.helpers.KeyHelper;
 import mariculture.core.helpers.PlayerHelper;
 import mariculture.core.lib.ArmorSlot;
@@ -10,18 +21,9 @@ import maritech.extensions.modules.ExtensionFactory;
 import maritech.items.ItemFLUDD;
 import maritech.items.ItemFLUDD.Mode;
 import maritech.network.PacketFLUDD;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class FLUDDEvents {
+
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void onKeyPress(KeyInputEvent event) {
@@ -90,7 +92,7 @@ public class FLUDDEvents {
                         playSmoke(ItemFLUDD.TURBO, player, true);
                     }
 
-                    //Rocket Mode
+                    // Rocket Mode
                     if (mode == Mode.ROCKET) {
                         if (jumpTick < 10) {
                             player.addVelocity(0, 0.35, 0);
@@ -107,7 +109,7 @@ public class FLUDDEvents {
                     hoverTick++;
                     jumpTick++;
 
-                    //Hover Mode
+                    // Hover Mode
                     if (mode == Mode.HOVER) {
                         if (hoverTick >= 300) {
                             disableHover(player);
@@ -122,7 +124,8 @@ public class FLUDDEvents {
                             }
 
                             player.fallDistance = 0F;
-                            player.getEntityData().setBoolean("UsingFLUDDHover", true);
+                            player.getEntityData()
+                                .setBoolean("UsingFLUDDHover", true);
                             player.capabilities.isFlying = true;
                             player.capabilities.setFlySpeed(0.005F);
                             player.motionY = ClientHelper.isForwardPressed() ? 0F : 0.05F;
@@ -155,7 +158,8 @@ public class FLUDDEvents {
                         Mode mode = getArmorMode(player);
                         V_HELD = false;
                         if (mode == Mode.HOVER) {
-                            PacketHandler.sendToServer(new PacketFLUDD(PacketFLUDD.DAMAGEPREVENT, Mode.HOVER.ordinal()));
+                            PacketHandler
+                                .sendToServer(new PacketFLUDD(PacketFLUDD.DAMAGEPREVENT, Mode.HOVER.ordinal()));
                         } else if (mode == Mode.TURBO) {
                             player.stepHeight = STEP_HEIGHT;
                             FIRST = true;
@@ -187,11 +191,40 @@ public class FLUDDEvents {
             for (float j = -0.1F; j < 0.15F; j = j + 0.05F) {
                 double i = 0.2D;
                 while (player.worldObj.isAirBlock((int) player.posX, (int) (player.posY - i), (int) player.posZ)) {
-                    player.worldObj.spawnParticle("cloud", player.posX + j, player.posY - 0.23F - i, player.posZ + j, 0, -1D, 0);
-                    player.worldObj.spawnParticle("cloud", player.posX + j + 0.5F, player.posY - 0.23F - i, player.posZ + j, 0, -5D, 0);
-                    player.worldObj.spawnParticle("cloud", player.posX + j - 0.5F, player.posY - 0.23F - i, player.posZ + j, 0, -5D, 0);
-                    player.worldObj.spawnParticle("cloud", player.posX + j, player.posY - 0.23F - i, player.posZ + j + 0.5F, 0, -5D, 0);
-                    player.worldObj.spawnParticle("cloud", player.posX + j, player.posY - 0.23F - i, player.posZ + j - 0.5F, 0, -5D, 0);
+                    player.worldObj
+                        .spawnParticle("cloud", player.posX + j, player.posY - 0.23F - i, player.posZ + j, 0, -1D, 0);
+                    player.worldObj.spawnParticle(
+                        "cloud",
+                        player.posX + j + 0.5F,
+                        player.posY - 0.23F - i,
+                        player.posZ + j,
+                        0,
+                        -5D,
+                        0);
+                    player.worldObj.spawnParticle(
+                        "cloud",
+                        player.posX + j - 0.5F,
+                        player.posY - 0.23F - i,
+                        player.posZ + j,
+                        0,
+                        -5D,
+                        0);
+                    player.worldObj.spawnParticle(
+                        "cloud",
+                        player.posX + j,
+                        player.posY - 0.23F - i,
+                        player.posZ + j + 0.5F,
+                        0,
+                        -5D,
+                        0);
+                    player.worldObj.spawnParticle(
+                        "cloud",
+                        player.posX + j,
+                        player.posY - 0.23F - i,
+                        player.posZ + j - 0.5F,
+                        0,
+                        -5D,
+                        0);
                     i++;
                 }
             }
@@ -210,12 +243,48 @@ public class FLUDDEvents {
                 for (float j = -1F; j < 1.05F; j = j + 0.15F) {
                     int i = 0;
                     if (send) {
-                        while (player.worldObj.isAirBlock((int) player.posX, (int) player.posY - i, (int) player.posZ)) {
-                            player.worldObj.spawnParticle("explode", player.posX + j, player.posY - 0.23F - i, player.posZ + k, 0, -1D, 0);
-                            player.worldObj.spawnParticle("explode", player.posX + j + 0.5F, player.posY - 0.23F - i, player.posZ + k, 0, -5D, 0);
-                            player.worldObj.spawnParticle("explode", player.posX + j - 0.5F, player.posY - 0.23F - i, player.posZ + k, 0, -5D, 0);
-                            player.worldObj.spawnParticle("explode", player.posX + j, player.posY - 0.23F - i, player.posZ + k + 0.5F, 0, -5D, 0);
-                            player.worldObj.spawnParticle("explode", player.posX + j, player.posY - 0.23F - i, player.posZ + k - 0.5F, 0, -5D, 0);
+                        while (player.worldObj
+                            .isAirBlock((int) player.posX, (int) player.posY - i, (int) player.posZ)) {
+                            player.worldObj.spawnParticle(
+                                "explode",
+                                player.posX + j,
+                                player.posY - 0.23F - i,
+                                player.posZ + k,
+                                0,
+                                -1D,
+                                0);
+                            player.worldObj.spawnParticle(
+                                "explode",
+                                player.posX + j + 0.5F,
+                                player.posY - 0.23F - i,
+                                player.posZ + k,
+                                0,
+                                -5D,
+                                0);
+                            player.worldObj.spawnParticle(
+                                "explode",
+                                player.posX + j - 0.5F,
+                                player.posY - 0.23F - i,
+                                player.posZ + k,
+                                0,
+                                -5D,
+                                0);
+                            player.worldObj.spawnParticle(
+                                "explode",
+                                player.posX + j,
+                                player.posY - 0.23F - i,
+                                player.posZ + k + 0.5F,
+                                0,
+                                -5D,
+                                0);
+                            player.worldObj.spawnParticle(
+                                "explode",
+                                player.posX + j,
+                                player.posY - 0.23F - i,
+                                player.posZ + k - 0.5F,
+                                0,
+                                -5D,
+                                0);
                             i++;
                         }
                     }
@@ -247,8 +316,10 @@ public class FLUDDEvents {
     }
 
     private void disableHover(EntityPlayer player) {
-        if (player.getEntityData().hasKey("UsingFLUDDHover")) {
-            player.getEntityData().removeTag("UsingFLUDDHover");
+        if (player.getEntityData()
+            .hasKey("UsingFLUDDHover")) {
+            player.getEntityData()
+                .removeTag("UsingFLUDDHover");
             player.capabilities.isFlying = false;
             player.capabilities.setFlySpeed(0.02F);
         }

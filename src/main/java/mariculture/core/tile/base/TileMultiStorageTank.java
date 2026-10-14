@@ -2,9 +2,6 @@ package mariculture.core.tile.base;
 
 import java.util.List;
 
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.util.ITank;
-import mariculture.core.util.Tank;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -12,14 +9,20 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.util.ITank;
+import mariculture.core.util.Tank;
+
 public class TileMultiStorageTank extends TileMultiStorage implements IFluidHandler, ITank {
+
     public Tank tank;
 
     @Override
     public FluidStack getFluid(int transfer) {
         if (getMaster() == null) return null;
 
-        TileMultiStorageTank mstr = (TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord);
+        TileMultiStorageTank mstr = (TileMultiStorageTank) worldObj
+            .getTileEntity(master.xCoord, master.yCoord, master.zCoord);
         if (mstr.tank.getFluid() == null) return null;
         if (mstr.tank.getFluidAmount() - transfer < 0) return null;
 
@@ -36,13 +39,17 @@ public class TileMultiStorageTank extends TileMultiStorage implements IFluidHand
 
     @Override
     public FluidStack getFluid() {
-        return getMaster() != null ? ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank.getFluid() : null;
+        return getMaster() != null
+            ? ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank
+                .getFluid()
+            : null;
     }
 
     @Override
     public void setFluid(FluidStack fluid) {
         if (getMaster() != null) {
-            ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank.setFluid(fluid);
+            ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank
+                .setFluid(fluid);
         }
     }
 
@@ -58,7 +65,10 @@ public class TileMultiStorageTank extends TileMultiStorage implements IFluidHand
 
     @Override
     public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
-        return getMaster() != null ? ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank.fill(resource, doFill) : 0;
+        return getMaster() != null
+            ? ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank
+                .fill(resource, doFill)
+            : 0;
     }
 
     @Override
@@ -68,7 +78,10 @@ public class TileMultiStorageTank extends TileMultiStorage implements IFluidHand
 
     @Override
     public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-        return getMaster() != null ? ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank.drain(maxDrain, doDrain) : null;
+        return getMaster() != null
+            ? ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank
+                .drain(maxDrain, doDrain)
+            : null;
     }
 
     @Override
@@ -83,7 +96,10 @@ public class TileMultiStorageTank extends TileMultiStorage implements IFluidHand
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-        return getMaster() != null ? new FluidTankInfo[] { ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank.getInfo() } : null;
+        return getMaster() != null ? new FluidTankInfo[] {
+            ((TileMultiStorageTank) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord)).tank
+                .getInfo() }
+            : null;
     }
 
     @Override

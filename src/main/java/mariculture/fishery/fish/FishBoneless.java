@@ -9,12 +9,6 @@ import static mariculture.core.lib.MCLib.witherSkull;
 
 import java.util.ArrayList;
 
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
-import mariculture.core.util.Fluids;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -23,7 +17,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.util.Fluids;
+
 public class FishBoneless extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 8;

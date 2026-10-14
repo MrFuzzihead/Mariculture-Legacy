@@ -2,17 +2,19 @@ package mariculture.fishery.items;
 
 import java.util.List;
 
-import mariculture.api.core.IItemUpgrade;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.gui.InventoryStorage;
-import mariculture.core.items.ItemMCStorage;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import mariculture.api.core.IItemUpgrade;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.gui.InventoryStorage;
+import mariculture.core.items.ItemMCStorage;
+import mariculture.core.util.MCTranslate;
+
 public class ItemTemperatureControl extends ItemMCStorage implements IItemUpgrade {
+
     private static final int SIZE = 5;
 
     public ItemTemperatureControl() {
@@ -45,7 +47,8 @@ public class ItemTemperatureControl extends ItemMCStorage implements IItemUpgrad
 
     @Override
     public boolean isItemValid(ItemStack stack) {
-        if (stack.getItem() instanceof IItemUpgrade && !(stack.getItem() instanceof ItemTemperatureControl)) return getTemperature(stack) != 0;
+        if (stack.getItem() instanceof IItemUpgrade && !(stack.getItem() instanceof ItemTemperatureControl))
+            return getTemperature(stack) != 0;
         else return false;
     }
 
@@ -69,10 +72,9 @@ public class ItemTemperatureControl extends ItemMCStorage implements IItemUpgrad
     public int getTemperature(ItemStack stack) {
         int temperature = 0;
         ItemStack[] invent = load(null, stack, SIZE);
-        for (ItemStack item : invent)
-            if (item != null) if (item.getItem() instanceof IItemUpgrade) {
-                temperature += ((IItemUpgrade) item.getItem()).getTemperature(item);
-            }
+        for (ItemStack item : invent) if (item != null) if (item.getItem() instanceof IItemUpgrade) {
+            temperature += ((IItemUpgrade) item.getItem()).getTemperature(item);
+        }
 
         return temperature;
     }
@@ -108,13 +110,15 @@ public class ItemTemperatureControl extends ItemMCStorage implements IItemUpgrad
     }
 
     private static class SlotHeating extends Slot {
+
         private SlotHeating(IInventory inv, int id, int x, int y) {
             super(inv, id, x, y);
         }
 
         @Override
         public boolean isItemValid(ItemStack stack) {
-            if (stack.getItem() instanceof IItemUpgrade && !(stack.getItem() instanceof ItemTemperatureControl)) return ((IItemUpgrade) stack.getItem()).getTemperature(stack) != 0;
+            if (stack.getItem() instanceof IItemUpgrade && !(stack.getItem() instanceof ItemTemperatureControl))
+                return ((IItemUpgrade) stack.getItem()).getTemperature(stack) != 0;
             else return false;
         }
     }

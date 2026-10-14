@@ -8,6 +8,13 @@ import static maritech.lib.SpecialIcons.sluiceAdvancedUp;
 import static maritech.lib.SpecialIcons.sluiceBack;
 import static maritech.lib.SpecialIcons.sluiceDown;
 import static maritech.lib.SpecialIcons.sluiceUp;
+
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.core.Core;
 import mariculture.core.blocks.BlockMachine;
 import mariculture.core.lib.MachineMeta;
@@ -16,19 +23,19 @@ import maritech.tile.TileGenerator;
 import maritech.tile.TileSluice;
 import maritech.tile.TileSluiceAdvanced;
 import maritech.util.IIconExtension;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExtensionIconMachine implements IIconExtension {
+
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getInventoryIcon(int meta, int side, IIcon icon) {
-        if (meta == MachineMeta.SLUICE) return side == 3 ? ((BlockMachine) Core.machines).icons[MachineMeta.SLUICE] : Core.metals.getIcon(side, MetalMeta.BASE_IRON);
-        else if (meta == MachineMeta.GENERATOR) return side == 3 ? ((BlockMachine) Core.machines).icons[MachineMeta.GENERATOR] : Core.metals.getIcon(side, MetalMeta.BASE_IRON);
-        else if (meta == MachineMeta.SLUICE_ADVANCED) return side == 3 ? ((BlockMachine) Core.machines).icons[MachineMeta.SLUICE_ADVANCED] : sluiceAdvanced;
+        if (meta == MachineMeta.SLUICE) return side == 3 ? ((BlockMachine) Core.machines).icons[MachineMeta.SLUICE]
+            : Core.metals.getIcon(side, MetalMeta.BASE_IRON);
+        else if (meta == MachineMeta.GENERATOR)
+            return side == 3 ? ((BlockMachine) Core.machines).icons[MachineMeta.GENERATOR]
+                : Core.metals.getIcon(side, MetalMeta.BASE_IRON);
+        else if (meta == MachineMeta.SLUICE_ADVANCED)
+            return side == 3 ? ((BlockMachine) Core.machines).icons[MachineMeta.SLUICE_ADVANCED] : sluiceAdvanced;
         else if (side < 2 && meta == MachineMeta.SPONGE) {
             return Core.metals.getIcon(side, MetalMeta.BASE_IRON);
         }
@@ -43,17 +50,25 @@ public class ExtensionIconMachine implements IIconExtension {
         if (tile instanceof TileSluice) {
             TileSluice sluice = (TileSluice) tile;
             if (tile instanceof TileSluiceAdvanced) {
-                if (sluice.orientation.ordinal() == side) return side > 1 ? ((BlockMachine) Core.machines).icons[MachineMeta.SLUICE_ADVANCED] : sluiceAdvancedUp;
-                else if (sluice.orientation.getOpposite().ordinal() == side) return side > 1 ? sluiceAdvancedBack : sluiceAdvancedDown;
+                if (sluice.orientation.ordinal() == side)
+                    return side > 1 ? ((BlockMachine) Core.machines).icons[MachineMeta.SLUICE_ADVANCED]
+                        : sluiceAdvancedUp;
+                else if (sluice.orientation.getOpposite()
+                    .ordinal() == side) return side > 1 ? sluiceAdvancedBack : sluiceAdvancedDown;
                 else return sluiceAdvanced;
             } else {
-                if (sluice.orientation.ordinal() == side) return side > 1 ? ((BlockMachine) Core.machines).icons[MachineMeta.SLUICE] : sluiceUp;
-                else if (sluice.orientation.getOpposite().ordinal() == side) return side > 1 ? sluiceBack : sluiceDown;
+                if (sluice.orientation.ordinal() == side)
+                    return side > 1 ? ((BlockMachine) Core.machines).icons[MachineMeta.SLUICE] : sluiceUp;
+                else if (sluice.orientation.getOpposite()
+                    .ordinal() == side) return side > 1 ? sluiceBack : sluiceDown;
                 else return Core.metals.getIcon(side, MetalMeta.BASE_IRON);
             }
         } else if (tile instanceof TileGenerator) {
             TileGenerator generator = (TileGenerator) tile;
-            return (generator.orientation.ordinal() == side) ? ((BlockMachine) Core.machines).icons[MachineMeta.GENERATOR] : generator.orientation.getOpposite().ordinal() == side ? generatorBack : Core.metals.getIcon(side, MetalMeta.BASE_IRON);
+            return (generator.orientation.ordinal() == side)
+                ? ((BlockMachine) Core.machines).icons[MachineMeta.GENERATOR]
+                : generator.orientation.getOpposite()
+                    .ordinal() == side ? generatorBack : Core.metals.getIcon(side, MetalMeta.BASE_IRON);
         } else return icon;
     }
 }

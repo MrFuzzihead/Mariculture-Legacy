@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
+
 import mariculture.core.gui.feature.FeatureEject.EjectSetting;
 import mariculture.core.gui.feature.FeatureRedstone.RedstoneMode;
 import mariculture.core.helpers.FluidHelper;
@@ -15,15 +23,9 @@ import mariculture.core.util.Tank;
 import mariculture.fishery.Fishery;
 import maritech.items.ItemFishDNA;
 import maritech.tile.base.TileMachinePowered;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileInjector extends TileMachinePowered implements IFluidHandler, ITank {
+
     public static final int FLUID_REQUIRED = 5000;
     public static final int FISH = 8;
     public static final int[] DNA = new int[] { 10, 11, 12 };
@@ -111,7 +113,11 @@ public class TileInjector extends TileMachinePowered implements IFluidHandler, I
     }
 
     private boolean hasBlood(Tank tank) {
-        return tank.getFluid() != null && Fluids.isBlood(tank.getFluid().getFluid().getName()) && tank.getFluidAmount() >= FLUID_REQUIRED;
+        return tank.getFluid() != null && Fluids.isBlood(
+            tank.getFluid()
+                .getFluid()
+                .getName())
+            && tank.getFluidAmount() >= FLUID_REQUIRED;
     }
 
     private boolean hasGoo() {
@@ -119,7 +125,8 @@ public class TileInjector extends TileMachinePowered implements IFluidHandler, I
     }
 
     private boolean hasGoo(Tank tank) {
-        return tank.getFluid() != null && tank.getFluid().getFluid() == Fluids.getFluid("flux") && tank.getFluidAmount() >= FLUID_REQUIRED;
+        return tank.getFluid() != null && tank.getFluid()
+            .getFluid() == Fluids.getFluid("flux") && tank.getFluidAmount() >= FLUID_REQUIRED;
     }
 
     private boolean hasPower() {
@@ -280,7 +287,12 @@ public class TileInjector extends TileMachinePowered implements IFluidHandler, I
 
     @Override
     public boolean hasChanged() {
-        return super.hasChanged() || lastFluidID != tank.getFluidID() || lastFluidAmount != tank.getFluidAmount() || lastFluidCapacity != tank.getCapacity() || lastFluid2ID != tank2.getFluidID() || lastFluid2Amount != tank2.getFluidAmount() || lastFluidCapacity != tank2.getCapacity();
+        return super.hasChanged() || lastFluidID != tank.getFluidID()
+            || lastFluidAmount != tank.getFluidAmount()
+            || lastFluidCapacity != tank.getCapacity()
+            || lastFluid2ID != tank2.getFluidID()
+            || lastFluid2Amount != tank2.getFluidAmount()
+            || lastFluidCapacity != tank2.getCapacity();
     }
 
     @Override
@@ -290,24 +302,27 @@ public class TileInjector extends TileMachinePowered implements IFluidHandler, I
         lastFluidCapacity = tank.getCapacity();
 
         ArrayList list = super.getGUIData();
-        list.addAll(Arrays.asList(new Integer[] { lastFluidID, lastFluidAmount, lastFluidCapacity, tank2.getFluidID(), tank2.getFluidAmount(), tank2.getCapacity() }));
+        list.addAll(
+            Arrays.asList(
+                new Integer[] { lastFluidID, lastFluidAmount, lastFluidCapacity, tank2.getFluidID(),
+                    tank2.getFluidAmount(), tank2.getCapacity() }));
         return list;
     }
 
     @Override
     public int getTankScaled(int i) {
         return 0;
-    } //NEVER CALLED
+    } // NEVER CALLED
 
     @Override
     public String getFluidName() {
         return null;
-    } //NEVER CALLED
+    } // NEVER CALLED
 
     @Override
     public List getFluidQty(List tooltip) {
         return null;
-    } //NEVER CALLLED
+    } // NEVER CALLLED
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {

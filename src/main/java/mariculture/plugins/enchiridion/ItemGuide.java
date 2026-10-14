@@ -2,23 +2,25 @@ package mariculture.plugins.enchiridion;
 
 import java.util.List;
 
-import mariculture.Mariculture;
-import mariculture.core.items.ItemMCMeta;
-import mariculture.core.lib.GuideMeta;
-import mariculture.core.lib.Modules;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import enchiridion.CreativeTab;
 import enchiridion.Enchiridion;
+import mariculture.Mariculture;
+import mariculture.core.items.ItemMCMeta;
+import mariculture.core.lib.GuideMeta;
+import mariculture.core.lib.Modules;
+import mariculture.core.util.MCTranslate;
 
 public class ItemGuide extends ItemMCMeta {
+
     public ItemGuide() {
         setCreativeTab(CreativeTab.books);
     }
@@ -66,7 +68,7 @@ public class ItemGuide extends ItemMCMeta {
             return stack;
         }
     }
-    
+
     public static boolean BLOOD = false;
     public static boolean BOTANIA = false;
 
@@ -117,7 +119,8 @@ public class ItemGuide extends ItemMCMeta {
         icons = new IIcon[getMetaCount()];
 
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = iconRegister.registerIcon(Mariculture.modid + ":" + getName(new ItemStack(this, 1, i)) + "Guide");
+            icons[i] = iconRegister
+                .registerIcon(Mariculture.modid + ":" + getName(new ItemStack(this, 1, i)) + "Guide");
         }
     }
 }

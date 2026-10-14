@@ -3,6 +3,12 @@ package mariculture.magic;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.core.config.Enchantments.Jewelry;
 import mariculture.core.helpers.EnchantHelper;
 import mariculture.lib.helpers.ClientHelper;
@@ -13,18 +19,14 @@ import mariculture.magic.enchantments.EnchantmentSpeed;
 import mariculture.magic.enchantments.EnchantmentSpider;
 import mariculture.magic.enchantments.EnchantmentStepUp;
 import mariculture.magic.jewelry.parts.JewelryMaterial;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class MirrorHelper {
+
     public static String world = "ls43llsds#232423d";
     public static HashMap<String, ItemStack[]> inventories = new HashMap();
     public static ItemStack[] inventory;
 
-    //This is the 'cached' list of the materials the jewelry piece is made up of
+    // This is the 'cached' list of the materials the jewelry piece is made up of
     public static HashMap<String, JewelryMaterial[]> materialList = new HashMap();
     public static JewelryMaterial[] materials;
 
@@ -46,7 +48,8 @@ public class MirrorHelper {
     }
 
     public static boolean isSameWorld(EntityPlayer player) {
-        String check = player.worldObj.getWorldInfo().getWorldName();
+        String check = player.worldObj.getWorldInfo()
+            .getWorldName();
         if (check.equals(world)) return true;
         else {
             world = check;
@@ -82,10 +85,9 @@ public class MirrorHelper {
     private static JewelryMaterial[] fetchMaterials(EntityPlayer player) {
         ArrayList<JewelryMaterial> array = new ArrayList();
         ItemStack[] mirror = MirrorHelper.getInventory(player);
-        for (ItemStack element : mirror)
-            if (element != null && element.hasTagCompound()) {
-                array.add(JewelryMaterial.list.get(element.stackTagCompound.getString(JewelryMaterial.nbt)));
-            }
+        for (ItemStack element : mirror) if (element != null && element.hasTagCompound()) {
+            array.add(JewelryMaterial.list.get(element.stackTagCompound.getString(JewelryMaterial.nbt)));
+        }
 
         return array.toArray(new JewelryMaterial[array.size()]);
     }
@@ -96,7 +98,8 @@ public class MirrorHelper {
     }
 
     public static ItemStack[] getInventoryForPlayer(EntityPlayer player) {
-        if (inventories.get(player.getCommandSenderName()) != null && isSameWorld(player)) return inventories.get(player.getCommandSenderName());
+        if (inventories.get(player.getCommandSenderName()) != null && isSameWorld(player))
+            return inventories.get(player.getCommandSenderName());
 
         ItemStack[] contents = null;
         MirrorSavedData data = getData(player);
@@ -129,10 +132,10 @@ public class MirrorHelper {
 
     public static boolean saveClient(EntityPlayer player, ItemStack[] invent) {
         inventory = getData(player).setJewelry(invent);
-        //Reset the color
+        // Reset the color
         materials = null;
 
-        //Setup the speeds after initially saving client data
+        // Setup the speeds after initially saving client data
         if (EnchantHelper.exists(Magic.speed)) {
             EnchantmentSpeed.set(EnchantHelper.getEnchantStrength(Magic.speed, player));
         }
@@ -158,7 +161,7 @@ public class MirrorHelper {
     public static boolean saveServer(EntityPlayer player, ItemStack[] invent) {
         String key = player.getCommandSenderName();
         inventories.put(key, getData(player).setJewelry(invent));
-        //Reset the color
+        // Reset the color
         if (materialList.containsKey(key)) {
             materialList.remove(key);
         }

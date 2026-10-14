@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 public class TileMultiStorage extends TileMultiBlock implements IInventory {
+
     public ItemStack[] inventory;
 
     @Override
@@ -108,7 +109,8 @@ public class TileMultiStorage extends TileMultiBlock implements IInventory {
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 128;
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this
+            && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 128;
     }
 
     @Override

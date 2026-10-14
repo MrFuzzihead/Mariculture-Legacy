@@ -3,10 +3,6 @@ package maritech.items;
 import java.util.Iterator;
 import java.util.List;
 
-import mariculture.api.core.MaricultureTab;
-import mariculture.lib.base.ItemBaseSingle;
-import maritech.entity.EntitySpeedBoat;
-import maritech.lib.MTModInfo;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +15,13 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
+import mariculture.api.core.MaricultureTab;
+import mariculture.lib.base.ItemBaseSingle;
+import maritech.entity.EntitySpeedBoat;
+import maritech.lib.MTModInfo;
+
 public class ItemSpeedBoat extends ItemBaseSingle {
+
     public ItemSpeedBoat() {
         super(MTModInfo.MODPATH, MaricultureTab.tabWorld);
     }
@@ -48,7 +50,10 @@ public class ItemSpeedBoat extends ItemBaseSingle {
             Vec3 var25 = player.getLook(var4);
             boolean flag = false;
             float var27 = 1.0F;
-            List var28 = world.getEntitiesWithinAABBExcludingEntity(player, player.boundingBox.addCoord(var25.xCoord * var21, var25.yCoord * var21, var25.zCoord * var21).expand(var27, var27, var27));
+            List var28 = world.getEntitiesWithinAABBExcludingEntity(
+                player,
+                player.boundingBox.addCoord(var25.xCoord * var21, var25.yCoord * var21, var25.zCoord * var21)
+                    .expand(var27, var27, var27));
             Iterator var29 = var28.iterator();
 
             while (var29.hasNext()) {
@@ -77,7 +82,8 @@ public class ItemSpeedBoat extends ItemBaseSingle {
                                 --var33;
                             }
 
-                            world.spawnEntityInWorld(new EntitySpeedBoat(world, var35 + 0.5F, var33 + 0.5F, var34 + 0.5F));
+                            world.spawnEntityInWorld(
+                                new EntitySpeedBoat(world, var35 + 0.5F, var33 + 0.5F, var34 + 0.5F));
                         }
 
                         if (!player.capabilities.isCreativeMode) {

@@ -1,10 +1,5 @@
 package mariculture.magic.enchantments;
 
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.core.helpers.EnchantHelper;
-import mariculture.magic.Magic;
-import mariculture.magic.MirrorHelper;
-import mariculture.magic.jewelry.parts.JewelryMaterial;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -12,7 +7,14 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.core.helpers.EnchantHelper;
+import mariculture.magic.Magic;
+import mariculture.magic.MirrorHelper;
+import mariculture.magic.jewelry.parts.JewelryMaterial;
+
 public class EnchantmentElemental extends EnchantmentJewelry {
+
     public EnchantmentElemental(int i, int weight, EnumEnchantmentType type) {
         super(i, weight, type);
         setName("elemental");
@@ -30,7 +32,8 @@ public class EnchantmentElemental extends EnchantmentJewelry {
             for (JewelryMaterial material : MirrorHelper.getMaterials(player)) {
                 int onHurt = material.onHurt(event, player);
                 if (onHurt > 0 && player.worldObj.rand.nextInt(onHurt) == 0) {
-                    MaricultureHandlers.mirror.damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
+                    MaricultureHandlers.mirror
+                        .damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
                 }
             }
         }
@@ -41,7 +44,8 @@ public class EnchantmentElemental extends EnchantmentJewelry {
             for (JewelryMaterial material : MirrorHelper.getMaterials(player)) {
                 int onAttacked = material.onAttacked(event, player);
                 if (onAttacked > 0 && player.worldObj.rand.nextInt(onAttacked) == 0) {
-                    MaricultureHandlers.mirror.damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
+                    MaricultureHandlers.mirror
+                        .damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
                 }
             }
         }
@@ -52,7 +56,8 @@ public class EnchantmentElemental extends EnchantmentJewelry {
             for (JewelryMaterial material : MirrorHelper.getMaterials(player)) {
                 int onAttack = material.onAttack(event, player);
                 if (onAttack > 0 && player.worldObj.rand.nextInt(onAttack) == 0) {
-                    MaricultureHandlers.mirror.damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
+                    MaricultureHandlers.mirror
+                        .damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
                 }
             }
         }
@@ -63,7 +68,8 @@ public class EnchantmentElemental extends EnchantmentJewelry {
             for (JewelryMaterial material : MirrorHelper.getMaterials(player)) {
                 int onKill = material.onKill(event, player);
                 if (onKill > 0 && player.worldObj.rand.nextInt(onKill) == 0) {
-                    MaricultureHandlers.mirror.damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
+                    MaricultureHandlers.mirror
+                        .damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
                 }
             }
         }
@@ -74,7 +80,8 @@ public class EnchantmentElemental extends EnchantmentJewelry {
             for (JewelryMaterial material : MirrorHelper.getMaterials(player)) {
                 int onBlockBreak = material.onBlockBreak(event, player);
                 if (onBlockBreak > 0 && player.worldObj.rand.nextInt(onBlockBreak) == 0) {
-                    MaricultureHandlers.mirror.damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
+                    MaricultureHandlers.mirror
+                        .damageItemsWithEnchantment(player, Magic.elemental.effectId, material.id);
                 }
             }
         }

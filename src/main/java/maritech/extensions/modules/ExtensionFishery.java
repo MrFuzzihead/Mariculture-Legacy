@@ -19,6 +19,12 @@ import static mariculture.core.lib.UpgradeMeta.SALINATOR_2;
 import static mariculture.core.lib.UpgradeMeta.ULTIMATE_COOLING;
 import static mariculture.core.lib.UpgradeMeta.ULTIMATE_HEATING;
 import static mariculture.core.util.Fluids.getFluidName;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.oredict.OreDictionary;
+
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.Loot;
 import mariculture.api.fishery.Loot.Rarity;
@@ -36,12 +42,9 @@ import maritech.tile.TileExtractor;
 import maritech.tile.TileIncubator;
 import maritech.tile.TileInjector;
 import maritech.util.IModuleExtension;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class ExtensionFishery implements IModuleExtension {
+
     public static Item dna;
     public static Item rodFlux;
 
@@ -49,15 +52,26 @@ public class ExtensionFishery implements IModuleExtension {
     public void preInit() {
         dna = new ItemFishDNA().setUnlocalizedName("dna");
         rodFlux = new ItemFluxRod().setUnlocalizedName("rod.flux");
-        RegistryHelper.registerTiles("Mariculture", new Class[] { TileAutofisher.class, TileIncubator.class, TileExtractor.class, TileInjector.class });
+        RegistryHelper.registerTiles(
+            "Mariculture",
+            new Class[] { TileAutofisher.class, TileIncubator.class, TileExtractor.class, TileInjector.class });
     }
 
     @Override
     public void init() {
-        addShaped(MTLib.incubatorTop, new Object[] { "DFD", "CHC", 'F', "fish", 'D', "dyeBrown", 'C', greyClay, 'H', heating });
-        addShaped(MTLib.incubatorBase, new Object[] { "DBD", "CHC", 'C', whiteClay, 'B', MTLib.copperBattery, 'D', "dyeLightBlue", 'H', heating });
-        addShaped(MTLib.autofisher, new Object[] { " F ", "RPR", "WBW", 'W', "logWood", 'R', asStack(Fishery.rodWood), 'F', "fish", 'B', baseWood, 'P', "plankWood" });
-        addShaped(ItemBattery.make(asStack(ExtensionFishery.rodFlux), 0), new Object[] { "  R", " RS", "B S", 'R', Fishery.rodTitanium, 'S', string, 'B', MTLib.titaniumBattery });
+        addShaped(
+            MTLib.incubatorTop,
+            new Object[] { "DFD", "CHC", 'F', "fish", 'D', "dyeBrown", 'C', greyClay, 'H', heating });
+        addShaped(
+            MTLib.incubatorBase,
+            new Object[] { "DBD", "CHC", 'C', whiteClay, 'B', MTLib.copperBattery, 'D', "dyeLightBlue", 'H', heating });
+        addShaped(
+            MTLib.autofisher,
+            new Object[] { " F ", "RPR", "WBW", 'W', "logWood", 'R', asStack(Fishery.rodWood), 'F', "fish", 'B',
+                baseWood, 'P', "plankWood" });
+        addShaped(
+            ItemBattery.make(asStack(ExtensionFishery.rodFlux), 0),
+            new Object[] { "  R", " RS", "B S", 'R', Fishery.rodTitanium, 'S', string, 'B', MTLib.titaniumBattery });
         ItemStack charged = new ItemStack(ExtensionFishery.rodFlux);
         charged.setTagCompound(new NBTTagCompound());
         charged.stackTagCompound.setInteger("Energy", 250000);
@@ -65,10 +79,21 @@ public class ExtensionFishery implements IModuleExtension {
         addVatItemRecipe(asStack(ExtensionFishery.rodFlux), getFluidName("flux"), 1000, charged, 15);
 
         ItemStack scuba = Modules.isActive(Modules.diving) ? asStack(ExtensionDiving.scubaMask) : MCLib.fishSorter;
-        ItemStack turbine = Modules.isActive(Modules.factory) ? asStack(ExtensionFactory.turbineTitanium) : MCLib.ironWheel;
-        addShaped(MTLib.extractor, new Object[] { " H ", "PSP", "TBT", 'H', life, 'P', titaniumRod, 'S', Fishery.scanner, 'T', turbine, 'B', "blockTitanium" });
-        addShaped(MTLib.injector, new Object[] { " S ", "GTG", "BEB", 'S', scuba, 'G', MCLib.goldSheet, 'T', thermometer, 'B', ExtensionCore.batteryTitanium, 'E', MTLib.extractor });
-        addShaped(asStack(upgrade, AQUASCUM), new Object[] { "DFD", "CTH", "DSD", 'D', asStack(dna, OreDictionary.WILDCARD_VALUE), 'F', asStack(upgrade, FILTER_2), 'C', asStack(upgrade, ULTIMATE_COOLING), 'T', asStack(Fishery.tempControl), 'H', asStack(upgrade, ULTIMATE_HEATING), 'S', asStack(upgrade, SALINATOR_2) });
+        ItemStack turbine = Modules.isActive(Modules.factory) ? asStack(ExtensionFactory.turbineTitanium)
+            : MCLib.ironWheel;
+        addShaped(
+            MTLib.extractor,
+            new Object[] { " H ", "PSP", "TBT", 'H', life, 'P', titaniumRod, 'S', Fishery.scanner, 'T', turbine, 'B',
+                "blockTitanium" });
+        addShaped(
+            MTLib.injector,
+            new Object[] { " S ", "GTG", "BEB", 'S', scuba, 'G', MCLib.goldSheet, 'T', thermometer, 'B',
+                ExtensionCore.batteryTitanium, 'E', MTLib.extractor });
+        addShaped(
+            asStack(upgrade, AQUASCUM),
+            new Object[] { "DFD", "CTH", "DSD", 'D', asStack(dna, OreDictionary.WILDCARD_VALUE), 'F',
+                asStack(upgrade, FILTER_2), 'C', asStack(upgrade, ULTIMATE_COOLING), 'T', asStack(Fishery.tempControl),
+                'H', asStack(upgrade, ULTIMATE_HEATING), 'S', asStack(upgrade, SALINATOR_2) });
         Fishing.fishing.registerRod(rodFlux, RodType.FLUX);
     }
 

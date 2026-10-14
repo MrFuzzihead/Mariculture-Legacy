@@ -1,13 +1,15 @@
 package mariculture.fishery.blocks.fluids;
 
-import mariculture.core.blocks.base.BlockFluid;
-import mariculture.core.helpers.BlockHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 
+import mariculture.core.blocks.base.BlockFluid;
+import mariculture.core.helpers.BlockHelper;
+
 public class BlockEnder extends BlockFluid {
+
     public BlockEnder(Fluid fluid, Material material) {
         super(fluid, material);
         quantaPerBlock = 6;
@@ -23,7 +25,8 @@ public class BlockEnder extends BlockFluid {
             if (BlockHelper.chunkExists(world, x2, z2)) {
                 int y2 = world.getTopSolidOrLiquidBlock(x2, z2);
 
-                if (world.getBlock(x2, y2, z2).getMaterial() != Material.lava) {
+                if (world.getBlock(x2, y2, z2)
+                    .getMaterial() != Material.lava) {
                     world.playSoundEffect(x2, y2, z2, "mob.endermen.portal", 1.0F, 1.0F);
                     entity.setPosition(x2, y2, z2);
                     world.playSoundEffect(entity.posX, entity.posY, entity.posZ, "mob.endermen.portal", 1.0F, 1.0F);

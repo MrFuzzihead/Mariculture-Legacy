@@ -1,14 +1,16 @@
 package mariculture.core.network;
 
-import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import io.netty.buffer.ByteBuf;
 
 public abstract class PacketNBT implements IMessage, IMessageHandler<PacketNBT, IMessage> {
+
     public NBTTagCompound nbt;
 
     public PacketNBT() {}

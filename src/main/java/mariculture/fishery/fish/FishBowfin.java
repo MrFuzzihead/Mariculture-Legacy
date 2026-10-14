@@ -7,14 +7,17 @@ import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletPlant;
 import static mariculture.core.lib.MCLib.dropletWater;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishBowfin extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 9;
@@ -59,7 +62,7 @@ public class FishBowfin extends FishSpecies {
     public int getWaterRequired() {
         return 100;
     }
-   
+
     @Override
     public void addFishProducts() {
         addProduct(dropletEarth, 7.5D);

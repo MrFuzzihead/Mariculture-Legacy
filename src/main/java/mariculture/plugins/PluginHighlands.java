@@ -1,18 +1,19 @@
 package mariculture.plugins;
 
-import highlands.api.HighlandsBiomes;
-
 import java.lang.reflect.Field;
 
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.core.handlers.LogHandler;
-import mariculture.plugins.Plugins.Plugin;
 import net.minecraft.world.biome.BiomeGenBase;
 
 import org.apache.logging.log4j.Level;
 
+import highlands.api.HighlandsBiomes;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.core.handlers.LogHandler;
+import mariculture.plugins.Plugins.Plugin;
+
 public class PluginHighlands extends Plugin {
+
     public PluginHighlands(String name) {
         super(name);
     }
@@ -28,7 +29,9 @@ public class PluginHighlands extends Plugin {
             Field field = HighlandsBiomes.class.getField(str);
             return (BiomeGenBase) field.get(null);
         } catch (Exception e) {
-            LogHandler.log(Level.INFO, "Couldn't find the Highlands Biome " + str + " : This is NOT an issue, do not report!");
+            LogHandler.log(
+                Level.INFO,
+                "Couldn't find the Highlands Biome " + str + " : This is NOT an issue, do not report!");
             return null;
         }
     }

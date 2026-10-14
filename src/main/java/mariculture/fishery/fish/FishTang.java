@@ -4,11 +4,7 @@ import static mariculture.api.core.Environment.Salinity.SALINE;
 import static mariculture.core.lib.MCLib.dropletAqua;
 import static mariculture.core.lib.MCLib.dropletWater;
 import static mariculture.core.lib.MCLib.lapis;
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.util.Fluids;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,7 +12,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.util.Fluids;
+
 public class FishTang extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 33;
@@ -56,7 +59,7 @@ public class FishTang extends FishSpecies {
     public int getWaterRequired() {
         return 25;
     }
-    
+
     @Override
     public Block getWater2() {
         return Fluids.getFluidBlock("custard");

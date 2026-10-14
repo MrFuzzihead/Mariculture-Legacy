@@ -17,6 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderProjectileFish extends Render {
+
     private final ItemStack fish;
 
     public RenderProjectileFish(final int id) {

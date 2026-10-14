@@ -1,6 +1,5 @@
 package mariculture.fishery.render;
 
-import mariculture.fishery.Fishery;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -10,7 +9,10 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.fishery.Fishery;
+
 public class ModelFishingHat extends ModelBiped {
+
     private ModelRenderer TieLeft;
     private ModelRenderer TieBottom;
     private ModelRenderer Middle;
@@ -71,21 +73,21 @@ public class ModelFishingHat extends ModelBiped {
             this.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
             GL11.glPushMatrix();
             GL11.glScalef(1.05F, 1.05F, 1.05F);
-            
+
             if (color != 0x123456) {
                 float red = (color >> 16 & 255) / 255.0F;
                 float green = (color >> 8 & 255) / 255.0F;
                 float blue = (color & 255) / 255.0F;
                 GL11.glColor4f(red, green, blue, 1.0F);
             }
-            
+
             if (entity instanceof EntityZombie) {
-                if (((EntityZombie)entity).isChild()) {
+                if (((EntityZombie) entity).isChild()) {
                     GL11.glScalef(0.6F, 0.6F, 0.6F);
                     GL11.glTranslatef(0F, 1F, 0F);
                 }
             }
-            
+
             TieLeft.render(f5);
             TieBottom.render(f5);
             Middle.render(f5);
@@ -97,7 +99,8 @@ public class ModelFishingHat extends ModelBiped {
     }
 
     @Override
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity) {
+    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6,
+        Entity entity) {
         this.TieLeft.rotateAngleX = par5 / (180F / (float) Math.PI);
         this.TieBottom.rotateAngleX = par5 / (180F / (float) Math.PI);
         this.Middle.rotateAngleX = par5 / (180F / (float) Math.PI);

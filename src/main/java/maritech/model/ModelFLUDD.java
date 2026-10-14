@@ -1,9 +1,5 @@
 package maritech.model;
 
-import mariculture.core.lib.ArmorSlot;
-import mariculture.core.render.IModelMariculture;
-import maritech.items.ItemFLUDD;
-import maritech.tile.TileFLUDDStand;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -14,7 +10,13 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.lib.ArmorSlot;
+import mariculture.core.render.IModelMariculture;
+import maritech.items.ItemFLUDD;
+import maritech.tile.TileFLUDDStand;
+
 public class ModelFLUDD extends ModelBiped implements IModelMariculture {
+
     private static final float scale = (float) (1.0 / 20.0);
     private ModelRenderer Mouth;
     private ModelRenderer Handle2;
@@ -352,58 +354,59 @@ public class ModelFLUDD extends ModelBiped implements IModelMariculture {
     public void render(Entity entity, float par2, float par3, float par4, float par5, float par6, float par7) {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            if (player.inventory.armorInventory[ArmorSlot.TOP] != null) if (player.inventory.armorInventory[ArmorSlot.TOP].hasTagCompound()) {
-                int mode = player.inventory.armorInventory[ArmorSlot.TOP].stackTagCompound.getInteger("mode");
+            if (player.inventory.armorInventory[ArmorSlot.TOP] != null)
+                if (player.inventory.armorInventory[ArmorSlot.TOP].hasTagCompound()) {
+                    int mode = player.inventory.armorInventory[ArmorSlot.TOP].stackTagCompound.getInteger("mode");
 
-                GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_LIGHTING);
-                GL11.glScalef(1.5F, 1.5F, 1.5F);
-                GL11.glTranslatef(0F, 0.1F, 0.2F);
+                    GL11.glPushMatrix();
+                    GL11.glDisable(GL11.GL_LIGHTING);
+                    GL11.glScalef(1.5F, 1.5F, 1.5F);
+                    GL11.glTranslatef(0F, 0.1F, 0.2F);
 
-                if (mode == ItemFLUDD.HOVER) {
-                    Top1.render(scale);
-                    Top2.render(scale);
-                    Head1.render(scale);
-                    Head2.render(scale);
-                    Nose1.render(scale);
-                    Nose2.render(scale);
-                    Mouth1.render(scale);
-                    Mouth2.render(scale);
+                    if (mode == ItemFLUDD.HOVER) {
+                        Top1.render(scale);
+                        Top2.render(scale);
+                        Head1.render(scale);
+                        Head2.render(scale);
+                        Nose1.render(scale);
+                        Nose2.render(scale);
+                        Mouth1.render(scale);
+                        Mouth2.render(scale);
 
-                } else if (mode == ItemFLUDD.ROCKET) {
-                    TurboRocketHead.render(scale);
-                    TurboRocketNose.render(scale);
-                    RocketBody1.render(scale);
-                    RocketBody2.render(scale);
-                    RocketBody3.render(scale);
-                    RocketBody4.render(scale);
-                    RocketBody5.render(scale);
-                } else if (mode == ItemFLUDD.TURBO) {
-                    TurboRocketHead.render(scale);
-                    TurboRocketNose.render(scale);
-                    TurboMouth.render(scale);
-                } else if (mode == ItemFLUDD.SQUIRT) {
-                    Mouth.render(scale);
-                    Head.render(scale);
-                    Nose.render(scale);
+                    } else if (mode == ItemFLUDD.ROCKET) {
+                        TurboRocketHead.render(scale);
+                        TurboRocketNose.render(scale);
+                        RocketBody1.render(scale);
+                        RocketBody2.render(scale);
+                        RocketBody3.render(scale);
+                        RocketBody4.render(scale);
+                        RocketBody5.render(scale);
+                    } else if (mode == ItemFLUDD.TURBO) {
+                        TurboRocketHead.render(scale);
+                        TurboRocketNose.render(scale);
+                        TurboMouth.render(scale);
+                    } else if (mode == ItemFLUDD.SQUIRT) {
+                        Mouth.render(scale);
+                        Head.render(scale);
+                        Nose.render(scale);
+                    }
+
+                    Handle2.render(scale);
+                    Neck.render(scale);
+                    NeckBump.render(scale);
+                    NeckTop.render(scale);
+                    Base.render(scale);
+                    Arm2.render(scale);
+                    Shoulder2.render(scale);
+                    Forearm2.render(scale);
+                    Handle1.render(scale);
+                    Forearm1.render(scale);
+                    Shoulder1.render(scale);
+                    Arm1.render(scale);
+
+                    GL11.glEnable(GL11.GL_LIGHTING);
+                    GL11.glPopMatrix();
                 }
-
-                Handle2.render(scale);
-                Neck.render(scale);
-                NeckBump.render(scale);
-                NeckTop.render(scale);
-                Base.render(scale);
-                Arm2.render(scale);
-                Shoulder2.render(scale);
-                Forearm2.render(scale);
-                Handle1.render(scale);
-                Forearm1.render(scale);
-                Shoulder1.render(scale);
-                Arm1.render(scale);
-
-                GL11.glEnable(GL11.GL_LIGHTING);
-                GL11.glPopMatrix();
-            }
         }
     }
 

@@ -1,6 +1,12 @@
 package maritech;
 
-import mariculture.Mariculture;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
+
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import mariculture.core.Core;
 import mariculture.core.lib.MachineRenderedMultiMeta;
 import mariculture.core.lib.Modules;
@@ -31,18 +37,17 @@ import maritech.tile.TileFLUDDStand;
 import maritech.tile.TileRotorAluminum;
 import maritech.tile.TileRotorCopper;
 import maritech.tile.TileRotorTitanium;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class MTClientProxy extends MTCommonProxy {
+
     private static final ResourceLocation FLUDD = new ResourceLocation("maritech", "textures/blocks/fludd_texture.png");
     private static final ResourceLocation COPPER = new ResourceLocation("maritech", "textures/blocks/copperRotor.png");
-    private static final ResourceLocation ALUMINUM = new ResourceLocation("maritech", "textures/blocks/aluminumRotor.png");
-    private static final ResourceLocation TITANIUM = new ResourceLocation("maritech", "textures/blocks/titaniumRotor.png");
+    private static final ResourceLocation ALUMINUM = new ResourceLocation(
+        "maritech",
+        "textures/blocks/aluminumRotor.png");
+    private static final ResourceLocation TITANIUM = new ResourceLocation(
+        "maritech",
+        "textures/blocks/titaniumRotor.png");
 
     @Override
     public void setupClient() {
@@ -54,20 +59,37 @@ public class MTClientProxy extends MTCommonProxy {
 
         if (Modules.isActive(Modules.diving)) {
             MTRenderIds.SCUBA = RenderingRegistry.addNewArmourRendererPrefix("scuba");
-            RenderHandler.register(Core.renderedMachinesMulti, MachineRenderedMultiMeta.COMPRESSOR_BASE, RenderCompressorBase.class);
-            RenderHandler.register(Core.renderedMachinesMulti, MachineRenderedMultiMeta.COMPRESSOR_TOP, RenderCompressorTop.class);
+            RenderHandler.register(
+                Core.renderedMachinesMulti,
+                MachineRenderedMultiMeta.COMPRESSOR_BASE,
+                RenderCompressorBase.class);
+            RenderHandler.register(
+                Core.renderedMachinesMulti,
+                MachineRenderedMultiMeta.COMPRESSOR_TOP,
+                RenderCompressorTop.class);
         }
 
         if (Modules.isActive(Modules.factory)) {
             MTRenderIds.FLUDD = RenderingRegistry.addNewArmourRendererPrefix("fludd");
             RenderingRegistry.registerEntityRenderingHandler(EntityFLUDDSquirt.class, new RenderFLUDDSquirt());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customRFBlock), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customRFBlock), new RenderCustomItem());
             MinecraftForgeClient.registerItemRenderer(ExtensionFactory.fludd, new RenderFLUDDItem());
-            ClientRegistry.bindTileEntitySpecialRenderer(TileFLUDDStand.class, new RenderSpecialHandler(new ModelFLUDD(), FLUDD));
-            ClientRegistry.bindTileEntitySpecialRenderer(TileRotorCopper.class, new RenderSpecialHandler(new ModelRotor(), COPPER));
-            ClientRegistry.bindTileEntitySpecialRenderer(TileRotorAluminum.class, new RenderSpecialHandler(new ModelRotor(), ALUMINUM));
-            ClientRegistry.bindTileEntitySpecialRenderer(TileRotorTitanium.class, new RenderSpecialHandler(new ModelRotor(), TITANIUM));
-            RenderHandler.register(Core.renderedMachinesMulti, MachineRenderedMultiMeta.PRESSURE_VESSEL, RenderPressureVessel.class);
+            ClientRegistry
+                .bindTileEntitySpecialRenderer(TileFLUDDStand.class, new RenderSpecialHandler(new ModelFLUDD(), FLUDD));
+            ClientRegistry.bindTileEntitySpecialRenderer(
+                TileRotorCopper.class,
+                new RenderSpecialHandler(new ModelRotor(), COPPER));
+            ClientRegistry.bindTileEntitySpecialRenderer(
+                TileRotorAluminum.class,
+                new RenderSpecialHandler(new ModelRotor(), ALUMINUM));
+            ClientRegistry.bindTileEntitySpecialRenderer(
+                TileRotorTitanium.class,
+                new RenderSpecialHandler(new ModelRotor(), TITANIUM));
+            RenderHandler.register(
+                Core.renderedMachinesMulti,
+                MachineRenderedMultiMeta.PRESSURE_VESSEL,
+                RenderPressureVessel.class);
         }
 
         if (Modules.isActive(Modules.transport)) {

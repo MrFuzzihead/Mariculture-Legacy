@@ -2,22 +2,24 @@ package mariculture.fishery.gui;
 
 import java.util.List;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+
 import mariculture.core.gui.GuiMariculture;
 import mariculture.core.gui.feature.FeatureBubbles;
 import mariculture.core.gui.feature.FeatureEject;
 import mariculture.core.gui.feature.FeatureNotifications;
+import mariculture.core.gui.feature.FeatureNotifications.NotificationType;
 import mariculture.core.gui.feature.FeatureRedstone;
 import mariculture.core.gui.feature.FeatureTank;
-import mariculture.core.gui.feature.FeatureUpgrades;
-import mariculture.core.gui.feature.FeatureNotifications.NotificationType;
 import mariculture.core.gui.feature.FeatureTank.TankSize;
+import mariculture.core.gui.feature.FeatureUpgrades;
 import mariculture.core.util.MCTranslate;
 import mariculture.fishery.FishFoodHandler;
 import mariculture.fishery.tile.TileFeeder;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 
 public class GuiFeeder extends GuiMariculture {
+
     private TileFeeder tile;
 
     public GuiFeeder(InventoryPlayer player, TileFeeder tile) {
@@ -25,7 +27,11 @@ public class GuiFeeder extends GuiMariculture {
         this.tile = tile;
         features.add(new FeatureUpgrades());
         features.add(new FeatureBubbles(tile, 104, 17));
-        features.add(new FeatureNotifications(tile, new NotificationType[] { NotificationType.NO_FOOD, NotificationType.NO_MALE, NotificationType.NO_FEMALE, NotificationType.BAD_ENV }));
+        features.add(
+            new FeatureNotifications(
+                tile,
+                new NotificationType[] { NotificationType.NO_FOOD, NotificationType.NO_MALE, NotificationType.NO_FEMALE,
+                    NotificationType.BAD_ENV }));
         features.add(new FeatureRedstone(tile));
         features.add(new FeatureEject(tile));
         features.add(new FeatureTank(tile, 33, 19, TankSize.DOUBLE));
@@ -37,7 +43,7 @@ public class GuiFeeder extends GuiMariculture {
             if (mouseY >= 24 && mouseY <= 41) {
                 tooltip = tile.getTooltip(TileFeeder.male, tooltip);
             }
-            
+
             if (mouseY >= 52 && mouseY <= 69) {
                 tooltip = tile.getTooltip(TileFeeder.female, tooltip);
             }

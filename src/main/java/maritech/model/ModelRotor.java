@@ -1,7 +1,5 @@
 package maritech.model;
 
-import mariculture.core.render.IModelMariculture;
-import maritech.tile.TileRotor;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -9,7 +7,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.render.IModelMariculture;
+import maritech.tile.TileRotor;
+
 public class ModelRotor extends ModelBase implements IModelMariculture {
+
     private static final float scale = (float) (1.0 / 20.0);
     private ModelRenderer Blade19;
     private ModelRenderer Blade18;

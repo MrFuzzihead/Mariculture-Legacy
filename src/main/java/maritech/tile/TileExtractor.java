@@ -1,5 +1,8 @@
 package maritech.tile;
 
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.fish.FishDNABase;
 import mariculture.core.gui.feature.FeatureEject.EjectSetting;
@@ -8,10 +11,9 @@ import mariculture.core.lib.MachineSpeeds;
 import mariculture.core.util.Fluids;
 import maritech.items.ItemFishDNA;
 import maritech.tile.base.TileTankPowered;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 
 public class TileExtractor extends TileTankPowered {
+
     public static final int FISH_OIL_REQUIRED = 10000;
     public static final int FISH = 6;
 
@@ -65,7 +67,8 @@ public class TileExtractor extends TileTankPowered {
     }
 
     private boolean hasFishOil() {
-        return tank.getFluid() != null && tank.getFluid().getFluid() == Fluids.getFluid("fish_oil") && tank.getFluidAmount() >= FISH_OIL_REQUIRED;
+        return tank.getFluid() != null && tank.getFluid()
+            .getFluid() == Fluids.getFluid("fish_oil") && tank.getFluidAmount() >= FISH_OIL_REQUIRED;
     }
 
     private boolean hasPower() {
@@ -82,7 +85,7 @@ public class TileExtractor extends TileTankPowered {
         int tries = 0;
         ItemStack result = null;
         tank.drain(FISH_OIL_REQUIRED, true);
-        //Loop through the fishies dna
+        // Loop through the fishies dna
         while (result == null && tries < 20) {
             for (FishDNABase dna : FishDNABase.DNAParts) {
                 int higher = dna.getDNA(inventory[FISH]);

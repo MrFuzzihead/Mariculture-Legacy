@@ -2,21 +2,23 @@ package maritech.handlers;
 
 import java.util.HashMap;
 
-import mariculture.core.events.IconEvent.GetInventoryIIcon;
-import mariculture.core.events.IconEvent.GetWorldIIcon;
-import maritech.util.IIconExtension;
 import net.minecraft.block.Block;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.events.IconEvent.GetInventoryIIcon;
+import mariculture.core.events.IconEvent.GetWorldIIcon;
+import maritech.util.IIconExtension;
 
 public class IconEvents {
-public static HashMap<Block, IIconExtension> icons = new HashMap();
-    
+
+    public static HashMap<Block, IIconExtension> icons = new HashMap();
+
     public static void register(Block block, IIconExtension extension) {
         icons.put(block, extension);
     }
-    
+
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void getInventoryIcon(GetInventoryIIcon event) {

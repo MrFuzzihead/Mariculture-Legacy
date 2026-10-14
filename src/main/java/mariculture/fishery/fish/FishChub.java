@@ -7,16 +7,18 @@ import static mariculture.core.lib.MCLib.dropletRegen;
 
 import java.util.Random;
 
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishChub extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 35;
@@ -61,7 +63,7 @@ public class FishChub extends FishSpecies {
     public int getWaterRequired() {
         return 85;
     }
-   
+
     @Override
     public void addFishProducts() {
         addProduct(dropletEarth, 10D);
@@ -73,22 +75,22 @@ public class FishChub extends FishSpecies {
     public double getFishOilVolume() {
         return 1.3D;
     }
-    
+
     @Override
     public void onConsumed(World world, EntityPlayer player) {
         player.addPotionEffect(new PotionEffect(Potion.hunger.id, 800, 1));
     }
-    
+
     @Override
     public int getFoodStat() {
         return 12;
     }
-    
+
     @Override
     public float getFoodSaturation() {
         return 0.6F;
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;
@@ -104,7 +106,8 @@ public class FishChub extends FishSpecies {
                 int chance = 40 - difficulty * 10;
                 if (rand.nextInt(chance) == 0) {
                     player.addPotionEffect(new PotionEffect(Potion.field_76444_x.id, difficulty * 100, 1, true));
-                    player.getFoodStats().addStats(1, 0.1F);
+                    player.getFoodStats()
+                        .addStats(1, 0.1F);
                 }
             }
         }

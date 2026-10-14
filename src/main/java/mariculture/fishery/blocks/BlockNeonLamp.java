@@ -3,11 +3,6 @@ package mariculture.fishery.blocks;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.blocks.base.BlockMCBaseMeta;
-import mariculture.core.lib.PearlColor;
-import mariculture.fishery.Fishery;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -19,10 +14,17 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.blocks.base.BlockMCBaseMeta;
+import mariculture.core.lib.PearlColor;
+import mariculture.fishery.Fishery;
 
 public class BlockNeonLamp extends BlockMCBaseMeta {
+
     private final boolean powered;
 
     public BlockNeonLamp(boolean powered, String prefix) {
@@ -88,7 +90,10 @@ public class BlockNeonLamp extends BlockMCBaseMeta {
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
         Block block = world.getBlock(x, y, z);
         if (this == Fishery.lampsOff || this == Fishery.lampsOn) {
-            if (world.getBlockMetadata(x, y, z) != world.getBlockMetadata(x - Facing.offsetsXForSide[side], y - Facing.offsetsYForSide[side], z - Facing.offsetsZForSide[side])) return true;
+            if (world.getBlockMetadata(x, y, z) != world.getBlockMetadata(
+                x - Facing.offsetsXForSide[side],
+                y - Facing.offsetsYForSide[side],
+                z - Facing.offsetsZForSide[side])) return true;
 
             if (block == this) return false;
         }
@@ -123,7 +128,7 @@ public class BlockNeonLamp extends BlockMCBaseMeta {
 
         boolean on = getUnlocalizedName().contains("on");
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = register.registerIcon(Mariculture.modid + ":lamps" + (on? "On": "Off") + i);
+            icons[i] = register.registerIcon(Mariculture.modid + ":lamps" + (on ? "On" : "Off") + i);
         }
     }
 
@@ -131,10 +136,9 @@ public class BlockNeonLamp extends BlockMCBaseMeta {
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
         if (creativeTabs == MaricultureTab.tabCore) if (item == Item.getItemFromBlock(Fishery.lampsOn)) {
-            for (int meta = 0; meta < PearlColor.COUNT; ++meta)
-                if (!list.contains(new ItemStack(item, 1, meta))) {
-                    list.add(new ItemStack(item, 1, meta));
-                }
+            for (int meta = 0; meta < PearlColor.COUNT; ++meta) if (!list.contains(new ItemStack(item, 1, meta))) {
+                list.add(new ItemStack(item, 1, meta));
+            }
         }
     }
 

@@ -2,13 +2,15 @@ package mariculture.core.items;
 
 import java.util.Random;
 
-import mariculture.core.lib.PearlColor;
-import mariculture.core.util.MCTranslate;
-import mariculture.magic.Magic;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.lib.PearlColor;
+import mariculture.core.util.MCTranslate;
+import mariculture.magic.Magic;
+
 public class ItemPearl extends ItemMCMeta {
+
     @Override
     public int getMetaCount() {
         return PearlColor.COUNT;
@@ -23,14 +25,14 @@ public class ItemPearl extends ItemMCMeta {
     public boolean isItemTool(ItemStack stack) {
         return true;
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         String translate = MCTranslate.translate("pearl.color." + PearlColor.get(stack.getItemDamage()) + ".pearl");
-        if(!translate.equals("mariculture.pearl.color." + PearlColor.get(stack.getItemDamage()) + ".pearl")) {
+        if (!translate.equals("mariculture.pearl.color." + PearlColor.get(stack.getItemDamage()) + ".pearl")) {
             return translate;
         }
-        
+
         String format = MCTranslate.translate("pearl.format");
         format = format.replace("%C", MCTranslate.translate("pearl.color." + PearlColor.get(stack.getItemDamage())));
         format = format.replace("%P", MCTranslate.translate("pearl"));

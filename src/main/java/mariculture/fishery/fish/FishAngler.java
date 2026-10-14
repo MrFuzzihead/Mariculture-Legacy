@@ -5,14 +5,17 @@ import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletFlux;
 import static mariculture.core.lib.MCLib.dropletWater;
+
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import mariculture.api.core.Environment.Height;
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class FishAngler extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 6;

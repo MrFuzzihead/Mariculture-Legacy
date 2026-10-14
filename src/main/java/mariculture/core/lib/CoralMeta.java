@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class CoralMeta {
+
     public static final int COUNT = 13;
     public static final int KELP_MIDDLE = 0;
     public static final int KELP = 1;

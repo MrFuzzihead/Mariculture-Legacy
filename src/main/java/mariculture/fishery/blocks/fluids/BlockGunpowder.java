@@ -2,13 +2,15 @@ package mariculture.fishery.blocks.fluids;
 
 import java.util.Random;
 
-import mariculture.core.blocks.base.BlockFluid;
-import mariculture.core.helpers.PlayerHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 
+import mariculture.core.blocks.base.BlockFluid;
+import mariculture.core.helpers.PlayerHelper;
+
 public class BlockGunpowder extends BlockFluid {
+
     public BlockGunpowder(Fluid fluid, Material material) {
         super(fluid, material);
         quantaPerBlock = 12;

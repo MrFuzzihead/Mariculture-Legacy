@@ -4,9 +4,7 @@ import static mariculture.api.core.Environment.Salinity.SALINE;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletPoison;
 import static mariculture.core.lib.MCLib.dropletWater;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
@@ -14,7 +12,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishBlaasop extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 9;
@@ -83,7 +86,7 @@ public class FishBlaasop extends FishSpecies {
         player.addPotionEffect(new PotionEffect(Potion.poison.id, 200, 5));
         player.addPotionEffect(new PotionEffect(Potion.confusion.id, 500, 0));
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;

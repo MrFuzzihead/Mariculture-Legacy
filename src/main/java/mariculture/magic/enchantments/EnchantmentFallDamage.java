@@ -1,12 +1,14 @@
 package mariculture.magic.enchantments;
 
-import mariculture.core.helpers.EnchantHelper;
-import mariculture.magic.Magic;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 
+import mariculture.core.helpers.EnchantHelper;
+import mariculture.magic.Magic;
+
 public class EnchantmentFallDamage extends EnchantmentJewelry {
+
     public EnchantmentFallDamage(final int i, final int weight, final EnumEnchantmentType type) {
         super(i, weight, type);
         setName("fall");

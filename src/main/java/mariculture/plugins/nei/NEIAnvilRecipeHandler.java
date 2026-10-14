@@ -4,6 +4,13 @@ import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
+import codechicken.nei.NEIServerUtils;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.GuiRecipe;
 import mariculture.Mariculture;
 import mariculture.api.core.IAnvilHandler.RecipeAnvil;
 import mariculture.api.core.MaricultureHandlers;
@@ -11,17 +18,13 @@ import mariculture.core.helpers.OreDicHelper;
 import mariculture.core.lib.Modules;
 import mariculture.core.util.MCTranslate;
 import mariculture.magic.JewelryHandler;
-import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import codechicken.nei.NEIServerUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.GuiRecipe;
 
 public class NEIAnvilRecipeHandler extends NEIBase {
+
     public static final HashMap<ItemStack, RecipeJewelry> jewelry = new HashMap();
 
     public static class RecipeJewelry {
+
         int hits;
         ItemStack input;
 
@@ -32,6 +35,7 @@ public class NEIAnvilRecipeHandler extends NEIBase {
     }
 
     public class CachedAnvilRecipe extends CachedRecipe {
+
         int hits;
         PositionedStack input;
         PositionedStack output;
@@ -58,14 +62,16 @@ public class NEIAnvilRecipeHandler extends NEIBase {
         if (outputId.equals("blacksmithanvil") && getClass() == NEIAnvilRecipeHandler.class) {
             HashMap<String, RecipeAnvil> recipes = MaricultureHandlers.anvil.getRecipes();
             for (Entry<String, RecipeAnvil> recipe : recipes.entrySet()) {
-                if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
-                arecipes.add(new CachedAnvilRecipe(recipe.getValue().input, recipe.getValue().output, recipe.getValue().hits));
+                if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
+                arecipes.add(
+                    new CachedAnvilRecipe(recipe.getValue().input, recipe.getValue().output, recipe.getValue().hits));
             }
 
             if (Modules.isActive(Modules.magic)) {
                 for (Entry<ItemStack, RecipeJewelry> recipe : jewelry.entrySet()) {
-                    if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
-                    arecipes.add(new CachedAnvilRecipe(recipe.getValue().input, recipe.getKey(), recipe.getValue().hits));
+                    if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
+                    arecipes
+                        .add(new CachedAnvilRecipe(recipe.getValue().input, recipe.getKey(), recipe.getValue().hits));
                 }
             }
         } else {
@@ -77,18 +83,23 @@ public class NEIAnvilRecipeHandler extends NEIBase {
     public void loadCraftingRecipes(ItemStack result) {
         HashMap<String, RecipeAnvil> recipes = MaricultureHandlers.anvil.getRecipes();
         for (Entry<String, RecipeAnvil> recipe : recipes.entrySet()) {
-            if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
+            if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
             if (NEIServerUtils.areStacksSameTypeCrafting(result, recipe.getValue().output)) {
-                arecipes.add(new CachedAnvilRecipe(recipe.getValue().input, recipe.getValue().output, recipe.getValue().hits));
+                arecipes.add(
+                    new CachedAnvilRecipe(recipe.getValue().input, recipe.getValue().output, recipe.getValue().hits));
             }
         }
         if (Modules.isActive(Modules.magic)) {
             for (Entry<ItemStack, RecipeJewelry> recipe : jewelry.entrySet()) {
-                if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
-                if (result.hasTagCompound() && recipe.getKey().hasTagCompound()) {
+                if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
+                if (result.hasTagCompound() && recipe.getKey()
+                    .hasTagCompound()) {
                     ItemStack other = recipe.getKey();
-                    if (JewelryHandler.getMaterial(other) == JewelryHandler.getMaterial(result) && JewelryHandler.getBinding(other) == JewelryHandler.getBinding(result) && JewelryHandler.getType(other) == JewelryHandler.getType(result)) {
-                        arecipes.add(new CachedAnvilRecipe(recipe.getValue().input, recipe.getKey(), recipe.getValue().hits));
+                    if (JewelryHandler.getMaterial(other) == JewelryHandler.getMaterial(result)
+                        && JewelryHandler.getBinding(other) == JewelryHandler.getBinding(result)
+                        && JewelryHandler.getType(other) == JewelryHandler.getType(result)) {
+                        arecipes.add(
+                            new CachedAnvilRecipe(recipe.getValue().input, recipe.getKey(), recipe.getValue().hits));
                     }
                 }
             }
@@ -99,9 +110,11 @@ public class NEIAnvilRecipeHandler extends NEIBase {
     public void loadUsageRecipes(ItemStack ingredient) {
         HashMap<String, RecipeAnvil> recipes = MaricultureHandlers.anvil.getRecipes();
         for (Entry<String, RecipeAnvil> recipe : recipes.entrySet()) {
-            if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
-            if (OreDicHelper.convert(ingredient).equals(OreDicHelper.convert(recipe.getValue().input))) {
-                arecipes.add(new CachedAnvilRecipe(recipe.getValue().input, recipe.getValue().output, recipe.getValue().hits));
+            if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
+            if (OreDicHelper.convert(ingredient)
+                .equals(OreDicHelper.convert(recipe.getValue().input))) {
+                arecipes.add(
+                    new CachedAnvilRecipe(recipe.getValue().input, recipe.getValue().output, recipe.getValue().hits));
             }
         }
     }
@@ -109,7 +122,8 @@ public class NEIAnvilRecipeHandler extends NEIBase {
     @Override
     public void drawExtras(int id) {
         CachedAnvilRecipe cache = (CachedAnvilRecipe) arecipes.get(id);
-        Minecraft.getMinecraft().fontRenderer.drawString(mariculture.lib.util.Text.GREY + cache.hits + " Hits", 78, 38, 0);
+        Minecraft.getMinecraft().fontRenderer
+            .drawString(mariculture.lib.util.Text.GREY + cache.hits + " Hits", 78, 38, 0);
     }
 
     @Override

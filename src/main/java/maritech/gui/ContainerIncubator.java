@@ -1,10 +1,5 @@
 package maritech.gui;
 
-import mariculture.api.core.IItemUpgrade;
-import mariculture.api.fishery.Fishing;
-import mariculture.core.gui.ContainerMachine;
-import mariculture.core.gui.SlotOutput;
-import maritech.tile.TileIncubator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -13,9 +8,16 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
 import cofh.api.energy.IEnergyContainerItem;
+import mariculture.api.core.IItemUpgrade;
+import mariculture.api.fishery.Fishing;
+import mariculture.core.gui.ContainerMachine;
+import mariculture.core.gui.SlotOutput;
+import maritech.tile.TileIncubator;
 
 public class ContainerIncubator extends ContainerMachine {
+
     public ContainerIncubator(TileIncubator tile, InventoryPlayer playerInventory) {
         super(tile);
 
@@ -54,7 +56,8 @@ public class ContainerIncubator extends ContainerMachine {
 
                 slot.onSlotChange(stack, itemstack);
             } else if (slotID >= size) {
-                if (Fishing.fishHelper.isEgg(stack) || stack.getItem() == Items.egg || stack.getItem() == Item.getItemFromBlock(Blocks.dragon_egg)) {
+                if (Fishing.fishHelper.isEgg(stack) || stack.getItem() == Items.egg
+                    || stack.getItem() == Item.getItemFromBlock(Blocks.dragon_egg)) {
                     if (!mergeItemStack(stack, 4, 13, false)) return null;
                 } else if (stack.getItem() instanceof IItemUpgrade) {
                     if (!mergeItemStack(stack, 0, 3, false)) return null;
@@ -80,6 +83,7 @@ public class ContainerIncubator extends ContainerMachine {
     }
 
     private class SlotFishEgg extends Slot {
+
         private EntityPlayer thePlayer;
 
         private SlotFishEgg(IInventory inventory, int par2, int par3, int par4) {

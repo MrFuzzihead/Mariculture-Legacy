@@ -3,13 +3,16 @@ package mariculture.fishery.fish;
 import static mariculture.core.lib.MCLib.dropletFlux;
 import static mariculture.core.lib.MCLib.dropletGold;
 import static mariculture.core.lib.MCLib.dropletRegen;
+
+import net.minecraft.block.Block;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
 import mariculture.core.util.Fluids;
-import net.minecraft.block.Block;
 
 public class FishGoldMetal extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 20;
@@ -44,27 +47,27 @@ public class FishGoldMetal extends FishSpecies {
     public int getFertility() {
         return 300;
     }
-    
+
     @Override
     public int getBaseProductivity() {
         return 0;
     }
-    
+
     @Override
     public Block getWater2() {
         return Fluids.getFluidBlock("custard");
     }
-    
+
     @Override
     public double getFishOilVolume() {
         return 0.0D;
     }
-    
+
     @Override
     public int getFoodStat() {
         return -1;
     }
-    
+
     @Override
     public int getFishMealSize() {
         return 0;

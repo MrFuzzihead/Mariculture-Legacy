@@ -2,9 +2,6 @@ package mariculture.core.items;
 
 import java.util.List;
 
-import mariculture.Mariculture;
-import mariculture.core.helpers.NBTHelper;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,10 +9,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.core.helpers.NBTHelper;
+import mariculture.core.util.MCTranslate;
 
 public class ItemWorked extends ItemMCDamageable {
+
     public IIcon crack;
 
     public ItemWorked() {
@@ -29,7 +31,9 @@ public class ItemWorked extends ItemMCDamageable {
         if (stack.stackTagCompound == null) return StatCollector.translateToLocal("itemGroup.jewelryTab");
 
         ItemStack worked = NBTHelper.getItemStackFromNBT(stack.stackTagCompound.getCompoundTag("WorkedItem"));
-        return MCTranslate.translate("unworked") + " " + worked.getItem().getItemStackDisplayName(worked);
+        return MCTranslate.translate("unworked") + " "
+            + worked.getItem()
+                .getItemStackDisplayName(worked);
     }
 
     @Override
@@ -83,7 +87,8 @@ public class ItemWorked extends ItemMCDamageable {
         if (pass < 4) if (stack.hasTagCompound()) {
             ItemStack worked = NBTHelper.getItemStackFromNBT(stack.stackTagCompound.getCompoundTag("WorkedItem"));
             if (worked == null || worked.getItem() == null) return crack;
-            if (worked.getItem() != this) return worked.getItem().getIcon(worked, pass);
+            if (worked.getItem() != this) return worked.getItem()
+                .getIcon(worked, pass);
         }
 
         return crack;

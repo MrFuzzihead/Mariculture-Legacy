@@ -1,6 +1,5 @@
 package mariculture.factory.tile;
 
-import mariculture.core.network.PacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,7 +8,10 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
+import mariculture.core.network.PacketHandler;
+
 public class TileCustom extends TileEntity {
+
     private float hardness, resist;
     private Block[] theBlocks = new Block[6];
     private int[] theBlockMetas = new int[6];
@@ -48,11 +50,11 @@ public class TileCustom extends TileEntity {
     public boolean canUpdate() {
         return false;
     }
-    
+
     public void readData(NBTTagCompound nbt) {
         for (int i = 0; i < 6; i++) {
             Block block = (Block) Block.blockRegistry.getObject(nbt.getString("BlockIdentifier" + i));
-            theBlocks[i] = block != null? block: Blocks.stone;
+            theBlocks[i] = block != null ? block : Blocks.stone;
         }
 
         resist = nbt.getFloat("BlockResistance");
@@ -71,11 +73,11 @@ public class TileCustom extends TileEntity {
     public boolean isNameNull() {
         return name == null || name.equals("");
     }
-    
+
     public void writeData(NBTTagCompound nbt) {
         for (int i = 0; i < 6; i++) {
             String name = Block.blockRegistry.getNameForObject(theBlocks[i]);
-            if (name == null || name.equals("")) name ="minecraft:stone";
+            if (name == null || name.equals("")) name = "minecraft:stone";
             nbt.setString("BlockIdentifier" + i, name);
         }
 
@@ -83,7 +85,7 @@ public class TileCustom extends TileEntity {
         nbt.setFloat("BlockHardness", hardness);
         nbt.setIntArray("BlockMetas", theBlockMetas);
         nbt.setIntArray("BlockSides", theSides);
-        nbt.setString("Name", isNameNull()? "invalid": name);
+        nbt.setString("Name", isNameNull() ? "invalid" : name);
     }
 
     @Override

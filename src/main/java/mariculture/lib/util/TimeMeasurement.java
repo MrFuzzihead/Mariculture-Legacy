@@ -1,11 +1,11 @@
-package hacker;
+package mariculture.lib.util;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-//BY CHYLEX
+// BY CHYLEX
 public final class TimeMeasurement {
+
     private static final Map<String, Long> timers = new HashMap<String, Long>();
 
     public static void start(String identifier) {

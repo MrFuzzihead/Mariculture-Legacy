@@ -1,11 +1,13 @@
 package mariculture.fishery.render;
 
+import net.minecraft.init.Blocks;
+
 import mariculture.core.Core;
 import mariculture.core.lib.TickingMeta;
 import mariculture.core.render.RenderBase;
-import net.minecraft.init.Blocks;
 
 public class RenderHatchery extends RenderBase {
+
     public RenderHatchery() {}
 
     @Override

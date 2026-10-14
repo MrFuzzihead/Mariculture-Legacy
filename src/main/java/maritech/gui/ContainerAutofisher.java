@@ -1,18 +1,20 @@
 package maritech.gui;
 
-import mariculture.api.core.IItemUpgrade;
-import mariculture.api.fishery.Fishing;
-import mariculture.core.gui.ContainerMachine;
-import mariculture.core.gui.SlotOutput;
-import maritech.tile.TileAutofisher;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cofh.api.energy.IEnergyContainerItem;
+import mariculture.api.core.IItemUpgrade;
+import mariculture.api.fishery.Fishing;
+import mariculture.core.gui.ContainerMachine;
+import mariculture.core.gui.SlotOutput;
+import maritech.tile.TileAutofisher;
 
 public class ContainerAutofisher extends ContainerMachine {
+
     public ContainerAutofisher(TileAutofisher tile, InventoryPlayer playerInventory) {
         super(tile);
 
@@ -61,7 +63,7 @@ public class ContainerAutofisher extends ContainerMachine {
                     if (!mergeItemStack(stack, 3, 4, false)) return null;
                 } else if (Fishing.fishing.getBaitQuality(stack) > 0) {
                     if (!mergeItemStack(stack, 5, 11, false)) // 5-10
-                    return null;
+                        return null;
                 } else if (slotID >= size && slotID < low) {
                     if (!mergeItemStack(stack, low, high, false)) return null;
                 } else if (slotID >= low && slotID < high && !mergeItemStack(stack, high, low, false)) return null;
@@ -82,6 +84,7 @@ public class ContainerAutofisher extends ContainerMachine {
     }
 
     private class SlotFishingRod extends Slot {
+
         public SlotFishingRod(IInventory inventory, int id, int x, int y) {
             super(inventory, id, x, y);
         }
@@ -93,6 +96,7 @@ public class ContainerAutofisher extends ContainerMachine {
     }
 
     private class SlotBait extends Slot {
+
         public SlotBait(IInventory inventory, int id, int x, int y) {
             super(inventory, id, x, y);
         }

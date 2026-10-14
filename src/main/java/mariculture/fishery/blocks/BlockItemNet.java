@@ -1,11 +1,5 @@
 package mariculture.fishery.blocks;
 
-import mariculture.api.core.MaricultureTab;
-import mariculture.api.fishery.Fishing;
-import mariculture.core.Core;
-import mariculture.core.items.ItemMCMeta;
-import mariculture.fishery.Fish;
-import mariculture.lib.helpers.ItemHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySquid;
@@ -15,7 +9,15 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 
+import mariculture.api.core.MaricultureTab;
+import mariculture.api.fishery.Fishing;
+import mariculture.core.Core;
+import mariculture.core.items.ItemMCMeta;
+import mariculture.fishery.Fish;
+import mariculture.lib.helpers.ItemHelper;
+
 public class BlockItemNet extends ItemMCMeta {
+
     public BlockItemNet() {
         setHasSubtypes(false);
         setCreativeTab(MaricultureTab.tabFishery);
@@ -41,7 +43,9 @@ public class BlockItemNet extends ItemMCMeta {
 
                 if (!player.canPlayerEdit(x, y, z, object.sideHit, stack)) return stack;
 
-                if (world.getBlock(x, y, z).getMaterial() == Material.water && world.getBlockMetadata(x, y, z) == 0 && world.isAirBlock(x, y + 1, z)) {
+                if (world.getBlock(x, y, z)
+                    .getMaterial() == Material.water && world.getBlockMetadata(x, y, z) == 0
+                    && world.isAirBlock(x, y + 1, z)) {
                     world.setBlock(x, y + 1, z, Core.ticking);
 
                     if (!player.capabilities.isCreativeMode) {
@@ -58,7 +62,12 @@ public class BlockItemNet extends ItemMCMeta {
     public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity) {
         if (!entity.worldObj.isRemote) if (entity instanceof EntitySquid) {
             player.inventory.decrStackSize(player.inventory.currentItem, 1);
-            ItemHelper.spawnItem(entity.worldObj, (int) entity.posX, (int) entity.posY, (int) entity.posZ, Fishing.fishHelper.makePureFish(Fish.squid));
+            ItemHelper.spawnItem(
+                entity.worldObj,
+                (int) entity.posX,
+                (int) entity.posY,
+                (int) entity.posZ,
+                Fishing.fishHelper.makePureFish(Fish.squid));
             entity.worldObj.spawnParticle("bubble", entity.posX, entity.posY, entity.posZ, 0, 0, 0);
             entity.setDead();
         }

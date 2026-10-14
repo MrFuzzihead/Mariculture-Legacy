@@ -3,6 +3,12 @@ package mariculture.core.tile.base;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+
 import mariculture.api.core.IUpgradable;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.gui.feature.Feature;
@@ -15,28 +21,25 @@ import mariculture.core.util.IMachine;
 import mariculture.core.util.IProgressable;
 import mariculture.core.util.IRedstoneControlled;
 import mariculture.core.util.Tank;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 
-public abstract class TileMultiMachineTank extends TileMultiStorageTank implements IUpgradable, IMachine, ISidedInventory, IRedstoneControlled, IEjectable, IProgressable {
+public abstract class TileMultiMachineTank extends TileMultiStorageTank
+    implements IUpgradable, IMachine, ISidedInventory, IRedstoneControlled, IEjectable, IProgressable {
+
     protected BlockTransferHelper helper;
-    //General Tick
+    // General Tick
     private int machineTick = 0;
-    //Upgrade Stats
+    // Upgrade Stats
     protected int purity = 0;
     public int heat = 0;
     protected int storage = 0;
     public int speed = 0;
     protected int rf = 0;
-    //Tile Configuration
+    // Tile Configuration
     public EjectSetting setting;
     public RedstoneMode mode;
-    //GUI INT offset
+    // GUI INT offset
     protected int offset = 9;
-    //Machine vars
+    // Machine vars
     protected int max;
     protected boolean canWork;
     protected int processed = 0;
@@ -78,10 +81,9 @@ public abstract class TileMultiMachineTank extends TileMultiStorageTank implemen
 
         int[] inputs = getInputSlots();
         if (inputs != null) {
-            for (int i : inputs)
-                if (slot == i) {
-                    mstr.canWork = mstr.canWork();
-                }
+            for (int i : inputs) if (slot == i) {
+                mstr.canWork = mstr.canWork();
+            }
         }
 
         mstr.markDirty();
@@ -153,10 +155,12 @@ public abstract class TileMultiMachineTank extends TileMultiStorageTank implemen
             TileMultiMachineTank mstr = (TileMultiMachineTank) getMaster();
             RedstoneMode mode = mstr.mode;
             if (mode == RedstoneMode.DISABLED) return true;
-            for (MultiPart block : mstr.slaves)
-                if (mode.equals(RedstoneMode.LOW)) {
-                    if (!RedstoneMode.canWork(worldObj.getTileEntity(block.xCoord, block.yCoord, block.zCoord), mode)) return false;
-                } else if (mode.equals(RedstoneMode.HIGH)) if (RedstoneMode.canWork(worldObj.getTileEntity(block.xCoord, block.yCoord, block.zCoord), mode)) return true;
+            for (MultiPart block : mstr.slaves) if (mode.equals(RedstoneMode.LOW)) {
+                if (!RedstoneMode.canWork(worldObj.getTileEntity(block.xCoord, block.yCoord, block.zCoord), mode))
+                    return false;
+            } else if (mode.equals(RedstoneMode.HIGH))
+                if (RedstoneMode.canWork(worldObj.getTileEntity(block.xCoord, block.yCoord, block.zCoord), mode))
+                    return true;
 
             return RedstoneMode.canWork(getMaster(), mode);
         }
@@ -218,7 +222,14 @@ public abstract class TileMultiMachineTank extends TileMultiStorageTank implemen
 
     @Override
     public boolean hasChanged() {
-        return lastMode != mode.ordinal() || lastSetting != setting.ordinal() || lastProcessed != processed || lastFluidID != tank.getFluidID() || lastFluidAmount != tank.getFluidAmount() || lastFluidCapacity != tank.getCapacity() || lastMasterX != getGuiMasterX() || lastMasterY != getGuiMasterY() || lastMasterZ != getGuiMasterZ();
+        return lastMode != mode.ordinal() || lastSetting != setting.ordinal()
+            || lastProcessed != processed
+            || lastFluidID != tank.getFluidID()
+            || lastFluidAmount != tank.getFluidAmount()
+            || lastFluidCapacity != tank.getCapacity()
+            || lastMasterX != getGuiMasterX()
+            || lastMasterY != getGuiMasterY()
+            || lastMasterZ != getGuiMasterZ();
     }
 
     @Override
@@ -233,7 +244,10 @@ public abstract class TileMultiMachineTank extends TileMultiStorageTank implemen
         lastMasterY = getGuiMasterY();
         lastMasterZ = getGuiMasterZ();
 
-        return new ArrayList(Arrays.asList(new Integer[] { lastMode, lastSetting, lastProcessed, lastFluidID, lastFluidAmount, lastFluidCapacity, lastMasterX, lastMasterY, lastMasterZ }));
+        return new ArrayList(
+            Arrays.asList(
+                new Integer[] { lastMode, lastSetting, lastProcessed, lastFluidID, lastFluidAmount, lastFluidCapacity,
+                    lastMasterX, lastMasterY, lastMasterZ }));
     }
 
     private int getGuiMasterX() {
@@ -291,8 +305,8 @@ public abstract class TileMultiMachineTank extends TileMultiStorageTank implemen
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        storage = nbt.getInteger("Storage"); //grab the storage value first
-        tank = new Tank(getTankCapacity(storage)); //Recreate the tank
+        storage = nbt.getInteger("Storage"); // grab the storage value first
+        tank = new Tank(getTankCapacity(storage)); // Recreate the tank
         tank.readFromNBT(nbt);
         setting = EjectSetting.readFromNBT(nbt);
         mode = RedstoneMode.readFromNBT(nbt);

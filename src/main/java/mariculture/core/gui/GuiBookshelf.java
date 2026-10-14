@@ -1,14 +1,16 @@
 package mariculture.core.gui;
 
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.tile.TileBookshelf;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.tile.TileBookshelf;
+
 public class GuiBookshelf extends GuiContainer {
+
     private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/container/dispenser.png");
     private final TileBookshelf tile;
 

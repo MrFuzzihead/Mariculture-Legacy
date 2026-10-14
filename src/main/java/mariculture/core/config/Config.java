@@ -3,21 +3,27 @@ package mariculture.core.config;
 import java.io.File;
 import java.lang.reflect.Method;
 
+import net.minecraftforge.common.config.Configuration;
+
+import org.apache.logging.log4j.Level;
+
 import mariculture.Mariculture;
 import mariculture.api.core.MaricultureTab;
 import mariculture.core.handlers.LogHandler;
 import mariculture.core.helpers.ConfigHelper;
 import mariculture.core.lib.MCModInfo;
 import mariculture.core.lib.Modules;
-import net.minecraftforge.common.config.Configuration;
-
-import org.apache.logging.log4j.Level;
 
 public class Config {
+
     private static final String dir = Mariculture.root + "/mariculture/";
 
     private static boolean setup(String name) {
-        Configuration config = new Configuration(new File(dir, name.replaceAll("(.)([A-Z])", "$1-$2").toLowerCase() + ".cfg"));
+        Configuration config = new Configuration(
+            new File(
+                dir,
+                name.replaceAll("(.)([A-Z])", "$1-$2")
+                    .toLowerCase() + ".cfg"));
         try {
             try {
                 config.load();

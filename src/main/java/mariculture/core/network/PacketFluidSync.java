@@ -1,21 +1,24 @@
 package mariculture.core.network;
 
-import io.netty.buffer.ByteBuf;
-import mariculture.core.util.ITank;
-import mariculture.lib.helpers.ClientHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.core.util.ITank;
+import mariculture.lib.helpers.ClientHelper;
 
 public class PacketFluidSync extends PacketCoords implements IMessageHandler<PacketFluidSync, IMessage> {
+
     private byte tank;
     private FluidStack fluid;
 
     public PacketFluidSync() {}
+
     public PacketFluidSync(int x, int y, int z, FluidStack fluid, byte tank) {
         super(x, y, z);
         this.fluid = fluid;

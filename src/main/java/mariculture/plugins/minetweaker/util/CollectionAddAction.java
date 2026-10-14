@@ -2,13 +2,14 @@ package mariculture.plugins.minetweaker.util;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
-import minetweaker.IUndoableAction;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
+import minetweaker.IUndoableAction;
+
 public abstract class CollectionAddAction implements IUndoableAction {
+
     protected final Collection list;
     protected final Object recipe;
     protected String description;
@@ -51,8 +52,10 @@ public abstract class CollectionAddAction implements IUndoableAction {
     public String describe() {
         if (recipe instanceof ItemStack)
             return "Adding " + description + " Recipe for :" + ((ItemStack) recipe).getDisplayName();
-        else if (recipe instanceof FluidStack)
-            return "Adding " + description + " Recipe for :" + ((FluidStack) recipe).getFluid().getLocalizedName();
+        else if (recipe instanceof FluidStack) return "Adding " + description
+            + " Recipe for :"
+            + ((FluidStack) recipe).getFluid()
+                .getLocalizedName();
         else return "Adding " + description + " Recipe for :" + getRecipeInfo();
     }
 
@@ -60,8 +63,10 @@ public abstract class CollectionAddAction implements IUndoableAction {
     public String describeUndo() {
         if (recipe instanceof ItemStack)
             return "Removing " + description + " Recipe for :" + ((ItemStack) recipe).getDisplayName();
-        else if (recipe instanceof FluidStack)
-            return "Removing " + description + " Recipe for :" + ((FluidStack) recipe).getFluid().getLocalizedName();
+        else if (recipe instanceof FluidStack) return "Removing " + description
+            + " Recipe for :"
+            + ((FluidStack) recipe).getFluid()
+                .getLocalizedName();
         else return "Removing " + description + " Recipe for :" + getRecipeInfo();
     }
 

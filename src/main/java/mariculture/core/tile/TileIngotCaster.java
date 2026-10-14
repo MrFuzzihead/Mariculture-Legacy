@@ -5,6 +5,7 @@ import mariculture.api.core.RecipeCasting;
 import mariculture.core.lib.MetalRates;
 
 public class TileIngotCaster extends TileCooling {
+
     @Override
     public int getInventorySize() {
         return 4;

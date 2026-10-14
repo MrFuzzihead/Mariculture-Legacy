@@ -1,5 +1,17 @@
 package mariculture.core.items;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+
+import cofh.api.energy.IEnergyContainerItem;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.api.core.MaricultureTab;
 import mariculture.core.config.GeneralStuff;
@@ -11,19 +23,9 @@ import mariculture.lib.helpers.ClientHelper;
 import mariculture.lib.util.Text;
 import mariculture.world.EntityRockhopper;
 import mariculture.world.WorldPlus;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
-import cofh.api.energy.IEnergyContainerItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemCrafting extends ItemMCMeta implements IEnergyContainerItem {
+
     @Override
     public int getMetaCount() {
         return CraftingMeta.COUNT;
@@ -90,9 +92,14 @@ public class ItemCrafting extends ItemMCMeta implements IEnergyContainerItem {
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        String unlocalized = getUnlocalizedName().replace("item", "").replace("_", ".");
-        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2").toLowerCase();
-        return Text.localize(unlocalized.replace("mariculture.", MaricultureEvents.getMod(stack.getItem(), stack.getItemDamage(), "mariculture") + ".") + "." + name);
+        String unlocalized = getUnlocalizedName().replace("item", "")
+            .replace("_", ".");
+        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2")
+            .toLowerCase();
+        return Text.localize(
+            unlocalized.replace(
+                "mariculture.",
+                MaricultureEvents.getMod(stack.getItem(), stack.getItemDamage(), "mariculture") + ".") + "." + name);
     }
 
     public boolean spawnEnderDragon(ItemStack stack, EntityPlayer player, World world, int x, int y, int z) {
@@ -119,21 +126,40 @@ public class ItemCrafting extends ItemMCMeta implements IEnergyContainerItem {
                 temperature = MaricultureHandlers.environment.getTemperature(world, x, y, z);
             }
 
-            if (world.isDaytime()) ClientHelper.addToChat(MCTranslate.translate("time") + " " + MCTranslate.translate("time.day"));
+            if (world.isDaytime())
+                ClientHelper.addToChat(MCTranslate.translate("time") + " " + MCTranslate.translate("time.day"));
             else ClientHelper.addToChat(MCTranslate.translate("time") + " " + MCTranslate.translate("time.night"));
             ClientHelper.addToChat(prefix + ": " + temperature + mariculture.lib.util.Text.DEGREES);
-            ClientHelper.addToChat(MCTranslate.translate("environment.salinity") + ": " + MCTranslate.translate("salinity." + MaricultureHandlers.environment.getSalinity(world, x, z).name().toLowerCase()));
+            ClientHelper.addToChat(
+                MCTranslate.translate("environment.salinity") + ": "
+                    + MCTranslate.translate(
+                        "salinity." + MaricultureHandlers.environment.getSalinity(world, x, z)
+                            .name()
+                            .toLowerCase()));
         }
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+        float par8, float par9, float par10) {
         int dmg = stack.getItemDamage();
-        if (dmg == CraftingMeta.DRAGON_EGG && GeneralStuff.ENABLE_ENDER_SPAWN) return spawnEnderDragon(stack, player, world, x, y, z);
+        if (dmg == CraftingMeta.DRAGON_EGG && GeneralStuff.ENABLE_ENDER_SPAWN)
+            return spawnEnderDragon(stack, player, world, x, y, z);
         else if (dmg == CraftingMeta.THERMOMETER) {
             displayTemperature(player.isSneaking(), world, x, y, z);
         } else if (Modules.isActive(Modules.worldplus) && dmg == CraftingMeta.SEEDS_KELP) {
-            if (Item.getItemFromBlock(WorldPlus.plantGrowable).onItemUse(new ItemStack(WorldPlus.plantGrowable, 1, 1), player, world, x, y, z, side, par8, par9, par10)) {
+            if (Item.getItemFromBlock(WorldPlus.plantGrowable)
+                .onItemUse(
+                    new ItemStack(WorldPlus.plantGrowable, 1, 1),
+                    player,
+                    world,
+                    x,
+                    y,
+                    z,
+                    side,
+                    par8,
+                    par9,
+                    par10)) {
                 stack.stackSize--;
             }
         } else if (Modules.isActive(Modules.worldplus) && dmg == CraftingMeta.ROCKHOPPER_EGG) {
@@ -175,7 +201,8 @@ public class ItemCrafting extends ItemMCMeta implements IEnergyContainerItem {
     @Override
     public boolean isValidTab(CreativeTabs creative, int meta) {
         if (meta == CraftingMeta.BLANK_PLAN) return creative == MaricultureTab.tabFactory;
-        if (meta == CraftingMeta.SEEDS_KELP || meta == CraftingMeta.ROCKHOPPER_EGG) return creative == MaricultureTab.tabWorld;
+        if (meta == CraftingMeta.SEEDS_KELP || meta == CraftingMeta.ROCKHOPPER_EGG)
+            return creative == MaricultureTab.tabWorld;
         if (meta == CraftingMeta.THERMOMETER) return creative == MaricultureTab.tabFishery;
         return creative == MaricultureTab.tabCore;
     }
@@ -186,11 +213,12 @@ public class ItemCrafting extends ItemMCMeta implements IEnergyContainerItem {
         String path = this.path != null ? this.path : mod + ":";
         icons = new IIcon[getMetaCount()];
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = register.registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + getName(new ItemStack(this, 1, i)));
+            icons[i] = register.registerIcon(
+                MaricultureEvents.getMod(this, i, "mariculture") + ":" + getName(new ItemStack(this, 1, i)));
         }
     }
 
-    //Used for the creative battery ;D//
+    // Used for the creative battery ;D//
     @Override
     public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate) {
         return 0;

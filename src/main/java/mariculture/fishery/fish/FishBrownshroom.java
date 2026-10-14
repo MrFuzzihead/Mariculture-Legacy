@@ -4,14 +4,17 @@ import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletAqua;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletPlant;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishBrownshroom extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 10;
@@ -79,7 +82,7 @@ public class FishBrownshroom extends FishSpecies {
     public RodType getRodNeeded() {
         return RodType.DIRE;
     }
-    
+
     @Override
     public double getCatchChance(World world, int height) {
         return 5D;

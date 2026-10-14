@@ -10,6 +10,7 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.input.Keyboard;
 
 public class FishDNA extends FishDNABase {
+
     public ArrayList<FishDNA> types;
     private boolean isHidden = false;
     private boolean isToggled = false;
@@ -29,7 +30,7 @@ public class FishDNA extends FishDNABase {
         types.add(new FishDNA().setValues(name, min, max, dominant));
     }
 
-    //Sets whether this dna should be displayed underneath a fish
+    // Sets whether this dna should be displayed underneath a fish
     public FishDNA setHidden() {
         isHidden = true;
         return this;
@@ -52,27 +53,33 @@ public class FishDNA extends FishDNABase {
     public void getInformationDisplay(ItemStack stack, List list) {
         if (isHidden) return;
         else if (!isToggled || isToggled && Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-            int type = stack.getTagCompound().getInteger(getHigherString());
-            for (FishDNA dna : types)
-                if (type >= dna.minimum && type <= dna.maximum) {
-                    String data = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? "" + getDNA(stack) : StatCollector.translateToLocal("mariculture.fish.data." + getHigherString().toLowerCase() + "." + dna.name);
-                    list.add(StatCollector.translateToLocal("mariculture.fish.data." + getHigherString().toLowerCase()) + ": " + data);
-                }
+            int type = stack.getTagCompound()
+                .getInteger(getHigherString());
+            for (FishDNA dna : types) if (type >= dna.minimum && type <= dna.maximum) {
+                String data = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? "" + getDNA(stack)
+                    : StatCollector
+                        .translateToLocal("mariculture.fish.data." + getHigherString().toLowerCase() + "." + dna.name);
+                list.add(
+                    StatCollector.translateToLocal("mariculture.fish.data." + getHigherString().toLowerCase()) + ": "
+                        + data);
+            }
         }
     }
 
     public String getDNAName(ItemStack stack) {
-        int type = stack.getTagCompound().getInteger(getHigherString());        
-        for (FishDNA dna : types)
-            if (type >= dna.minimum && type <= dna.maximum) return StatCollector.translateToLocal("mariculture.fish.data." + getHigherString().toLowerCase() + "." + dna.name);
+        int type = stack.getTagCompound()
+            .getInteger(getHigherString());
+        for (FishDNA dna : types) if (type >= dna.minimum && type <= dna.maximum) return StatCollector
+            .translateToLocal("mariculture.fish.data." + getHigherString().toLowerCase() + "." + dna.name);
 
         return "";
     }
 
     public String getLowerDNAName(ItemStack stack) {
-        int type = stack.getTagCompound().getInteger(getLowerString());
-        for (FishDNA dna : types)
-            if (type >= dna.minimum && type <= dna.maximum) return StatCollector.translateToLocal("mariculture.fish.data." + getHigherString().toLowerCase() + "." + dna.name);
+        int type = stack.getTagCompound()
+            .getInteger(getLowerString());
+        for (FishDNA dna : types) if (type >= dna.minimum && type <= dna.maximum) return StatCollector
+            .translateToLocal("mariculture.fish.data." + getHigherString().toLowerCase() + "." + dna.name);
 
         return "";
     }
@@ -110,9 +117,16 @@ public class FishDNA extends FishDNABase {
                 is2Dominant = dna.isDominant;
             }
         }
-        
-        String display1 = (is1Dominant ? "\u00a76" : "\u00a79") + (numbers? getDNA(stack) + " ": "") + "(" + getDNAName(stack) + ")";
-        String display2 = (is2Dominant ? "\u00a76" : "\u00a79") + (numbers? getLowerDNA(stack) + " ": "") + "(" + getLowerDNAName(stack) + ")";
-        return new String[] { StatCollector.translateToLocal("mariculture.fish.data." + getName().toLowerCase()), display1, display2 };
+
+        String display1 = (is1Dominant ? "\u00a76" : "\u00a79") + (numbers ? getDNA(stack) + " " : "")
+            + "("
+            + getDNAName(stack)
+            + ")";
+        String display2 = (is2Dominant ? "\u00a76" : "\u00a79") + (numbers ? getLowerDNA(stack) + " " : "")
+            + "("
+            + getLowerDNAName(stack)
+            + ")";
+        return new String[] { StatCollector.translateToLocal("mariculture.fish.data." + getName().toLowerCase()),
+            display1, display2 };
     }
 }

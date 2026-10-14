@@ -1,10 +1,5 @@
 package mariculture.diving;
 
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.Core;
-import mariculture.core.helpers.OreDicHelper;
-import mariculture.core.items.ItemMCBaseArmor;
-import mariculture.lib.util.Library;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +8,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.Core;
+import mariculture.core.helpers.OreDicHelper;
+import mariculture.core.items.ItemMCBaseArmor;
+import mariculture.lib.util.Library;
+
 public class ItemArmorDiving extends ItemMCBaseArmor {
+
     public ItemArmorDiving(ArmorMaterial material, int j, int k) {
         super(material, j, k);
         setCreativeTab(MaricultureTab.tabWorld);
@@ -27,9 +29,12 @@ public class ItemArmorDiving extends ItemMCBaseArmor {
 
     @Override
     public boolean getIsRepairable(ItemStack stack1, ItemStack stack2) {
-        if (stack1.getItem() == Diving.divingHelmet && OreDicHelper.convert(stack2).equals("ingotCopper")) return true;
-        if (stack1.getItem() == Diving.divingBoots && OreDicHelper.convert(stack2).equals("ingotIron")) return true;
-        if ((stack1.getItem() == Diving.divingTop || stack1.getItem() == Diving.divingPants) && stack2.getItem() == Items.leather) return true;
+        if (stack1.getItem() == Diving.divingHelmet && OreDicHelper.convert(stack2)
+            .equals("ingotCopper")) return true;
+        if (stack1.getItem() == Diving.divingBoots && OreDicHelper.convert(stack2)
+            .equals("ingotIron")) return true;
+        if ((stack1.getItem() == Diving.divingTop || stack1.getItem() == Diving.divingPants)
+            && stack2.getItem() == Items.leather) return true;
         return false;
     }
 
@@ -40,14 +45,19 @@ public class ItemArmorDiving extends ItemMCBaseArmor {
             if (!world.isRemote) {
                 for (int x = (int) (player.posX - size); x < player.posX + size; x++) {
                     for (int z = (int) (player.posZ - size); z < player.posZ + size; z++) {
-                        for (int y = 0; y < 155; y++)
-                            if (player.isSneaking()) {
-                                if (world.getBlock(x, y, z) == Blocks.stone || world.getBlock(x, y, z) == Blocks.dirt || world.getBlock(x, y, z) == Blocks.grass || world.getBlock(x, y, z) == Blocks.sandstone || world.getBlock(x, y, z) == Blocks.gravel || world.getBlock(x, y, z).getMaterial() == Material.water || world.getBlock(x, y, z) == Blocks.sand) {
-                                    world.setBlockToAir(x, y, z);
-                                }
-                            } else if (world.getBlock(x, y, z) == Core.limestone) {
+                        for (int y = 0; y < 155; y++) if (player.isSneaking()) {
+                            if (world.getBlock(x, y, z) == Blocks.stone || world.getBlock(x, y, z) == Blocks.dirt
+                                || world.getBlock(x, y, z) == Blocks.grass
+                                || world.getBlock(x, y, z) == Blocks.sandstone
+                                || world.getBlock(x, y, z) == Blocks.gravel
+                                || world.getBlock(x, y, z)
+                                    .getMaterial() == Material.water
+                                || world.getBlock(x, y, z) == Blocks.sand) {
                                 world.setBlockToAir(x, y, z);
                             }
+                        } else if (world.getBlock(x, y, z) == Core.limestone) {
+                            world.setBlockToAir(x, y, z);
+                        }
                     }
                 }
             }

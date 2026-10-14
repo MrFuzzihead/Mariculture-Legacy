@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class BaitMeta {
+
     public static final int COUNT = 5;
 
     public static final int WORM = 0;

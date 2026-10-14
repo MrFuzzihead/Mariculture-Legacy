@@ -4,11 +4,13 @@ import static mariculture.core.lib.MCLib.dropletAir;
 import static mariculture.core.lib.MCLib.dropletFlux;
 import static mariculture.core.lib.MCLib.dropletPlatinum;
 import static mariculture.core.lib.MCLib.dropletRegen;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
 
 public class FishPlatinum extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 15;
@@ -43,22 +45,22 @@ public class FishPlatinum extends FishSpecies {
     public int getFertility() {
         return 20;
     }
-    
+
     @Override
     public int getBaseProductivity() {
         return 0;
     }
-    
+
     @Override
     public double getFishOilVolume() {
         return 0.0D;
     }
-    
+
     @Override
     public int getFoodStat() {
         return -1;
     }
-    
+
     @Override
     public int getFishMealSize() {
         return 0;

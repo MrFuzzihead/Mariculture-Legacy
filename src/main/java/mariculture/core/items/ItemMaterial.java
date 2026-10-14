@@ -1,15 +1,17 @@
 package mariculture.core.items;
 
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.lib.MaterialsMeta;
-import mariculture.core.lib.Modules;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.lib.MaterialsMeta;
+import mariculture.core.lib.Modules;
+
 public class ItemMaterial extends ItemMCMeta {
+
     @Override
     public int getMetaCount() {
         return MaterialsMeta.COUNT;
@@ -102,7 +104,8 @@ public class ItemMaterial extends ItemMCMeta {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7,
+        float par8, float par9, float par10) {
         if (!player.canPlayerEdit(x, y, z, par7, stack)) return false;
         else {
             int blockID;
@@ -125,6 +128,7 @@ public class ItemMaterial extends ItemMCMeta {
 
     @Override
     public boolean isValidTab(CreativeTabs creative, int meta) {
-        return meta == MaterialsMeta.FISH_MEAL && creative == MaricultureTab.tabFishery ? true : creative == MaricultureTab.tabCore;
+        return meta == MaterialsMeta.FISH_MEAL && creative == MaricultureTab.tabFishery ? true
+            : creative == MaricultureTab.tabCore;
     }
 }

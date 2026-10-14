@@ -1,5 +1,12 @@
 package mariculture.fishery.gui;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+
 import mariculture.api.core.IItemUpgrade;
 import mariculture.api.fishery.Fishing;
 import mariculture.core.gui.ContainerMachine;
@@ -11,12 +18,6 @@ import mariculture.fishery.FishFoodHandler;
 import mariculture.fishery.FishyHelper;
 import mariculture.fishery.items.ItemFishy;
 import mariculture.fishery.tile.TileFeeder;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class ContainerFeeder extends ContainerMachine {
 
@@ -25,15 +26,15 @@ public class ContainerFeeder extends ContainerMachine {
 
         addUpgradeSlots(tile);
 
-        //Fluids
+        // Fluids
         addSlotToContainer(new SlotFluidContainer(tile, 3, 10, 25));
         addSlotToContainer(new SlotOutput(tile, 4, 10, 56));
 
-        //Fish
+        // Fish
         addSlotToContainer(new SlotFather(tile, 5, 76, 25));
         addSlotToContainer(new SlotMother(tile, 6, 76, 53));
 
-        //Output
+        // Output
         addSlotToContainer(new SlotOutput(tile, 7, 132, 22));
         addSlotToContainer(new SlotOutput(tile, 8, 132, 40));
         addSlotToContainer(new SlotOutput(tile, 9, 132, 58));
@@ -62,26 +63,26 @@ public class ContainerFeeder extends ContainerMachine {
                 slot.onSlotChange(stack, itemstack);
             } else if (slotID >= size) {
                 if (stack.getItem() instanceof ItemFishy && Fish.gender.getDNA(stack) == FishyHelper.MALE) {
-                	if (((Slot) inventorySlots.get(5)).getHasStack()) return null;
+                    if (((Slot) inventorySlots.get(5)).getHasStack()) return null;
                     if (stack.stackSize == 1) {
                         ((Slot) inventorySlots.get(5)).putStack(stack.copy());
                         stack.stackSize = 0;
                     } else if (stack.stackSize >= 1) {
-                    	ItemStack clone = new ItemStack(stack.getItem(), 1, stack.getItemDamage());
-                    	NBTTagCompound tag = (NBTTagCompound) stack.stackTagCompound.copy();
-                    	clone.setTagCompound(tag);
+                        ItemStack clone = new ItemStack(stack.getItem(), 1, stack.getItemDamage());
+                        NBTTagCompound tag = (NBTTagCompound) stack.stackTagCompound.copy();
+                        clone.setTagCompound(tag);
                         ((Slot) inventorySlots.get(5)).putStack(clone);
                         --stack.stackSize;
                     }
                 } else if (stack.getItem() instanceof ItemFishy && Fish.gender.getDNA(stack) == FishyHelper.FEMALE) {
-                	if (((Slot) inventorySlots.get(6)).getHasStack()) return null;
+                    if (((Slot) inventorySlots.get(6)).getHasStack()) return null;
                     if (stack.stackSize == 1) {
                         ((Slot) inventorySlots.get(6)).putStack(stack.copy());
                         stack.stackSize = 0;
                     } else if (stack.stackSize >= 1) {
-                    	ItemStack clone = new ItemStack(stack.getItem(), 1, stack.getItemDamage());
-                    	NBTTagCompound tag = (NBTTagCompound) stack.stackTagCompound.copy();
-                    	clone.setTagCompound(tag);
+                        ItemStack clone = new ItemStack(stack.getItem(), 1, stack.getItemDamage());
+                        NBTTagCompound tag = (NBTTagCompound) stack.stackTagCompound.copy();
+                        clone.setTagCompound(tag);
                         ((Slot) inventorySlots.get(6)).putStack(clone);
                         --stack.stackSize;
                     }
@@ -109,6 +110,7 @@ public class ContainerFeeder extends ContainerMachine {
     }
 
     private class SlotFather extends Slot {
+
         public SlotFather(IInventory inventory, int id, int x, int y) {
             super(inventory, id, x, y);
         }
@@ -125,6 +127,7 @@ public class ContainerFeeder extends ContainerMachine {
     }
 
     private class SlotMother extends Slot {
+
         public SlotMother(IInventory inventory, int id, int x, int y) {
             super(inventory, id, x, y);
         }

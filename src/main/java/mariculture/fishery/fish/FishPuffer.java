@@ -4,9 +4,7 @@ import static mariculture.api.core.Environment.Salinity.BRACKISH;
 import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletPoison;
 import static mariculture.core.lib.MCLib.dropletWater;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -16,7 +14,12 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionHelper;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishPuffer extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 33;
@@ -61,7 +64,7 @@ public class FishPuffer extends FishSpecies {
     public int getWaterRequired() {
         return 115;
     }
-    
+
     @Override
     public Block getWater2() {
         return Blocks.lava;

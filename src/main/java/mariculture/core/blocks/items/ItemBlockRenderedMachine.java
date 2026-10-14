@@ -1,13 +1,15 @@
 package mariculture.core.blocks.items;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+
 import mariculture.core.blocks.base.ItemBlockMariculture;
 import mariculture.core.events.MaricultureEvents;
 import mariculture.core.lib.MachineRenderedMeta;
 import mariculture.lib.util.Text;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 
 public class ItemBlockRenderedMachine extends ItemBlockMariculture {
+
     public ItemBlockRenderedMachine(Block block) {
         super(block);
     }
@@ -36,11 +38,17 @@ public class ItemBlockRenderedMachine extends ItemBlockMariculture {
 
         return MaricultureEvents.getItemName(field_150939_a, meta, "renderedBlocks");
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        String unlocalized = field_150939_a.getUnlocalizedName().replace("tile.", "").replace("_", ".");
-        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2").toLowerCase();
-        return Text.localize(unlocalized.replace("mariculture.", MaricultureEvents.getMod(stack.getItem(), stack.getItemDamage(), "mariculture") + ".") + "." + name);
+        String unlocalized = field_150939_a.getUnlocalizedName()
+            .replace("tile.", "")
+            .replace("_", ".");
+        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2")
+            .toLowerCase();
+        return Text.localize(
+            unlocalized.replace(
+                "mariculture.",
+                MaricultureEvents.getMod(stack.getItem(), stack.getItemDamage(), "mariculture") + ".") + "." + name);
     }
 }

@@ -1,5 +1,18 @@
 package maritech.extensions.blocks;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import cofh.api.energy.IEnergyContainerItem;
+import cofh.api.energy.IEnergyReceiver;
 import mariculture.api.core.MaricultureTab;
 import mariculture.core.lib.MachineMeta;
 import mariculture.core.lib.Modules;
@@ -12,20 +25,9 @@ import maritech.tile.TileInjector;
 import maritech.tile.TileSluice;
 import maritech.tile.TileSluiceAdvanced;
 import maritech.tile.TileSponge;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyContainerItem;
-import cofh.api.energy.IEnergyReceiver;
 
 public class ExtensionMachine extends ExtensionBlocksBase {
+
     @Override
     public String getName(int meta, String name) {
         switch (meta) {
@@ -47,7 +49,7 @@ public class ExtensionMachine extends ExtensionBlocksBase {
 
         return name;
     }
-    
+
     @Override
     public String getMod(int meta, String mod) {
         switch (meta) {
@@ -72,7 +74,8 @@ public class ExtensionMachine extends ExtensionBlocksBase {
     }
 
     private void clearWater(World world, int x, int y, int z) {
-        if (world.getBlock(x, y, z).getMaterial() == Material.water) {
+        if (world.getBlock(x, y, z)
+            .getMaterial() == Material.water) {
             world.setBlockToAir(x, y, z);
         }
     }
@@ -192,11 +195,14 @@ public class ExtensionMachine extends ExtensionBlocksBase {
                 if (world.isRemote && player instanceof EntityClientPlayerMP) {
                     PacketHandler.sendToServer(new PacketSponge(x, y, z, true));
                 } else if (player.getCurrentEquippedItem() != null && !world.isRemote) {
-                    Item currentItem = player.getCurrentEquippedItem().getItem();
+                    Item currentItem = player.getCurrentEquippedItem()
+                        .getItem();
                     if (currentItem instanceof IEnergyContainerItem && !world.isRemote) {
-                        int powerAdd = ((IEnergyContainerItem) currentItem).extractEnergy(player.getCurrentEquippedItem(), 5000, true);
+                        int powerAdd = ((IEnergyContainerItem) currentItem)
+                            .extractEnergy(player.getCurrentEquippedItem(), 5000, true);
                         int reduce = ((IEnergyReceiver) tile).receiveEnergy(ForgeDirection.UNKNOWN, powerAdd, false);
-                        ((IEnergyContainerItem) currentItem).extractEnergy(player.getCurrentEquippedItem(), reduce, false);
+                        ((IEnergyContainerItem) currentItem)
+                            .extractEnergy(player.getCurrentEquippedItem(), reduce, false);
                     }
                 }
 

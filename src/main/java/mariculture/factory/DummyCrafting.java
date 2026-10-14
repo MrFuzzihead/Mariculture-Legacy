@@ -4,6 +4,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 
 public class DummyCrafting extends InventoryCrafting {
+
     private ItemStack[] stackList;
 
     public DummyCrafting(int par2, int par3) {

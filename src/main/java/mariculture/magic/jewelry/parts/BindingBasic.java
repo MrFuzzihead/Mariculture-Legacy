@@ -1,11 +1,13 @@
 package mariculture.magic.jewelry.parts;
 
-import mariculture.magic.jewelry.ItemJewelry.JewelryType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
+import mariculture.magic.jewelry.ItemJewelry.JewelryType;
+
 public class BindingBasic extends JewelryBinding {
+
     @Override
     public String getColor() {
         return mariculture.lib.util.Text.WHITE;

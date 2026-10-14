@@ -1,14 +1,16 @@
 package mariculture.factory.gui;
 
-import mariculture.core.gui.ContainerMachine;
-import mariculture.factory.tile.TileFishSorter;
-import mariculture.fishery.gui.SlotSorter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.gui.ContainerMachine;
+import mariculture.factory.tile.TileFishSorter;
+import mariculture.fishery.gui.SlotSorter;
+
 public class ContainerFishSorter extends ContainerMachine {
+
     public ContainerFishSorter(TileFishSorter tile, InventoryPlayer playerInventory) {
         super(tile);
 

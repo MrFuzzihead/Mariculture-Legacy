@@ -1,14 +1,16 @@
 package mariculture.core.blocks.base;
 
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.tile.base.TileMultiBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.tile.base.TileMultiBlock;
+
 public abstract class BlockFunctionalMulti extends BlockFunctional {
+
     public BlockFunctionalMulti(Material material) {
         super(material);
     }

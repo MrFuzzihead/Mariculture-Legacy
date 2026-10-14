@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.api.fishery.Fishing;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 
+import mariculture.api.fishery.Fishing;
+
 public class FishDNABase {
+
     protected String category;
     public static final ArrayList<FishDNABase> DNAParts = new ArrayList<FishDNABase>();
 
@@ -20,9 +21,11 @@ public class FishDNABase {
     }
 
     public String getName() {
-        return this.getClass().getSimpleName().substring(7);
+        return this.getClass()
+            .getSimpleName()
+            .substring(7);
     }
-    
+
     /** The chance that this DNA is extracted by an extractor, 1 in this many **/
     public int getCopyChance() {
         return 10;
@@ -96,7 +99,7 @@ public class FishDNABase {
         return -1;
     }
 
-    //Everything below this point is mostly irrelevant when adding new dna except in special cases
+    // Everything below this point is mostly irrelevant when adding new dna except in special cases
 
     /** Automatically called when generating a fish **/
     public ItemStack addDNA(ItemStack stack, Integer data) {
@@ -218,12 +221,15 @@ public class FishDNABase {
         }
     }
 
-    /** Returns the display data for this dna type in the fish scanner, make sure you return a string with three length **/
+    /**
+     * Returns the display data for this dna type in the fish scanner, make sure you return a string with three length
+     **/
     public String[] getScannedDisplay(ItemStack stack) {
         return getScannedDisplay(stack, true);
     }
 
     public String[] getScannedDisplay(ItemStack stack, boolean numbers) {
-        return new String[] { StatCollector.translateToLocal("mariculture.fish.data." + getName().toLowerCase()), "" + getDNA(stack), "" + getLowerDNA(stack) };
+        return new String[] { StatCollector.translateToLocal("mariculture.fish.data." + getName().toLowerCase()),
+            "" + getDNA(stack), "" + getLowerDNA(stack) };
     }
 }

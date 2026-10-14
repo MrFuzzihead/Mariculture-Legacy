@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class MetalMeta {
+
     public static final int COUNT = 6;
     public static final int COPPER_BLOCK = 0;
     public static final int ALUMINUM_BLOCK = 1;

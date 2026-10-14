@@ -4,6 +4,17 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import mariculture.Mariculture;
 import mariculture.api.core.IAnvilHandler;
 import mariculture.core.Core;
@@ -17,18 +28,9 @@ import mariculture.core.tile.base.TileStorage;
 import mariculture.core.util.IFaceable;
 import mariculture.magic.JewelryHandler;
 import mariculture.magic.jewelry.ItemJewelry;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileAnvil extends TileStorage implements ISidedInventory, IAnvilHandler, IFaceable {
+
     private static final HashMap<String, RecipeAnvil> recipes = new HashMap();
     public ForgeDirection orientation = ForgeDirection.EAST;
 
@@ -74,7 +76,9 @@ public class TileAnvil extends TileStorage implements ISidedInventory, IAnvilHan
     }
 
     public boolean canBeRepaired(ItemStack stack) {
-        if (stack.isItemStackDamageable() && stack.isItemDamaged() && stack.getItem().isRepairable()) {
+        if (stack.isItemStackDamageable() && stack.isItemDamaged()
+            && stack.getItem()
+                .isRepairable()) {
             if (stack.getItemDamage() > 0) return true;
         } else if (stack.getItem() instanceof ItemJewelry && stack.getItemDamage() > 0) return true;
 
@@ -92,10 +96,17 @@ public class TileAnvil extends TileStorage implements ISidedInventory, IAnvilHan
         if (!canBeWorked(stack)) {
             int modifier = 1;
             if (stack.isItemEnchanted()) {
-                LinkedHashMap<Integer, Integer> maps = (LinkedHashMap<Integer, Integer>) EnchantmentHelper.getEnchantments(stack);
+                LinkedHashMap<Integer, Integer> maps = (LinkedHashMap<Integer, Integer>) EnchantmentHelper
+                    .getEnchantments(stack);
                 for (Entry<Integer, Integer> i : maps.entrySet()) {
-                    int total = maps.entrySet().iterator().next().getValue();
-                    Enchantment enchant = Enchantment.enchantmentsList[maps.keySet().iterator().next().intValue()];
+                    int total = maps.entrySet()
+                        .iterator()
+                        .next()
+                        .getValue();
+                    Enchantment enchant = Enchantment.enchantmentsList[maps.keySet()
+                        .iterator()
+                        .next()
+                        .intValue()];
                     int bonus = enchant.getMaxEnchantability(1) - enchant.getMinEnchantability(1);
                     modifier += total + bonus;
                 }
@@ -104,7 +115,8 @@ public class TileAnvil extends TileStorage implements ISidedInventory, IAnvilHan
                 modifier = modifier >= 1 ? modifier : 1;
 
                 if (stack.getItem() instanceof ItemJewelry) {
-                    modifier *= JewelryHandler.getMaterial(stack).getRepairModifier(JewelryHandler.getType(stack));
+                    modifier *= JewelryHandler.getMaterial(stack)
+                        .getRepairModifier(JewelryHandler.getType(stack));
                 }
             }
 

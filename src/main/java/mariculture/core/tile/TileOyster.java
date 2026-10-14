@@ -1,9 +1,5 @@
 package mariculture.core.tile;
 
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.tile.base.TileStorage;
-import mariculture.core.util.IFaceable;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -14,7 +10,13 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.tile.base.TileStorage;
+import mariculture.core.util.IFaceable;
+
 public class TileOyster extends TileStorage implements ISidedInventory, IFaceable {
+
     public ForgeDirection orientation = ForgeDirection.WEST;
 
     public TileOyster() {

@@ -1,18 +1,13 @@
 package maritech.extensions.blocks;
 
-import static maritech.lib.SpecialIcons.incubatorIcons;
-import mariculture.core.Core;
+import net.minecraft.tileentity.TileEntity;
+
 import mariculture.core.lib.MachineMultiMeta;
 import mariculture.core.lib.Modules;
 import maritech.tile.TileIncubator;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExtensionMachineMulti extends ExtensionBlocksBase {
+
     @Override
     public String getName(int meta, String name) {
         switch (meta) {

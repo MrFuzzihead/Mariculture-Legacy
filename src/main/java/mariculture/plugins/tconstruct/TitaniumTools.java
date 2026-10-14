@@ -1,19 +1,22 @@
 package mariculture.plugins.tconstruct;
 
 import static mariculture.core.lib.MetalRates.INGOT;
-import mariculture.core.util.Fluids;
-import mariculture.plugins.PluginTConstruct;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import cpw.mods.fml.common.Loader;
+import mariculture.core.util.Fluids;
+import mariculture.plugins.PluginTConstruct;
 import tconstruct.library.TConstructRegistry;
 import tconstruct.library.client.TConstructClientRegistry;
 import tconstruct.library.crafting.PatternBuilder;
 import tconstruct.library.tools.ToolCore;
-import cpw.mods.fml.common.Loader;
 
 public class TitaniumTools {
+
     public static final int titanium_id = 200;
     public static TitaniumPart axe_head;
     public static TitaniumPart battle_sign_head;
@@ -68,10 +71,17 @@ public class TitaniumTools {
     public static void postInit() {
         addCastings(titanium_id, 80);
 
-        //Register Titanium with Patterns
-        if (OreDictionary.getOres("ingotTitanium").size() > 0) {
+        // Register Titanium with Patterns
+        if (OreDictionary.getOres("ingotTitanium")
+            .size() > 0) {
             for (ItemStack ingot : OreDictionary.getOres("ingotTitanium")) {
-                PatternBuilder.instance.registerFullMaterial(ingot, 2, "Titanium", new ItemStack(chunk, 1, titanium_id), new ItemStack(tool_rod, 1, titanium_id), titanium_id);
+                PatternBuilder.instance.registerFullMaterial(
+                    ingot,
+                    2,
+                    "Titanium",
+                    new ItemStack(chunk, 1, titanium_id),
+                    new ItemStack(tool_rod, 1, titanium_id),
+                    titanium_id);
             }
         }
 
@@ -87,48 +97,168 @@ public class TitaniumTools {
     }
 
     public static void addCastings(int id, int delay) {
-        PluginTConstruct.addPartCasting(new ItemStack(tool_rod, 1, id), TConstructRegistry.getItemStack("toolRodCast"), titanium(INGOT / 2), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(pickaxe_head, 1, id), TConstructRegistry.getItemStack("pickaxeHeadCast"), titanium(INGOT), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(shovel_head, 1, id), TConstructRegistry.getItemStack("shovelHeadCast"), titanium(INGOT), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(axe_head, 1, id), TConstructRegistry.getItemStack("hatchetHeadCast"), titanium(INGOT), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(sword_blade, 1, id), TConstructRegistry.getItemStack("swordBladeCast"), titanium(INGOT), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(large_guard, 1, id), TConstructRegistry.getItemStack("wideGuardCast"), titanium(INGOT / 2), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(hand_guard, 1, id), TConstructRegistry.getItemStack("handGuardCast"), titanium(INGOT / 2), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(crossbar, 1, id), TConstructRegistry.getItemStack("crossbarCast"), titanium(INGOT / 2), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(binding, 1, id), TConstructRegistry.getItemStack("bindingCast"), titanium(INGOT / 2), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(frypan_head, 1, id), TConstructRegistry.getItemStack("frypanHeadCast"), titanium(INGOT), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(battle_sign_head, 1, id), TConstructRegistry.getItemStack("signHeadCast"), titanium(INGOT), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(knife_blade, 1, id), TConstructRegistry.getItemStack("knifeBladeCast"), titanium(INGOT / 2), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(chisel_head, 1, id), TConstructRegistry.getItemStack("chiselHeadCast"), titanium(INGOT / 2), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(tough_rod, 1, id), TConstructRegistry.getItemStack("toughRodCast"), titanium(INGOT * 3), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(tough_binding, 1, id), TConstructRegistry.getItemStack("toughBindingCast"), titanium(INGOT * 3), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(large_plate, 1, id), TConstructRegistry.getItemStack("largePlateCast"), titanium(INGOT * 8), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(broad_axe_head, 1, id), TConstructRegistry.getItemStack("broadAxeHeadCast"), titanium(INGOT * 8), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(scythe_head, 1, id), TConstructRegistry.getItemStack("scytheHeadCast"), titanium(INGOT * 8), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(excavator_head, 1, id), TConstructRegistry.getItemStack("excavatorHeadCast"), titanium(INGOT * 8), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(large_sword_blade, 1, id), TConstructRegistry.getItemStack("largeBladeCast"), titanium(INGOT * 8), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(hammer_head, 1, id), TConstructRegistry.getItemStack("hammerHeadCast"), titanium(INGOT * 8), delay);
-        PluginTConstruct.addPartCasting(new ItemStack(full_guard, 1, id), TConstructRegistry.getItemStack("fullGuardCast"), titanium(INGOT * 3), delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(tool_rod, 1, id),
+            TConstructRegistry.getItemStack("toolRodCast"),
+            titanium(INGOT / 2),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(pickaxe_head, 1, id),
+            TConstructRegistry.getItemStack("pickaxeHeadCast"),
+            titanium(INGOT),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(shovel_head, 1, id),
+            TConstructRegistry.getItemStack("shovelHeadCast"),
+            titanium(INGOT),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(axe_head, 1, id),
+            TConstructRegistry.getItemStack("hatchetHeadCast"),
+            titanium(INGOT),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(sword_blade, 1, id),
+            TConstructRegistry.getItemStack("swordBladeCast"),
+            titanium(INGOT),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(large_guard, 1, id),
+            TConstructRegistry.getItemStack("wideGuardCast"),
+            titanium(INGOT / 2),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(hand_guard, 1, id),
+            TConstructRegistry.getItemStack("handGuardCast"),
+            titanium(INGOT / 2),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(crossbar, 1, id),
+            TConstructRegistry.getItemStack("crossbarCast"),
+            titanium(INGOT / 2),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(binding, 1, id),
+            TConstructRegistry.getItemStack("bindingCast"),
+            titanium(INGOT / 2),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(frypan_head, 1, id),
+            TConstructRegistry.getItemStack("frypanHeadCast"),
+            titanium(INGOT),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(battle_sign_head, 1, id),
+            TConstructRegistry.getItemStack("signHeadCast"),
+            titanium(INGOT),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(knife_blade, 1, id),
+            TConstructRegistry.getItemStack("knifeBladeCast"),
+            titanium(INGOT / 2),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(chisel_head, 1, id),
+            TConstructRegistry.getItemStack("chiselHeadCast"),
+            titanium(INGOT / 2),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(tough_rod, 1, id),
+            TConstructRegistry.getItemStack("toughRodCast"),
+            titanium(INGOT * 3),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(tough_binding, 1, id),
+            TConstructRegistry.getItemStack("toughBindingCast"),
+            titanium(INGOT * 3),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(large_plate, 1, id),
+            TConstructRegistry.getItemStack("largePlateCast"),
+            titanium(INGOT * 8),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(broad_axe_head, 1, id),
+            TConstructRegistry.getItemStack("broadAxeHeadCast"),
+            titanium(INGOT * 8),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(scythe_head, 1, id),
+            TConstructRegistry.getItemStack("scytheHeadCast"),
+            titanium(INGOT * 8),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(excavator_head, 1, id),
+            TConstructRegistry.getItemStack("excavatorHeadCast"),
+            titanium(INGOT * 8),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(large_sword_blade, 1, id),
+            TConstructRegistry.getItemStack("largeBladeCast"),
+            titanium(INGOT * 8),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(hammer_head, 1, id),
+            TConstructRegistry.getItemStack("hammerHeadCast"),
+            titanium(INGOT * 8),
+            delay);
+        PluginTConstruct.addPartCasting(
+            new ItemStack(full_guard, 1, id),
+            TConstructRegistry.getItemStack("fullGuardCast"),
+            titanium(INGOT * 3),
+            delay);
     }
 
     public static void addTools() {
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("battleaxe"), new Item[] { broad_axe_head, tough_rod, broad_axe_head, tough_binding });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("battlesign"), new Item[] { battle_sign_head, tool_rod });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("broadsword"), new Item[] { sword_blade, tool_rod, large_guard });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("chisel"), new Item[] { chisel_head, tool_rod });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("cleaver"), new Item[] { large_sword_blade, tough_rod, large_plate, tough_rod });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("cutlass"), new Item[] { sword_blade, tool_rod, full_guard });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("dagger"), new Item[] { knife_blade, tool_rod, crossbar });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("excavator"), new Item[] { excavator_head, tough_rod, large_plate, tough_binding });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("frypan"), new Item[] { frypan_head, tool_rod });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("hammer"), new Item[] { hammer_head, tough_rod, large_plate, large_plate });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("hatchet"), new Item[] { axe_head, tool_rod });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("longsword"), new Item[] { sword_blade, tool_rod, hand_guard });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("lumberaxe"), new Item[] { broad_axe_head, tough_rod, large_plate, tough_binding });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("mattock"), new Item[] { axe_head, tool_rod, shovel_head });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("pickaxe"), new Item[] { pickaxe_head, tool_rod, binding });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("rapier"), new Item[] { sword_blade, tool_rod, crossbar });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("scythe"), new Item[] { scythe_head, tough_rod, tough_binding, tough_rod });
-        TConstructRegistry.addToolRecipe((ToolCore) TConstructRegistry.getItem("shovel"), new Item[] { shovel_head, tool_rod });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("battleaxe"),
+            new Item[] { broad_axe_head, tough_rod, broad_axe_head, tough_binding });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("battlesign"),
+            new Item[] { battle_sign_head, tool_rod });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("broadsword"),
+            new Item[] { sword_blade, tool_rod, large_guard });
+        TConstructRegistry
+            .addToolRecipe((ToolCore) TConstructRegistry.getItem("chisel"), new Item[] { chisel_head, tool_rod });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("cleaver"),
+            new Item[] { large_sword_blade, tough_rod, large_plate, tough_rod });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("cutlass"),
+            new Item[] { sword_blade, tool_rod, full_guard });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("dagger"),
+            new Item[] { knife_blade, tool_rod, crossbar });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("excavator"),
+            new Item[] { excavator_head, tough_rod, large_plate, tough_binding });
+        TConstructRegistry
+            .addToolRecipe((ToolCore) TConstructRegistry.getItem("frypan"), new Item[] { frypan_head, tool_rod });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("hammer"),
+            new Item[] { hammer_head, tough_rod, large_plate, large_plate });
+        TConstructRegistry
+            .addToolRecipe((ToolCore) TConstructRegistry.getItem("hatchet"), new Item[] { axe_head, tool_rod });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("longsword"),
+            new Item[] { sword_blade, tool_rod, hand_guard });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("lumberaxe"),
+            new Item[] { broad_axe_head, tough_rod, large_plate, tough_binding });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("mattock"),
+            new Item[] { axe_head, tool_rod, shovel_head });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("pickaxe"),
+            new Item[] { pickaxe_head, tool_rod, binding });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("rapier"),
+            new Item[] { sword_blade, tool_rod, crossbar });
+        TConstructRegistry.addToolRecipe(
+            (ToolCore) TConstructRegistry.getItem("scythe"),
+            new Item[] { scythe_head, tough_rod, tough_binding, tough_rod });
+        TConstructRegistry
+            .addToolRecipe((ToolCore) TConstructRegistry.getItem("shovel"), new Item[] { shovel_head, tool_rod });
     }
 }

@@ -1,16 +1,19 @@
 package mariculture.magic;
 
-import mariculture.core.helpers.EnchantHelper;
-import mariculture.magic.enchantments.EnchantmentResurrection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import mariculture.core.helpers.EnchantHelper;
+import mariculture.magic.enchantments.EnchantmentResurrection;
+
 public class ResurrectionTracker {
+
     public static void onPlayerRespawn(EntityPlayer player) {
         if (!player.worldObj.isRemote) {
-            NBTTagCompound nbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+            NBTTagCompound nbt = player.getEntityData()
+                .getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
             if (nbt.hasKey(EnchantmentResurrection.inventory)) {
                 NBTTagList invList = nbt.getTagList(EnchantmentResurrection.inventory, 10);
                 if (invList != null) {
@@ -66,7 +69,9 @@ public class ResurrectionTracker {
                     EnchantHelper.damageItems(Magic.resurrection, player, resist / 50);
                 }
             } else {
-                player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).removeTag("mirrorContents");
+                player.getEntityData()
+                    .getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG)
+                    .removeTag("mirrorContents");
             }
         }
     }

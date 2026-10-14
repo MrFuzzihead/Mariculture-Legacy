@@ -5,6 +5,7 @@ import mariculture.core.lib.MachineRenderedMeta;
 import mariculture.core.render.RenderBase;
 
 public class RenderFeeder extends RenderBase {
+
     public RenderFeeder() {}
 
     @Override

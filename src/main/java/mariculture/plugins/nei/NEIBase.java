@@ -3,8 +3,6 @@ package mariculture.plugins.nei;
 import java.awt.Point;
 import java.lang.reflect.Field;
 
-import mariculture.core.gui.feature.Feature;
-import mariculture.core.gui.feature.FeatureTank.TankSize;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -19,67 +17,286 @@ import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.GuiUsageRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import mariculture.core.gui.feature.Feature;
+import mariculture.core.gui.feature.FeatureTank.TankSize;
 
 public abstract class NEIBase extends TemplateRecipeHandler {
+
     protected void drawFluidRect(int j, int k, FluidStack fluid, TankSize size) {
         if (fluid == null || fluid.getFluid() == null) return;
         int scale = fluid.amount * 58 / 5000;
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         if (size.equals(TankSize.VAT)) {
-            drawScaledTexturedModelRectFromIcon(j, k, fluid.getFluid().getIcon(), 16, 16);
-            drawScaledTexturedModelRectFromIcon(j + 16, k, fluid.getFluid().getIcon(), 7, 16);
-            drawScaledTexturedModelRectFromIcon(j, k - 16, fluid.getFluid().getIcon(), 16, 16);
-            drawScaledTexturedModelRectFromIcon(j + 16, k - 16, fluid.getFluid().getIcon(), 7, 16);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                16,
+                16);
+            drawScaledTexturedModelRectFromIcon(
+                j + 16,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                7,
+                16);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k - 16,
+                fluid.getFluid()
+                    .getIcon(),
+                16,
+                16);
+            drawScaledTexturedModelRectFromIcon(
+                j + 16,
+                k - 16,
+                fluid.getFluid()
+                    .getIcon(),
+                7,
+                16);
         }
 
         if (size.equals(TankSize.CASTER)) {
-            drawScaledTexturedModelRectFromIcon(j, k, fluid.getFluid().getIcon(), 16, 16);
-            drawScaledTexturedModelRectFromIcon(j + 21, k, fluid.getFluid().getIcon(), 16, 16);
-            drawScaledTexturedModelRectFromIcon(j + 21, k + 21, fluid.getFluid().getIcon(), 16, 16);
-            drawScaledTexturedModelRectFromIcon(j, k + 21, fluid.getFluid().getIcon(), 16, 16);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                16,
+                16);
+            drawScaledTexturedModelRectFromIcon(
+                j + 21,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                16,
+                16);
+            drawScaledTexturedModelRectFromIcon(
+                j + 21,
+                k + 21,
+                fluid.getFluid()
+                    .getIcon(),
+                16,
+                16);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k + 21,
+                fluid.getFluid()
+                    .getIcon(),
+                16,
+                16);
         }
 
         if (size.equals(TankSize.BLOCK_CASTER)) {
-            drawScaledTexturedModelRectFromIcon(j, k, fluid.getFluid().getIcon(), 12, 12);
-            drawScaledTexturedModelRectFromIcon(j + 12, k, fluid.getFluid().getIcon(), 13, 12);
-            drawScaledTexturedModelRectFromIcon(j + 25, k, fluid.getFluid().getIcon(), 12, 12);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                12,
+                12);
+            drawScaledTexturedModelRectFromIcon(
+                j + 12,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                13,
+                12);
+            drawScaledTexturedModelRectFromIcon(
+                j + 25,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                12,
+                12);
 
-            drawScaledTexturedModelRectFromIcon(j + 25, k + 12, fluid.getFluid().getIcon(), 12, 13);
-            drawScaledTexturedModelRectFromIcon(j + 12, k + 12, fluid.getFluid().getIcon(), 13, 13);
-            drawScaledTexturedModelRectFromIcon(j, k + 12, fluid.getFluid().getIcon(), 12, 13);
+            drawScaledTexturedModelRectFromIcon(
+                j + 25,
+                k + 12,
+                fluid.getFluid()
+                    .getIcon(),
+                12,
+                13);
+            drawScaledTexturedModelRectFromIcon(
+                j + 12,
+                k + 12,
+                fluid.getFluid()
+                    .getIcon(),
+                13,
+                13);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k + 12,
+                fluid.getFluid()
+                    .getIcon(),
+                12,
+                13);
 
-            drawScaledTexturedModelRectFromIcon(j + 25, k + 25, fluid.getFluid().getIcon(), 12, 12);
-            drawScaledTexturedModelRectFromIcon(j + 12, k + 25, fluid.getFluid().getIcon(), 13, 12);
-            drawScaledTexturedModelRectFromIcon(j, k + 25, fluid.getFluid().getIcon(), 12, 12);
+            drawScaledTexturedModelRectFromIcon(
+                j + 25,
+                k + 25,
+                fluid.getFluid()
+                    .getIcon(),
+                12,
+                12);
+            drawScaledTexturedModelRectFromIcon(
+                j + 12,
+                k + 25,
+                fluid.getFluid()
+                    .getIcon(),
+                13,
+                12);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k + 25,
+                fluid.getFluid()
+                    .getIcon(),
+                12,
+                12);
         }
 
         if (size.equals(TankSize.NUGGET_CASTER)) {
-            drawScaledTexturedModelRectFromIcon(j, k, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j, k + 10, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j, k + 21, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j, k + 31, fluid.getFluid().getIcon(), 6, 6);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k + 10,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k + 21,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k + 31,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
 
-            drawScaledTexturedModelRectFromIcon(j + 10, k, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 10, k + 10, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 10, k + 21, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 10, k + 31, fluid.getFluid().getIcon(), 6, 6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 10,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 10,
+                k + 10,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 10,
+                k + 21,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 10,
+                k + 31,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
 
-            drawScaledTexturedModelRectFromIcon(j + 21, k, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 21, k + 10, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 21, k + 21, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 21, k + 31, fluid.getFluid().getIcon(), 6, 6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 21,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 21,
+                k + 10,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 21,
+                k + 21,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 21,
+                k + 31,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
 
-            drawScaledTexturedModelRectFromIcon(j + 31, k, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 31, k + 10, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 31, k + 21, fluid.getFluid().getIcon(), 6, 6);
-            drawScaledTexturedModelRectFromIcon(j + 31, k + 31, fluid.getFluid().getIcon(), 6, 6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 31,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 31,
+                k + 10,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 31,
+                k + 21,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
+            drawScaledTexturedModelRectFromIcon(
+                j + 31,
+                k + 31,
+                fluid.getFluid()
+                    .getIcon(),
+                6,
+                6);
         }
 
         if (size.equals(TankSize.DOUBLE)) {
-            drawScaledTexturedModelRectFromIcon(j, k, fluid.getFluid().getIcon(), 16, 16);
-            drawScaledTexturedModelRectFromIcon(j + 16, k, fluid.getFluid().getIcon(), 16, 16);
-            drawScaledTexturedModelRectFromIcon(j + 32, k, fluid.getFluid().getIcon(), 2, 16);
+            drawScaledTexturedModelRectFromIcon(
+                j,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                16,
+                16);
+            drawScaledTexturedModelRectFromIcon(
+                j + 16,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                16,
+                16);
+            drawScaledTexturedModelRectFromIcon(
+                j + 32,
+                k,
+                fluid.getFluid()
+                    .getIcon(),
+                2,
+                16);
             Minecraft.getMinecraft().renderEngine.bindTexture(Feature.texture);
             GuiDraw.drawTexturedModalRect(j, k - 42, 16, 0, 34, 60);
         }
@@ -89,11 +306,13 @@ public abstract class NEIBase extends TemplateRecipeHandler {
 
     public int getGuiWidth(GuiRecipe gui) {
         try {
-            Field f = gui.getClass().getField("width");
+            Field f = gui.getClass()
+                .getField("width");
             return (Integer) f.get(gui);
         } catch (NoSuchFieldException e) {
             try {
-                Field f = gui.getClass().getField("field_146294_l");
+                Field f = gui.getClass()
+                    .getField("field_146294_l");
                 return (Integer) f.get(gui);
             } catch (Exception e2) {
                 return 0;
@@ -106,11 +325,13 @@ public abstract class NEIBase extends TemplateRecipeHandler {
 
     public int getGuiHeight(GuiRecipe gui) {
         try {
-            Field f = gui.getClass().getField("height");
+            Field f = gui.getClass()
+                .getField("height");
             return (Integer) f.get(gui);
         } catch (NoSuchFieldException e) {
             try {
-                Field f = gui.getClass().getField("field_146295_m");
+                Field f = gui.getClass()
+                    .getField("field_146295_m");
                 return (Integer) f.get(gui);
             } catch (Exception e2) {
                 return 0;
@@ -132,7 +353,12 @@ public abstract class NEIBase extends TemplateRecipeHandler {
         Tessellator tessellator = Tessellator.instance;
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV(i + 0, j + y, GuiDraw.gui.getZLevel(), minU, minV + (maxV - minV) * y / 16.0D);
-        tessellator.addVertexWithUV(i + x, j + y, GuiDraw.gui.getZLevel(), minU + (maxU - minU) * x / 16.0D, minV + (maxV - minV) * y / 16.0D);
+        tessellator.addVertexWithUV(
+            i + x,
+            j + y,
+            GuiDraw.gui.getZLevel(),
+            minU + (maxU - minU) * x / 16.0D,
+            minV + (maxV - minV) * y / 16.0D);
         tessellator.addVertexWithUV(i + x, j + 0, GuiDraw.gui.getZLevel(), minU + (maxU - minU) * x / 16.0D, minV);
         tessellator.addVertexWithUV(i + 0, j + 0, GuiDraw.gui.getZLevel(), minU, minV);
         tessellator.draw();

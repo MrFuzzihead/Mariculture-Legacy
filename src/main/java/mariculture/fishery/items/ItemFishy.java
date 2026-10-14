@@ -3,6 +3,17 @@ package mariculture.fishery.items;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.api.core.ISpecialSorting;
 import mariculture.api.core.MaricultureTab;
 import mariculture.api.fishery.Fishing;
@@ -12,18 +23,9 @@ import mariculture.core.items.ItemMCBaseSingle;
 import mariculture.core.util.MCTranslate;
 import mariculture.fishery.Fish;
 import mariculture.fishery.FishyHelper;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemFishy extends ItemMCBaseSingle implements ISpecialSorting {
+
     private static IIcon egg;
 
     public ItemFishy() {
@@ -37,17 +39,23 @@ public class ItemFishy extends ItemMCBaseSingle implements ISpecialSorting {
         if (fish2.getItem() instanceof ItemFishy) {
             if (!isPerfectMatch) {
                 if (Fishing.fishHelper.isEgg(fish1)) return Fishing.fishHelper.isEgg(fish2);
-                if (Fish.species.getDNA(fish1).equals(Fish.species.getDNA(fish2))) return Fish.species.getLowerDNA(fish1).equals(Fish.species.getLowerDNA(fish2));
-                if (Fish.species.getDNA(fish1).equals(Fish.species.getLowerDNA(fish2))) return Fish.species.getLowerDNA(fish1).equals(Fish.species.getDNA(fish2));
+                if (Fish.species.getDNA(fish1)
+                    .equals(Fish.species.getDNA(fish2)))
+                    return Fish.species.getLowerDNA(fish1)
+                        .equals(Fish.species.getLowerDNA(fish2));
+                if (Fish.species.getDNA(fish1)
+                    .equals(Fish.species.getLowerDNA(fish2)))
+                    return Fish.species.getLowerDNA(fish1)
+                        .equals(Fish.species.getDNA(fish2));
                 return false;
             }
 
-            //Check all the fish dna matches
+            // Check all the fish dna matches
             for (FishDNABase dna : FishDNABase.DNAParts) {
                 int dna1Upper = dna.getDNA(fish1);
                 int dna2Upper = dna.getDNA(fish2);
                 int dna1Lower = dna.getLowerDNA(fish1);
-                int dna2Lower = dna.getLowerDNA(fish2);               
+                int dna2Lower = dna.getLowerDNA(fish2);
                 if (dna1Upper != dna2Upper) return false;
                 if (dna == Fish.gender) continue;
                 if (dna1Lower != dna2Lower) return false;
@@ -77,7 +85,12 @@ public class ItemFishy extends ItemMCBaseSingle implements ISpecialSorting {
         FishSpecies active = FishSpecies.species.get(Fish.species.getDNA(stack));
         FishSpecies inactive = FishSpecies.species.get(Fish.species.getLowerDNA(stack));
         if (active == null || inactive == null) return MCTranslate.translate("anyFish");
-        if (active != inactive) return mariculture.lib.util.Text.AQUA + active.getName() + "-" + inactive.getName() + " " + mariculture.lib.util.Text.localize("mariculture.fish.data.hybrid") + convertToSymbol(Fish.gender.getDNA(stack));
+        if (active != inactive) return mariculture.lib.util.Text.AQUA + active.getName()
+            + "-"
+            + inactive.getName()
+            + " "
+            + mariculture.lib.util.Text.localize("mariculture.fish.data.hybrid")
+            + convertToSymbol(Fish.gender.getDNA(stack));
         else return mariculture.lib.util.Text.AQUA + active.getName() + convertToSymbol(Fish.gender.getDNA(stack));
     }
 
@@ -86,7 +99,8 @@ public class ItemFishy extends ItemMCBaseSingle implements ISpecialSorting {
         FishSpecies species = Fishing.fishHelper.getSpecies(stack);
         if (species != null) {
             for (int i = 0; i < FishDNABase.DNAParts.size(); i++) {
-                FishDNABase.DNAParts.get(i).getInformationDisplay(stack, list);
+                FishDNABase.DNAParts.get(i)
+                    .getInformationDisplay(stack, list);
             }
         }
     }
@@ -102,7 +116,8 @@ public class ItemFishy extends ItemMCBaseSingle implements ISpecialSorting {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         for (Entry<Integer, FishSpecies> species : FishSpecies.species.entrySet()) {
-            species.getValue().registerIcon(iconRegister);
+            species.getValue()
+                .registerIcon(iconRegister);
         }
     }
 

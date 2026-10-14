@@ -2,13 +2,6 @@ package mariculture.core.items;
 
 import java.util.List;
 
-import mariculture.Mariculture;
-import mariculture.core.Core;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.util.ITank;
-import mariculture.lib.util.Text;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -30,10 +23,19 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.oredict.OreDictionary;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.core.Core;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.util.ITank;
+import mariculture.lib.util.Text;
 
 public class ItemFluidStorage extends ItemMCBaseSingle implements IFluidContainerItem {
+
     public int capacity;
     private IIcon filledIcon;
 
@@ -87,7 +89,7 @@ public class ItemFluidStorage extends ItemMCBaseSingle implements IFluidContaine
             y = movingobjectposition.blockY;
             z = movingobjectposition.blockZ;
             side = movingobjectposition.sideHit;
-            
+
             if (((IFluidContainerItem) item.getItem()).getFluid(item) != null) {
                 FluidStack stack = ((IFluidContainerItem) item.getItem()).getFluid(item);
                 Fluid fluid = stack.getFluid();
@@ -97,7 +99,9 @@ public class ItemFluidStorage extends ItemMCBaseSingle implements IFluidContaine
                 FluidStack result = ((IFluidContainerItem) item.getItem()).drain(item, drain, false);
                 if (result == null || result.amount < drain) return item;
 
-                if (!result.getFluid().getName().equals("lava") && world.provider.isHellWorld) return item;
+                if (!result.getFluid()
+                    .getName()
+                    .equals("lava") && world.provider.isHellWorld) return item;
 
                 if (side == 1 && (block instanceof BlockFluidBase || block instanceof BlockLiquid)) {
                     --y;
@@ -139,7 +143,13 @@ public class ItemFluidStorage extends ItemMCBaseSingle implements IFluidContaine
                             theBlock.onPostBlockPlaced(world, x, y, z, 0);
                         }
 
-                        world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, theBlock.stepSound.func_150496_b(), (theBlock.stepSound.getVolume() + 1.0F) / 2.0F, theBlock.stepSound.getPitch() * 0.8F);
+                        world.playSoundEffect(
+                            x + 0.5F,
+                            y + 0.5F,
+                            z + 0.5F,
+                            theBlock.stepSound.func_150496_b(),
+                            (theBlock.stepSound.getVolume() + 1.0F) / 2.0F,
+                            theBlock.stepSound.getPitch() * 0.8F);
 
                         ((IFluidContainerItem) item.getItem()).drain(item, drain, true);
                         return item;
@@ -152,7 +162,8 @@ public class ItemFluidStorage extends ItemMCBaseSingle implements IFluidContaine
     }
 
     @Override
-    public boolean onItemUse(ItemStack item, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack item, EntityPlayer player, World world, int x, int y, int z, int side,
+        float hitX, float hitY, float hitZ) {
         if (FluidHelper.isIContainer(item)) if (world.getTileEntity(x, y, z) instanceof IFluidHandler) {
             ForgeDirection dir = ForgeDirection.getOrientation(side);
             IFluidHandler tank = (IFluidHandler) world.getTileEntity(x, y, z);
@@ -231,7 +242,8 @@ public class ItemFluidStorage extends ItemMCBaseSingle implements IFluidContaine
     public void registerIcons(IIconRegister iconRegister) {
         super.registerIcons(iconRegister);
         if (this == Core.bucketTitanium) {
-            String name = super.getUnlocalizedName().replace("item.", "").toLowerCase();
+            String name = super.getUnlocalizedName().replace("item.", "")
+                .toLowerCase();
             filledIcon = iconRegister.registerIcon(Mariculture.modid + ":bucketTitaniumFilled");
         }
     }
@@ -252,7 +264,8 @@ public class ItemFluidStorage extends ItemMCBaseSingle implements IFluidContaine
         if (resource == null) return 0;
 
         if (!doFill) {
-            if (container.stackTagCompound == null || !container.stackTagCompound.hasKey("Fluid")) return Math.min(capacity, resource.amount);
+            if (container.stackTagCompound == null || !container.stackTagCompound.hasKey("Fluid"))
+                return Math.min(capacity, resource.amount);
 
             FluidStack stack = FluidStack.loadFluidStackFromNBT(container.stackTagCompound.getCompoundTag("Fluid"));
 

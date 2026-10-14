@@ -1,17 +1,19 @@
 package maritech.render;
 
-import mariculture.core.Core;
-import mariculture.core.lib.MachineRenderedMultiMeta;
-import mariculture.core.lib.MetalMeta;
-import mariculture.core.render.RenderBase;
-import maritech.tile.TileAirCompressor;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.Core;
+import mariculture.core.lib.MachineRenderedMultiMeta;
+import mariculture.core.lib.MetalMeta;
+import mariculture.core.render.RenderBase;
+import maritech.tile.TileAirCompressor;
+
 public class RenderCompressorTop extends RenderBase {
+
     public RenderCompressorTop() {}
 
     @Override

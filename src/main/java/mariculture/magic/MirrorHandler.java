@@ -1,5 +1,11 @@
 package mariculture.magic;
 
+import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import mariculture.api.core.IMirrorHandler;
 import mariculture.core.helpers.EnchantHelper;
 import mariculture.core.network.PacketDamageJewelry;
@@ -7,20 +13,16 @@ import mariculture.core.network.PacketHandler;
 import mariculture.core.network.PacketSyncMirror;
 import mariculture.magic.jewelry.ItemJewelry;
 import mariculture.magic.jewelry.parts.JewelryMaterial;
-import net.minecraft.client.entity.EntityClientPlayerMP;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 public class MirrorHandler implements IMirrorHandler {
+
     @Override
     public boolean containsEnchantedItems(EntityPlayer player) {
         // Mirror
         ItemStack[] mirror = MirrorHelper.getInventory(player);
         if (mirror != null) {
-            for (int i = 0; i < 3; i++)
-                if (mirror[i] != null) if (mirror[i].isItemEnchanted() && !EnchantHelper.isBroken(mirror[i])) return true;
+            for (int i = 0; i < 3; i++) if (mirror[i] != null)
+                if (mirror[i].isItemEnchanted() && !EnchantHelper.isBroken(mirror[i])) return true;
         }
 
         return false;
@@ -29,11 +31,10 @@ public class MirrorHandler implements IMirrorHandler {
     @Override
     public void dropItems(EntityPlayer player, World world, double posX, double posY, double posZ) {
         ItemStack[] mirror = MirrorHelper.getInventory(player);
-        for (int i = 0; i < mirror.length; ++i)
-            if (mirror[i] != null) {
-                player.dropPlayerItemWithRandomChoice(mirror[i], true);
-                mirror[i] = null;
-            }
+        for (int i = 0; i < mirror.length; ++i) if (mirror[i] != null) {
+            player.dropPlayerItemWithRandomChoice(mirror[i], true);
+            mirror[i] = null;
+        }
 
         MirrorHelper.save(player, mirror);
     }
@@ -42,10 +43,9 @@ public class MirrorHandler implements IMirrorHandler {
     public int getEnchantmentStrength(EntityPlayer player, int enchant) {
         ItemStack[] mirror = MirrorHelper.getInventory(player);
         int total = 0;
-        for (int i = 0; i < 3; i++)
-            if (mirror[i] != null && !EnchantHelper.isBroken(mirror[i])) {
-                total = total + EnchantHelper.getLevel(enchant, mirror[i]);
-            }
+        for (int i = 0; i < 3; i++) if (mirror[i] != null && !EnchantHelper.isBroken(mirror[i])) {
+            total = total + EnchantHelper.getLevel(enchant, mirror[i]);
+        }
 
         return total;
     }
@@ -80,19 +80,23 @@ public class MirrorHandler implements IMirrorHandler {
 
     public static void handleDamage(EntityPlayer player, int enchant, int amount) {
         // Mirror
-        //Set the amount of damage to 1 if the enchantment is the elemental enchant
+        // Set the amount of damage to 1 if the enchantment is the elemental enchant
         int matId = amount;
         amount = EnchantHelper.exists(Magic.elemental) && enchant == Magic.elemental.effectId ? 1 : amount;
         ItemStack[] mirror = MirrorHelper.getInventory(player);
         for (int damaged = 0; damaged < amount; damaged++) {
-            for (int i = 0; i < 3; i++)
-                if (mirror[i] != null) if (EnchantHelper.hasEnchantment(enchant, mirror[i])) if (EnchantHelper.exists(Magic.elemental) && enchant == Magic.elemental.effectId) {
+            for (int i = 0; i < 3; i++) if (mirror[i] != null) if (EnchantHelper.hasEnchantment(enchant, mirror[i]))
+                if (EnchantHelper.exists(Magic.elemental) && enchant == Magic.elemental.effectId) {
                     JewelryMaterial material = JewelryHandler.getMaterial(mirror[i]);
                     if (material.id == matId) if (mirror[i].attemptDamageItem(1, player.worldObj.rand)) {
-                        PacketHandler.sendToClient(new PacketSyncMirror(MirrorHelper.getInventoryForPlayer(player)), (EntityPlayerMP) player);
+                        PacketHandler.sendToClient(
+                            new PacketSyncMirror(MirrorHelper.getInventoryForPlayer(player)),
+                            (EntityPlayerMP) player);
                     }
                 } else if (mirror[i].attemptDamageItem(1, player.worldObj.rand)) {
-                    PacketHandler.sendToClient(new PacketSyncMirror(MirrorHelper.getInventoryForPlayer(player)), (EntityPlayerMP) player);
+                    PacketHandler.sendToClient(
+                        new PacketSyncMirror(MirrorHelper.getInventoryForPlayer(player)),
+                        (EntityPlayerMP) player);
                 }
         }
 

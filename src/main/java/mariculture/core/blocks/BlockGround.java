@@ -3,13 +3,6 @@ package mariculture.core.blocks;
 import java.util.ArrayList;
 import java.util.Random;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.blocks.base.BlockMCBaseMeta;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.lib.Dye;
-import mariculture.core.lib.Extra;
-import mariculture.core.lib.GroundMeta;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -19,10 +12,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.blocks.base.BlockMCBaseMeta;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.lib.Dye;
+import mariculture.core.lib.Extra;
+import mariculture.core.lib.GroundMeta;
 
 public class BlockGround extends BlockMCBaseMeta {
+
     public BlockGround() {
         super(Material.sand);
     }
@@ -74,38 +76,37 @@ public class BlockGround extends BlockMCBaseMeta {
         ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 
         int count = quantityDropped(metadata, fortune, world.rand);
-        for (int i = 0; i < count; i++)
-            if (metadata == GroundMeta.ANCIENT) {
-                if (!Extra.NERF_FOOD) {
-                    if (world.rand.nextInt(7) <= fortune) {
-                        ret.add(new ItemStack(Items.bone));
-                    }
-                    if (world.rand.nextInt(3) <= fortune) {
-                        ret.add(new ItemStack(Items.dye, 1, Dye.BONE));
-                    }
+        for (int i = 0; i < count; i++) if (metadata == GroundMeta.ANCIENT) {
+            if (!Extra.NERF_FOOD) {
+                if (world.rand.nextInt(7) <= fortune) {
+                    ret.add(new ItemStack(Items.bone));
                 }
-
-                if (world.rand.nextInt(15) <= fortune) {
-                    ret.add(new ItemStack(Items.dye, 1, Dye.INK));
-                }
-                if (world.rand.nextInt(64) <= fortune) {
-                    ret.add(new ItemStack(Items.gold_nugget));
-                }
-                if (world.rand.nextInt(48) <= fortune) {
-                    ret.add(new ItemStack(Blocks.chest));
-                }
-                if (world.rand.nextInt(52) <= fortune) {
-                    ret.add(new ItemStack(Blocks.trapped_chest));
-                }
-                if (ret.size() == 0) {
-                    ret.add(new ItemStack(this, 1, GroundMeta.ANCIENT));
-                }
-            } else {
-                Item item = getItemDropped(metadata, world.rand, fortune);
-                if (item != null) {
-                    ret.add(new ItemStack(item, 1, damageDropped(metadata)));
+                if (world.rand.nextInt(3) <= fortune) {
+                    ret.add(new ItemStack(Items.dye, 1, Dye.BONE));
                 }
             }
+
+            if (world.rand.nextInt(15) <= fortune) {
+                ret.add(new ItemStack(Items.dye, 1, Dye.INK));
+            }
+            if (world.rand.nextInt(64) <= fortune) {
+                ret.add(new ItemStack(Items.gold_nugget));
+            }
+            if (world.rand.nextInt(48) <= fortune) {
+                ret.add(new ItemStack(Blocks.chest));
+            }
+            if (world.rand.nextInt(52) <= fortune) {
+                ret.add(new ItemStack(Blocks.trapped_chest));
+            }
+            if (ret.size() == 0) {
+                ret.add(new ItemStack(this, 1, GroundMeta.ANCIENT));
+            }
+        } else {
+            Item item = getItemDropped(metadata, world.rand, fortune);
+            if (item != null) {
+                ret.add(new ItemStack(item, 1, damageDropped(metadata)));
+            }
+        }
         return ret;
     }
 

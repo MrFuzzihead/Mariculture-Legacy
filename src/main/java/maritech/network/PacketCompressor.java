@@ -1,15 +1,17 @@
 package maritech.network;
 
+import net.minecraft.tileentity.TileEntity;
+
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import mariculture.core.network.PacketCoords;
 import mariculture.lib.helpers.ClientHelper;
 import maritech.tile.TileAirCompressor;
-import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketCompressor extends PacketCoords implements IMessageHandler<PacketCompressor, IMessage> {
+
     public int air, power;
 
     public PacketCompressor() {}

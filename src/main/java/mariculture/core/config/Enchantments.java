@@ -5,10 +5,13 @@ import static mariculture.core.helpers.ConfigHelper.getDouble;
 import static mariculture.core.helpers.ConfigHelper.getInt;
 import static mariculture.core.helpers.ConfigHelper.setCategory;
 import static mariculture.core.helpers.ConfigHelper.setConfig;
+
 import net.minecraftforge.common.config.Configuration;
 
 public class Enchantments {
+
     public static class EnchantIds {
+
         public static int hungry;
         public static int oneRing;
         public static int speed;
@@ -71,6 +74,7 @@ public class Enchantments {
     }
 
     public static class Jewelry {
+
         public static boolean JEWELRY_OFFLINE;
         public static boolean DROP_JEWELRY;
         public static boolean ALTERNATIVE_CELESTIAL_RECIPE;

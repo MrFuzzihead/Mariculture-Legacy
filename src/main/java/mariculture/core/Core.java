@@ -11,6 +11,23 @@ import static mariculture.core.helpers.FluidHelper.addGas;
 import static mariculture.core.helpers.FluidHelper.registerHeatBottle;
 import static mariculture.core.helpers.FluidHelper.registerVanillaBottle;
 import static mariculture.core.util.Fluids.getFluid;
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.Height;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import mariculture.Mariculture;
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.core.MaricultureHandlers;
@@ -90,23 +107,9 @@ import mariculture.core.util.Fluids;
 import mariculture.core.util.XPRegistry;
 import mariculture.factory.tile.TileGasTank;
 import mariculture.lib.helpers.RegistryHelper;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.BiomeGenBase.Height;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.oredict.OreDictionary;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Core extends RegistrationModule {
+
     public static Block air;
     public static Block glass;
     public static Block limestone;
@@ -155,19 +158,25 @@ public class Core extends RegistrationModule {
         MinecraftForge.EVENT_BUS.register(new BucketHandler());
         MinecraftForge.EVENT_BUS.register(new GuiItemToolTip());
         MinecraftForge.EVENT_BUS.register(new OreDicHandler());
-        FMLCommonHandler.instance().bus().register(new ServerFMLEvents());
-        FMLCommonHandler.instance().bus().register(new ClientFMLEvents());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new ServerFMLEvents());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new ClientFMLEvents());
 
         if (WorldGen.ENABLE_REPLACEMENTS) {
             MinecraftForge.EVENT_BUS.register(new WorldEventHandler());
         }
 
-        BiomeGenBase.getBiomeGenArray()[BiomeGenBase.ocean.biomeID].setHeight(new Height((float) WorldGen.OCEAN_ROOT, (float) WorldGen.OCEAN_VARIATION));
-        BiomeGenBase.getBiomeGenArray()[BiomeGenBase.deepOcean.biomeID].setHeight(new Height((float) WorldGen.OCEAN_DEEP_ROOT, (float) WorldGen.OCEAN_DEEP_VARIATION));
+        BiomeGenBase.getBiomeGenArray()[BiomeGenBase.ocean.biomeID]
+            .setHeight(new Height((float) WorldGen.OCEAN_ROOT, (float) WorldGen.OCEAN_VARIATION));
+        BiomeGenBase.getBiomeGenArray()[BiomeGenBase.deepOcean.biomeID]
+            .setHeight(new Height((float) WorldGen.OCEAN_DEEP_ROOT, (float) WorldGen.OCEAN_DEEP_VARIATION));
 
         if (RetroGen.ENABLED) {
             MinecraftForge.EVENT_BUS.register(new RetroGeneration());
-        }        
+        }
     }
 
     ToolMaterial brick = EnumHelper.addToolMaterial("BRICK", 1, 1000, 3.0F, 1.2F, 12);
@@ -232,24 +241,59 @@ public class Core extends RegistrationModule {
     @Override
     public void registerBlocks() {
         FluidHelper.setBlock(BlockPressurisedWater.class, "hp_water", "highPressureWater");
-        rocks = new BlockRock().setStepSound(Block.soundTypeStone).setResistance(2F).setBlockName("rocks");
-        limestone = new BlockLimestone().setStepSound(Block.soundTypeStone).setResistance(1F).setBlockName("limestone");
-        metals = new BlockMetal().setStepSound(Block.soundTypeMetal).setResistance(5F).setBlockName("metals");
-        pearlBlock = new BlockPearlBlock("pearlBlock_").setStepSound(Block.soundTypeStone).setResistance(1.5F).setBlockName("pearl.block");
-        machines = new BlockMachine().setStepSound(Block.soundTypeWood).setResistance(10F).setBlockName("machines.single");
-        machinesMulti = new BlockMachineMulti().setStepSound(Block.soundTypeStone).setResistance(20F).setBlockName("machines.multi");
-        renderedMachines = new BlockRenderedMachine().setStepSound(Block.soundTypeMetal).setResistance(1F).setHardness(1F).setBlockName("machines.single.rendered");
-        renderedMachinesMulti = new BlockRenderedMachineMulti().setStepSound(Block.soundTypeMetal).setResistance(3F).setHardness(3F).setBlockName("machines.multi.rendered");
-        glass = new BlockGlass().setStepSound(Block.soundTypeGlass).setResistance(5F).setBlockName("glass");
+        rocks = new BlockRock().setStepSound(Block.soundTypeStone)
+            .setResistance(2F)
+            .setBlockName("rocks");
+        limestone = new BlockLimestone().setStepSound(Block.soundTypeStone)
+            .setResistance(1F)
+            .setBlockName("limestone");
+        metals = new BlockMetal().setStepSound(Block.soundTypeMetal)
+            .setResistance(5F)
+            .setBlockName("metals");
+        pearlBlock = new BlockPearlBlock("pearlBlock_").setStepSound(Block.soundTypeStone)
+            .setResistance(1.5F)
+            .setBlockName("pearl.block");
+        machines = new BlockMachine().setStepSound(Block.soundTypeWood)
+            .setResistance(10F)
+            .setBlockName("machines.single");
+        machinesMulti = new BlockMachineMulti().setStepSound(Block.soundTypeStone)
+            .setResistance(20F)
+            .setBlockName("machines.multi");
+        renderedMachines = new BlockRenderedMachine().setStepSound(Block.soundTypeMetal)
+            .setResistance(1F)
+            .setHardness(1F)
+            .setBlockName("machines.single.rendered");
+        renderedMachinesMulti = new BlockRenderedMachineMulti().setStepSound(Block.soundTypeMetal)
+            .setResistance(3F)
+            .setHardness(3F)
+            .setBlockName("machines.multi.rendered");
+        glass = new BlockGlass().setStepSound(Block.soundTypeGlass)
+            .setResistance(5F)
+            .setBlockName("glass");
         air = new BlockAir().setBlockName("air");
-        woods = new BlockWood().setStepSound(Block.soundTypeWood).setBlockName("woods").setHardness(2.0F);
-        tanks = new BlockTank().setStepSound(Block.soundTypeGlass).setBlockName("tanks").setHardness(1F);
-        sands = new BlockGround().setStepSound(Block.soundTypeSand).setBlockName("sands").setHardness(1F);
-        transparent = new BlockTransparent().setStepSound(Block.soundTypePiston).setBlockName("transparent").setHardness(1F);
-        ticking = new BlockTicking().setStepSound(Block.soundTypeCloth).setHardness(0.05F).setBlockName("ticking");
-        water = new BlockWater().setStepSound(Block.soundTypeSnow).setHardness(10F).setBlockName("water");
-        RegistryHelper.registerTiles("Mariculture", new Class[] { TileAirPump.class, TileCrucible.class, TileBookshelf.class, TileTankBlock.class, TileVat.class, TileAnvil.class, 
-                TileIngotCaster.class, TileVoidBottle.class, TileOyster.class, TileBlockCaster.class, TileNuggetCaster.class, TileAutohammer.class, TileTankAluminum.class, 
+        woods = new BlockWood().setStepSound(Block.soundTypeWood)
+            .setBlockName("woods")
+            .setHardness(2.0F);
+        tanks = new BlockTank().setStepSound(Block.soundTypeGlass)
+            .setBlockName("tanks")
+            .setHardness(1F);
+        sands = new BlockGround().setStepSound(Block.soundTypeSand)
+            .setBlockName("sands")
+            .setHardness(1F);
+        transparent = new BlockTransparent().setStepSound(Block.soundTypePiston)
+            .setBlockName("transparent")
+            .setHardness(1F);
+        ticking = new BlockTicking().setStepSound(Block.soundTypeCloth)
+            .setHardness(0.05F)
+            .setBlockName("ticking");
+        water = new BlockWater().setStepSound(Block.soundTypeSnow)
+            .setHardness(10F)
+            .setBlockName("water");
+        RegistryHelper.registerTiles(
+            "Mariculture",
+            new Class[] { TileAirPump.class, TileCrucible.class, TileBookshelf.class, TileTankBlock.class,
+                TileVat.class, TileAnvil.class, TileIngotCaster.class, TileVoidBottle.class, TileOyster.class,
+                TileBlockCaster.class, TileNuggetCaster.class, TileAutohammer.class, TileTankAluminum.class,
                 TileTankTitanium.class, TileGasTank.class });
     }
 
@@ -269,7 +313,14 @@ public class Core extends RegistrationModule {
     }
 
     private void registerEntities() {
-        EntityRegistry.registerModEntity(EntityFakeItem.class, "FakeItem", EntityIds.FAKE_ITEM, Mariculture.instance, 80, 3, false);
+        EntityRegistry.registerModEntity(
+            EntityFakeItem.class,
+            "FakeItem",
+            EntityIds.FAKE_ITEM,
+            Mariculture.instance,
+            80,
+            3,
+            false);
     }
 
     private void registerBiomes() {

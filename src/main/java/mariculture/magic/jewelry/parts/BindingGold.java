@@ -1,12 +1,14 @@
 package mariculture.magic.jewelry.parts;
 
-import mariculture.core.Core;
-import mariculture.core.lib.CraftingMeta;
-import mariculture.magic.jewelry.ItemJewelry.JewelryType;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.Core;
+import mariculture.core.lib.CraftingMeta;
+import mariculture.magic.jewelry.ItemJewelry.JewelryType;
+
 public class BindingGold extends JewelryBinding {
+
     @Override
     public String getColor() {
         return mariculture.lib.util.Text.YELLOW;

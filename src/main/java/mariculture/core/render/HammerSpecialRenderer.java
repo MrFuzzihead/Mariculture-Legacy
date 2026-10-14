@@ -1,7 +1,5 @@
 package mariculture.core.render;
 
-import mariculture.core.tile.TileAutohammer;
-import mariculture.core.util.EntityFakeItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -12,9 +10,12 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.tile.TileAutohammer;
+import mariculture.core.util.EntityFakeItem;
 
 @SideOnly(Side.CLIENT)
 public class HammerSpecialRenderer extends TileEntitySpecialRenderer {
+
     @Override
     public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float tick) {
         TileAutohammer hammer = (TileAutohammer) tile;
@@ -43,7 +44,7 @@ public class HammerSpecialRenderer extends TileEntitySpecialRenderer {
             GL11.glTranslatef(x, y, z);
             GL11.glRotatef(dir, 0F, 1F, 0F);
             GL11.glRotatef(85F + angle, 0F, 0F, 1F);
-            //GL11.glRotatef(dir, 1F, 0F, 0F);
+            // GL11.glRotatef(dir, 1F, 0F, 0F);
             GL11.glScalef(1.8F, 1.8F, 1.8F);
             RenderManager.instance.renderEntityWithPosYaw(item, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
             GL11.glPopMatrix();

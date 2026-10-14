@@ -6,17 +6,20 @@ import java.util.Set;
 import net.minecraft.item.ItemStack;
 
 public interface ICrucibleHandler {
-    /** Add a Melting Recipe
-     * Take note that if you set the liquid output to the same as the ore rate, 
-     * 	then your item will be affected by the purity upgrade */
+
+    /**
+     * Add a Melting Recipe
+     * Take note that if you set the liquid output to the same as the ore rate,
+     * then your item will be affected by the purity upgrade
+     */
     public void addRecipe(RecipeSmelter recipe);
 
-    //Can be either a FluidStack, ItemStack, FluidName or Ore Dictionary Name
+    // Can be either a FluidStack, ItemStack, FluidName or Ore Dictionary Name
     public void addFuel(Object stack, FuelInfo info);
-    
+
     /** Adds a handler for this fuel, it's called whenever the fuel ticks **/
     public void addFuelHandler(Object stack, IFuelTickHandler handler);
-    
+
     /** Returns the fuel tick handler for this fuel **/
     public IFuelTickHandler getFuelTickHandler(Object obj);
 
@@ -27,7 +30,7 @@ public interface ICrucibleHandler {
 
     /** Get the melting point of an item */
     public int getMeltingPoint(ItemStack stack, boolean ethereal);
-    
+
     /** Returns a set of all the recipes **/
     public Set<RecipeSmelter> getRecipeList();
 

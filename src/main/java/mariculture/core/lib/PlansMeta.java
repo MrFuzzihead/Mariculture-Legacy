@@ -1,7 +1,5 @@
 package mariculture.core.lib;
 
-import mariculture.factory.Factory;
-import mariculture.factory.tile.TileCustom;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCarpet;
 import net.minecraft.block.BlockFence;
@@ -12,9 +10,13 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
 import cofh.api.energy.IEnergyReceiver;
+import mariculture.factory.Factory;
+import mariculture.factory.tile.TileCustom;
 
 public class PlansMeta {
+
     public static final int COUNT = 10;
     public static final int FLOOR = 0;
     public static final int BLOCK = 1;
@@ -80,7 +82,7 @@ public class PlansMeta {
             if (world.getTileEntity(x, y - 1, z) instanceof IEnergyReceiver) {
                 return PlansMeta.RF_WALL;
             }
-            
+
             return PlansMeta.WALL;
         } else if (block instanceof BlockCarpet) return PlansMeta.FLOOR;
         else if (world.getTileEntity(x, y, z) instanceof IEnergyReceiver) return PlansMeta.RF;

@@ -2,15 +2,16 @@ package maritech.handlers;
 
 import java.util.HashMap;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mariculture.core.events.ConfigEvent;
 import maritech.util.IConfigExtension;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigEvents {
+
     private static HashMap<String, IConfigExtension> extensions = new HashMap();
-    
+
     public static void register(IConfigExtension extension) {
-       extensions.put(extension.getName(), extension);
+        extensions.put(extension.getName(), extension);
     }
 
     @SubscribeEvent

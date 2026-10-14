@@ -1,6 +1,7 @@
 package mariculture.magic.jewelry;
 
 public class ItemNecklace extends ItemJewelry {
+
     @Override
     public JewelryType getType() {
         return JewelryType.NECKLACE;

@@ -5,6 +5,7 @@ import mariculture.core.lib.MCModInfo;
 import mariculture.lib.base.ItemBaseSingle;
 
 public class ItemMCBaseSingle extends ItemBaseSingle {
+
     public ItemMCBaseSingle() {
         super(MCModInfo.MODPATH, MaricultureTab.tabCore);
     }

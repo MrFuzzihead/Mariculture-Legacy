@@ -2,7 +2,6 @@ package mariculture.core.util;
 
 import java.util.List;
 
-import mariculture.core.helpers.FluidHelper;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidEvent;
@@ -10,7 +9,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidTank;
 
+import mariculture.core.helpers.FluidHelper;
+
 public class Tank implements IFluidTank, ITank {
+
     protected FluidStack fluid;
     protected int capacity;
     protected TileEntity tile;
@@ -61,7 +63,7 @@ public class Tank implements IFluidTank, ITank {
     public int getFluidID() {
         if (fluid == null) return -1;
 
-        return fluid.fluidID;
+        return fluid.getFluidID();
     }
 
     public void setFluidID(int id) {
@@ -113,7 +115,14 @@ public class Tank implements IFluidTank, ITank {
             fluid = new FluidStack(resource, Math.min(capacity, resource.amount));
 
             if (tile != null) {
-                FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(fluid, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this));
+                FluidEvent.fireEvent(
+                    new FluidEvent.FluidFillingEvent(
+                        fluid,
+                        tile.getWorldObj(),
+                        tile.xCoord,
+                        tile.yCoord,
+                        tile.zCoord,
+                        this));
             }
             return fluid.amount;
         }
@@ -129,7 +138,14 @@ public class Tank implements IFluidTank, ITank {
         }
 
         if (tile != null) {
-            FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(fluid, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this));
+            FluidEvent.fireEvent(
+                new FluidEvent.FluidFillingEvent(
+                    fluid,
+                    tile.getWorldObj(),
+                    tile.xCoord,
+                    tile.yCoord,
+                    tile.zCoord,
+                    this));
         }
         return filled;
     }
@@ -151,14 +167,22 @@ public class Tank implements IFluidTank, ITank {
             }
 
             if (tile != null) {
-                FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(fluid, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord, this));
+                FluidEvent.fireEvent(
+                    new FluidEvent.FluidDrainingEvent(
+                        fluid,
+                        tile.getWorldObj(),
+                        tile.xCoord,
+                        tile.yCoord,
+                        tile.zCoord,
+                        this));
             }
         }
         return stack;
     }
 
     public int fill(FluidStack resource, boolean doFill, Tank tank) {
-        if (tank.getFluid() != null && resource.getFluid() == tank.getFluid().getFluid()) return 0;
+        if (tank.getFluid() != null && resource.getFluid() == tank.getFluid()
+            .getFluid()) return 0;
         return fill(resource, doFill);
     }
 

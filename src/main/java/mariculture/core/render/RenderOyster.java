@@ -1,9 +1,5 @@
 package mariculture.core.render;
 
-import mariculture.core.Core;
-import mariculture.core.handlers.PearlGenHandler;
-import mariculture.core.lib.PearlColor;
-import mariculture.core.tile.TileOyster;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -13,7 +9,13 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.Core;
+import mariculture.core.handlers.PearlGenHandler;
+import mariculture.core.lib.PearlColor;
+import mariculture.core.tile.TileOyster;
+
 public class RenderOyster extends RenderBase {
+
     public static IIcon lid_blur;
     public static IIcon lid;
     public static IIcon tongue;
@@ -43,7 +45,22 @@ public class RenderOyster extends RenderBase {
         if (dir == ForgeDirection.SOUTH || isItem) {
             setTexture(tongue);
             renderBlock(0.15, 0.1, 0.1, 0.85, 0.11, 0.9);
-            renderAngledBlock(-0.15D, 0.55D, -0.35D, 0.2D, 0.55D, -0.35D, -0.15D, 0.05D, 0.1D, 0.2D, 0.05D, 0.1D, 0.0D, 0.005D, 0.0D);
+            renderAngledBlock(
+                -0.15D,
+                0.55D,
+                -0.35D,
+                0.2D,
+                0.55D,
+                -0.35D,
+                -0.15D,
+                0.05D,
+                0.1D,
+                0.2D,
+                0.05D,
+                0.1D,
+                0.0D,
+                0.005D,
+                0.0D);
 
             setTexture(lid);
             renderBlock(0.1, 0.05, 0.1, 0.9, 0.1, 0.9);
@@ -52,9 +69,54 @@ public class RenderOyster extends RenderBase {
             renderBlock(0.85, 0.1, 0.1, 0.9, 0.15, 0.9);
             renderBlock(0.1, 0.1, 0.05, 0.9, 0.15, 0.1);
             renderBlock(0.15, 0.1, 0.9, 0.85, 0.15, 0.95);
-            renderAngledBlock(-0.2D, 0.6D, -0.4D, 0.2D, 0.6D, -0.4D, -0.2D, 0.15D, 0.15D, 0.2D, 0.15D, 0.15D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.3D, 0.55D, -0.5D, 0.3D, 0.55D, -0.5D, -0.3D, 0.3D, 0.25D, 0.3D, 0.3D, 0.25D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.15D, 0.6D, -0.35D, 0.15D, 0.6D, -0.35D, -0.15D, 0.05D, 0.1D, 0.15D, 0.05D, 0.1D, 0.0D, 0.05D, 0.0D);
+            renderAngledBlock(
+                -0.2D,
+                0.6D,
+                -0.4D,
+                0.2D,
+                0.6D,
+                -0.4D,
+                -0.2D,
+                0.15D,
+                0.15D,
+                0.2D,
+                0.15D,
+                0.15D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.3D,
+                0.55D,
+                -0.5D,
+                0.3D,
+                0.55D,
+                -0.5D,
+                -0.3D,
+                0.3D,
+                0.25D,
+                0.3D,
+                0.3D,
+                0.25D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.15D,
+                0.6D,
+                -0.35D,
+                0.15D,
+                0.6D,
+                -0.35D,
+                -0.15D,
+                0.05D,
+                0.1D,
+                0.15D,
+                0.05D,
+                0.1D,
+                0.0D,
+                0.05D,
+                0.0D);
 
             if (!isItem) {
                 renderBlock(0.15, 0.62, 0.65, 0.85, 0.67, 0.7);
@@ -65,17 +127,107 @@ public class RenderOyster extends RenderBase {
             }
 
             setTexture(lid_blur);
-            renderAngledBlock(-0.1D, 0.55D, -0.35D, 0.85D, 0.55D, -0.35D, -0.1D, 0.05D, 0.1D, 0.85D, 0.05D, 0.1D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.85D, 0.55D, -0.35D, 0.1D, 0.55D, -0.35D, -0.85D, 0.05D, 0.1D, 0.1D, 0.05D, 0.1D, 0.0D, 0.05D, 0.0D);
+            renderAngledBlock(
+                -0.1D,
+                0.55D,
+                -0.35D,
+                0.85D,
+                0.55D,
+                -0.35D,
+                -0.1D,
+                0.05D,
+                0.1D,
+                0.85D,
+                0.05D,
+                0.1D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.85D,
+                0.55D,
+                -0.35D,
+                0.1D,
+                0.55D,
+                -0.35D,
+                -0.85D,
+                0.05D,
+                0.1D,
+                0.1D,
+                0.05D,
+                0.1D,
+                0.0D,
+                0.05D,
+                0.0D);
         } else if (dir == ForgeDirection.EAST) {
             // Birch >> Acacia >> Jungle >> Dark Oak
             setTexture(tongue);
             renderBlock(0.1, 0.1, 0.15, 0.9, 0.11, 0.85);
-            renderAngledBlock(-0.35D, 0.55D, -0.15D, 0.1D, 0.05D, -0.15D, -0.35D, 0.55D, 0.15D, 0.1D, 0.05D, 0.15D, 0.0D, 0.005D, 0.0D);
+            renderAngledBlock(
+                -0.35D,
+                0.55D,
+                -0.15D,
+                0.1D,
+                0.05D,
+                -0.15D,
+                -0.35D,
+                0.55D,
+                0.15D,
+                0.1D,
+                0.05D,
+                0.15D,
+                0.0D,
+                0.005D,
+                0.0D);
             setTexture(lid);
-            renderAngledBlock(-0.4D, 0.6D, -0.2D, 0.1D, 0.15D, -0.2D, -0.4D, 0.6D, 0.2D, 0.1D, 0.15D, 0.2D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.5D, 0.55D, -0.3D, 0.2D, 0.3D, -0.3D, -0.5D, 0.55D, 0.3D, 0.2D, 0.3D, 0.3D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.35D, 0.6D, -0.15D, 0.05D, 0.05D, -0.15D, -0.35D, 0.6D, 0.15D, 0.05D, 0.05D, 0.15D, 0.0D, 0.05D, 0.0D);
+            renderAngledBlock(
+                -0.4D,
+                0.6D,
+                -0.2D,
+                0.1D,
+                0.15D,
+                -0.2D,
+                -0.4D,
+                0.6D,
+                0.2D,
+                0.1D,
+                0.15D,
+                0.2D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.5D,
+                0.55D,
+                -0.3D,
+                0.2D,
+                0.3D,
+                -0.3D,
+                -0.5D,
+                0.55D,
+                0.3D,
+                0.2D,
+                0.3D,
+                0.3D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.35D,
+                0.6D,
+                -0.15D,
+                0.05D,
+                0.05D,
+                -0.15D,
+                -0.35D,
+                0.6D,
+                0.15D,
+                0.05D,
+                0.05D,
+                0.15D,
+                0.0D,
+                0.05D,
+                0.0D);
             renderBlock(0.1, 0.05, 0.1, 0.9, 0.1, 0.9);
             renderBlock(0.2, 0.0, 0.2, 0.8, 0.05, 0.8);
             renderBlock(0.1, 0.1, 0.1, 0.9, 0.15, 0.15);
@@ -84,16 +236,106 @@ public class RenderOyster extends RenderBase {
             renderBlock(0.9, 0.1, 0.15, 0.95, 0.15, 0.85);
             renderBlock(0.65, 0.62, 0.15, 0.7, 0.67, 0.85);
             setTexture(lid_blur);
-            renderAngledBlock(-0.35D, 0.55D, -0.9D, 0.1D, 0.05D, -0.9D, -0.35D, 0.55D, 0.15D, 0.1D, 0.05D, 0.15D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.35D, 0.55D, -0.15D, 0.1D, 0.05D, -0.15D, -0.35D, 0.55D, 0.9D, 0.1D, 0.05D, 0.9D, 0.0D, 0.05D, 0.0D);
+            renderAngledBlock(
+                -0.35D,
+                0.55D,
+                -0.9D,
+                0.1D,
+                0.05D,
+                -0.9D,
+                -0.35D,
+                0.55D,
+                0.15D,
+                0.1D,
+                0.05D,
+                0.15D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.35D,
+                0.55D,
+                -0.15D,
+                0.1D,
+                0.05D,
+                -0.15D,
+                -0.35D,
+                0.55D,
+                0.9D,
+                0.1D,
+                0.05D,
+                0.9D,
+                0.0D,
+                0.05D,
+                0.0D);
         } else if (dir == ForgeDirection.WEST) {
             setTexture(tongue);
             renderBlock(0.05, 0.1, 0.15, 0.9, 0.11, 0.85);
-            renderAngledBlock(-0.1D, 0.05D, -0.15D, 0.35D, 0.55D, -0.15D, -0.1D, 0.05D, 0.15D, 0.35D, 0.55D, 0.15D, 0.0D, 0.005D, 0.0D);
+            renderAngledBlock(
+                -0.1D,
+                0.05D,
+                -0.15D,
+                0.35D,
+                0.55D,
+                -0.15D,
+                -0.1D,
+                0.05D,
+                0.15D,
+                0.35D,
+                0.55D,
+                0.15D,
+                0.0D,
+                0.005D,
+                0.0D);
             setTexture(lid);
-            renderAngledBlock(-0.1D, 0.15D, -0.2D, 0.4D, 0.6D, -0.2D, -0.1D, 0.15D, 0.2D, 0.4D, 0.6D, 0.2D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.2D, 0.3D, -0.3D, 0.5D, 0.55D, -0.3D, -0.2D, 0.3D, 0.3D, 0.5D, 0.55D, 0.3D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.05D, 0.05D, -0.15D, 0.35D, 0.6D, -0.15D, -0.05D, 0.05D, 0.15D, 0.35D, 0.6D, 0.15D, 0.0D, 0.05D, 0.0D);
+            renderAngledBlock(
+                -0.1D,
+                0.15D,
+                -0.2D,
+                0.4D,
+                0.6D,
+                -0.2D,
+                -0.1D,
+                0.15D,
+                0.2D,
+                0.4D,
+                0.6D,
+                0.2D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.2D,
+                0.3D,
+                -0.3D,
+                0.5D,
+                0.55D,
+                -0.3D,
+                -0.2D,
+                0.3D,
+                0.3D,
+                0.5D,
+                0.55D,
+                0.3D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.05D,
+                0.05D,
+                -0.15D,
+                0.35D,
+                0.6D,
+                -0.15D,
+                -0.05D,
+                0.05D,
+                0.15D,
+                0.35D,
+                0.6D,
+                0.15D,
+                0.0D,
+                0.05D,
+                0.0D);
             renderBlock(0.1, 0.05, 0.1, 0.9, 0.1, 0.9);
             renderBlock(0.2, 0.0, 0.2, 0.8, 0.05, 0.8);
             renderBlock(0.1, 0.1, 0.1, 0.9, 0.15, 0.15);
@@ -102,12 +344,57 @@ public class RenderOyster extends RenderBase {
             renderBlock(0.9, 0.1, 0.1, 0.95, 0.15, 0.9);
             renderBlock(0.3, 0.62, 0.15, 0.35, 0.67, 0.85);
             setTexture(lid_blur);
-            renderAngledBlock(-0.1D, 0.05D, -0.9D, 0.35D, 0.55D, -0.9D, -0.1D, 0.05D, 0.15D, 0.35D, 0.55D, 0.15D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.1D, 0.05D, -0.15D, 0.35D, 0.55D, -0.15D, -0.1D, 0.05D, 0.9D, 0.35D, 0.55D, 0.9D, 0.0D, 0.05D, 0.0D);
+            renderAngledBlock(
+                -0.1D,
+                0.05D,
+                -0.9D,
+                0.35D,
+                0.55D,
+                -0.9D,
+                -0.1D,
+                0.05D,
+                0.15D,
+                0.35D,
+                0.55D,
+                0.15D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.1D,
+                0.05D,
+                -0.15D,
+                0.35D,
+                0.55D,
+                -0.15D,
+                -0.1D,
+                0.05D,
+                0.9D,
+                0.35D,
+                0.55D,
+                0.9D,
+                0.0D,
+                0.05D,
+                0.0D);
         } else if (dir == ForgeDirection.NORTH) {
             setTexture(tongue);
             renderBlock(0.15, 0.1, 0.1, 0.85, 0.11, 0.9);
-            renderAngledBlock(-0.15D, 0.05D, -0.1D, 0.2D, 0.05D, -0.1D, -0.15D, 0.55D, 0.35D, 0.2D, 0.55D, 0.35D, 0.0D, 0.005D, 0.0D);
+            renderAngledBlock(
+                -0.15D,
+                0.05D,
+                -0.1D,
+                0.2D,
+                0.05D,
+                -0.1D,
+                -0.15D,
+                0.55D,
+                0.35D,
+                0.2D,
+                0.55D,
+                0.35D,
+                0.0D,
+                0.005D,
+                0.0D);
             setTexture(lid);
             renderBlock(0.1, 0.05, 0.1, 0.9, 0.1, 0.9);
             renderBlock(0.2, 0.0, 0.2, 0.8, 0.05, 0.8);
@@ -115,13 +402,88 @@ public class RenderOyster extends RenderBase {
             renderBlock(0.85, 0.1, 0.1, 0.9, 0.15, 0.95);
             renderBlock(0.15, 0.1, 0.05, 0.85, 0.15, 0.1);
             renderBlock(0.15, 0.1, 0.9, 0.85, 0.15, 0.95);
-            renderAngledBlock(-0.2D, 0.15D, -0.15D, 0.2D, 0.15D, -0.15D, -0.2D, 0.6D, 0.4D, 0.2D, 0.6D, 0.4D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.3D, 0.3D, -0.25D, 0.3D, 0.3D, -0.25D, -0.3D, 0.553D, 0.5D, 0.3D, 0.55D, 0.5D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.15D, 0.05D, -0.1D, 0.15D, 0.05D, -0.1D, -0.15D, 0.6D, 0.35D, 0.15D, 0.6D, 0.35D, 0.0D, 0.05D, 0.0D);
+            renderAngledBlock(
+                -0.2D,
+                0.15D,
+                -0.15D,
+                0.2D,
+                0.15D,
+                -0.15D,
+                -0.2D,
+                0.6D,
+                0.4D,
+                0.2D,
+                0.6D,
+                0.4D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.3D,
+                0.3D,
+                -0.25D,
+                0.3D,
+                0.3D,
+                -0.25D,
+                -0.3D,
+                0.553D,
+                0.5D,
+                0.3D,
+                0.55D,
+                0.5D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.15D,
+                0.05D,
+                -0.1D,
+                0.15D,
+                0.05D,
+                -0.1D,
+                -0.15D,
+                0.6D,
+                0.35D,
+                0.15D,
+                0.6D,
+                0.35D,
+                0.0D,
+                0.05D,
+                0.0D);
             renderBlock(0.15, 0.62, 0.3, 0.85, 0.67, 0.35);
             setTexture(lid_blur);
-            renderAngledBlock(-0.1D, 0.05D, -0.1D, 0.85D, 0.05D, -0.1D, -0.1D, 0.55D, 0.35D, 0.85D, 0.55D, 0.35D, 0.0D, 0.05D, 0.0D);
-            renderAngledBlock(-0.85D, 0.05D, -0.1D, 0.1D, 0.05D, -0.1D, -0.85D, 0.55D, 0.35D, 0.1D, 0.55D, 0.35D, 0.0D, 0.05D, 0.0D);
+            renderAngledBlock(
+                -0.1D,
+                0.05D,
+                -0.1D,
+                0.85D,
+                0.05D,
+                -0.1D,
+                -0.1D,
+                0.55D,
+                0.35D,
+                0.85D,
+                0.55D,
+                0.35D,
+                0.0D,
+                0.05D,
+                0.0D);
+            renderAngledBlock(
+                -0.85D,
+                0.05D,
+                -0.1D,
+                0.1D,
+                0.05D,
+                -0.1D,
+                -0.85D,
+                0.55D,
+                0.35D,
+                0.1D,
+                0.55D,
+                0.35D,
+                0.0D,
+                0.05D,
+                0.0D);
         }
 
         renderContents();

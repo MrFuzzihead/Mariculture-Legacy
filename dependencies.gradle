@@ -34,23 +34,42 @@
  * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
-    implementation("com.github.GTNewHorizons:NotEnoughItems:2.8.160-GTNH:dev")
-    implementation("com.github.GTNewHorizons:NotEnoughItems:1.4.22:dev")
-    implementation("com.github.GTNewHorizons:AppleCore:3.3.13:dev")
-    implementation("com.github.GTNewHorizons:Baubles-Expanded:2.2.25-GTNH:dev")
-    implementation("com.github.GTNewHorizons:BloodMagic:1.9.14:dev")
-    implementation("com.github.GTNewHorizons:Botania:1.13.39-GTNH:dev")
-    implementation("com.github.GTNewHorizons:Mantle:0.5.4:dev")
-    implementation("com.github.GTNewHorizons:CraftTweaker:3.4.8:dev")
-    implementation("com.github.GTNewHorizons:TinkersConstruct:1.14.119-GTNH:dev")
-    implementation("com.github.GTNewHorizons:ForestryMC:4.11.39:dev")
-    implementation(rfg.deobf("curse.maven:Aquaculture-60028:2285775"))
-    implementation(rfg.deobf("curse.maven:Enchiridion-76612:2242855"))
+    /*
+     * Configuration choice for this mod:
+     *   devOnlyNonPublishable = compile + runtime in dev/CI, not published to Maven
+     *   compileOnly           = compile only; the class is only loaded when the other mod is present
+     *
+     * Mariculture/MariTech load every optional integration lazily: the plugin classes live under
+     * mariculture.plugins.* / maritech.plugins.* and are only instantiated when Loader.isModLoaded(...)
+     * is true, so the dependency is not needed at runtime unless the other mod is installed.
+     *
+     * Two dependencies are NOT optional at runtime:
+     *   - CoFH Core: always-loaded classes implement cofh.api.energy.* (ItemCrafting, ItemBaseEnergy,
+     *     TileAirPump, TileFeeder and every MariTech powered tile).
+     *   - Enchiridion: Mariculture.preInit() halts the game if the "Enchiridion" modid is absent.
+     */
+
+    // Required at runtime (always-loaded classes reference these types)
+    devOnlyNonPublishable("curse.maven:cofh-core-69162:2388751")
+    devOnlyNonPublishable(rfg.deobf("curse.maven:Enchiridion-76612:2242855"))
+
+    // Optional, but kept on the dev/CI runtime classpath so the NEI integration stays exercised
+    devOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.160-GTNH:dev")
+
+    // Optional integrations (plugin classes only load when the other mod is present)
+    compileOnly("com.github.GTNewHorizons:CodeChickenCore:1.4.22:dev")
+    compileOnly("com.github.GTNewHorizons:AppleCore:3.3.13:dev")
+    compileOnly("com.github.GTNewHorizons:BloodMagic:1.9.14:dev")
+    compileOnly("com.github.GTNewHorizons:Botania:1.13.39-GTNH:dev")
+    compileOnly("com.github.GTNewHorizons:TinkersConstruct:1.14.119-GTNH:dev")
+    compileOnly("com.github.GTNewHorizons:Mantle:0.5.4:dev")
+    compileOnly("com.github.GTNewHorizons:ForestryMC:4.11.39:dev")
+    compileOnly("com.github.GTNewHorizons:CraftTweaker:3.4.8:dev")
+    compileOnly("com.github.GTNewHorizons:waila:1.19.34:api")
+    compileOnly("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
+    compileOnly("curse.maven:MFR-66672:2277486")
     compileOnly(rfg.deobf("curse.maven:BiomesOPlenty-220318:2499612"))
     compileOnly(rfg.deobf("curse.maven:Highlands-221226:2227924"))
     compileOnly("curse.maven:EE3-65509:2305023")
-    compileOnly("com.github.GTNewHorizons:waila:1.19.34:api")
-    compileOnly("curse.maven:MFR-66672:2277486")
-    compileOnly("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
-    compileOnly("curse.maven:cofh-core-69162:2388751")
+    compileOnly(rfg.deobf("curse.maven:Aquaculture-60028:2285775"))
 }

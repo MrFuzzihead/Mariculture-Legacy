@@ -2,15 +2,17 @@ package mariculture.core.handlers;
 
 import java.util.HashMap;
 
-import mariculture.api.core.IEnvironmentHandler;
-import mariculture.api.core.Environment.Salinity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.core.IEnvironmentHandler;
+
 public class EnvironmentHandler implements IEnvironmentHandler {
+
     public static final HashMap<Integer, BiomeData> environments = new HashMap();
 
     @Override
@@ -99,6 +101,7 @@ public class EnvironmentHandler implements IEnvironmentHandler {
     }
 
     private static class BiomeData {
+
         private int temperature;
         private Salinity salinity;
 
@@ -109,18 +112,19 @@ public class EnvironmentHandler implements IEnvironmentHandler {
     }
 
     @Override
-    public boolean matches(Salinity biomeSalinity, int biomeTemp, Salinity checkSaltBase, int checkSaltVariation, int checkTempBase, int checkTempVariation) {
+    public boolean matches(Salinity biomeSalinity, int biomeTemp, Salinity checkSaltBase, int checkSaltVariation,
+        int checkTempBase, int checkTempVariation) {
         int minSalt = Math.max(0, checkSaltBase.ordinal() - checkSaltVariation);
         int maxSalt = Math.max(2, checkSaltBase.ordinal() + checkSaltVariation);
         int minTemp = checkTempBase - checkTempVariation;
         int maxTemp = checkTempBase + checkTempVariation;
-        
-        if(biomeTemp >= minTemp && biomeTemp <= maxTemp) {
-            if(biomeSalinity.ordinal() >= minSalt && biomeSalinity.ordinal()<= maxSalt) {
+
+        if (biomeTemp >= minTemp && biomeTemp <= maxTemp) {
+            if (biomeSalinity.ordinal() >= minSalt && biomeSalinity.ordinal() <= maxSalt) {
                 return true;
             }
         }
-        
+
         return false;
     }
 }

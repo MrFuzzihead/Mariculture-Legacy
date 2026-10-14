@@ -2,13 +2,15 @@ package mariculture.magic.jewelry.parts;
 
 import java.util.HashMap;
 
-import mariculture.Mariculture;
-import mariculture.magic.jewelry.ItemJewelry.JewelryType;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
+import mariculture.Mariculture;
+import mariculture.magic.jewelry.ItemJewelry.JewelryType;
+
 public abstract class JewelryBinding {
+
     public static final String nbt = "binding";
     public static final HashMap<String, JewelryBinding> list = new HashMap();
     public final HashMap<JewelryType, IIcon> icons = new HashMap();
@@ -19,8 +21,11 @@ public abstract class JewelryBinding {
     }
 
     public String getIdentifier() {
-        String name = this.getClass().getSimpleName().substring(7);
-        return name.substring(0, 1).toLowerCase() + name.substring(1);
+        String name = this.getClass()
+            .getSimpleName()
+            .substring(7);
+        return name.substring(0, 1)
+            .toLowerCase() + name.substring(1);
     }
 
     /** The icon for this material **/
@@ -30,7 +35,14 @@ public abstract class JewelryBinding {
 
     /** Called by each individual jewelry registration **/
     public void registerIcons(IIconRegister iconRegistry, JewelryType type) {
-        icons.put(type, iconRegistry.registerIcon(Mariculture.modid + ":jewelry/" + type.name().toLowerCase() + "/binding/" + getIdentifier()));
+        icons.put(
+            type,
+            iconRegistry.registerIcon(
+                Mariculture.modid + ":jewelry/"
+                    + type.name()
+                        .toLowerCase()
+                    + "/binding/"
+                    + getIdentifier()));
     }
 
     /** The durability base of this material **/

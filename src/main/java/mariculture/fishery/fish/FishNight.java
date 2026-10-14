@@ -2,11 +2,7 @@ package mariculture.fishery.fish;
 
 import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletEnder;
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.util.Fluids;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +10,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.util.Fluids;
+
 public class FishNight extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 3;
@@ -76,7 +79,7 @@ public class FishNight extends FishSpecies {
             player.addPotionEffect(new PotionEffect(Potion.damageBoost.id, 1800, 0));
         }
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;

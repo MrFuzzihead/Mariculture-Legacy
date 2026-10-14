@@ -1,18 +1,20 @@
 package mariculture.core.blocks;
 
-import mariculture.Mariculture;
-import mariculture.core.blocks.base.BlockMCBaseMeta;
-import mariculture.core.lib.MetalMeta;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.core.blocks.base.BlockMCBaseMeta;
+import mariculture.core.lib.MetalMeta;
 
 public class BlockMetal extends BlockMCBaseMeta {
+
     private IIcon[] aluminum;
 
     public BlockMetal() {
@@ -65,7 +67,8 @@ public class BlockMetal extends BlockMCBaseMeta {
     }
 
     @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
         switch (world.getBlockMetadata(x, y, z)) {
             case MetalMeta.COPPER_BLOCK:
                 return 10F;
@@ -84,9 +87,11 @@ public class BlockMetal extends BlockMCBaseMeta {
         }
     }
 
-    //Checks whether the block is the same type or not
+    // Checks whether the block is the same type or not
     private boolean isSameBlock(IBlockAccess world, int[] coords1, int[] coords2) {
-        return world.getBlock(coords1[0], coords1[1], coords1[2]) == world.getBlock(coords2[0], coords2[1], coords2[2]) && world.getBlockMetadata(coords1[1], coords1[0], coords1[2]) == world.getBlockMetadata(coords2[1], coords2[0], coords2[2]);
+        return world.getBlock(coords1[0], coords1[1], coords1[2]) == world.getBlock(coords2[0], coords2[1], coords2[2])
+            && world.getBlockMetadata(coords1[1], coords1[0], coords1[2])
+                == world.getBlockMetadata(coords2[1], coords2[0], coords2[2]);
     }
 
     @Override

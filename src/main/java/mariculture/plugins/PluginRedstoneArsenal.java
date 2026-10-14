@@ -2,6 +2,10 @@ package mariculture.plugins;
 
 import java.util.Random;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.RodType.RodTypeFlux;
@@ -9,11 +13,9 @@ import mariculture.core.lib.BaitMeta;
 import mariculture.core.lib.Modules;
 import mariculture.fishery.Fishery;
 import mariculture.plugins.Plugins.Plugin;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 public class PluginRedstoneArsenal extends Plugin {
+
     public static RodType INFUSED;
 
     public PluginRedstoneArsenal(String name) {
@@ -44,6 +46,7 @@ public class PluginRedstoneArsenal extends Plugin {
     }
 
     private static class RodTypeInfused extends RodTypeFlux {
+
         public RodTypeInfused(int quality, double junk, double good, double rare, int enchantment) {
             super("INFUSED", quality, junk, good, rare, enchantment);
         }

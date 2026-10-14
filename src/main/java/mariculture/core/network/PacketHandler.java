@@ -2,22 +2,24 @@ package mariculture.core.network;
 
 import java.util.ArrayList;
 
-import mariculture.Mariculture;
-import mariculture.core.config.Machines.MachineSettings;
-import mariculture.core.util.IFaceable;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
+
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import mariculture.Mariculture;
+import mariculture.core.config.Machines.MachineSettings;
+import mariculture.core.util.IFaceable;
 
 public class PacketHandler {
+
     private static int id;
     private static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Mariculture.modid);
 
@@ -40,7 +42,7 @@ public class PacketHandler {
         registerPacket(PacketJewelrySwap.class, Side.SERVER);
         registerPacket(PacketTeleport.class, Side.SERVER);
 
-        //New Packets
+        // New Packets
         registerPacket(PacketCrack.class, Side.CLIENT);
         registerPacket(PacketParticle.class, Side.CLIENT);
         registerPacket(PacketSyncFeeder.class, Side.CLIENT);
@@ -77,15 +79,28 @@ public class PacketHandler {
     }
 
     public static void syncMultiBlock(TileEntity master, TileEntity slave, ForgeDirection dir) {
-        sendAround(new PacketMultiInit(slave.xCoord, slave.yCoord, slave.zCoord, master.xCoord, master.yCoord, master.zCoord, dir), slave);
+        sendAround(
+            new PacketMultiInit(
+                slave.xCoord,
+                slave.yCoord,
+                slave.zCoord,
+                master.xCoord,
+                master.yCoord,
+                master.zCoord,
+                dir),
+            slave);
     }
 
     public static void breakMultiBlock(TileEntity slave) {
-        sendAround(new PacketMultiInit(slave.xCoord, slave.yCoord, slave.zCoord, 0, -1, 0, ForgeDirection.UNKNOWN), slave);
+        sendAround(
+            new PacketMultiInit(slave.xCoord, slave.yCoord, slave.zCoord, 0, -1, 0, ForgeDirection.UNKNOWN),
+            slave);
     }
 
     public static void updateOrientation(IFaceable faceable, int x, int y, int z, int dim) {
-        INSTANCE.sendToAllAround(new PacketOrientationSync(x, y, z, faceable.getFacing()), new TargetPoint(dim, x, y, z, MachineSettings.PACKET_DISTANCE));
+        INSTANCE.sendToAllAround(
+            new PacketOrientationSync(x, y, z, faceable.getFacing()),
+            new TargetPoint(dim, x, y, z, MachineSettings.PACKET_DISTANCE));
     }
 
     public static void updateOrientation(TileEntity tile) {

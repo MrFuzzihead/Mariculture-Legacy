@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.WorldSavedData;
 
 public class MirrorSavedData extends WorldSavedData {
+
     public static final String name = "Mariculture-Mirror";
     ItemStack[] inventory;
 

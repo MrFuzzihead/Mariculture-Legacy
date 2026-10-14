@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class DropletMeta {
+
     public static final int COUNT = 30;
     public static final int EARTH = 0;
     public static final int PLANT = 1;

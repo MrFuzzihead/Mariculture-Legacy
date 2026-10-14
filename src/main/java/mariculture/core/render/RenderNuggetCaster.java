@@ -8,6 +8,7 @@ import mariculture.core.lib.MetalRates;
 import mariculture.core.tile.TileNuggetCaster;
 
 public class RenderNuggetCaster extends RenderBase {
+
     public RenderNuggetCaster() {}
 
     public TileNuggetCaster tile;
@@ -29,24 +30,24 @@ public class RenderNuggetCaster extends RenderBase {
     public void renderBlock() {
         if (!isItem()) {
             if (tile == null) return;
-            //Slots 0-3
+            // Slots 0-3
             renderNugget(0, 0.1, 0.26, 0.1, 0.26);
             renderNugget(1, 0.32, 0.47, 0.1, 0.26);
             renderNugget(2, 0.53, 0.68, 0.1, 0.26);
             renderNugget(3, 0.74, 0.9, 0.1, 0.26);
-            //Slots 4-7
+            // Slots 4-7
             renderNugget(4, 0.1, 0.26, 0.32, 0.47);
             renderNugget(5, 0.32, 0.47, 0.32, 0.47);
             renderNugget(6, 0.53, 0.68, 0.32, 0.47);
             renderNugget(7, 0.74, 0.9, 0.32, 0.47);
 
-            //Slots 8-11
+            // Slots 8-11
             renderNugget(8, 0.1, 0.26, 0.53, 0.68);
             renderNugget(9, 0.32, 0.47, 0.53, 0.68);
             renderNugget(10, 0.53, 0.68, 0.53, 0.68);
             renderNugget(11, 0.74, 0.9, 0.53, 0.68);
 
-            //Slots 12-15
+            // Slots 12-15
             renderNugget(12, 0.1, 0.26, 0.74, 0.9);
             renderNugget(13, 0.32, 0.47, 0.74, 0.9);
             renderNugget(14, 0.53, 0.68, 0.74, 0.9);
@@ -59,7 +60,7 @@ public class RenderNuggetCaster extends RenderBase {
 
         setTexture(Core.renderedMachinesMulti, MachineRenderedMultiMeta.VAT);
         renderBlock(0, 0, 0, 1, 0.05, 1);
-        //Sides
+        // Sides
         setTexture(Core.renderedMachines, MachineRenderedMeta.INGOT_CASTER);
         renderBlock(0, 0.05, 0, 1, 0.5, 0.1);
         renderBlock(0, 0.05, 0.9, 1, 0.5, 1);
@@ -67,13 +68,13 @@ public class RenderNuggetCaster extends RenderBase {
         renderBlock(0.9, 0.05, 0.1, 1, 0.5, 0.9);
 
         setTexture(Core.renderedMachinesMulti, MachineRenderedMultiMeta.VAT);
-        //Crossbars
+        // Crossbars
         renderBlock(0.26, 0.05, 0.1, 0.32, 0.5, 0.9);
         renderBlock(0.47, 0.05, 0.1, 0.53, 0.5, 0.9);
         renderBlock(0.68, 0.05, 0.1, 0.74, 0.5, 0.9);
         renderBlock(0.1, 0.05, 0.26, 0.9, 0.5, 0.32);
         renderBlock(0.1, 0.05, 0.47, 0.9, 0.5, 0.53);
         renderBlock(0.1, 0.05, 0.68, 0.9, 0.5, 0.74);
-        //renderBlock(0.6, 0.05, 0.4, 0.9, 0.5, 0.6);
+        // renderBlock(0.6, 0.05, 0.4, 0.9, 0.5, 0.6);
     }
 }

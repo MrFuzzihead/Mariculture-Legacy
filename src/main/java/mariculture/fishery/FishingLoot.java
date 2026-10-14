@@ -5,15 +5,18 @@ import static mariculture.core.lib.MCLib.eyeOfEnder;
 import static mariculture.core.lib.MCLib.ironWheel;
 import static mariculture.core.lib.MCLib.voidBottle;
 import static mariculture.core.lib.MCLib.xpBottle;
-import mariculture.api.fishery.Fishing;
-import mariculture.api.fishery.Loot;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.Loot.Rarity;
-import mariculture.core.Core;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
+import mariculture.api.fishery.Fishing;
+import mariculture.api.fishery.Loot;
+import mariculture.api.fishery.Loot.Rarity;
+import mariculture.api.fishery.RodType;
+import mariculture.core.Core;
+
 public class FishingLoot {
+
     public static void add() {
         addOverworldLoot();
         addNetherLoot();

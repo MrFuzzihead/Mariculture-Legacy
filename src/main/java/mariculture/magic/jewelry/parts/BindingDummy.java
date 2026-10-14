@@ -1,10 +1,12 @@
 package mariculture.magic.jewelry.parts;
 
-import mariculture.magic.jewelry.ItemJewelry.JewelryType;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
+import mariculture.magic.jewelry.ItemJewelry.JewelryType;
+
 public class BindingDummy extends JewelryBinding {
+
     public BindingDummy() {
         ignore = true;
     }

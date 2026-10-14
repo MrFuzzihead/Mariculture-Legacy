@@ -1,16 +1,18 @@
 package mariculture.lib.base;
 
-import mariculture.lib.util.Text;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.lib.util.Text;
 
 public abstract class ItemBaseArmor extends ItemArmor {
+
     protected String mod;
     protected String path;
 
@@ -33,9 +35,11 @@ public abstract class ItemBaseArmor extends ItemArmor {
 
     @Override
     public String getUnlocalizedName() {
-        return mod + "." + super.getUnlocalizedName().replace("item.", "").replace("_", ".");
+        return mod + "."
+            + super.getUnlocalizedName().replace("item.", "")
+                .replace("_", ".");
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         return Text.localize(getUnlocalizedName());
@@ -45,7 +49,8 @@ public abstract class ItemBaseArmor extends ItemArmor {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         String path = this.path != null ? this.path : mod + ":";
-        String name = super.getUnlocalizedName().replace("item.", "").toLowerCase();
+        String name = super.getUnlocalizedName().replace("item.", "")
+            .toLowerCase();
         itemIcon = iconRegister.registerIcon(path + Text.removeDecimals(name));
     }
 }

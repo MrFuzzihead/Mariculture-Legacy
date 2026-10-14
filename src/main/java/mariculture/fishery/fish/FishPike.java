@@ -4,16 +4,19 @@ import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletFrozen;
 import static mariculture.core.lib.MCLib.dropletWater;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.util.Fluids;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.util.Fluids;
+
 public class FishPike extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 5;
@@ -58,7 +61,7 @@ public class FishPike extends FishSpecies {
     public int getWaterRequired() {
         return 120;
     }
-    
+
     @Override
     public Block getWater2() {
         return Fluids.getFluidBlock("custard");

@@ -1,6 +1,5 @@
 package mariculture.lib.helpers;
 
-import mariculture.core.helpers.BlockTransferHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
@@ -8,7 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.core.helpers.BlockTransferHelper;
+
 public class ItemHelper {
+
     public static void addToPlayerInventory(EntityPlayer player, ItemStack stack) {
         if (!player.inventory.addItemStackToInventory(stack)) {
             if (!player.worldObj.isRemote) {
@@ -24,8 +26,8 @@ public class ItemHelper {
             }
         }
     }
-    
-    //Items Spawned by entities last 24 hours
+
+    // Items Spawned by entities last 24 hours
     public static void spawnByEntity(Entity entity, ItemStack stack) {
         spawnItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, stack, false, 24000, 0, 0);
     }
@@ -43,7 +45,7 @@ public class ItemHelper {
     }
 
     public static void spawnItem(World world, double x, double y, double z, ItemStack stack) {
-        spawnItem(world, (int)x, (int)y, (int)z, stack);
+        spawnItem(world, (int) x, (int) y, (int) z, stack);
     }
 
     public static void spawnItem(World world, int x, int y, int z, ItemStack stack, boolean random, int lifespan) {
@@ -54,8 +56,9 @@ public class ItemHelper {
         EntityXPOrb orb = new EntityXPOrb(world, x, y, z, amount);
         world.spawnEntityInWorld(orb);
     }
-    
-    public static ItemStack spawnItem(World world, double x, double y, double z, ItemStack stack, boolean random, int lifespan, int delay, double motion) {
+
+    public static ItemStack spawnItem(World world, double x, double y, double z, ItemStack stack, boolean random,
+        int lifespan, int delay, double motion) {
         if (!world.isRemote) {
             float f = 0.7F;
             double d0 = random ? world.rand.nextFloat() * f + (1.0F - f) * 0.5D : 0.5D;

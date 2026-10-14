@@ -1,21 +1,23 @@
 package mariculture.core.blocks;
 
-import mariculture.Mariculture;
-import mariculture.core.blocks.base.BlockMCBaseMeta;
-import mariculture.core.helpers.cofh.BlockHelper;
-import mariculture.core.helpers.cofh.BlockHelper.RotationType;
-import mariculture.core.lib.Modules;
-import mariculture.core.lib.WoodMeta;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.core.blocks.base.BlockMCBaseMeta;
+import mariculture.core.helpers.cofh.BlockHelper;
+import mariculture.core.helpers.cofh.BlockHelper.RotationType;
+import mariculture.core.lib.Modules;
+import mariculture.core.lib.WoodMeta;
 
 public class BlockWood extends BlockMCBaseMeta {
+
     public IIcon top;
     public IIcon side;
 
@@ -91,7 +93,8 @@ public class BlockWood extends BlockMCBaseMeta {
     public boolean rotateBlock(World world, int x, int y, int z, ForgeDirection axis) {
         if (world.getBlockMetadata(x, y, z) >= WoodMeta.POLISHED_LOG) {
             BlockHelper.rotateType[Block.getIdFromBlock(this)] = RotationType.LOG;
-            BlockHelper.rotateVanillaBlockAlt(world, Block.getIdFromBlock(this), world.getBlockMetadata(x, y, z), x, y, z);
+            BlockHelper
+                .rotateVanillaBlockAlt(world, Block.getIdFromBlock(this), world.getBlockMetadata(x, y, z), x, y, z);
             return true;
         }
 
@@ -108,7 +111,9 @@ public class BlockWood extends BlockMCBaseMeta {
         if (meta >= WoodMeta.POLISHED_LOG) {
             int k = meta & 12;
             int l = meta & 3;
-            return k == 0 && (side == 1 || side == 0) ? getEndIcon(l) : k == 4 && (side == 5 || side == 4) ? getEndIcon(l) : k == 8 && (side == 2 || side == 3) ? getEndIcon(l) : getSideIcon(l);
+            return k == 0 && (side == 1 || side == 0) ? getEndIcon(l)
+                : k == 4 && (side == 5 || side == 4) ? getEndIcon(l)
+                    : k == 8 && (side == 2 || side == 3) ? getEndIcon(l) : getSideIcon(l);
         }
 
         return super.getIcon(side, meta);

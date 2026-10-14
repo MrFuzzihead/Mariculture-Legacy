@@ -2,9 +2,6 @@ package mariculture.factory.blocks;
 
 import java.util.Random;
 
-import mariculture.core.lib.PlansMeta;
-import mariculture.factory.tile.TileCustom;
-import mariculture.lib.util.IHasMetaBlock;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,10 +16,15 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.lib.PlansMeta;
+import mariculture.factory.tile.TileCustom;
+import mariculture.lib.util.IHasMetaBlock;
 
 public class BlockCustomStairs extends BlockStairs implements IHasMetaBlock {
+
     public BlockCustomStairs(int modelMetadata) {
         super(Blocks.stone, modelMetadata);
         setLightOpacity(0);
@@ -62,7 +64,8 @@ public class BlockCustomStairs extends BlockStairs implements IHasMetaBlock {
     }
 
     @Override
-    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
         return BlockCustomHelper.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 

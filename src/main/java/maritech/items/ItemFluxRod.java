@@ -2,19 +2,21 @@ package maritech.items;
 
 import java.util.List;
 
-import mariculture.core.util.MCTranslate;
-import mariculture.fishery.items.ItemRod;
-import maritech.lib.MTModInfo;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
 import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.util.MCTranslate;
+import mariculture.fishery.items.ItemRod;
+import maritech.lib.MTModInfo;
 
 public class ItemFluxRod extends ItemRod implements IEnergyContainerItem {
+
     public ItemFluxRod() {
         super(MTModInfo.MODPATH, 0, 0);
         setNoRepair();
@@ -42,7 +44,13 @@ public class ItemFluxRod extends ItemRod implements IEnergyContainerItem {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool) {
         if (stack.stackTagCompound == null) return;
 
-        list.add(MCTranslate.translate("charge") + ": " + stack.stackTagCompound.getInteger("Energy") + " / " + capacity + " " + MCTranslate.translate("rf"));
+        list.add(
+            MCTranslate.translate("charge") + ": "
+                + stack.stackTagCompound.getInteger("Energy")
+                + " / "
+                + capacity
+                + " "
+                + MCTranslate.translate("rf"));
         list.add(MCTranslate.translate("transfer") + ": " + maxReceive + " " + MCTranslate.translate("rft"));
         list.add(MCTranslate.translate("peruse") + ": " + maxExtract + " " + MCTranslate.translate("rf"));
     }

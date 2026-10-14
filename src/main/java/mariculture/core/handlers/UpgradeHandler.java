@@ -1,12 +1,14 @@
 package mariculture.core.handlers;
 
+import net.minecraft.item.ItemStack;
+
 import mariculture.api.core.IItemUpgrade;
 import mariculture.api.core.IUpgradable;
 import mariculture.api.core.IUpgradeHandler;
 import mariculture.core.tile.base.TileMultiBlock;
-import net.minecraft.item.ItemStack;
 
 public class UpgradeHandler implements IUpgradeHandler {
+
     @Override
     public int getData(String type, IUpgradable tile) {
         if (tile == null) return 0;
@@ -21,7 +23,8 @@ public class UpgradeHandler implements IUpgradeHandler {
         if (tile instanceof TileMultiBlock) {
             TileMultiBlock multi = (TileMultiBlock) tile;
             if (multi.master == null) return 0;
-            tile = (IUpgradable) ((TileMultiBlock) tile).getWorldObj().getTileEntity(multi.master.xCoord, multi.master.yCoord, multi.master.zCoord);
+            tile = (IUpgradable) ((TileMultiBlock) tile).getWorldObj()
+                .getTileEntity(multi.master.xCoord, multi.master.yCoord, multi.master.zCoord);
             if (tile == null) return 0;
         }
 
@@ -38,7 +41,11 @@ public class UpgradeHandler implements IUpgradeHandler {
             }
         }
 
-        return type.equalsIgnoreCase("salinity") ? salinity : type.equalsIgnoreCase("storage") ? storage : type.equalsIgnoreCase("temp") ? temp : type.equalsIgnoreCase("purity") ? purity : type.equalsIgnoreCase("speed") ? speed : type.equalsIgnoreCase("rf") ? rf : 0;
+        return type.equalsIgnoreCase("salinity") ? salinity
+            : type.equalsIgnoreCase("storage") ? storage
+                : type.equalsIgnoreCase("temp") ? temp
+                    : type.equalsIgnoreCase("purity") ? purity
+                        : type.equalsIgnoreCase("speed") ? speed : type.equalsIgnoreCase("rf") ? rf : 0;
     }
 
     @Override
@@ -47,7 +54,8 @@ public class UpgradeHandler implements IUpgradeHandler {
         for (ItemStack upgradeStack : upgrades) {
             if (upgradeStack != null && upgradeStack.getItem() instanceof IItemUpgrade) {
                 IItemUpgrade upgrade = (IItemUpgrade) upgradeStack.getItem();
-                if (upgrade.getType(upgradeStack).equalsIgnoreCase(type)) return true;
+                if (upgrade.getType(upgradeStack)
+                    .equalsIgnoreCase(type)) return true;
             }
         }
 

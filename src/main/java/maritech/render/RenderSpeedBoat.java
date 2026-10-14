@@ -1,8 +1,5 @@
 package maritech.render;
 
-import maritech.entity.EntitySpeedBoat;
-import maritech.lib.MTModInfo;
-import maritech.model.ModelSpeedBoat;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -11,10 +8,15 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import maritech.entity.EntitySpeedBoat;
+import maritech.lib.MTModInfo;
+import maritech.model.ModelSpeedBoat;
 
 @SideOnly(Side.CLIENT)
 public class RenderSpeedBoat extends Render {
-    private static final ResourceLocation resource = new ResourceLocation(MTModInfo.MODPATH + ":textures/entity/speedboat.png");
+
+    private static final ResourceLocation resource = new ResourceLocation(
+        MTModInfo.MODPATH + ":textures/entity/speedboat.png");
     private ModelSpeedBoat modelBoat;
 
     public RenderSpeedBoat() {

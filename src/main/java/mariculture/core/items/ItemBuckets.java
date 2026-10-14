@@ -2,10 +2,6 @@ package mariculture.core.items;
 
 import java.util.List;
 
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.lib.BucketMeta;
-import mariculture.core.lib.Modules;
-import mariculture.core.util.Fluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +14,13 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.lib.BucketMeta;
+import mariculture.core.lib.Modules;
+import mariculture.core.util.Fluids;
+
 public class ItemBuckets extends ItemMCMeta {
+
     public ItemBuckets() {
         maxStackSize = 1;
     }
@@ -79,7 +81,8 @@ public class ItemBuckets extends ItemMCMeta {
 
                 if (!player.canPlayerEdit(i, j, k, movingobjectposition.sideHit, stack)) return stack;
 
-                if (tryPlaceContainedLiquid(stack, world, i, j, k) && !player.capabilities.isCreativeMode) return new ItemStack(Items.bucket);
+                if (tryPlaceContainedLiquid(stack, world, i, j, k) && !player.capabilities.isCreativeMode)
+                    return new ItemStack(Items.bucket);
 
             }
 
@@ -90,7 +93,8 @@ public class ItemBuckets extends ItemMCMeta {
     public boolean tryPlaceContainedLiquid(ItemStack stack, World world, int x, int y, int z) {
         Block block = getFluid(stack.getItemDamage());
         if (block == null) return false;
-        Material material = world.getBlock(x, y, z).getMaterial();
+        Material material = world.getBlock(x, y, z)
+            .getMaterial();
         boolean flag = !material.isSolid();
         if (!world.isAirBlock(x, y, z) && !flag) return false;
         else {
@@ -129,7 +133,8 @@ public class ItemBuckets extends ItemMCMeta {
             if (block == Fluids.getFluidBlock("fish_oil")) return new ItemStack(this, 1, BucketMeta.FISH_OIL);
             else if (block == Fluids.getFluidBlock("custard")) return new ItemStack(this, 1, BucketMeta.CUSTARD);
             else if (block == Fluids.getFluidBlock("blood")) return new ItemStack(this, 1, BucketMeta.BLOOD);
-            else if (block == Fluids.getFluidBlock("chlorophyll")) return new ItemStack(this, 1, BucketMeta.CHLOROPHYLL);
+            else if (block == Fluids.getFluidBlock("chlorophyll"))
+                return new ItemStack(this, 1, BucketMeta.CHLOROPHYLL);
             else if (block == Fluids.getFluidBlock("ender")) return new ItemStack(this, 1, BucketMeta.ENDER);
             else if (block == Fluids.getFluidBlock("flux")) return new ItemStack(this, 1, BucketMeta.FLUX);
             else if (block == Fluids.getFluidBlock("gunpowder")) return new ItemStack(this, 1, BucketMeta.GUNPOWDER);
@@ -225,38 +230,50 @@ public class ItemBuckets extends ItemMCMeta {
                 return "container";
         }
     }
-    
+
     @Override
     public boolean isActive(int meta) {
-       if (FluidContainerRegistry.getFluidForFilledItem(new ItemStack(this, 1, meta)) == null) {
-           return false;
-       }
-        
+        if (FluidContainerRegistry.getFluidForFilledItem(new ItemStack(this, 1, meta)) == null) {
+            return false;
+        }
+
         switch (meta) {
             case BucketMeta.BRONZE:
-                return OreDictionary.getOres("ingotBronze").size() > 0;
+                return OreDictionary.getOres("ingotBronze")
+                    .size() > 0;
             case BucketMeta.LEAD:
-                return OreDictionary.getOres("ingotLead").size() > 0;
+                return OreDictionary.getOres("ingotLead")
+                    .size() > 0;
             case BucketMeta.NICKEL:
-                return OreDictionary.getOres("ingotNickel").size() > 0;
+                return OreDictionary.getOres("ingotNickel")
+                    .size() > 0;
             case BucketMeta.SILVER:
-                return OreDictionary.getOres("ingotSilver").size() > 0;
+                return OreDictionary.getOres("ingotSilver")
+                    .size() > 0;
             case BucketMeta.STEEL:
-                return OreDictionary.getOres("ingotSteel").size() > 0;
+                return OreDictionary.getOres("ingotSteel")
+                    .size() > 0;
             case BucketMeta.TIN:
-                return OreDictionary.getOres("ingotTin").size() > 0;
+                return OreDictionary.getOres("ingotTin")
+                    .size() > 0;
             case BucketMeta.ZINC:
-                return OreDictionary.getOres("ingotZinc").size() > 0;
+                return OreDictionary.getOres("ingotZinc")
+                    .size() > 0;
             case BucketMeta.ARDITE:
-                return OreDictionary.getOres("ingotArdite").size() > 0;
+                return OreDictionary.getOres("ingotArdite")
+                    .size() > 0;
             case BucketMeta.COBALT:
-                return OreDictionary.getOres("ingotCobalt").size() > 0;
+                return OreDictionary.getOres("ingotCobalt")
+                    .size() > 0;
             case BucketMeta.PLATINUM:
-                return OreDictionary.getOres("ingotPlatinum").size() > 0;
+                return OreDictionary.getOres("ingotPlatinum")
+                    .size() > 0;
             case BucketMeta.OSMIUM:
-                return OreDictionary.getOres("ingotOsmium").size() > 0;
+                return OreDictionary.getOres("ingotOsmium")
+                    .size() > 0;
             case BucketMeta.ELECTRUM:
-                return OreDictionary.getOres("ingotElectrum").size() > 0;
+                return OreDictionary.getOres("ingotElectrum")
+                    .size() > 0;
             case BucketMeta.FISH_OIL:
                 return Modules.isActive(Modules.fishery);
             case BucketMeta.FISH_FOOD:

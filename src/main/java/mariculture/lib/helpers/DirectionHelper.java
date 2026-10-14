@@ -5,6 +5,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class DirectionHelper {
+
     public static ForgeDirection getFacingFromEntity(EntityLivingBase entity) {
         int facing = MathHelper.floor_double(entity.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
         ForgeDirection dir = ForgeDirection.NORTH;

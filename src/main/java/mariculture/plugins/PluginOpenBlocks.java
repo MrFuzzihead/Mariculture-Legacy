@@ -1,11 +1,13 @@
 package mariculture.plugins;
 
+import net.minecraftforge.fluids.FluidRegistry;
+
 import mariculture.core.util.Fluids;
 import mariculture.core.util.XPRegistry;
 import mariculture.plugins.Plugins.Plugin;
-import net.minecraftforge.fluids.FluidRegistry;
 
 public class PluginOpenBlocks extends Plugin {
+
     public PluginOpenBlocks(String name) {
         super(name);
     }

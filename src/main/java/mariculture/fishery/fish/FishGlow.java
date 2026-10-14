@@ -7,13 +7,6 @@ import static mariculture.core.lib.MCLib.glowstone;
 
 import java.util.ArrayList;
 
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
-import mariculture.core.util.Fluids;
-import mariculture.lib.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -21,7 +14,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.util.Fluids;
+import mariculture.lib.helpers.ItemHelper;
+
 public class FishGlow extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 57;

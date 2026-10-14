@@ -6,14 +6,16 @@ import static mariculture.core.lib.MCLib.dropletEarth;
 
 import java.util.ArrayList;
 
+import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.world.World;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
 import mariculture.api.util.CachedCoords;
-import net.minecraft.entity.passive.EntityWolf;
-import net.minecraft.world.World;
 
 public class FishPupfish extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 34;

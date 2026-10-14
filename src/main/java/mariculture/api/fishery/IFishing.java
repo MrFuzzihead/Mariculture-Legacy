@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public interface IFishing {
+
     public ItemStack handleRightClick(ItemStack stack, World world, EntityPlayer player);
 
     public RodType getRodType(ItemStack stack);

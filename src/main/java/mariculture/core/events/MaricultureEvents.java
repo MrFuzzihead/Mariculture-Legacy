@@ -1,19 +1,5 @@
 package mariculture.core.events;
 
-import mariculture.core.events.BlockEvent.BlockBroken;
-import mariculture.core.events.BlockEvent.GetHardness;
-import mariculture.core.events.BlockEvent.GetIsActive;
-import mariculture.core.events.BlockEvent.GetIsValidTab;
-import mariculture.core.events.BlockEvent.GetTileEntity;
-import mariculture.core.events.BlockEvent.GetToolLevel;
-import mariculture.core.events.BlockEvent.GetToolType;
-import mariculture.core.events.BlockEvent.TilePlaced;
-import mariculture.core.events.IconEvent.GetInventoryIIcon;
-import mariculture.core.events.IconEvent.GetWorldIIcon;
-import mariculture.core.events.ItemEvent.GetItemName;
-import mariculture.core.events.ItemEvent.GetModName;
-import mariculture.core.lib.Modules.RegistrationModule;
-import mariculture.plugins.Plugins.Plugin.Stage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.creativetab.CreativeTabs;
@@ -28,10 +14,26 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.events.BlockEvent.BlockBroken;
+import mariculture.core.events.BlockEvent.GetHardness;
+import mariculture.core.events.BlockEvent.GetIsActive;
+import mariculture.core.events.BlockEvent.GetIsValidTab;
+import mariculture.core.events.BlockEvent.GetTileEntity;
+import mariculture.core.events.BlockEvent.GetToolLevel;
+import mariculture.core.events.BlockEvent.GetToolType;
+import mariculture.core.events.BlockEvent.TilePlaced;
+import mariculture.core.events.IconEvent.GetInventoryIIcon;
+import mariculture.core.events.IconEvent.GetWorldIIcon;
+import mariculture.core.events.ItemEvent.GetItemName;
+import mariculture.core.events.ItemEvent.GetModName;
+import mariculture.core.lib.Modules.RegistrationModule;
+import mariculture.plugins.Plugins.Plugin.Stage;
 
 public class MaricultureEvents {
+
     public static boolean isActive(Block block, int meta, boolean isActive) {
         GetIsActive event = new GetIsActive(block, meta, isActive);
         MinecraftForge.EVENT_BUS.post(event);
@@ -68,7 +70,8 @@ public class MaricultureEvents {
         return event.tile;
     }
 
-    public static void onBlockPlaced(ItemStack stack, Block block, World world, int x, int y, int z, EntityLivingBase entity, TileEntity tile) {
+    public static void onBlockPlaced(ItemStack stack, Block block, World world, int x, int y, int z,
+        EntityLivingBase entity, TileEntity tile) {
         int direction = BlockPistonBase.determineOrientation(world, x, y, z, entity);
         TilePlaced event = new TilePlaced(stack, block, entity, tile, direction);
         MinecraftForge.EVENT_BUS.post(event);
@@ -119,11 +122,11 @@ public class MaricultureEvents {
         MinecraftForge.EVENT_BUS.post(event);
         return event.mod;
     }
-    
+
     public static String getItemName(Block block, int meta, String name) {
         return getItemName(Item.getItemFromBlock(block), meta, name);
     }
-    
+
     public static String getItemName(Item item, int meta, String name) {
         GetItemName event = new GetItemName(item, meta, name);
         MinecraftForge.EVENT_BUS.post(event);

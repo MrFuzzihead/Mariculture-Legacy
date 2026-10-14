@@ -2,7 +2,6 @@ package mariculture.core.gui;
 
 import java.util.Random;
 
-import mariculture.core.items.ItemMCStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
@@ -10,14 +9,18 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.core.items.ItemMCStorage;
+
 public class ContainerStorage extends ContainerMariculture {
+
     protected final InventoryStorage storage;
     private final Random rand = new Random();
 
     public ContainerStorage(IInventory inventory, InventoryStorage storage, World world, int offset) {
         this.storage = storage;
 
-        ItemMCStorage item = (ItemMCStorage) storage.player.getCurrentEquippedItem().getItem();
+        ItemMCStorage item = (ItemMCStorage) storage.player.getCurrentEquippedItem()
+            .getItem();
         for (int i = 0; i < item.size; i++) {
             addSlotToContainer(item.getSlot(storage, i));
         }
@@ -53,7 +56,8 @@ public class ContainerStorage extends ContainerMariculture {
 
         if (slot != null) {
             slot.getStack();
-            if (player.getCurrentEquippedItem() != null && slot.getHasStack() && ItemStack.areItemStacksEqual(slot.getStack(), player.getCurrentEquippedItem())) {
+            if (player.getCurrentEquippedItem() != null && slot.getHasStack()
+                && ItemStack.areItemStacksEqual(slot.getStack(), player.getCurrentEquippedItem())) {
                 stop = true;
             }
         }
@@ -80,11 +84,12 @@ public class ContainerStorage extends ContainerMariculture {
 
             if (slotID < size) {
                 if (!mergeItemStack(stack, size, high, true)) return null;
-            } else if (!(stack.getItem() instanceof ItemMCStorage) && ((ItemMCStorage) player.getCurrentEquippedItem().getItem()).isItemValid(stack)) {
-                if (!mergeItemStack(stack, 0, storage.getSizeInventory(), false)) return null;
-            } else if (slotID >= size && slotID < low) {
-                if (!mergeItemStack(stack, low, high, false)) return null;
-            } else if (slotID >= low && slotID < high && !mergeItemStack(stack, size, low, false)) return null;
+            } else if (!(stack.getItem() instanceof ItemMCStorage) && ((ItemMCStorage) player.getCurrentEquippedItem()
+                .getItem()).isItemValid(stack)) {
+                    if (!mergeItemStack(stack, 0, storage.getSizeInventory(), false)) return null;
+                } else if (slotID >= size && slotID < low) {
+                    if (!mergeItemStack(stack, low, high, false)) return null;
+                } else if (slotID >= low && slotID < high && !mergeItemStack(stack, size, low, false)) return null;
 
             if (stack.stackSize == 0) {
                 slot.putStack((ItemStack) null);

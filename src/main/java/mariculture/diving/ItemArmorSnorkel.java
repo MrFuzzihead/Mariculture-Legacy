@@ -1,15 +1,17 @@
 package mariculture.diving;
 
-import mariculture.core.items.ItemMCBaseArmor;
-import mariculture.diving.render.ModelLifejacket;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.items.ItemMCBaseArmor;
+import mariculture.diving.render.ModelLifejacket;
 
 public class ItemArmorSnorkel extends ItemMCBaseArmor {
+
     public ItemArmorSnorkel(ArmorMaterial material, int j, int k) {
         super(material, j, k);
     }

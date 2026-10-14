@@ -2,17 +2,19 @@ package mariculture.core.gui.feature;
 
 import java.util.List;
 
-import mariculture.core.gui.GuiMariculture;
-import mariculture.core.network.PacketClick;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.util.IRedstoneControlled;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.gui.GuiMariculture;
+import mariculture.core.network.PacketClick;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.util.IRedstoneControlled;
+
 public class FeatureRedstone extends Feature {
+
     public IRedstoneControlled tile;
     public int x, y, z;
 
@@ -24,7 +26,10 @@ public class FeatureRedstone extends Feature {
     }
 
     public enum RedstoneMode {
-        DISABLED, LOW, HIGH;
+
+        DISABLED,
+        LOW,
+        HIGH;
 
         public static RedstoneMode readFromNBT(NBTTagCompound nbt) {
             return RedstoneMode.values()[nbt.getByte("RedstoneMode")];
@@ -39,11 +44,14 @@ public class FeatureRedstone extends Feature {
                 case DISABLED:
                     return true;
                 case LOW:
-                    return !tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
+                    return !tile.getWorldObj()
+                        .isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
                 case HIGH:
-                    return tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
+                    return tile.getWorldObj()
+                        .isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
                 default:
-                    return !tile.getWorldObj().isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
+                    return !tile.getWorldObj()
+                        .isBlockIndirectlyGettingPowered(tile.xCoord, tile.yCoord, tile.zCoord);
             }
         }
 
@@ -64,9 +72,18 @@ public class FeatureRedstone extends Feature {
     @Override
     public void addTooltip(List tooltip, int mouseX, int mouseY) {
         if (mouseX >= 177 && mouseX <= 192 && mouseY >= 76 && mouseY <= 92) {
-            tooltip.add(mariculture.lib.util.Text.RED + StatCollector.translateToLocal("rsmode." + tile.getRSMode().toString().toLowerCase()));
+            tooltip.add(
+                mariculture.lib.util.Text.RED + StatCollector.translateToLocal(
+                    "rsmode." + tile.getRSMode()
+                        .toString()
+                        .toLowerCase()));
             for (int i = 0; i < 3; i++) {
-                addLine("rsmode", i, tile.getRSMode().toString(), tooltip);
+                addLine(
+                    "rsmode",
+                    i,
+                    tile.getRSMode()
+                        .toString(),
+                    tooltip);
             }
         }
     }

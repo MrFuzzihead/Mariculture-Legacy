@@ -7,12 +7,16 @@ import static mariculture.core.helpers.ConfigHelper.getIntList;
 import static mariculture.core.helpers.ConfigHelper.getRand;
 import static mariculture.core.helpers.ConfigHelper.setCategory;
 import static mariculture.core.helpers.ConfigHelper.setConfig;
+
 import net.minecraftforge.common.config.Configuration;
 
 public class WorldGeneration {
+
     public static void init(Configuration config) {
         setConfig(config);
-        setCategory("Ore Generation", "This section let's you adjust where your ores will spawn and how much. Please note when it comes to 'chance', that LOWER = more common, as it's a x in this many chance.");
+        setCategory(
+            "Ore Generation",
+            "This section let's you adjust where your ores will spawn and how much. Please note when it comes to 'chance', that LOWER = more common, as it's a x in this many chance.");
         OreGen.BAUXITE_ON = getBoolean("Bauxite > Generation", true);
         OreGen.BAUXITE_TOTAL = getInt("Bauxite > Number of Veins", 16);
         OreGen.BAUXITE_VEIN = getInt("Bauxite > Maximum Vein Size", 8);
@@ -41,8 +45,14 @@ public class WorldGeneration {
         WorldGen.RIVER_LIMESTONE = getDouble("River > Limestone Height", 2.5D);
         WorldGen.BEACH_LIMESTONE = getDouble("Beach > Limestone Height", 25D);
         WorldGen.VARYING_LIMESTONE = getBoolean("Limestone > Varying Height", true);
-        WorldGen.LIMESTONE_FLOOR = getBoolean("Limestone > Sea Bed", true, "If this is false, you will get a sandstone seabed instead.");
-        WorldGen.ENABLE_REPLACEMENTS = getBoolean("Biome Top Block Replacements > Enable", true, "Disabling this will stop the generation of limestone, rutile and sand on ocean floors");
+        WorldGen.LIMESTONE_FLOOR = getBoolean(
+            "Limestone > Sea Bed",
+            true,
+            "If this is false, you will get a sandstone seabed instead.");
+        WorldGen.ENABLE_REPLACEMENTS = getBoolean(
+            "Biome Top Block Replacements > Enable",
+            true,
+            "Disabling this will stop the generation of limestone, rutile and sand on ocean floors");
         WorldGen.OCEAN_BLACKLIST = getIntList("Ocean Generation > Blacklisted Dimension IDs", new int[] { -1, 1 });
 
         WorldGen.OYSTER_ENABLED = getBoolean("Pearl Oyster > Generation", true);
@@ -55,20 +65,40 @@ public class WorldGeneration {
 
         WorldGen.CORAL_REEF_ENABLED = getBoolean("Coral Reef > Generation", true);
         WorldGen.CORAL_EXTRA = getBoolean("Coral Reef > Enable Harsher Generation", true);
-        WorldGen.CORAL_REEF_START_CHANCE = getRand("Coral Reef > Start Chance", 256, "The higher the number, the rarer the generation will be, this number defines the chance of this gen spawning");
-        WorldGen.CORAL_REEF_END_CHANCE = getRand("Coral Reef > End Chance", 40, "The higher the number, the larger the generation will be, this number defines the chance of this gen no longer spawning");
+        WorldGen.CORAL_REEF_START_CHANCE = getRand(
+            "Coral Reef > Start Chance",
+            256,
+            "The higher the number, the rarer the generation will be, this number defines the chance of this gen spawning");
+        WorldGen.CORAL_REEF_END_CHANCE = getRand(
+            "Coral Reef > End Chance",
+            40,
+            "The higher the number, the larger the generation will be, this number defines the chance of this gen no longer spawning");
 
         WorldGen.KELP_FOREST_ENABLED = getBoolean("Kelp Forest > Enabled", true);
-        WorldGen.KELP_FOREST_START_CHANCE = getRand("Kelp Forest > Start Chance", 640, "The higher the number, the rarer the generation will be, this number defines the chance of this gen spawning");
-        WorldGen.KELP_FOREST_END_CHANCE = getRand("Kelp Forest > End Chance", 96, "The higher the number, the larger the generation will be, this number defines the chance of this gen no longer spawning");
+        WorldGen.KELP_FOREST_START_CHANCE = getRand(
+            "Kelp Forest > Start Chance",
+            640,
+            "The higher the number, the rarer the generation will be, this number defines the chance of this gen spawning");
+        WorldGen.KELP_FOREST_END_CHANCE = getRand(
+            "Kelp Forest > End Chance",
+            96,
+            "The higher the number, the larger the generation will be, this number defines the chance of this gen no longer spawning");
         WorldGen.KELP_FOREST_CHEST_MAX_ITEMS = getInt("Kelp Forest > Maximum Items", 10);
         WorldGen.KELP_FOREST_CHEST_MIN_ITEMS = getInt("Kelp Forest > Minimum Items", 2);
-        WorldGen.KELP_FOREST_CHEST_CHANCE = getInt("Kelp Forest > Chest Chance", 640, "The higher the number the less common a chest will be, this roughly works out to this 1 chest per this many blocks of a forest.");
+        WorldGen.KELP_FOREST_CHEST_CHANCE = getInt(
+            "Kelp Forest > Chest Chance",
+            640,
+            "The higher the number the less common a chest will be, this roughly works out to this 1 chest per this many blocks of a forest.");
         WorldGen.PENGUIN_SPAWN_ENABLED = getBoolean("Penguin Spawning > Enabled", true);
-        
-        setCategory("Retro-Generation", "Retro-Generation allows you to generate ores/other features in your existing worlds, without you having to go off and explore new areas. If you set all to true, it will override the individual settings for retro-gen, Make sure you disable retro-gen after you have regenned your world");
+
+        setCategory(
+            "Retro-Generation",
+            "Retro-Generation allows you to generate ores/other features in your existing worlds, without you having to go off and explore new areas. If you set all to true, it will override the individual settings for retro-gen, Make sure you disable retro-gen after you have regenned your world");
         RetroGen.ENABLED = getBoolean("Enable Retro-Gen", false);
-        RetroGen.KEY = getInt("Key", 555, "This key is what stops, retro gen from generating in chunks over and over, if you want to retro gen again, change the key to any other integer");
+        RetroGen.KEY = getInt(
+            "Key",
+            555,
+            "This key is what stops, retro gen from generating in chunks over and over, if you want to retro gen again, change the key to any other integer");
         RetroGen.ALL = getBoolean("All", true);
         RetroGen.BAUXITE = getBoolean("Bauxite", false);
         RetroGen.COPPER = getBoolean("Copper", false);
@@ -80,6 +110,7 @@ public class WorldGeneration {
     }
 
     public static class OreGen {
+
         public static boolean COPPER_ON;
         public static int COPPER_TOTAL;
         public static int COPPER_VEIN;
@@ -100,6 +131,7 @@ public class WorldGeneration {
     }
 
     public static class WorldGen {
+
         public static boolean ENABLE_REPLACEMENTS;
         public static boolean LIMESTONE_FLOOR;
         public static int[] OCEAN_BLACKLIST;
@@ -137,6 +169,7 @@ public class WorldGeneration {
     }
 
     public static class RetroGen {
+
         public static boolean ENABLED;
         public static int KEY;
         public static boolean ALL;

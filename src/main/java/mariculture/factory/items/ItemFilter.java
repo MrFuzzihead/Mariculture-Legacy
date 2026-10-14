@@ -2,17 +2,19 @@ package mariculture.factory.items;
 
 import java.util.List;
 
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.gui.InventoryStorage;
-import mariculture.core.items.ItemMCStorage;
-import mariculture.factory.gui.SlotDictionary;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.gui.InventoryStorage;
+import mariculture.core.items.ItemMCStorage;
+import mariculture.factory.gui.SlotDictionary;
+
 public class ItemFilter extends ItemMCStorage {
+
     public static final int SIZE = 9;
 
     public ItemFilter() {

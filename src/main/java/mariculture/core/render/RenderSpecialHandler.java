@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderSpecialHandler extends TileEntitySpecialRenderer {
+
     protected ResourceLocation resource;
     protected IModelMariculture model;
 

@@ -1,5 +1,13 @@
 package maritech.extensions.blocks;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
+
 import mariculture.api.util.CachedCoords;
 import mariculture.core.Core;
 import mariculture.core.lib.MachineRenderedMeta;
@@ -16,15 +24,9 @@ import maritech.tile.TileRotor;
 import maritech.tile.TileRotorAluminum;
 import maritech.tile.TileRotorCopper;
 import maritech.tile.TileRotorTitanium;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidStack;
 
 public class ExtensionRenderedMachine extends ExtensionBlocksBase {
+
     @Override
     public String getName(int meta, String name) {
         switch (meta) {

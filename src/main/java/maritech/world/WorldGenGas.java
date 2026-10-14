@@ -2,9 +2,6 @@ package maritech.world;
 
 import java.util.Random;
 
-import mariculture.core.Core;
-import mariculture.core.lib.GroundMeta;
-import mariculture.lib.util.Library;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -12,7 +9,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.core.Core;
+import mariculture.core.lib.GroundMeta;
+import mariculture.lib.util.Library;
+
 public class WorldGenGas extends WorldGenerator {
+
     /** The block ID of the ore to be placed using this generator. */
     private Block mineableBlock;
     private int minableBlockMeta = 0;
@@ -76,11 +78,13 @@ public class WorldGenGas extends WorldGenerator {
                             for (int z3 = k1; z3 <= j2; ++z3) {
                                 double d14 = (z3 + 0.5D - d8) / (d10 / 2.0D);
 
-                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D) if (world.getBlock(x2, y2, z3) != null) if (world.getBlock(x2, y2, z3).isSideSolid(world, x2, y2, z3, ForgeDirection.UNKNOWN)) {
-                                    world.setBlock(x2, y2, z3, mineableBlock, minableBlockMeta, 2);
-                                    xLast = x2;
-                                    zLast = z3;
-                                }
+                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D)
+                                    if (world.getBlock(x2, y2, z3) != null) if (world.getBlock(x2, y2, z3)
+                                        .isSideSolid(world, x2, y2, z3, ForgeDirection.UNKNOWN)) {
+                                            world.setBlock(x2, y2, z3, mineableBlock, minableBlockMeta, 2);
+                                            xLast = x2;
+                                            zLast = z3;
+                                        }
                             }
                         }
                     }
@@ -88,7 +92,13 @@ public class WorldGenGas extends WorldGenerator {
             }
         }
 
-        world.setBlock(xLast, world.getTopSolidOrLiquidBlock(xLast, zLast) - 1, zLast, Core.sands, GroundMeta.BUBBLES, 2);
+        world.setBlock(
+            xLast,
+            world.getTopSolidOrLiquidBlock(xLast, zLast) - 1,
+            zLast,
+            Core.sands,
+            GroundMeta.BUBBLES,
+            2);
         if (Library.DEBUG_ON) {
             world.setBlock(xLast, 65, zLast, Blocks.obsidian, 1, 2);
         }

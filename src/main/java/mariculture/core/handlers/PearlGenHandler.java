@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import mariculture.core.Core;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -15,7 +12,12 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomChestContent;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import mariculture.core.Core;
+
 public class PearlGenHandler {
+
     private static ArrayList<GeneratedPearls> pearls = new ArrayList<GeneratedPearls>();
     public static HashMap<String, IIcon> textures = new HashMap();
 
@@ -26,7 +28,8 @@ public class PearlGenHandler {
     public static void addPearl(ItemStack item, Block block, int meta, int rarity) {
         addPearl(item, rarity, 1, 1);
         String name = Item.itemRegistry.getNameForObject(item.getItem()) + item.getItemDamage();
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT && item.getItem() != Items.ender_pearl) {
+        if (FMLCommonHandler.instance()
+            .getSide() == Side.CLIENT && item.getItem() != Items.ender_pearl) {
             textures.put(name, block.getIcon(0, meta));
         }
     }
@@ -52,6 +55,7 @@ public class PearlGenHandler {
     }
 
     private static class GeneratedPearls extends WeightedRandomChestContent {
+
         private ItemStack itemStack;
         private int minCount = 1;
         private int maxCount = 1;

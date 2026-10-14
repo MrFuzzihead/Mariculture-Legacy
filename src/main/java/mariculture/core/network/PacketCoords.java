@@ -1,9 +1,10 @@
 package mariculture.core.network;
 
-import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import io.netty.buffer.ByteBuf;
 
 public class PacketCoords implements IMessage {
+
     public int x;
     public int y;
     public int z;

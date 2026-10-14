@@ -3,16 +3,6 @@ package mariculture.core.blocks;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.api.fishery.Fishing;
-import mariculture.core.blocks.base.BlockFunctional;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.lib.MachineSpeeds;
-import mariculture.core.lib.RenderIds;
-import mariculture.core.lib.WaterMeta;
-import mariculture.fishery.Fish;
-import mariculture.fishery.Fishery;
-import mariculture.fishery.items.ItemFishy;
-import mariculture.lib.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,10 +15,22 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.api.fishery.Fishing;
+import mariculture.core.blocks.base.BlockFunctional;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.lib.MachineSpeeds;
+import mariculture.core.lib.RenderIds;
+import mariculture.core.lib.WaterMeta;
+import mariculture.fishery.Fish;
+import mariculture.fishery.Fishery;
+import mariculture.fishery.items.ItemFishy;
+import mariculture.lib.helpers.ItemHelper;
 
 public class BlockTicking extends BlockFunctional {
+
     public BlockTicking() {
         super(Material.cloth);
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
@@ -74,7 +76,13 @@ public class BlockTicking extends BlockFunctional {
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
         byte b0 = 0;
         float f = 0.0625F;
-        return AxisAlignedBB.getBoundingBox((double) x + this.minX, (double) y + this.minY, (double) z + this.minZ, (double) x + this.maxX, (double) ((float) y + (float) b0 * f), (double) z + this.maxZ);
+        return AxisAlignedBB.getBoundingBox(
+            (double) x + this.minX,
+            (double) y + this.minY,
+            (double) z + this.minZ,
+            (double) x + this.maxX,
+            (double) ((float) y + (float) b0 * f),
+            (double) z + this.maxZ);
     }
 
     @Override
@@ -116,7 +124,14 @@ public class BlockTicking extends BlockFunctional {
             if (loot != null && loot.getItem() instanceof ItemFishy) {
                 ItemHelper.spawnItem(world, x, y, z, loot, true, OreDictionary.WILDCARD_VALUE);
             } else {
-                ItemHelper.spawnItem(world, x, y, z, new ItemStack(Items.fish, 1, Fish.cod.getID()), true, OreDictionary.WILDCARD_VALUE);
+                ItemHelper.spawnItem(
+                    world,
+                    x,
+                    y,
+                    z,
+                    new ItemStack(Items.fish, 1, Fish.cod.getID()),
+                    true,
+                    OreDictionary.WILDCARD_VALUE);
             }
         }
     }

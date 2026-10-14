@@ -1,5 +1,10 @@
 package mariculture.factory.items;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
 import mariculture.api.core.MaricultureTab;
 import mariculture.core.Core;
 import mariculture.core.helpers.PlayerHelper;
@@ -8,19 +13,17 @@ import mariculture.core.lib.CraftingMeta;
 import mariculture.core.lib.PlansMeta;
 import mariculture.factory.Factory;
 import mariculture.lib.helpers.ItemHelper;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 public class ItemChalk extends ItemMCDamageable {
+
     public ItemChalk(int dmg) {
         super(dmg);
         setCreativeTab(MaricultureTab.tabFactory);
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+        float hitX, float hitY, float hitZ) {
         int slot = PlayerHelper.hasItem(player, new ItemStack(Core.crafting, 1, CraftingMeta.BLANK_PLAN), false);
         if (slot != -1) {
             Block block = world.getBlock(x, y, z);
