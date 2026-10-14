@@ -313,7 +313,7 @@ public abstract class FishSpecies {
 
     /**
      * Called when this fish is added to the fish feeder
-     * 
+     *
      * @param the fish stack
      * @param the world
      * @param the x of fish feeder
@@ -328,7 +328,7 @@ public abstract class FishSpecies {
     /**
      * Called when this fish is added to the fish feeder
      * Or when it dies.
-     * 
+     *
      * @param the fish stack
      * @param the world
      * @param the x of fish feeder
@@ -471,7 +471,7 @@ public abstract class FishSpecies {
 
     /**
      * Returns your fish icon
-     * 
+     *
      * @param gender
      **/
     public IIcon getIcon(int gender) {

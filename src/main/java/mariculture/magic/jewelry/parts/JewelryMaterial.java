@@ -37,7 +37,7 @@ public abstract class JewelryMaterial {
 
     /**
      * Called by the jewelry handler when a player has the elemental affinity enchantment on a living hurt event
-     * 
+     *
      * @param event  - The event, can be cancelled from here
      * @param player - Quicker access to the player
      **/
@@ -48,7 +48,7 @@ public abstract class JewelryMaterial {
     /**
      * Called by the jewelry handler when a player has the elemental affinity enchantment on a living attack event and
      * they're being attacked
-     * 
+     *
      * @param event  - The event, can be cancelled from here
      * @param player - Quicker access to the player
      **/
@@ -59,7 +59,7 @@ public abstract class JewelryMaterial {
     /**
      * Called by the jewelry handler when a player has the elemental affinity enchantment on a living attack event and
      * they're being attacking
-     * 
+     *
      * @param event  - The event, can be cancelled from here
      * @param player - Quicker access to the player
      **/
@@ -69,7 +69,7 @@ public abstract class JewelryMaterial {
 
     /**
      * Called by the jewelry handler when a player has the elemental affinity enchantment on a living death event
-     * 
+     *
      * @param event  - The event, can be cancelled from here
      * @param player - Quicker access to the player
      **/
@@ -79,7 +79,7 @@ public abstract class JewelryMaterial {
 
     /**
      * Called by the jewelry handler when a player has the elemental affinity enchantment on a block break event
-     * 
+     *
      * @param event  - The event, can be cancelled from here
      * @param player - Quicker access to the player
      **/
