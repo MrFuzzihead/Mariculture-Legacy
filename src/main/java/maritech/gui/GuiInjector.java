@@ -1,9 +1,6 @@
 package maritech.gui;
 
-import java.util.List;
-
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import mariculture.core.gui.GuiMariculture;
@@ -34,11 +31,6 @@ public class GuiInjector extends GuiMariculture {
 
     @Override
     public void addToolTip() {
-        return;
-    }
-
-    @Override
-    public void addItemToolTip(ItemStack stack, List<String> list) {
         return;
     }
 

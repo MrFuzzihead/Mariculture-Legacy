@@ -276,11 +276,25 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
         }
 
         if (ret == true) {
-            int realTemp = temp * 2000 / MAX_TEMP;
-            int max_temp = 2000 - recipe.temp;
-            melting_modifier = 1.0D + Math.min(realTemp, max_temp) * 3.333333D / 2000;
+            melting_modifier = getMeltingModifier(temp, recipe.temp);
             return true;
         } else return false;
+    }
+
+    /**
+     * Speed multiplier for a crucible recipe: 1.0 when the crucible is exactly at the recipe's melting point,
+     * rising towards ~4.33 at full heat. The previous formula used {@code 2000 - recipe.temp} (the head-room to
+     * maximum) instead of the difference between the current and the required temperature, so the multiplier was
+     * constant for a given recipe no matter how hot the crucible actually was.
+     *
+     * @param crucibleTemp the internal temperature (0..{@link #MAX_TEMP})
+     * @param recipeTemp   the recipe's required temperature on the 0..2000 display scale
+     */
+    static double getMeltingModifier(int crucibleTemp, int recipeTemp) {
+        int realTemp = crucibleTemp * 2000 / MAX_TEMP;
+        int maxOverheat = Math.max(0, 2000 - recipeTemp);
+        int overheat = Math.max(0, Math.min(realTemp - recipeTemp, maxOverheat));
+        return 1.0D + overheat * 3.333333D / 2000;
     }
 
     private void melt(int slot) {

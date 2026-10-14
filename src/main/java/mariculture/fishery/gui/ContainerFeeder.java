@@ -1,5 +1,7 @@
 package mariculture.fishery.gui;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,6 +15,7 @@ import mariculture.core.gui.ContainerMachine;
 import mariculture.core.gui.SlotFluidContainer;
 import mariculture.core.gui.SlotOutput;
 import mariculture.core.helpers.FluidHelper;
+import mariculture.core.util.MCTranslate;
 import mariculture.fishery.Fish;
 import mariculture.fishery.FishFoodHandler;
 import mariculture.fishery.FishyHelper;
@@ -140,6 +143,16 @@ public class ContainerFeeder extends ContainerMachine {
         @Override
         public boolean isItemValid(ItemStack stack) {
             return Fishing.fishHelper.isFemale(stack);
+        }
+    }
+
+    @Override
+    public void addItemToolTip(ItemStack stack, List<String> list) {
+        if (stack != null) {
+            int value = FishFoodHandler.getValue(stack);
+            if (value > 0) {
+                list.add(MCTranslate.translate("provides") + " " + value + " " + MCTranslate.translate("fishFood"));
+            }
         }
     }
 }

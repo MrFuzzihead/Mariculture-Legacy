@@ -243,9 +243,8 @@ public class TileVat extends TileMultiStorage implements ISidedInventory, IFluid
     }
 
     private boolean hasRoom(ItemStack stack, FluidStack newFluid) {
-        if (tank3.getFluid() != null && newFluid != null)
-            if (newFluid != tank3.getFluid() || newFluid.amount + tank3.getFluidAmount() > tank3.getCapacity())
-                return false;
+        if (tank3.getFluid() != null && newFluid != null) if (!newFluid.isFluidEqual(tank3.getFluid())
+            || newFluid.amount + tank3.getFluidAmount() > tank3.getCapacity()) return false;
 
         return stack == null || inventory[1] == null
             || CoFhItemHelper.areItemStackEqualNoNull(stack, inventory[1])
@@ -463,10 +462,13 @@ public class TileVat extends TileMultiStorage implements ISidedInventory, IFluid
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
         NBTTagList tagList = nbt.getTagList("Tanks", 10);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
-            byte tank = tag.getByte("Tank");
-            getTank(i).readFromNBT(tag);
+            if (tag == null) continue;
+            int tank = tag.getByte("Tank");
+            if (tank >= 0 && tank < 3) {
+                getTank(tank).readFromNBT(tag);
+            }
         }
 
         timeNeeded = nbt.getInteger("TimeNeeded");
@@ -583,7 +585,7 @@ public class TileVat extends TileMultiStorage implements ISidedInventory, IFluid
 
     @Override
     public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
-        return drain(from, resource.amount, doDrain);
+        return drain(from, resource == null ? Integer.MAX_VALUE : resource.amount, doDrain);
     }
 
     @Override

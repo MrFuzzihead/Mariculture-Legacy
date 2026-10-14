@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
+import org.apache.logging.log4j.Level;
+
 import mariculture.Mariculture;
 import mariculture.api.core.IAnvilHandler.RecipeAnvil;
 import mariculture.api.core.MaricultureHandlers;
@@ -19,6 +21,7 @@ import mariculture.api.core.RecipeCasting;
 import mariculture.api.core.RecipeSmelter;
 import mariculture.api.core.RecipeVat;
 import mariculture.core.Core;
+import mariculture.core.handlers.LogHandler;
 import mariculture.core.lib.DropletMeta;
 import mariculture.core.lib.GroundMeta;
 import mariculture.core.lib.LimestoneMeta;
@@ -194,6 +197,9 @@ public class PluginEE3 extends Plugin {
                 if (outItem != null) addRecipe(outItem, input);
                 if (outFluid != null) addRecipe(outFluid, input);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            LogHandler.log(Level.WARN, "Mariculture failed to register its EE3 integration");
+            e.printStackTrace();
+        }
     }
 }

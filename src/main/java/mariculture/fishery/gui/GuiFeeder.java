@@ -1,9 +1,6 @@
 package mariculture.fishery.gui;
 
-import java.util.List;
-
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 
 import mariculture.core.gui.GuiMariculture;
 import mariculture.core.gui.feature.FeatureBubbles;
@@ -14,8 +11,6 @@ import mariculture.core.gui.feature.FeatureRedstone;
 import mariculture.core.gui.feature.FeatureTank;
 import mariculture.core.gui.feature.FeatureTank.TankSize;
 import mariculture.core.gui.feature.FeatureUpgrades;
-import mariculture.core.util.MCTranslate;
-import mariculture.fishery.FishFoodHandler;
 import mariculture.fishery.tile.TileFeeder;
 
 public class GuiFeeder extends GuiMariculture {
@@ -46,16 +41,6 @@ public class GuiFeeder extends GuiMariculture {
 
             if (mouseY >= 52 && mouseY <= 69) {
                 tooltip = tile.getTooltip(TileFeeder.female, tooltip);
-            }
-        }
-    }
-
-    @Override
-    public void addItemToolTip(ItemStack stack, List<String> list) {
-        if (stack != null) {
-            int value = FishFoodHandler.getValue(stack);
-            if (value > 0) {
-                list.add(MCTranslate.translate("provides") + " " + value + " " + MCTranslate.translate("fishFood"));
             }
         }
     }

@@ -41,10 +41,17 @@ public class Mariculture {
     public static Mariculture instance;
     public static Modules modules = new Modules();
     public static File root;
+    /**
+     * Enchiridion is a hard runtime dependency. When it is missing the downloader/halt handling in
+     * {@link EnchiridionManager} runs instead of module registration, and this flag keeps the remaining
+     * lifecycle events from operating on an uninitialised mod.
+     */
+    public static boolean loaded = false;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         if (EnchiridionManager.isPresent()) {
+            loaded = true;
             root = event.getModConfigurationDirectory();
             Config.setup();
             for (Module module : Modules.modules) {
@@ -57,6 +64,8 @@ public class Mariculture {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
+        if (!loaded) return;
+
         PacketHandler.init();
         // Fish need to be registered before, the recipes that use them are called
         if (Modules.isActive(Modules.fishery)) {
@@ -71,6 +80,8 @@ public class Mariculture {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        if (!loaded) return;
+
         for (Module module : Modules.modules) {
             module.postInit();
         }
@@ -82,6 +93,8 @@ public class Mariculture {
 
     @EventHandler
     public void onComplete(FMLLoadCompleteEvent event) {
+        if (!loaded) return;
+
         if (EE3) {
             PluginEE3.load();
         }
@@ -89,6 +102,8 @@ public class Mariculture {
 
     @EventHandler
     public void onServerStart(FMLServerStartingEvent event) {
+        if (!loaded) return;
+
         if (Modules.isActive(Modules.fishery)) {
             FisheryEventHandler.invalid_spawns = HashMultimap.create();
         }

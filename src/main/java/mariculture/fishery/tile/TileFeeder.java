@@ -219,14 +219,18 @@ public class TileFeeder extends TileMachineTank implements IHasNotification, IEn
             FishSpecies species = Fishing.fishHelper.getSpecies(fish);
             FishSpecies secondary = Fishing.fishHelper
                 .getSpecies(Fishing.fishHelper.getLowerDNA(Fish.species.getName(), fish));
-            if (!fish.stackTagCompound.hasKey(Fish.temperature.getName())) {
-                Fish.temperature.addDNA(fish, species.getTemperatureTolerance());
-                Fish.temperature.addLowerDNA(fish, secondary.getTemperatureTolerance());
-            }
+            // A fish with an unknown species can't be repaired with species data; leave it alone instead of
+            // NPE-ing the server tick (this method exists precisely to clean up broken fish).
+            if (species != null && secondary != null) {
+                if (!fish.stackTagCompound.hasKey(Fish.temperature.getName())) {
+                    Fish.temperature.addDNA(fish, species.getTemperatureTolerance());
+                    Fish.temperature.addLowerDNA(fish, secondary.getTemperatureTolerance());
+                }
 
-            if (!fish.stackTagCompound.hasKey(Fish.temperature.getName())) {
-                Fish.temperature.addDNA(fish, species.getSalinityTolerance());
-                Fish.temperature.addDNA(fish, secondary.getSalinityTolerance());
+                if (!fish.stackTagCompound.hasKey(Fish.salinity.getName())) {
+                    Fish.salinity.addDNA(fish, species.getSalinityTolerance());
+                    Fish.salinity.addLowerDNA(fish, secondary.getSalinityTolerance());
+                }
             }
         }
 

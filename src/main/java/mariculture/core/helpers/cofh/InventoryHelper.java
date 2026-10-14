@@ -183,39 +183,38 @@ public class InventoryHelper {
     // Copy of the above but simulates
     public static boolean canInsertItemStackIntoInventory(IInventory theInventory, ItemStack stack, int side) {
         if (stack == null) return false;
-        ItemStack original = stack.copy();
-        int stackSize = stack.stackSize;
+        // Simulate on a copy: the simulate* helpers consume the stack they are given, so passing the caller's
+        // stack made this "can insert" query silently eat items.
+        ItemStack simulated = stack.copy();
 
         if (theInventory instanceof ISidedInventory) {
             ISidedInventory sidedInv = (ISidedInventory) theInventory;
             int slots[] = sidedInv.getAccessibleSlotsFromSide(side);
 
             if (slots == null) return false;
-            for (int i = 0; i < slots.length && stack != null; i++) if (sidedInv.canInsertItem(slots[i], stack, side)
-                && CoFhItemHelper.itemsEqualWithMetadata(stack, theInventory.getStackInSlot(slots[i]), true)) {
-                    stack = simulateAddToOccupiedInventorySlot(sidedInv, slots[i], stack);
-                }
-            for (int i = 0; i < slots.length && stack != null; i++)
-                if (sidedInv.canInsertItem(slots[i], stack, side) && theInventory.getStackInSlot(slots[i]) == null) {
-                    stack = simulateAddToEmptyInventorySlot(sidedInv, slots[i], stack);
-                }
+            for (int i = 0; i < slots.length && simulated != null; i++)
+                if (sidedInv.canInsertItem(slots[i], simulated, side)
+                    && CoFhItemHelper.itemsEqualWithMetadata(simulated, theInventory.getStackInSlot(slots[i]), true)) {
+                        simulated = simulateAddToOccupiedInventorySlot(sidedInv, slots[i], simulated);
+                    }
+            for (int i = 0; i < slots.length && simulated != null; i++)
+                if (sidedInv.canInsertItem(slots[i], simulated, side)
+                    && theInventory.getStackInSlot(slots[i]) == null) {
+                        simulated = simulateAddToEmptyInventorySlot(sidedInv, slots[i], simulated);
+                    }
         } else {
             int invSize = theInventory.getSizeInventory();
-            for (int i = 0; i < invSize && stack != null; i++)
-                if (CoFhItemHelper.itemsEqualWithMetadata(stack, theInventory.getStackInSlot(i), true)) {
-                    stack = simulateAddToOccupiedInventorySlot(theInventory, i, stack);
+            for (int i = 0; i < invSize && simulated != null; i++)
+                if (CoFhItemHelper.itemsEqualWithMetadata(simulated, theInventory.getStackInSlot(i), true)) {
+                    simulated = simulateAddToOccupiedInventorySlot(theInventory, i, simulated);
                 }
 
-            for (int i = 0; i < invSize && stack != null; i++) if (theInventory.getStackInSlot(i) == null) {
-                stack = simulateAddToEmptyInventorySlot(theInventory, i, stack);
+            for (int i = 0; i < invSize && simulated != null; i++) if (theInventory.getStackInSlot(i) == null) {
+                simulated = simulateAddToEmptyInventorySlot(theInventory, i, simulated);
             }
         }
 
-        if (stack == null || stack.stackSize == 0) {
-            return true;
-        }
-
-        return false;
+        return simulated == null || simulated.stackSize == 0;
     }
 
     /* Slot Interaction */

@@ -138,15 +138,7 @@ public class TileFishTank extends TileEntity implements IInventory, IMachine, IF
 
     @Override
     public Packet getDescriptionPacket() {
-        return PacketHandler.getPacket(
-            new PacketFishTankSync(
-                getStackInSlot(0),
-                getStackInSlot(1),
-                getStackInSlot(2),
-                xCoord,
-                yCoord,
-                zCoord,
-                orientation));
+        return PacketHandler.getPacket(new PacketFishTankSync(inventory.clone(), xCoord, yCoord, zCoord, orientation));
     }
 
     @Override
@@ -227,7 +219,7 @@ public class TileFishTank extends TileEntity implements IInventory, IMachine, IF
 
     @Override
     public int[] getAccessibleSlotsFromSide(int slot) {
-        return all_slots;
+        return all_slots.clone();
     }
 
     @Override

@@ -401,7 +401,7 @@ public class RecipesSmelting {
         RecipeHelper.addFluidAlloy(
             get("water", 1000),
             get(getFluidName("quicklime"), 3000),
-            get("magnesium", MetalRates.INGOT),
+            get(getFluidName("magnesium"), MetalRates.INGOT),
             9);
 
         ArrayList<ItemStack> added = new ArrayList();

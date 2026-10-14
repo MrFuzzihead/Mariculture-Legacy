@@ -1,7 +1,5 @@
 package mariculture.fishery.gui;
 
-import java.util.List;
-
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -19,20 +17,9 @@ import mariculture.fishery.tile.TileFishTank;
 public class GuiFishTank extends GuiMariculture {
 
     private static final RenderItem fishyRender = new RenderTankItem();
-    private TileFishTank tile;
 
     public GuiFishTank(InventoryPlayer player, TileFishTank tile) {
         super(new ContainerFishTank(tile, player), "fishtank", 52);
-
-        this.tile = tile;
-    }
-
-    @Override
-    public void addItemToolTip(ItemStack stack, List<String> currenttip) {
-        if (stack.stackSize > 999) {
-            currenttip.add("");
-            currenttip.add(stack.stackSize + " " + stack.getDisplayName());
-        }
     }
 
     @Override

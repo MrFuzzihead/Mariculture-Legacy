@@ -40,7 +40,11 @@ public class NBTHelper {
         if (tag.getString("Name")
             .equals("")) return null;
         Item item = (Item) Item.itemRegistry.getObject(tag.getString("Name"));
+        // The item may have been removed (mod uninstalled / registry renamed). Creating a stack with a null item
+        // only defers the crash to the first render/save/interaction, so drop the entry instead.
+        if (item == null) return null;
         int count = tag.getInteger("Count");
+        if (count <= 0) return null;
         int damage = tag.getInteger("Damage");
         if (damage < 0) {
             damage = 0;

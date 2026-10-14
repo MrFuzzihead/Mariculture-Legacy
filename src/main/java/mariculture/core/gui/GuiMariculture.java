@@ -115,7 +115,9 @@ public abstract class GuiMariculture extends GuiContainer {
     }
 
     public void addItemToolTip(ItemStack stack, List<String> list) {
-        return;
+        if (inventorySlots instanceof ContainerMariculture) {
+            ((ContainerMariculture) inventorySlots).addItemToolTip(stack, list);
+        }
     }
 
     protected void drawToolTip(List par1List, int par2, int par3, FontRenderer font) {

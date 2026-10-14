@@ -37,6 +37,25 @@
 
 I also explicitly checked and **cleared** several suspicious patterns — see §6 "False positives examined" — so that future readers don't re-investigate them.
 
+### Fix status (working tree, `feature-Refactors`)
+
+| Batch | Findings | Status | Notes |
+|-------|----------|--------|-------|
+| 1 | #2, #4 | **Fixed** | `PacketFishTankSync` rewritten with a symmetric codec and `int` stack counts. Regression test `PacketFishTankSyncTest` (3 tests) fails on the old code and passes now. |
+| 2 | #1, #6, §3.2, §3.5 | **Fixed** | Vat magnesium recipe, `hasRoom` fluid comparison, `readFromNBT` tank index/guard, `drain(null)` guard. |
+| 3 | #7, #8, #9, #10 | **Fixed** | Feeder salinity copy/paste + null guard, salinity range clamp, `getEntityLifespan` guard, `getDominant` guard. `EnvironmentHandlerTest` (4 tests) fails on the old code and passes now. |
+| 4 | #3, #12 | **Fixed** | `PacketFishTankSync` now carries the whole 54-slot inventory (with an `int` count and a symmetric null marker); `GuiItemToolTip` dispatches tooltips through `ContainerMariculture` instead of constructing a GUI per tooltip frame, so the `addItemToolTip` logic moved onto the containers. |
+| 5 | #5 | **Fixed** | `slotClick` bounds guard corrected (and now returns early for bogus ids); `SlotFake.handle` receives the vanilla click mode, so `ClientHelper.isShiftPressed()` is gone from common slot code. `ContainerMaricultureTest` (1 test) fails on the old guard. |
+| 6 | #11, #15, #16, #17 | **Fixed** | Crucible melt-speed now scales with actual overheat (`TileCrucibleTest`, 4 tests, fails on the old formula); `NBTHelper` drops entries for removed items; `OreDicHandler` guards an empty lore list; `ShapelessFishRecipe` uses `650.0D` and no longer mutates the cached output (`ShapelessFishRecipeTest`, 2 tests). |
+| 7 | #13, #14, #18, #21 | **Fixed** | `InventoryHelper` simulates on a copy; `BlockTransferHelper` returns a shuffled copy and guards null slaves; `TileUnpacker` now stores its input and drains one item per tick instead of destroying a stack; fish-tank `getPickBlock` null guard, `all_slots` copy, dead `lastClick` removed. |
+| 8 | #19, #20 | **Fixed** | `Mariculture` lifecycle events are gated on the `loaded` flag so a missing Enchiridion leaves the mod dormant rather than half-initialised; the plugin config loop iterates backwards; `PluginEE3` now logs a swallowed exception. |
+| 9 | §4.16 (temperature) | **Fixed** | `EnvironmentHandler.getTemperature` now uses the intended flat 60..68 surface band with cooling above/below (the old code had the `60`/`68` constants swapped), keeps the calculation in `double` and rounds once with `Math.round`, and applies the rain term instead of truncating it to 0. `EnvironmentHandlerTemperatureTest` (5 tests incl. fish placability) fails on the old swapped/truncating behaviour. |
+| — | — | Done | All numbered findings addressed. Deliberately deferred: live in-world tank rendering for server-side automation (GUI is authoritative), rendering more than 3 display fish, and tuning the small explicit rain coefficient (0.15; sun brightness already reacts to weather). |
+
+Remaining known limitation after #3: automation that inserts into a tank server-side (hoppers/pipes, `BlockTransferHelper.ejectToSides`) does not push an update to clients until the next description packet; player clicks stay in sync through the symmetric `handle` path. The only remaining `ClientHelper.isShiftPressed()` caller is `ItemArmorFishingHat.addInformation` (client-only tooltip code), which is not a dedicated-server hazard.
+
+Build/test command: `./gradlew test --offline` (uses `testImplementation("junit:junit:4.13.2")`).
+
 ---
 
 ## 1. Confirmed startup bug — Vat recipe dropped during registration

@@ -304,9 +304,8 @@ public class BlockTank extends BlockConnected {
                 if (!world.isRemote) {
                     PacketHandler.sendAround(
                         new PacketFishTankSync(
-                            tank.getStackInSlot(0),
-                            tank.getStackInSlot(1),
-                            tank.getStackInSlot(2),
+                            tank.getInventory()
+                                .clone(),
                             tank.xCoord,
                             tank.yCoord,
                             tank.zCoord,
@@ -398,6 +397,7 @@ public class BlockTank extends BlockConnected {
             }
 
             TileFishTank tank = (TileFishTank) world.getTileEntity(x, y, z);
+            if (tank == null) return drop;
             NBTTagList itemList = new NBTTagList();
             for (int i = 0; i < tank.getInventory().length; i++) {
                 ItemStack stack = tank.getInventory()[i];

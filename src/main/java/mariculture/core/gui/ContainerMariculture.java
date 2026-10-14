@@ -1,5 +1,7 @@
 package mariculture.core.gui;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -54,8 +56,22 @@ public class ContainerMariculture extends Container {
 
     @Override
     public ItemStack slotClick(int slotID, int mouseButton, int modifier, EntityPlayer player) {
-        Slot slot = slotID < 0 || slotID > inventorySlots.size() ? null : (Slot) inventorySlots.get(slotID);
-        return slot instanceof SlotFake && ((SlotFake) slot).handle(player, mouseButton, slot) == null ? null
+        // Vanilla sends -1 (outside any slot) and -999 (drop the cursor stack); those are handled by super. Any id
+        // at or beyond the slot count is bogus and previously indexed out of bounds.
+        if (slotID >= inventorySlots.size()) return null;
+
+        Slot slot = slotID < 0 ? null : (Slot) inventorySlots.get(slotID);
+        return slot instanceof SlotFake && ((SlotFake) slot).handle(player, mouseButton, modifier, slot) == null ? null
             : super.slotClick(slotID, mouseButton, modifier, player);
     }
+
+    /**
+     * Appends extra tooltip lines for an item hovered while this container is open.
+     *
+     * <p>
+     * This lives on the container (rather than only on the client GUI) so that tooltip code does not have to
+     * construct a throw-away {@code Gui}/{@code Container} for every rendered item tooltip. The default is a
+     * no-op; machine containers override it.
+     */
+    public void addItemToolTip(ItemStack stack, List<String> list) {}
 }
