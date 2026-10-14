@@ -20,6 +20,11 @@ public class ItemBlockMachine extends ItemBlockMariculture {
     }
 
     @Override
+    protected boolean hasTooltip() {
+        return true;
+    }
+
+    @Override
     public String getName(ItemStack stack) {
         int meta = stack.getItemDamage();
         switch (meta) {

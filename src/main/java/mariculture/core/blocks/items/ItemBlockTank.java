@@ -19,6 +19,11 @@ public class ItemBlockTank extends ItemBlockMariculture {
     }
 
     @Override
+    protected boolean hasTooltip() {
+        return true;
+    }
+
+    @Override
     public String getName(ItemStack stack) {
         switch (stack.getItemDamage()) {
             case TankMeta.FISH:
@@ -50,6 +55,8 @@ public class ItemBlockTank extends ItemBlockMariculture {
 
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool) {
+        super.addInformation(stack, player, list, bool);
+
         int dmg = stack.getItemDamage();
         int total = dmg == TankMeta.TANK ? TileTankBlock.COPPER_CAPACITY
             : dmg == TankMeta.TANK_ALUMINUM ? TileTankBlock.ALUMINUM_CAPACITY
