@@ -1,5 +1,27 @@
 package mariculture.core.blocks;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.IFluidHandler;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.Mariculture;
 import mariculture.api.core.INeighborNotify;
 import mariculture.api.core.ISpecialPickblock;
@@ -28,29 +50,9 @@ import mariculture.fishery.tile.TileFeeder;
 import mariculture.lib.helpers.DirectionHelper;
 import mariculture.lib.helpers.ItemHelper;
 import maritech.tile.TileRotor;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockPistonBase;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.IFluidHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockRenderedMachine extends BlockFunctional {
+
     public BlockRenderedMachine() {
         super(Material.piston);
     }
@@ -103,13 +105,16 @@ public class BlockRenderedMachine extends BlockFunctional {
     }
 
     @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
-        return world.getBlockMetadata(x, y, z) == MachineRenderedMeta.FISH_FEEDER ? 100F : super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
+        return world.getBlockMetadata(x, y, z) == MachineRenderedMeta.FISH_FEEDER ? 100F
+            : super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     @Override
     public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {
-        return world.getBlockMetadata(x, y, z) == MachineRenderedMeta.FISH_FEEDER ? false : super.canEntityDestroy(world, x, y, z, entity);
+        return world.getBlockMetadata(x, y, z) == MachineRenderedMeta.FISH_FEEDER ? false
+            : super.canEntityDestroy(world, x, y, z, entity);
     }
 
     @Override
@@ -160,7 +165,8 @@ public class BlockRenderedMachine extends BlockFunctional {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile != null) {
             if (tile instanceof TileGeyser) {
-                ((TileGeyser) tile).setFacing(ForgeDirection.getOrientation(BlockPistonBase.determineOrientation(world, x, y, z, entity)));
+                ((TileGeyser) tile).setFacing(
+                    ForgeDirection.getOrientation(BlockPistonBase.determineOrientation(world, x, y, z, entity)));
             } else if (tile instanceof TileAirPump) {
                 ((TileAirPump) tile).setFacing(DirectionHelper.getFacingFromEntity(entity));
             } else if (tile instanceof TileAnvil) {
@@ -172,16 +178,17 @@ public class BlockRenderedMachine extends BlockFunctional {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+        float hitY, float hitZ) {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile == null || player.isSneaking() && !world.isRemote) return false;
 
-        //Add 100RF to the air pump on right click
+        // Add 100RF to the air pump on right click
         if (tile instanceof TileAirPump) {
             TileAirPump pump = (TileAirPump) tile;
             if (!world.isRemote) {
-                if (!pump.isAnimating) { //Only add energy if not animating
-                    pump.receiveEnergy(ForgeDirection.UP, 100, false); //Add 100 RF when right clicking
+                if (!pump.isAnimating) { // Only add energy if not animating
+                    pump.receiveEnergy(ForgeDirection.UP, 100, false); // Add 100 RF when right clicking
                 }
             }
 
@@ -197,7 +204,7 @@ public class BlockRenderedMachine extends BlockFunctional {
             return true;
         }
 
-        //Update the anvil inventory
+        // Update the anvil inventory
         if (tile instanceof TileAnvil) {
             if (PlayerHelper.isFake(player)) return false;
             TileAnvil anvil = (TileAnvil) tile;
@@ -209,7 +216,8 @@ public class BlockRenderedMachine extends BlockFunctional {
                 ItemHelper.addToPlayerInventory(player, world, x, y + 1, z, anvil.getStackInSlot(0));
                 anvil.setInventorySlotContents(0, null);
             } else if (player.getCurrentEquippedItem() != null) {
-                ItemStack stack = player.getCurrentEquippedItem().copy();
+                ItemStack stack = player.getCurrentEquippedItem()
+                    .copy();
                 stack.stackSize = 1;
                 anvil.setInventorySlotContents(0, stack);
                 if (!player.capabilities.isCreativeMode) {
@@ -230,36 +238,39 @@ public class BlockRenderedMachine extends BlockFunctional {
 
                 ItemHelper.addToPlayerInventory(player, world, x, y + 1, z, hammer.getStackInSlot(slot));
                 hammer.setInventorySlotContents(slot, null);
-            } else if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemHammer) {
-                ItemStack stack = player.getCurrentEquippedItem().copy();
-                hammer.setInventorySlotContents(slot, stack);
-                if (!player.capabilities.isCreativeMode) {
-                    player.inventory.decrStackSize(player.inventory.currentItem, 1);
+            } else if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem()
+                .getItem() instanceof ItemHammer) {
+                    ItemStack stack = player.getCurrentEquippedItem()
+                        .copy();
+                    hammer.setInventorySlotContents(slot, stack);
+                    if (!player.capabilities.isCreativeMode) {
+                        player.inventory.decrStackSize(player.inventory.currentItem, 1);
+                    }
                 }
-            }
 
             return true;
         }
 
-        //Update the ingot caster inventory
+        // Update the ingot caster inventory
         if (tile instanceof TileCooling) {
             if (!world.isRemote) {
                 TileCooling caster = (TileCooling) tile;
-                for (int i = 0; i < caster.getSizeInventory(); i++)
-                    if (caster.getStackInSlot(i) != null) {
-                        ItemHelper.spawnItem(world, x, y + 1, z, caster.getStackInSlot(i));
-                        caster.setInventorySlotContents(i, null);
-                        caster.markDirty();
-                    }
+                for (int i = 0; i < caster.getSizeInventory(); i++) if (caster.getStackInSlot(i) != null) {
+                    ItemHelper.spawnItem(world, x, y + 1, z, caster.getStackInSlot(i));
+                    caster.setInventorySlotContents(i, null);
+                    caster.markDirty();
+                }
             }
 
-            return FluidHelper.handleFillOrDrain((IFluidHandler) world.getTileEntity(x, y, z), player, ForgeDirection.UP);
+            return FluidHelper
+                .handleFillOrDrain((IFluidHandler) world.getTileEntity(x, y, z), player, ForgeDirection.UP);
         }
 
-        //Fill the geyser
-        if (tile instanceof TileGeyser) return FluidHelper.handleFillOrDrain((IFluidHandler) world.getTileEntity(x, y, z), player, ForgeDirection.UP);
+        // Fill the geyser
+        if (tile instanceof TileGeyser) return FluidHelper
+            .handleFillOrDrain((IFluidHandler) world.getTileEntity(x, y, z), player, ForgeDirection.UP);
 
-        //Return to doing the rest
+        // Return to doing the rest
         return super.onBlockActivated(world, x, y, z, player, side, hitX, hitY, hitZ);
     }
 
@@ -267,7 +278,8 @@ public class BlockRenderedMachine extends BlockFunctional {
     public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player) {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof TileAnvil && CoFhItemHelper.isPlayerHoldingItem(Core.hammer, player)) {
-            if (player.getDisplayName().equals("[CoFH]")) return;
+            if (player.getDisplayName()
+                .equals("[CoFH]")) return;
             if (player instanceof FakePlayer) return;
             ItemStack hammer = player.getCurrentEquippedItem();
             if (((TileAnvil) tile).workItem(player, hammer) > 0) {
@@ -334,7 +346,8 @@ public class BlockRenderedMachine extends BlockFunctional {
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
         int meta = world.getBlockMetadata(x, y, z);
-        if (meta == MachineRenderedMeta.GEYSER || meta == MachineRenderedMeta.ANVIL || meta == MachineRenderedMeta.NUGGET_CASTER) {
+        if (meta == MachineRenderedMeta.GEYSER || meta == MachineRenderedMeta.ANVIL
+            || meta == MachineRenderedMeta.NUGGET_CASTER) {
             return AxisAlignedBB.getBoundingBox(x + minX, y + minY, z + minZ, x + maxX, y + maxY, z + maxZ);
         }
 
@@ -427,7 +440,8 @@ public class BlockRenderedMachine extends BlockFunctional {
 
     @Override
     public boolean isValidTab(CreativeTabs tab, int meta) {
-        boolean isValid = meta == MachineRenderedMeta.FISH_FEEDER ? tab == MaricultureTab.tabFishery : tab == MaricultureTab.tabFactory;
+        boolean isValid = meta == MachineRenderedMeta.FISH_FEEDER ? tab == MaricultureTab.tabFishery
+            : tab == MaricultureTab.tabFactory;
         return MaricultureEvents.isValidTab(this, tab, meta, isValid);
     }
 
@@ -442,8 +456,10 @@ public class BlockRenderedMachine extends BlockFunctional {
         String name = prefix != null ? prefix : "";
         icons = new IIcon[getMetaCount() - 2];
         for (int i = 0; i < icons.length; i++) {
-            if ((i < MachineRenderedMeta.ROTOR_COPPER || i == MachineRenderedMeta.INGOT_CASTER) && i != MachineRenderedMeta.AUTO_HAMMER) {
-                icons[i] = iconRegister.registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + name + getName(i));
+            if ((i < MachineRenderedMeta.ROTOR_COPPER || i == MachineRenderedMeta.INGOT_CASTER)
+                && i != MachineRenderedMeta.AUTO_HAMMER) {
+                icons[i] = iconRegister
+                    .registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + name + getName(i));
             }
         }
     }

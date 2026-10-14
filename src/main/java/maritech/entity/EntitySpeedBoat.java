@@ -2,9 +2,6 @@ package maritech.entity;
 
 import java.util.List;
 
-import mariculture.lib.helpers.ItemHelper;
-import maritech.extensions.config.ExtensionGeneralStuff;
-import maritech.extensions.modules.ExtensionTransport;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,10 +15,15 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.lib.helpers.ItemHelper;
+import maritech.extensions.config.ExtensionGeneralStuff;
+import maritech.extensions.modules.ExtensionTransport;
 
 public class EntitySpeedBoat extends Entity {
+
     public boolean isBoatEmpty;
     public double speedMultiplier;
     public int boatPosRotationIncrements;
@@ -99,9 +101,10 @@ public class EntitySpeedBoat extends Entity {
             boolean flag = source.getEntity() instanceof EntityPlayer;
             if (flag) {
                 EntityPlayer player = (EntityPlayer) source.getEntity();
-                if (!player.capabilities.isCreativeMode) if (!player.inventory.addItemStackToInventory(boat)) if (!worldObj.isRemote) {
-                    ItemHelper.spawnItem(worldObj, (int) posX, (int) posY, (int) posZ, boat);
-                }
+                if (!player.capabilities.isCreativeMode)
+                    if (!player.inventory.addItemStackToInventory(boat)) if (!worldObj.isRemote) {
+                        ItemHelper.spawnItem(worldObj, (int) posX, (int) posY, (int) posZ, boat);
+                    }
 
                 if (!worldObj.isRemote) {
                     setDead();
@@ -182,7 +185,8 @@ public class EntitySpeedBoat extends Entity {
         for (int i = 0; i < b0; ++i) {
             double d1 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (i + 0) / b0 - 0.125D;
             double d3 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (i + 1) / b0 - 0.125D;
-            AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(boundingBox.minX, d1, boundingBox.minZ, boundingBox.maxX, d3, boundingBox.maxZ);
+            AxisAlignedBB axisalignedbb = AxisAlignedBB
+                .getBoundingBox(boundingBox.minX, d1, boundingBox.minZ, boundingBox.maxX, d3, boundingBox.maxZ);
 
             if (worldObj.isAABBInMaterial(axisalignedbb, Material.water)) {
                 d0 += 1.0D / b0;
@@ -277,8 +281,12 @@ public class EntitySpeedBoat extends Entity {
             if (riddenByEntity != null && riddenByEntity instanceof EntityLivingBase) {
                 EntityLivingBase entitylivingbase = (EntityLivingBase) riddenByEntity;
                 float f = riddenByEntity.rotationYaw + -entitylivingbase.moveStrafing * 90.0F;
-                motionX += -Math.sin(f * (float) Math.PI / 180.0F) * speedMultiplier * entitylivingbase.moveForward * 0.05000000074505806D;
-                motionZ += Math.cos(f * (float) Math.PI / 180.0F) * speedMultiplier * entitylivingbase.moveForward * 0.05000000074505806D;
+                motionX += -Math.sin(f * (float) Math.PI / 180.0F) * speedMultiplier
+                    * entitylivingbase.moveForward
+                    * 0.05000000074505806D;
+                motionZ += Math.cos(f * (float) Math.PI / 180.0F) * speedMultiplier
+                    * entitylivingbase.moveForward
+                    * 0.05000000074505806D;
             }
 
             d2 = Math.sqrt(motionX * motionX + motionZ * motionZ);
@@ -312,7 +320,8 @@ public class EntitySpeedBoat extends Entity {
                         }
                 }
 
-                List list = worldObj.getEntitiesWithinAABB(EntitySquid.class, getBoundingBox().expand(1.0D, 1.0D, 1.0D));
+                List list = worldObj
+                    .getEntitiesWithinAABB(EntitySquid.class, getBoundingBox().expand(1.0D, 1.0D, 1.0D));
                 if (!list.isEmpty()) {
                     for (Object i : list) {
                         EntitySquid squid = (EntitySquid) i;
@@ -362,7 +371,9 @@ public class EntitySpeedBoat extends Entity {
             setRotation(rotationYaw, rotationPitch);
 
             if (!worldObj.isRemote) {
-                List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
+                List list = worldObj.getEntitiesWithinAABBExcludingEntity(
+                    this,
+                    boundingBox.expand(0.20000000298023224D, 0.0D, 0.20000000298023224D));
                 if (list != null && !list.isEmpty()) {
                     for (int k1 = 0; k1 < list.size(); ++k1) {
                         Entity entity = (Entity) list.get(k1);
@@ -403,7 +414,8 @@ public class EntitySpeedBoat extends Entity {
 
     @Override
     public boolean interactFirst(EntityPlayer par1EntityPlayer) {
-        if (riddenByEntity != null && riddenByEntity instanceof EntityPlayer && riddenByEntity != par1EntityPlayer) return true;
+        if (riddenByEntity != null && riddenByEntity instanceof EntityPlayer && riddenByEntity != par1EntityPlayer)
+            return true;
         else {
             if (!worldObj.isRemote) {
                 par1EntityPlayer.mountEntity(this);
@@ -424,9 +436,10 @@ public class EntitySpeedBoat extends Entity {
                 fall(fallDistance);
                 fallDistance = 0.0F;
             }
-        } else if (worldObj.getBlock(i, j - 1, k).getMaterial() != Material.water && par1 < 0.0D) {
-            fallDistance = (float) (fallDistance - par1);
-        }
+        } else if (worldObj.getBlock(i, j - 1, k)
+            .getMaterial() != Material.water && par1 < 0.0D) {
+                fallDistance = (float) (fallDistance - par1);
+            }
     }
 
     public void setDamageTaken(float par1) {

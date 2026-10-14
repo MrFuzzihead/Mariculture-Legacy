@@ -4,6 +4,13 @@ import static mariculture.Mariculture.modid;
 
 import java.util.Map.Entry;
 
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.oredict.OreDictionary;
+
+import org.apache.commons.lang3.StringUtils;
+
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.fish.FishDNA;
 import mariculture.api.fishery.fish.FishDNABase;
@@ -90,14 +97,9 @@ import mariculture.fishery.fish.dna.FishDNATemperatureTolerance;
 import mariculture.fishery.fish.dna.FishDNAWaterRequired;
 import mariculture.fishery.fish.dna.FishDNAWorkEthic;
 import mariculture.fishery.fish.requirements.RequirementHasTag;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.oredict.OreDictionary;
-
-import org.apache.commons.lang3.StringUtils;
 
 public class Fish {
+
     public static FishDNABase species;
     public static FishDNABase gender;
 
@@ -115,62 +117,62 @@ public class Fish {
     public static FishDNA salinity;
     public static FishDNA temperature;
 
-    public static FishSpecies nether; //Netherwart
-    public static FishSpecies glow; //Spawns glowstone, where there was stone
-    public static FishSpecies blaze; //Spawns fire and blazes
-    public static FishSpecies night; //Strength at Night
-    public static FishSpecies ender; //Ender Pearls, Teleport randomly, Spawns Endermen
-    public static FishSpecies dragon; //Dragon eggs
-    public static FishSpecies minnow; //Great Bait
-    public static FishSpecies salmon; //Shed leather
-    public static FishSpecies bass; //Causes explosions
-    public static FishSpecies tetra; //Neon lamps
-    public static FishSpecies catfish; //Spawns ocelot 
-    public static FishSpecies piranha; //Atacks Entities and players
-    public static FishSpecies cod; //Leather (When melted)
-    public static FishSpecies perch; //Spawns bats
-    public static FishSpecies tuna; //Add Speed Potion
-    public static FishSpecies stingRay; //Poisons those in water
-    public static FishSpecies mantaRay; //Regen 2 when eaten, and Heals you when in water 
-    public static FishSpecies electricRay; //Produce 10RF/t per connection lots of power
-    public static FishSpecies damsel; //Breeds animals
-    public static FishSpecies angel; //Teleport stuff in to inventories
-    public static FishSpecies puffer; //Nothing
-    public static FishSpecies squid; //Ink Sacks
-    public static FishSpecies jelly; //Produce slimeballs
-    public static FishSpecies manOWar; //Blinds Enemies
-    public static FishSpecies goldfish; //Produce gold nuggets when melted
-    public static FishSpecies siamese; //Attack entities (not players)
-    public static FishSpecies koi; //Spawns ocean chest and vanilla chest loot in the water
-    public static FishSpecies butterfly; //Shed feathers
-    public static FishSpecies tang; //Produces lapis
-    public static FishSpecies clown; //Spawns Cows, Chickens, Sheep, Pig
+    public static FishSpecies nether; // Netherwart
+    public static FishSpecies glow; // Spawns glowstone, where there was stone
+    public static FishSpecies blaze; // Spawns fire and blazes
+    public static FishSpecies night; // Strength at Night
+    public static FishSpecies ender; // Ender Pearls, Teleport randomly, Spawns Endermen
+    public static FishSpecies dragon; // Dragon eggs
+    public static FishSpecies minnow; // Great Bait
+    public static FishSpecies salmon; // Shed leather
+    public static FishSpecies bass; // Causes explosions
+    public static FishSpecies tetra; // Neon lamps
+    public static FishSpecies catfish; // Spawns ocelot
+    public static FishSpecies piranha; // Atacks Entities and players
+    public static FishSpecies cod; // Leather (When melted)
+    public static FishSpecies perch; // Spawns bats
+    public static FishSpecies tuna; // Add Speed Potion
+    public static FishSpecies stingRay; // Poisons those in water
+    public static FishSpecies mantaRay; // Regen 2 when eaten, and Heals you when in water
+    public static FishSpecies electricRay; // Produce 10RF/t per connection lots of power
+    public static FishSpecies damsel; // Breeds animals
+    public static FishSpecies angel; // Teleport stuff in to inventories
+    public static FishSpecies puffer; // Nothing
+    public static FishSpecies squid; // Ink Sacks
+    public static FishSpecies jelly; // Produce slimeballs
+    public static FishSpecies manOWar; // Blinds Enemies
+    public static FishSpecies goldfish; // Produce gold nuggets when melted
+    public static FishSpecies siamese; // Attack entities (not players)
+    public static FishSpecies koi; // Spawns ocean chest and vanilla chest loot in the water
+    public static FishSpecies butterfly; // Shed feathers
+    public static FishSpecies tang; // Produces lapis
+    public static FishSpecies clown; // Spawns Cows, Chickens, Sheep, Pig
 
-    //1.2.2 Species
-    public static FishSpecies blaasop; //Nothing
-    public static FishSpecies stargazer; //Prevent Mob Spawns
-    public static FishSpecies lamprey; //Withers players, Converts skeletons to wither skeletons
-    public static FishSpecies spider; //Spawns spiders
-    public static FishSpecies boneless; //Spawns skeletons
-    public static FishSpecies undead; //Spawns zombies
-    public static FishSpecies minecraft; //Gives XP to player
-    public static FishSpecies angler; //Fish feeder light
-    public static FishSpecies trout; //Weapon, Dyes
-    public static FishSpecies herring; //Redstone
+    // 1.2.2 Species
+    public static FishSpecies blaasop; // Nothing
+    public static FishSpecies stargazer; // Prevent Mob Spawns
+    public static FishSpecies lamprey; // Withers players, Converts skeletons to wither skeletons
+    public static FishSpecies spider; // Spawns spiders
+    public static FishSpecies boneless; // Spawns skeletons
+    public static FishSpecies undead; // Spawns zombies
+    public static FishSpecies minecraft; // Gives XP to player
+    public static FishSpecies angler; // Fish feeder light
+    public static FishSpecies trout; // Weapon, Dyes
+    public static FishSpecies herring; // Redstone
 
-    //1.2.5 new Species
-    public static FishSpecies brown; //BrownShroom, Spawns Mycelium /TODO:
-    public static FishSpecies red; //RedShroom, Spawns Mycelium /TODO:
-    public static FishSpecies pup; //Spawns Wolves
-    public static FishSpecies chub; //Fills Hunger Bar
-    public static FishSpecies bowfin; //Generates Arrows
-    public static FishSpecies lung; //Applies Water Breathing, Gives it when eaten
-    public static FishSpecies walleye; //Eyesight, Zooms in like bow /TODO:
-    public static FishSpecies pike; //Generates flint
-    public static FishSpecies stickleback; //Grows Kelp /TODO:
-    public static FishSpecies pickerel; //Harvests Crops /TODO:
+    // 1.2.5 new Species
+    public static FishSpecies brown; // BrownShroom, Spawns Mycelium /TODO:
+    public static FishSpecies red; // RedShroom, Spawns Mycelium /TODO:
+    public static FishSpecies pup; // Spawns Wolves
+    public static FishSpecies chub; // Fills Hunger Bar
+    public static FishSpecies bowfin; // Generates Arrows
+    public static FishSpecies lung; // Applies Water Breathing, Gives it when eaten
+    public static FishSpecies walleye; // Eyesight, Zooms in like bow /TODO:
+    public static FishSpecies pike; // Generates flint
+    public static FishSpecies stickleback; // Grows Kelp /TODO:
+    public static FishSpecies pickerel; // Harvests Crops /TODO:
 
-    //1.2.5 Metal Species
+    // 1.2.5 Metal Species
     public static FishSpecies iron;
     public static FishSpecies gold;
     public static FishSpecies copper;
@@ -185,11 +187,11 @@ public class Fish {
     }
 
     private static void addDNA() {
-        //Exceptions to 'DNA', They have their own special conditions
+        // Exceptions to 'DNA', They have their own special conditions
         species = new FishDNASpecies().register();
         gender = new FishDNAGender().register();
 
-        //Lifespan
+        // Lifespan
         lifespan = new FishDNALifespan().register();
         lifespan.add("miniscule", 0, 3600, true);
         lifespan.add("tiny", 3601, 6001, false);
@@ -200,7 +202,7 @@ public class Fish {
         lifespan.add("marathon", 36006, 54006, false);
         lifespan.add("insane", 54007, 100000, true);
 
-        //Fertility
+        // Fertility
         fertility = new FishDNAFertility().register();
         fertility.add("extremehigh", 3000, 5000, false);
         fertility.add("veryhigh", 2000, 2999, true);
@@ -211,15 +213,16 @@ public class Fish {
         fertility.add("extremelow", 25, 99, true);
         fertility.add("pathetic", 0, 24, true);
 
-        //Production
+        // Production
         production = new FishDNAWorkEthic().register();
         production.add("lazy", 0, 0, false);
         production.add("normal", 1, 1, true);
         production.add("hardworker", 2, 2, false);
         production.add("overclocker", 3, 3, false);
 
-        //Tank Size
-        tankSize = new FishDNAWaterRequired().setHidden().register();
+        // Tank Size
+        tankSize = new FishDNAWaterRequired().setHidden()
+            .register();
         tankSize.add("preschool", 0, 14, false);
         tankSize.add("beginner", 15, 24, false);
         tankSize.add("basic", 25, 44, false);
@@ -229,37 +232,46 @@ public class Fish {
         tankSize.add("ultimate", 200, 319, false);
         tankSize.add("draconic", 320, 10000, true);
 
-        //Food Usage
-        foodUsage = new FishDNAFoodUsage().setHidden().register();
+        // Food Usage
+        foodUsage = new FishDNAFoodUsage().setHidden()
+            .register();
         foodUsage.add("none", 0, 0, false);
         foodUsage.add("normal", 1, 1, false);
         foodUsage.add("hungry", 2, 2, true);
         foodUsage.add("greedy", 3, 3, true);
 
-        //Area of Effect
-        up = new FishDNAAreaOfEffect(ForgeDirection.UP).setHidden().register();
-        down = new FishDNAAreaOfEffect(ForgeDirection.DOWN).setHidden().register();
-        north = new FishDNAAreaOfEffect(ForgeDirection.NORTH).setHidden().register();
-        east = new FishDNAAreaOfEffect(ForgeDirection.EAST).setHidden().register();
-        south = new FishDNAAreaOfEffect(ForgeDirection.SOUTH).setHidden().register();
-        west = new FishDNAAreaOfEffect(ForgeDirection.WEST).setHidden().register();
+        // Area of Effect
+        up = new FishDNAAreaOfEffect(ForgeDirection.UP).setHidden()
+            .register();
+        down = new FishDNAAreaOfEffect(ForgeDirection.DOWN).setHidden()
+            .register();
+        north = new FishDNAAreaOfEffect(ForgeDirection.NORTH).setHidden()
+            .register();
+        east = new FishDNAAreaOfEffect(ForgeDirection.EAST).setHidden()
+            .register();
+        south = new FishDNAAreaOfEffect(ForgeDirection.SOUTH).setHidden()
+            .register();
+        west = new FishDNAAreaOfEffect(ForgeDirection.WEST).setHidden()
+            .register();
         addEffectNames(new FishDNA[] { up, down, north, east, south, west });
 
-        //Salinity Tolerance
-        salinity = new FishDNASalinityTolerance().setHidden().register();
+        // Salinity Tolerance
+        salinity = new FishDNASalinityTolerance().setHidden()
+            .register();
         salinity.add("intolerant", 0, 0, true);
         salinity.add("tolerant", 1, 1, false);
         salinity.add("hightolerant", 2, 2, false);
 
-        //Temperature Tolerance
-        temperature = new FishDNATemperatureTolerance().setHidden().register();
+        // Temperature Tolerance
+        temperature = new FishDNATemperatureTolerance().setHidden()
+            .register();
         temperature.add("fussy", 0, 3, true);
         temperature.add("normal", 4, 9, true);
-        temperature.add("sltolerant", 10, 13, false); //slightly
+        temperature.add("sltolerant", 10, 13, false); // slightly
         temperature.add("tolerant", 14, 17, false);
-        temperature.add("vtolerant", 18, 25, false); //very
-        temperature.add("itolerant", 26, 39, false); //incredibly
-        temperature.add("etolerant", 40, 100, false); //extremely
+        temperature.add("vtolerant", 18, 25, false); // very
+        temperature.add("itolerant", 26, 39, false); // incredibly
+        temperature.add("etolerant", 40, 100, false); // extremely
     }
 
     private static void addEffectNames(FishDNA[] dnas) {
@@ -312,7 +324,7 @@ public class Fish {
         herring = Fishing.fishHelper.registerFish(modid, FishHerring.class, 38);
         minecraft = Fishing.fishHelper.registerFish(modid, FishMinecraft.class, 39);
 
-        //New Species
+        // New Species
         brown = Fishing.fishHelper.registerFish(modid, FishBrownshroom.class, 40);
         red = Fishing.fishHelper.registerFish(modid, FishRedshroom.class, 41);
         pup = Fishing.fishHelper.registerFish(modid, FishPupfish.class, 42);
@@ -324,7 +336,7 @@ public class Fish {
         stickleback = Fishing.fishHelper.registerFish(modid, FishStickleback.class, 48);
         pickerel = Fishing.fishHelper.registerFish(modid, FishPickerel.class, 49);
 
-        //Metal species
+        // Metal species
         iron = Fishing.fishHelper.registerFish(modid, FishIron.class, 50);
         gold = Fishing.fishHelper.registerFish(modid, FishGoldMetal.class, 51);
         copper = Fishing.fishHelper.registerFish(modid, FishCopper.class, 52);
@@ -333,22 +345,29 @@ public class Fish {
         magnesium = Fishing.fishHelper.registerFish(modid, FishMagnesium.class, 55);
     }
 
-    public static FishSpecies silver; //Iron + Magnesium
-    public static FishSpecies lead; //Angler + Copper
-    public static FishSpecies tin; //Squid + Stargazer
-    public static FishSpecies platinum; //Koi + Rutile
-    public static FishSpecies nickel; //Magnesium + Angler
-    public static FishSpecies cobalt; //Cat + Rutile
-    public static FishSpecies ardite; //Glow + Rutile
-    public static FishSpecies osmium; //Electric + Rutile
-    public static FishSpecies zinc; //Aluminum + Puffer
-    public static FishSpecies mana;//Mana = Koi + GoldenEye
+    public static FishSpecies silver; // Iron + Magnesium
+    public static FishSpecies lead; // Angler + Copper
+    public static FishSpecies tin; // Squid + Stargazer
+    public static FishSpecies platinum; // Koi + Rutile
+    public static FishSpecies nickel; // Magnesium + Angler
+    public static FishSpecies cobalt; // Cat + Rutile
+    public static FishSpecies ardite; // Glow + Rutile
+    public static FishSpecies osmium; // Electric + Rutile
+    public static FishSpecies zinc; // Aluminum + Puffer
+    public static FishSpecies mana;// Mana = Koi + GoldenEye
 
-    public static FishSpecies registerFish(String ingot, FishSpecies father, FishSpecies mother, double chance, Class clazz, int id) {
-        if (OreDictionary.getOres("ingot" + StringUtils.capitalize(ingot)).size() > 0) {
+    public static FishSpecies registerFish(String ingot, FishSpecies father, FishSpecies mother, double chance,
+        Class clazz, int id) {
+        if (OreDictionary.getOres("ingot" + StringUtils.capitalize(ingot))
+            .size() > 0) {
             FishSpecies fish = Fishing.fishHelper.registerFish(modid, clazz, id);
             if (FishMechanics.ENABLE_METAL_FISH) {
-                Fishing.mutation.addMutation(father, mother, fish, chance, new RequirementHasTag("block" + StringUtils.capitalize(ingot)));
+                Fishing.mutation.addMutation(
+                    father,
+                    mother,
+                    fish,
+                    chance,
+                    new RequirementHasTag("block" + StringUtils.capitalize(ingot)));
             }
 
             return fish;
@@ -424,9 +443,15 @@ public class Fish {
 
     private static void addRecipe(FishSpecies species) {
         ItemStack raw = species.getRawForm(1);
-        ItemStack kelp = Modules.isActive(Modules.worldplus) ? new ItemStack(Core.food, 1, FoodMeta.KELP_WRAP) : MCLib.cactusGreen;
-        if (species.getFishOilVolume() > 0 && species.getLiquifiedProduct() != null && species.getLiquifiedProductChance() > 0) {
-            RecipeHelper.addFishMelting(raw, species.getFishOilVolume(), species.getLiquifiedProduct(), species.getLiquifiedProductChance());
+        ItemStack kelp = Modules.isActive(Modules.worldplus) ? new ItemStack(Core.food, 1, FoodMeta.KELP_WRAP)
+            : MCLib.cactusGreen;
+        if (species.getFishOilVolume() > 0 && species.getLiquifiedProduct() != null
+            && species.getLiquifiedProductChance() > 0) {
+            RecipeHelper.addFishMelting(
+                raw,
+                species.getFishOilVolume(),
+                species.getLiquifiedProduct(),
+                species.getLiquifiedProductChance());
         }
 
         int meal = species.getFishMealSize();

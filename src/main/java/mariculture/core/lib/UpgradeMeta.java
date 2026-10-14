@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class UpgradeMeta {
+
     public static final int COUNT = 43;
 
     public static final int BASIC_STORAGE = 0;

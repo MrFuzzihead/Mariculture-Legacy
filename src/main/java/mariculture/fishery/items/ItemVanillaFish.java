@@ -3,14 +3,6 @@ package mariculture.fishery.items;
 import java.util.List;
 import java.util.Map.Entry;
 
-import mariculture.api.core.MaricultureTab;
-import mariculture.api.fishery.Fishing;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.config.Vanilla;
-import mariculture.core.lib.Extra;
-import mariculture.core.lib.Modules;
-import mariculture.core.util.MCTranslate;
-import mariculture.fishery.FishyHelper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,9 +16,17 @@ import com.google.common.collect.Multimap;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
+import mariculture.api.core.MaricultureTab;
+import mariculture.api.fishery.Fishing;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.config.Vanilla;
+import mariculture.core.lib.Extra;
+import mariculture.core.lib.Modules;
+import mariculture.core.util.MCTranslate;
+import mariculture.fishery.FishyHelper;
 
 public class ItemVanillaFish extends ItemFishFood {
+
     public static final int LAST_VANILLA = ItemFishFood.FishType.PUFFERFISH.ordinal() + 1;
 
     public ItemVanillaFish(boolean bool) {
@@ -37,10 +37,13 @@ public class ItemVanillaFish extends ItemFishFood {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (Fishing.fishHelper == null) return super.getItemStackDisplayName(stack);
-        if (Vanilla.VANILLA_TEXTURES && stack.getItemDamage() < LAST_VANILLA) return super.getItemStackDisplayName(stack);
+        if (Vanilla.VANILLA_TEXTURES && stack.getItemDamage() < LAST_VANILLA)
+            return super.getItemStackDisplayName(stack);
         FishSpecies species = Fishing.fishHelper.getSpecies(stack.getItemDamage());
         if (species == null) return MCTranslate.translate("anyFish");
-        return MCTranslate.translate("fish.data.dead") + " " + Fishing.fishHelper.getSpecies(stack.getItemDamage()).getName();
+        return MCTranslate.translate("fish.data.dead") + " "
+            + Fishing.fishHelper.getSpecies(stack.getItemDamage())
+                .getName();
     }
 
     @Override
@@ -66,7 +69,8 @@ public class ItemVanillaFish extends ItemFishFood {
 
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        if (Vanilla.VANILLA_STATS && stack.getItemDamage() < LAST_VANILLA) return super.onItemRightClick(stack, world, player);
+        if (Vanilla.VANILLA_STATS && stack.getItemDamage() < LAST_VANILLA)
+            return super.onItemRightClick(stack, world, player);
         else {
             FishSpecies fish = Fishing.fishHelper.getSpecies(stack.getItemDamage());
             if (fish != null) {
@@ -89,7 +93,8 @@ public class ItemVanillaFish extends ItemFishFood {
                 if (Extra.NERF_FOOD) {
                     ItemVanillaFishEdible.INSTANCE.onEatenCompatibility(stack, player);
                 } else {
-                    player.getFoodStats().addStats(fish.getFoodStat(), fish.getFoodSaturation());
+                    player.getFoodStats()
+                        .addStats(fish.getFoodStat(), fish.getFoodSaturation());
                 }
 
                 world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
@@ -114,8 +119,9 @@ public class ItemVanillaFish extends ItemFishFood {
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-        if(!Modules.isActive(Modules.fishery)) return super.onLeftClickEntity(stack, player, entity); //If fishery is disabled
-        
+        if (!Modules.isActive(Modules.fishery)) return super.onLeftClickEntity(stack, player, entity); // If fishery is
+                                                                                                       // disabled
+
         if (!player.capabilities.isCreativeMode) {
             FishSpecies species = Fishing.fishHelper.getSpecies(stack.getItemDamage());
             if (species != null) if (species.destroyOnAttack()) {
@@ -132,7 +138,7 @@ public class ItemVanillaFish extends ItemFishFood {
 
     @Override
     public Multimap getAttributeModifiers(ItemStack stack) {
-        if(!Modules.isActive(Modules.fishery)) return super.getAttributeModifiers(stack); //If fishery is disabled
+        if (!Modules.isActive(Modules.fishery)) return super.getAttributeModifiers(stack); // If fishery is disabled
         FishSpecies species = Fishing.fishHelper.getSpecies(stack.getItemDamage());
         if (species != null) return species.getModifiers(field_111210_e, super.getAttributeModifiers(stack));
         else return super.getAttributeModifiers(stack);
@@ -144,7 +150,8 @@ public class ItemVanillaFish extends ItemFishFood {
         if (Modules.isActive(Modules.fishery)) {
             for (Entry<Integer, FishSpecies> species : FishSpecies.species.entrySet()) {
                 FishSpecies fishy = species.getValue();
-                if (fishy.getRawForm(1).getItem() instanceof ItemVanillaFish) {
+                if (fishy.getRawForm(1)
+                    .getItem() instanceof ItemVanillaFish) {
                     list.add(fishy.getRawForm(1));
                 }
             }

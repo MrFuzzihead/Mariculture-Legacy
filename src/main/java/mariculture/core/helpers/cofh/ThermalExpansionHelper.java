@@ -3,6 +3,7 @@ package mariculture.core.helpers.cofh;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
+
 import cpw.mods.fml.common.event.FMLInterModComms;
 
 public class ThermalExpansionHelper {
@@ -27,12 +28,14 @@ public class ThermalExpansionHelper {
         addPulverizerRecipe(energy, input, primaryOutput, null, 0);
     }
 
-    public static void addPulverizerRecipe(int energy, ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput) {
+    public static void addPulverizerRecipe(int energy, ItemStack input, ItemStack primaryOutput,
+        ItemStack secondaryOutput) {
 
         addPulverizerRecipe(energy, input, primaryOutput, secondaryOutput, 100);
     }
 
-    public static void addPulverizerRecipe(int energy, ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance) {
+    public static void addPulverizerRecipe(int energy, ItemStack input, ItemStack primaryOutput,
+        ItemStack secondaryOutput, int secondaryChance) {
 
         NBTTagCompound toSend = new NBTTagCompound();
 
@@ -54,12 +57,14 @@ public class ThermalExpansionHelper {
         addSawmillRecipe(energy, input, primaryOutput, null, 0);
     }
 
-    public static void addSawmillRecipe(int energy, ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput) {
+    public static void addSawmillRecipe(int energy, ItemStack input, ItemStack primaryOutput,
+        ItemStack secondaryOutput) {
 
         addSawmillRecipe(energy, input, primaryOutput, secondaryOutput, 100);
     }
 
-    public static void addSawmillRecipe(int energy, ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance) {
+    public static void addSawmillRecipe(int energy, ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput,
+        int secondaryChance) {
 
         NBTTagCompound toSend = new NBTTagCompound();
 
@@ -76,17 +81,20 @@ public class ThermalExpansionHelper {
         FMLInterModComms.sendMessage("ThermalExpansion", "SawmillRecipe", toSend);
     }
 
-    public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput) {
+    public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput,
+        ItemStack primaryOutput) {
 
         addSmelterRecipe(energy, primaryInput, secondaryInput, primaryOutput, null, 0);
     }
 
-    public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput) {
+    public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput,
+        ItemStack primaryOutput, ItemStack secondaryOutput) {
 
         addSmelterRecipe(energy, primaryInput, secondaryInput, primaryOutput, secondaryOutput, 100);
     }
 
-    public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance) {
+    public static void addSmelterRecipe(int energy, ItemStack primaryInput, ItemStack secondaryInput,
+        ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance) {
 
         NBTTagCompound toSend = new NBTTagCompound();
 
@@ -106,11 +114,12 @@ public class ThermalExpansionHelper {
     }
 
     /**
-     * Use this to register an Ore TYPE as a "Blast" recipe - it will require Pyrotheum Dust to smelt. Do not add the prefix. This is an opt-in for ores which
+     * Use this to register an Ore TYPE as a "Blast" recipe - it will require Pyrotheum Dust to smelt. Do not add the
+     * prefix. This is an opt-in for ores which
      * do NOT have vanilla furnace recipes.
-     * 
+     *
      * Ex: "Steel" or "ElectrumFlux", not "dustSteel" or "dustElectrumFlux"
-     * 
+     *
      * @param oreType
      */
     public static void addSmelterBlastOre(String oreType) {
@@ -136,7 +145,8 @@ public class ThermalExpansionHelper {
         FMLInterModComms.sendMessage("ThermalExpansion", "CrucibleRecipe", toSend);
     }
 
-    public static void addTransposerFill(int energy, ItemStack input, ItemStack output, FluidStack fluid, boolean reversible) {
+    public static void addTransposerFill(int energy, ItemStack input, ItemStack output, FluidStack fluid,
+        boolean reversible) {
 
         NBTTagCompound toSend = new NBTTagCompound();
 
@@ -153,7 +163,8 @@ public class ThermalExpansionHelper {
         FMLInterModComms.sendMessage("ThermalExpansion", "TransposerFillRecipe", toSend);
     }
 
-    public static void addTransposerExtract(int energy, ItemStack input, ItemStack output, FluidStack fluid, int chance, boolean reversible) {
+    public static void addTransposerExtract(int energy, ItemStack input, ItemStack output, FluidStack fluid, int chance,
+        boolean reversible) {
 
         NBTTagCompound toSend = new NBTTagCompound();
 

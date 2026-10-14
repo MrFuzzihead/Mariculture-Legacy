@@ -22,12 +22,14 @@ public final class BlockHelper {
     }
 
     public static byte[] rotateType = new byte[4096];
-    public static final int[][] SIDE_COORD_MOD = { { 0, -1, 0 }, { 0, 1, 0 }, { 0, 0, -1 }, { 0, 0, 1 }, { -1, 0, 0 }, { 1, 0, 0 } };
+    public static final int[][] SIDE_COORD_MOD = { { 0, -1, 0 }, { 0, 1, 0 }, { 0, 0, -1 }, { 0, 0, 1 }, { -1, 0, 0 },
+        { 1, 0, 0 } };
     public static final byte[] SIDE_LEFT = { 4, 5, 5, 4, 2, 3 };
     public static final byte[] SIDE_RIGHT = { 5, 4, 4, 5, 3, 2 };
     public static final byte[] SIDE_OPPOSITE = { 1, 0, 3, 2, 5, 4 };
 
     public static final class RotationType {
+
         public static final int PREVENT = -1;
         public static final int FOUR_WAY = 1;
         public static final int SIX_WAY = 2;
@@ -97,7 +99,8 @@ public final class BlockHelper {
 
     public static TileEntity getAdjacentTileEntity(TileEntity refTile, ForgeDirection dir) {
 
-        return refTile == null ? null : getAdjacentTileEntity(refTile.getWorldObj(), refTile.xCoord, refTile.yCoord, refTile.zCoord, dir);
+        return refTile == null ? null
+            : getAdjacentTileEntity(refTile.getWorldObj(), refTile.xCoord, refTile.yCoord, refTile.zCoord, dir);
     }
 
     /* COORDINATE TRANSFORM */

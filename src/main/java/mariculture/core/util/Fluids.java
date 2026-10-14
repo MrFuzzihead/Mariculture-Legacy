@@ -8,9 +8,11 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class Fluids {
+
     private static HashMap<String, BalancedFluid> fluids = new HashMap();
 
     private static class BalancedFluid {
+
         Fluid fluid;
         int volume;
 
@@ -25,14 +27,16 @@ public class Fluids {
     }
 
     public static boolean add(String name, Fluid fluid, int volume, boolean override) {
-        Fluid fluid2 = FluidRegistry.getFluid(fluid.getName()); //If there is already a fluid registered
+        if (fluid == null) return false;
+
+        Fluid fluid2 = FluidRegistry.getFluid(fluid.getName()); // If there is already a fluid registered
         if (fluid2 != null) {
-            fluid = fluid2; //Use the registered fluid no matter what
+            fluid = fluid2; // Use the registered fluid no matter what
         }
-        
+
         if ((!fluids.containsKey(name) && fluid != null) || override) {
             fluids.put(name, new BalancedFluid(fluid, volume));
-            return fluid != fluid2; //Return true if we should register our own fluid
+            return fluid != fluid2; // Return true if we should register our own fluid
         }
 
         return false;
@@ -76,8 +80,8 @@ public class Fluids {
     public static FluidStack getBalancedStack(String fluid) {
         return new FluidStack(getFluid(fluid), getBalancedVolume(fluid));
     }
-    
-    public static boolean isBlood(String blood) {        
+
+    public static boolean isBlood(String blood) {
         return blood.equals("life essence") || blood.equals("blood");
     }
 

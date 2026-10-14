@@ -1,11 +1,13 @@
 package mariculture.core.tile;
 
-import mariculture.core.util.Tank;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 
+import mariculture.core.util.Tank;
+
 public class TileVoidBottle extends TileTankBlock {
+
     public TileVoidBottle() {
         tank = new Tank(Integer.MAX_VALUE);
     }

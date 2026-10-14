@@ -1,6 +1,12 @@
 package mariculture.plugins;
 
 import static mariculture.core.lib.MCLib.stick;
+
+import net.minecraft.item.ItemStack;
+
+import org.apache.logging.log4j.Level;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 import mariculture.api.core.FuelInfo;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.RecipesSmelting;
@@ -8,13 +14,9 @@ import mariculture.core.handlers.LogHandler;
 import mariculture.core.lib.MetalRates;
 import mariculture.core.util.Fluids;
 import mariculture.plugins.Plugins.Plugin;
-import net.minecraft.item.ItemStack;
-
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class PluginRailcraft extends Plugin {
+
     public PluginRailcraft(String name) {
         super(name);
     }
@@ -35,8 +37,20 @@ public class PluginRailcraft extends Plugin {
             ItemStack steelAxe = new ItemStack(GameRegistry.findItem("Railcraft", "tool.steel.axe"));
             ItemStack steelSword = new ItemStack(GameRegistry.findItem("Railcraft", "tool.steel.sword"));
             ItemStack steelHoe = new ItemStack(GameRegistry.findItem("Railcraft", "tool.steel.hoe"));
-            RecipesSmelting.addRecipe(Fluids.getFluidName("steel"), new Object[] { steelPick, steelShovel, steelAxe, steelSword, steelHoe }, MetalRates.TOOLS, RecipesSmelting.steel, new ItemStack(stick), 1);
-            RecipesSmelting.addRecipe(Fluids.getFluidName("steel"), new Object[] { steelHelm, steelChest, steelPants, steelBoots }, MetalRates.ARMOR, RecipesSmelting.steel, null, 0);
+            RecipesSmelting.addRecipe(
+                Fluids.getFluidName("steel"),
+                new Object[] { steelPick, steelShovel, steelAxe, steelSword, steelHoe },
+                MetalRates.TOOLS,
+                RecipesSmelting.steel,
+                new ItemStack(stick),
+                1);
+            RecipesSmelting.addRecipe(
+                Fluids.getFluidName("steel"),
+                new Object[] { steelHelm, steelChest, steelPants, steelBoots },
+                MetalRates.ARMOR,
+                RecipesSmelting.steel,
+                null,
+                0);
         } catch (Exception e) {
             LogHandler.log(Level.INFO, "Failed to add railcraft steel items to the melting list");
         }

@@ -1,24 +1,24 @@
 package maritech.gui;
 
-import mariculture.api.core.IItemUpgrade;
-import mariculture.api.core.IUpgradable;
-import mariculture.core.gui.ContainerMachine;
-import mariculture.core.gui.SlotFluidContainer;
-import mariculture.core.gui.SlotOutput;
-import mariculture.core.gui.SlotUpgrade;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.fishery.FishFoodHandler;
-import mariculture.fishery.Fishery;
-import mariculture.fishery.items.ItemFishy;
-import maritech.tile.TileExtractor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cofh.api.energy.IEnergyContainerItem;
+import mariculture.api.core.IItemUpgrade;
+import mariculture.core.gui.ContainerMachine;
+import mariculture.core.gui.SlotFluidContainer;
+import mariculture.core.gui.SlotOutput;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.fishery.FishFoodHandler;
+import mariculture.fishery.Fishery;
+import mariculture.fishery.items.ItemFishy;
+import maritech.tile.TileExtractor;
 
 public class ContainerExtractor extends ContainerMachine {
+
     public ContainerExtractor(TileExtractor tile, InventoryPlayer playerInventory) {
         super(tile);
 
@@ -55,11 +55,11 @@ public class ContainerExtractor extends ContainerMachine {
                 slot.onSlotChange(stack, itemstack);
             } else if (slotID >= size) {
                 if (stack.getItem() instanceof ItemFishy) {
-                    if (!mergeItemStack(stack, 6, 7, false)) return null; //Slot 6 for the Fish
+                    if (!mergeItemStack(stack, 6, 7, false)) return null; // Slot 6 for the Fish
                 } else if (stack.getItem() instanceof IItemUpgrade) {
-                    if (!mergeItemStack(stack, 0, 3, false)) return null; //Slot 0-2 for the Upgrades
+                    if (!mergeItemStack(stack, 0, 3, false)) return null; // Slot 0-2 for the Upgrades
                 } else if (stack.getItem() instanceof IEnergyContainerItem) {
-                    if (!mergeItemStack(stack, 5, 6, false)) return null; //Slot 5 for the Energy
+                    if (!mergeItemStack(stack, 5, 6, false)) return null; // Slot 5 for the Energy
                 } else if (FluidHelper.isFluidOrEmpty(stack) || FishFoodHandler.isFishFood(stack)) {
                     if (!mergeItemStack(stack, 3, 4, false)) return null; // Slot 3 for the Liquids
                 } else if (slotID >= size && slotID < low) {
@@ -82,6 +82,7 @@ public class ContainerExtractor extends ContainerMachine {
     }
 
     private class SlotFish extends Slot {
+
         public SlotFish(IInventory inventory, int id, int x, int y) {
             super(inventory, id, x, y);
         }

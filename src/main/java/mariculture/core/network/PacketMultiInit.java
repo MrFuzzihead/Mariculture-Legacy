@@ -1,16 +1,18 @@
 package mariculture.core.network;
 
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import mariculture.core.tile.base.TileMultiBlock;
 import mariculture.core.tile.base.TileMultiBlock.MultiPart;
 import mariculture.lib.helpers.ClientHelper;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketMultiInit extends PacketCoords implements IMessageHandler<PacketMultiInit, IMessage> {
+
     public int mX, mY, mZ, facing;
 
     public PacketMultiInit() {}

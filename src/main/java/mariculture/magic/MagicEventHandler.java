@@ -2,22 +2,6 @@ package mariculture.magic;
 
 import java.util.Random;
 
-import mariculture.core.helpers.EnchantHelper;
-import mariculture.core.helpers.PlayerHelper;
-import mariculture.core.helpers.cofh.CoFhItemHelper;
-import mariculture.magic.enchantments.EnchantmentBlink;
-import mariculture.magic.enchantments.EnchantmentElemental;
-import mariculture.magic.enchantments.EnchantmentFallDamage;
-import mariculture.magic.enchantments.EnchantmentFlight;
-import mariculture.magic.enchantments.EnchantmentGlide;
-import mariculture.magic.enchantments.EnchantmentHealth;
-import mariculture.magic.enchantments.EnchantmentJump;
-import mariculture.magic.enchantments.EnchantmentNeverHungry;
-import mariculture.magic.enchantments.EnchantmentOneRing;
-import mariculture.magic.enchantments.EnchantmentRestore;
-import mariculture.magic.enchantments.EnchantmentResurrection;
-import mariculture.magic.enchantments.EnchantmentSpeed;
-import mariculture.magic.enchantments.EnchantmentSpider;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -41,9 +25,27 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import mariculture.core.helpers.EnchantHelper;
+import mariculture.core.helpers.PlayerHelper;
+import mariculture.core.helpers.cofh.CoFhItemHelper;
+import mariculture.magic.enchantments.EnchantmentBlink;
+import mariculture.magic.enchantments.EnchantmentElemental;
+import mariculture.magic.enchantments.EnchantmentFallDamage;
+import mariculture.magic.enchantments.EnchantmentFlight;
+import mariculture.magic.enchantments.EnchantmentGlide;
+import mariculture.magic.enchantments.EnchantmentHealth;
+import mariculture.magic.enchantments.EnchantmentJump;
+import mariculture.magic.enchantments.EnchantmentNeverHungry;
+import mariculture.magic.enchantments.EnchantmentOneRing;
+import mariculture.magic.enchantments.EnchantmentRestore;
+import mariculture.magic.enchantments.EnchantmentResurrection;
+import mariculture.magic.enchantments.EnchantmentSpeed;
+import mariculture.magic.enchantments.EnchantmentSpider;
 
 public class MagicEventHandler {
+
     private Random rand = new Random();
 
     @SubscribeEvent
@@ -107,15 +109,17 @@ public class MagicEventHandler {
 
     @SubscribeEvent
     public void onEntityFall(LivingFallEvent event) {
-        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) if (EnchantHelper.exists(Magic.glide) || EnchantHelper.exists(Magic.fall) || EnchantHelper.exists(Magic.flight)) {
-            EntityPlayer player = (EntityPlayer) event.entity;
-            EnchantmentGlide.damage(player, rand);
-            EnchantmentFallDamage.activate(event, player);
+        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
+            if (EnchantHelper.exists(Magic.glide) || EnchantHelper.exists(Magic.fall)
+                || EnchantHelper.exists(Magic.flight)) {
+                    EntityPlayer player = (EntityPlayer) event.entity;
+                    EnchantmentGlide.damage(player, rand);
+                    EnchantmentFallDamage.activate(event, player);
 
-            if (EnchantHelper.hasEnchantment(Magic.flight, player)) {
-                event.setCanceled(true);
-            }
-        }
+                    if (EnchantHelper.hasEnchantment(Magic.flight, player)) {
+                        event.setCanceled(true);
+                    }
+                }
     }
 
     @SubscribeEvent
@@ -153,12 +157,33 @@ public class MagicEventHandler {
         }
     }
 
-    public MovingObjectPosition getMovingObjectPositionFromPlayer(World world, EntityPlayer player, boolean p_77621_3_) {
+    public MovingObjectPosition getMovingObjectPositionFromPlayer(World world, EntityPlayer player,
+        boolean p_77621_3_) {
         float f = 1.0F;
         float f1 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * f;
         float f2 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * f;
         double d0 = player.prevPosX + (player.posX - player.prevPosX) * (double) f;
-        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f + (double) (world.isRemote ? player.getEyeHeight() - player.getDefaultEyeHeight() : player.getEyeHeight()); // isRemote check to revert changes to ray trace position due to adding the eye height clientside and player yOffset differences
+        double d1 = player.prevPosY + (player.posY - player.prevPosY) * (double) f
+            + (double) (world.isRemote ? player.getEyeHeight() - player.getDefaultEyeHeight() : player.getEyeHeight()); // isRemote
+                                                                                                                        // check
+                                                                                                                        // to
+                                                                                                                        // revert
+                                                                                                                        // changes
+                                                                                                                        // to
+                                                                                                                        // ray
+                                                                                                                        // trace
+                                                                                                                        // position
+                                                                                                                        // due
+                                                                                                                        // to
+                                                                                                                        // adding
+                                                                                                                        // the
+                                                                                                                        // eye
+                                                                                                                        // height
+                                                                                                                        // clientside
+                                                                                                                        // and
+                                                                                                                        // player
+                                                                                                                        // yOffset
+                                                                                                                        // differences
         double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) f;
         Vec3 vec3 = Vec3.createVectorHelper(d0, d1, d2);
         float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);

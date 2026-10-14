@@ -1,12 +1,15 @@
 package mariculture.fishery.gui;
 
-import scala.util.Random;
-import mariculture.api.fishery.fish.FishDNABase;
-import mariculture.fishery.Fishery;
+import java.util.Random;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import mariculture.api.fishery.fish.FishDNABase;
+import mariculture.fishery.Fishery;
+
 public class FishTankData {
+
     private static Random rand = new Random();
     private NBTTagCompound data;
     private int count;
@@ -19,11 +22,11 @@ public class FishTankData {
         this.data = data;
         this.count = count;
     }
-    
+
     public void set(int count) {
         this.count = count;
     }
-    
+
     public int getCount() {
         return count;
     }
@@ -50,11 +53,13 @@ public class FishTankData {
     public boolean matches(ItemStack stack) {
         if (!stack.hasTagCompound()) return false;
         for (FishDNABase dna : FishDNABase.DNAParts) {
-            if (!dna.getDNA(stack).equals(dna.getDNA(make()))) {
+            if (!dna.getDNA(stack)
+                .equals(dna.getDNA(make()))) {
                 return false;
             }
 
-            if (!(dna.getLowerDNA(stack).equals(dna.getLowerDNA(make())))) {
+            if (!(dna.getLowerDNA(stack)
+                .equals(dna.getLowerDNA(make())))) {
                 return false;
             }
         }
@@ -75,16 +80,16 @@ public class FishTankData {
         nbt.setTag("Data", data);
         nbt.setInteger("Count", count);
     }
-    
+
     private int xPlus;
     private int yPlus;
 
     public void move() {
-        if(x == 145 || x == 1 || y == 91 || y == 1 || rand.nextInt(60) == 0) {
+        if (x == 145 || x == 1 || y == 91 || y == 1 || rand.nextInt(60) == 0) {
             xPlus = rand.nextInt(3) - 1;
             yPlus = rand.nextInt(3) - 1;
         }
-        
+
         x = Math.min(145, Math.max(1, x + xPlus));
         y = Math.min(91, Math.max(1, y + yPlus));
     }

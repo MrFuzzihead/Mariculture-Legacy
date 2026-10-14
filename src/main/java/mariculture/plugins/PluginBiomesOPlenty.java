@@ -2,14 +2,6 @@ package mariculture.plugins;
 
 import java.lang.reflect.Field;
 
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.core.handlers.LogHandler;
-import mariculture.core.handlers.OreDicHandler;
-import mariculture.core.helpers.RecipeHelper;
-import mariculture.core.lib.Extra;
-import mariculture.core.lib.MCLib;
-import mariculture.plugins.Plugins.Plugin;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -19,14 +11,24 @@ import org.apache.logging.log4j.Level;
 import biomesoplenty.api.content.BOPCBiomes;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.core.handlers.LogHandler;
+import mariculture.core.handlers.OreDicHandler;
+import mariculture.core.helpers.RecipeHelper;
+import mariculture.core.lib.Extra;
+import mariculture.core.lib.MCLib;
+import mariculture.plugins.Plugins.Plugin;
 
 public class PluginBiomesOPlenty extends Plugin {
+
     public PluginBiomesOPlenty(String name) {
         super(name);
     }
 
     public static enum Biome {
-        KELP, CORAL
+        KELP,
+        CORAL
     }
 
     private void addBiome(BiomeGenBase biome, int temp, Salinity salt) {
@@ -38,19 +40,45 @@ public class PluginBiomesOPlenty extends Plugin {
     @Override
     public void preInit() {
         Extra.HAS_BOP = Loader.isModLoaded("BiomesOPlenty");
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "planks")), new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "saplings")), new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "colorizedSaplings")), new Integer[] { 0, 1, 2, 3, 4, 5, 6 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "woodenSingleSlab1")), new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "woodenSingleSlab2")), new Integer[] { 0, 1, 2, 3, 4 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "colorizedLeaves1")), new Integer[] { 0, 1, 2, 3 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "colorizedLeaves2")), new Integer[] { 0, 1, 2 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "leaves1")), new Integer[] { 0, 1, 2, 3 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "leaves2")), new Integer[] { 0, 1, 2, 3 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "leaves3")), new Integer[] { 0, 1, 2, 3 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "leaves4")), new Integer[] { 0, 1 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "appleLeaves")), new Integer[] { 0 });
-        OreDicHandler.registerWildcard(new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "persimmonLeaves")), new Integer[] { 0 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "planks")),
+            new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "saplings")),
+            new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "colorizedSaplings")),
+            new Integer[] { 0, 1, 2, 3, 4, 5, 6 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "woodenSingleSlab1")),
+            new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "woodenSingleSlab2")),
+            new Integer[] { 0, 1, 2, 3, 4 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "colorizedLeaves1")),
+            new Integer[] { 0, 1, 2, 3 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "colorizedLeaves2")),
+            new Integer[] { 0, 1, 2 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "leaves1")),
+            new Integer[] { 0, 1, 2, 3 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "leaves2")),
+            new Integer[] { 0, 1, 2, 3 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "leaves3")),
+            new Integer[] { 0, 1, 2, 3 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "leaves4")),
+            new Integer[] { 0, 1 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "appleLeaves")),
+            new Integer[] { 0 });
+        OreDicHandler.registerWildcard(
+            new ItemStack(GameRegistry.findBlock("BiomesOPlenty", "persimmonLeaves")),
+            new Integer[] { 0 });
     }
 
     private static BiomeGenBase getBiome(String str) {
@@ -58,7 +86,9 @@ public class PluginBiomesOPlenty extends Plugin {
             Field field = BOPCBiomes.class.getField(str);
             return (BiomeGenBase) field.get(null);
         } catch (Exception e) {
-            LogHandler.log(Level.INFO, "Couldn't find the BiomesOPlenty Biome " + str + " : This is NOT an issue, do not report!");
+            LogHandler.log(
+                Level.INFO,
+                "Couldn't find the BiomesOPlenty Biome " + str + " : This is NOT an issue, do not report!");
             return null;
         }
     }

@@ -1,13 +1,15 @@
 package maritech.nei;
 
-import mariculture.core.lib.Modules;
-import mariculture.factory.Factory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
+import mariculture.core.lib.Modules;
+import mariculture.factory.Factory;
 
 public class MTNEIConfig implements IConfigureNEI {
+
     @Override
     public void loadConfig() {
         if (Modules.isActive(Modules.factory)) {

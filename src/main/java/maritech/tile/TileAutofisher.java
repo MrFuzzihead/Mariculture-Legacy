@@ -1,5 +1,9 @@
 package maritech.tile;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.RodType;
 import mariculture.core.gui.feature.FeatureEject.EjectSetting;
@@ -10,12 +14,10 @@ import mariculture.core.helpers.EnchantHelper;
 import mariculture.core.lib.MachineSpeeds;
 import mariculture.core.util.IHasNotification;
 import maritech.tile.base.TileMachinePowered;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class TileAutofisher extends TileMachinePowered implements IHasNotification {
-    //Slot Helper variables
+
+    // Slot Helper variables
     public static final int rod = 4;
     private static final int[] rod_slot = new int[] { 4 };
     private static final int[] bait = new int[] { 5, 6, 7, 8, 9, 10 };
@@ -34,7 +36,7 @@ public class TileAutofisher extends TileMachinePowered implements IHasNotificati
     public int getRFCapacity() {
         return 20000;
     }
-    
+
     @Override
     public void updateUpgrades() {
         super.updateUpgrades();
@@ -64,14 +66,15 @@ public class TileAutofisher extends TileMachinePowered implements IHasNotificati
     }
 
     @Override
-    public void process() {        
+    public void process() {
         int speed = 1 + EnchantHelper.getLevel(Enchantment.field_151369_A, inventory[rod]);
         for (int i = 0; i < speed && canWork; i++) {
             int baitSlot = destroyBait();
             int bonusQuality = getBait() + EnchantHelper.getLevel(Enchantment.field_151370_z, inventory[rod]) * 4;
             if (worldObj.rand.nextInt(100) < bonusQuality && baitSlot >= 0) {
                 RodType type = Fishing.fishing.getRodType(inventory[rod]);
-                ItemStack lootResult = Fishing.fishing.getCatch(worldObj, xCoord, yCoord - 1, zCoord, null, inventory[rod]);
+                ItemStack lootResult = Fishing.fishing
+                    .getCatch(worldObj, xCoord, yCoord - 1, zCoord, null, inventory[rod]);
                 setInventorySlotContents(rod, type.damage(worldObj, null, inventory[rod], 0, worldObj.rand));
                 if (lootResult != null) {
                     decrStackSize(baitSlot, 1);
@@ -82,18 +85,17 @@ public class TileAutofisher extends TileMachinePowered implements IHasNotificati
     }
 
     private int destroyBait() {
-        for (int i : bait)
-            if (inventory[i] != null) {
-                int quality = Fishing.fishing.getBaitQuality(inventory[i]);
-                if (i > 0 && Fishing.fishing.canUseBait(inventory[rod], inventory[i])) {
-                    return i;
-                }
+        for (int i : bait) if (inventory[i] != null) {
+            int quality = Fishing.fishing.getBaitQuality(inventory[i]);
+            if (i > 0 && Fishing.fishing.canUseBait(inventory[rod], inventory[i])) {
+                return i;
             }
+        }
 
         return -1;
     }
 
-    //Returns how much RF this machine uses
+    // Returns how much RF this machine uses
     @Override
     public void updatePowerPerTick() {
         if (rf <= 300000) {
@@ -103,11 +105,15 @@ public class TileAutofisher extends TileMachinePowered implements IHasNotificati
     }
 
     @Override
-    public boolean canWork() {        
-        return RedstoneMode.canWork(this, mode) && hasRod() && getBait() > 0 && hasPower() && isFishable() && hasRoom(null);
+    public boolean canWork() {
+        return RedstoneMode.canWork(this, mode) && hasRod()
+            && getBait() > 0
+            && hasPower()
+            && isFishable()
+            && hasRoom(null);
     }
 
-    //Checks whether the item in the rod slot is a fishing rod, and if so, whether it can fish at the coordinates
+    // Checks whether the item in the rod slot is a fishing rod, and if so, whether it can fish at the coordinates
     private boolean hasRod() {
         if (inventory[rod] != null) {
             RodType type = Fishing.fishing.getRodType(inventory[rod]);
@@ -115,23 +121,22 @@ public class TileAutofisher extends TileMachinePowered implements IHasNotificati
         } else return false;
     }
 
-    //Return whether the autofisher has bait available to be used
+    // Return whether the autofisher has bait available to be used
     private int getBait() {
-        for (int i : bait)
-            if (inventory[i] != null) {
-                int quality = Fishing.fishing.getBaitQuality(inventory[i]);
-                if (i > 0 && Fishing.fishing.canUseBait(inventory[rod], inventory[i])) return quality;
-            }
+        for (int i : bait) if (inventory[i] != null) {
+            int quality = Fishing.fishing.getBaitQuality(inventory[i]);
+            if (i > 0 && Fishing.fishing.canUseBait(inventory[rod], inventory[i])) return quality;
+        }
 
         return 0;
     }
 
-    //Returns whether the rod can operate or not, depends on the bait and the rod
+    // Returns whether the rod can operate or not, depends on the bait and the rod
     private boolean hasPower() {
         return energyStorage.extractEnergy(getPowerPerTick(), true) >= getPowerPerTick();
     }
 
-    //Returns whether the block below can be fished in or not
+    // Returns whether the block below can be fished in or not
     private boolean isFishable() {
         return BlockHelper.isFishable(worldObj, xCoord, yCoord - 1, zCoord);
     }

@@ -1,12 +1,5 @@
 package mariculture.world;
 
-import mariculture.Mariculture;
-import mariculture.api.fishery.Fishing;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.Core;
-import mariculture.core.lib.CraftingMeta;
-import mariculture.core.lib.Modules;
-import mariculture.fishery.items.ItemFishy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,7 +27,16 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
+import mariculture.Mariculture;
+import mariculture.api.fishery.Fishing;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.Core;
+import mariculture.core.lib.CraftingMeta;
+import mariculture.core.lib.Modules;
+import mariculture.fishery.items.ItemFishy;
+
 public class EntityRockhopper extends EntityTameable {
+
     public short rotationBody = 0;
     public short rotationWing = 570;
     public boolean upWing = false;
@@ -62,8 +64,10 @@ public class EntityRockhopper extends EntityTameable {
     @Override
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(15.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.15000001192092896D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth)
+            .setBaseValue(15.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed)
+            .setBaseValue(0.15000001192092896D);
     }
 
     @Override
@@ -112,12 +116,12 @@ public class EntityRockhopper extends EntityTameable {
             }
         }
     }
-    
+
     @Override
     protected String getLivingSound() {
         return Mariculture.modid + ":rockhopper_ambient";
     }
-    
+
     @Override
     protected String getDeathSound() {
         return Mariculture.modid + ":rockhopper_death";
@@ -226,7 +230,9 @@ public class EntityRockhopper extends EntityTameable {
                 this.entityDropItem(new ItemStack(Core.crafting, 1, CraftingMeta.NEOPRENE), 1F);
             } else {
                 if (Modules.isActive(Modules.fishery)) {
-                    this.entityDropItem(Fishing.fishing.getCatch(worldObj, (int) posX, (int) posY, (int) posZ, null, null), 1F);
+                    this.entityDropItem(
+                        Fishing.fishing.getCatch(worldObj, (int) posX, (int) posY, (int) posZ, null, null),
+                        1F);
                 } else this.entityDropItem(new ItemStack(Items.fish, j, rand.nextInt(4)), 1F);
             }
         }

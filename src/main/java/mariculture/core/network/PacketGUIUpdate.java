@@ -1,17 +1,18 @@
 package mariculture.core.network;
 
-import io.netty.buffer.ByteBuf;
-
 import java.util.ArrayList;
 
-import mariculture.core.gui.ContainerMariculture;
-import mariculture.lib.helpers.ClientHelper;
 import net.minecraft.entity.player.EntityPlayer;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.core.gui.ContainerMariculture;
+import mariculture.lib.helpers.ClientHelper;
 
 public class PacketGUIUpdate implements IMessage, IMessageHandler<PacketGUIUpdate, IMessage> {
+
     public int id;
     public int size;
     public int[] data;
@@ -22,7 +23,7 @@ public class PacketGUIUpdate implements IMessage, IMessageHandler<PacketGUIUpdat
         this.id = id;
         this.size = list.size();
         this.data = new int[size];
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             this.data[i] = list.get(i);
         }
     }

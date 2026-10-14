@@ -1,10 +1,5 @@
 package mariculture.diving;
 
-import mariculture.core.Core;
-import mariculture.core.config.GeneralStuff;
-import mariculture.core.helpers.PlayerHelper;
-import mariculture.core.lib.ArmorSlot;
-import mariculture.core.lib.WaterMeta;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -13,9 +8,16 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import mariculture.core.Core;
+import mariculture.core.config.GeneralStuff;
+import mariculture.core.helpers.PlayerHelper;
+import mariculture.core.lib.ArmorSlot;
+import mariculture.core.lib.WaterMeta;
 
 public class DivingEventHandler {
+
     @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent event) {
         if (event.entity instanceof EntityPlayer) {

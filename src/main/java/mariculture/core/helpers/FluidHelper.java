@@ -3,19 +3,6 @@ package mariculture.core.helpers;
 import java.util.HashMap;
 import java.util.List;
 
-import mariculture.core.Core;
-import mariculture.core.blocks.base.BlockFluid;
-import mariculture.core.lib.BottleMeta;
-import mariculture.core.lib.MetalRates;
-import mariculture.core.lib.Modules;
-import mariculture.core.util.FluidMari;
-import mariculture.core.util.Fluids;
-import mariculture.core.util.MCTranslate;
-import mariculture.core.util.Tank;
-import mariculture.fishery.FishFoodHandler;
-import mariculture.fishery.Fishery;
-import mariculture.fishery.items.ItemDroplet;
-import mariculture.lib.helpers.RegistryHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,9 +19,23 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
-import net.minecraftforge.oredict.OreDictionary;
+
+import mariculture.core.Core;
+import mariculture.core.blocks.base.BlockFluid;
+import mariculture.core.lib.BottleMeta;
+import mariculture.core.lib.MetalRates;
+import mariculture.core.lib.Modules;
+import mariculture.core.util.FluidMari;
+import mariculture.core.util.Fluids;
+import mariculture.core.util.MCTranslate;
+import mariculture.core.util.Tank;
+import mariculture.fishery.FishFoodHandler;
+import mariculture.fishery.Fishery;
+import mariculture.fishery.items.ItemDroplet;
+import mariculture.lib.helpers.RegistryHelper;
 
 public class FluidHelper {
+
     public static boolean isFluidOrEmpty(ItemStack stack) {
         return isEmpty(stack) || isFilled(stack) || isVoid(stack) || FishFoodHandler.isFishFood(stack);
     }
@@ -86,8 +87,14 @@ public class FluidHelper {
 
     public static ItemStack getEmptyContainerForFilledItem(ItemStack stack) {
         if (stack == null || stack.getItem() == null || empties == null) return null;
-        ItemStack result = empties.get(Item.itemRegistry.getNameForObject(stack.getItem()) + ":" + stack.getItemDamage());
-        return result != null ? result : stack.getItem().hasContainerItem(stack) ? stack.getItem().getContainerItem(stack) : null;
+        ItemStack result = empties
+            .get(Item.itemRegistry.getNameForObject(stack.getItem()) + ":" + stack.getItemDamage());
+        return result != null ? result
+            : stack.getItem()
+                .hasContainerItem(stack)
+                    ? stack.getItem()
+                        .getContainerItem(stack)
+                    : null;
     }
 
     private static ItemStack doEmpty(Tank tank, ItemStack top, ItemStack bottom) {
@@ -161,11 +168,12 @@ public class FluidHelper {
             invent.decrStackSize(in, 1);
             if (result.getItem() != Item.getItemFromBlock(Core.air)) if (invent.getStackInSlot(out) == null) {
                 invent.setInventorySlotContents(out, result.copy());
-            } else if (invent.getStackInSlot(out).getItem() == result.getItem()) {
-                ItemStack stack = invent.getStackInSlot(out);
-                ++stack.stackSize;
-                invent.setInventorySlotContents(out, stack);
-            }
+            } else if (invent.getStackInSlot(out)
+                .getItem() == result.getItem()) {
+                    ItemStack stack = invent.getStackInSlot(out);
+                    ++stack.stackSize;
+                    invent.setInventorySlotContents(out, stack);
+                }
         }
     }
 
@@ -200,7 +208,8 @@ public class FluidHelper {
     public static String getName(FluidStack fluidStack) {
         if (fluidStack == null || fluidStack.getFluid() == null) return null;
 
-        if (fluidStack.getFluid().getID() > 0) {
+        if (fluidStack.getFluid()
+            .getID() > 0) {
             String name = fluidStack.getLocalizedName();
             if (name.startsWith("fluid.")) {
                 name = name.substring(6);
@@ -209,7 +218,8 @@ public class FluidHelper {
                 }
             }
 
-            return name.substring(0, 1).toUpperCase() + name.substring(1);
+            return name.substring(0, 1)
+                .toUpperCase() + name.substring(1);
         }
 
         return null;
@@ -239,7 +249,8 @@ public class FluidHelper {
                 return true;
             } else return true;
         } else if (FluidContainerRegistry.isEmptyContainer(heldItem)) {
-            ItemStack result = FluidContainerRegistry.fillFluidContainer(tank.drain(ForgeDirection.UNKNOWN, 100000, false), heldItem);
+            ItemStack result = FluidContainerRegistry
+                .fillFluidContainer(tank.drain(ForgeDirection.UNKNOWN, 100000, false), heldItem);
             FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(result);
             if (result != null) {
                 tank.drain(side, fluid.amount, true);
@@ -261,7 +272,8 @@ public class FluidHelper {
     }
 
     public static String getFluidName(FluidStack fluid) {
-        if (fluid == null || fluid.getFluid() == null || fluid.amount <= 0) return mariculture.lib.util.Text.WHITE + MCTranslate.translate("empty");
+        if (fluid == null || fluid.getFluid() == null || fluid.amount <= 0)
+            return mariculture.lib.util.Text.WHITE + MCTranslate.translate("empty");
         return FluidHelper.getFluidName(fluid.getFluid());
     }
 
@@ -281,36 +293,67 @@ public class FluidHelper {
 
     public static List getFluidQty(List tooltip, FluidStack fluid, int max) {
         if (fluid == null || fluid.getFluid() == null) {
-            tooltip.add(mariculture.lib.util.Text.GREY + "" + 0 + (max > 0 ? "/" + max + MCTranslate.translate("mb") : MCTranslate.translate("mb")));
+            tooltip.add(
+                mariculture.lib.util.Text.GREY + ""
+                    + 0
+                    + (max > 0 ? "/" + max + MCTranslate.translate("mb") : MCTranslate.translate("mb")));
         } else if (Modules.isActive(Modules.fishery) && fluid.getFluid() == Fluids.getFluid("fish_food")) {
-            tooltip.add(mariculture.lib.util.Text.GREY + "" + fluid.amount + (max > 0 ? "/" + max + " " + MCTranslate.translate("pieces") : " " + MCTranslate.translate("pieces")));
-        } else if (fluid.getFluid().getName().contains("glass") || fluid.getFluid().getName().contains("salt") || fluid.getFluid().getName().contains("dirt")) {
-            tooltip.add(mariculture.lib.util.Text.GREY + "" + fluid.amount + (max > 0 ? "/" + max + MCTranslate.translate("mb") : MCTranslate.translate("mb")));
-        } else if (fluid.getFluid().getName().contains("molten")) {
-            int ingots = fluid.amount / MetalRates.INGOT;
-            if (ingots > 0) {
-                tooltip.add(mariculture.lib.util.Text.GREY + MCTranslate.translate("ingots") + ": " + ingots);
-            }
-            int mB = fluid.amount % MetalRates.INGOT;
-            if (mB > 0) {
-                int nuggets = mB / MetalRates.NUGGET;
-                int junk = mB % MetalRates.NUGGET;
-                if (nuggets > 0) {
-                    tooltip.add(mariculture.lib.util.Text.GREY + MCTranslate.translate("nuggets") + ": " + nuggets);
-                }
-                if (junk > 0) {
-                    tooltip.add(mariculture.lib.util.Text.GREY + MCTranslate.translate("mb") + ": " + junk);
-                }
-            }
+            tooltip.add(
+                mariculture.lib.util.Text.GREY + ""
+                    + fluid.amount
+                    + (max > 0 ? "/" + max + " " + MCTranslate.translate("pieces")
+                        : " " + MCTranslate.translate("pieces")));
+        } else if (fluid.getFluid()
+            .getName()
+            .contains("glass")
+            || fluid.getFluid()
+                .getName()
+                .contains("salt")
+            || fluid.getFluid()
+                .getName()
+                .contains("dirt")) {
+                    tooltip.add(
+                        mariculture.lib.util.Text.GREY + ""
+                            + fluid.amount
+                            + (max > 0 ? "/" + max + MCTranslate.translate("mb") : MCTranslate.translate("mb")));
+                } else
+            if (fluid.getFluid()
+                .getName()
+                .contains("molten")) {
+                    int ingots = fluid.amount / MetalRates.INGOT;
+                    if (ingots > 0) {
+                        tooltip.add(mariculture.lib.util.Text.GREY + MCTranslate.translate("ingots") + ": " + ingots);
+                    }
+                    int mB = fluid.amount % MetalRates.INGOT;
+                    if (mB > 0) {
+                        int nuggets = mB / MetalRates.NUGGET;
+                        int junk = mB % MetalRates.NUGGET;
+                        if (nuggets > 0) {
+                            tooltip.add(
+                                mariculture.lib.util.Text.GREY + MCTranslate.translate("nuggets") + ": " + nuggets);
+                        }
+                        if (junk > 0) {
+                            tooltip.add(mariculture.lib.util.Text.GREY + MCTranslate.translate("mb") + ": " + junk);
+                        }
+                    }
 
-            if (max > 0) {
-                tooltip.add("");
-                tooltip.add(mariculture.lib.util.Text.GREY + MCTranslate.translate("outof"));
-                tooltip.add(mariculture.lib.util.Text.GREY + max / MetalRates.INGOT + " " + MCTranslate.translate("ingots") + " & " + max % MetalRates.INGOT + MCTranslate.translate("mb"));
-            }
-        } else {
-            tooltip.add(mariculture.lib.util.Text.GREY + "" + fluid.amount + (max > 0 ? "/" + max + MCTranslate.translate("mb") : MCTranslate.translate("mb")));
-        }
+                    if (max > 0) {
+                        tooltip.add("");
+                        tooltip.add(mariculture.lib.util.Text.GREY + MCTranslate.translate("outof"));
+                        tooltip.add(
+                            mariculture.lib.util.Text.GREY + max / MetalRates.INGOT
+                                + " "
+                                + MCTranslate.translate("ingots")
+                                + " & "
+                                + max % MetalRates.INGOT
+                                + MCTranslate.translate("mb"));
+                    }
+                } else {
+                    tooltip.add(
+                        mariculture.lib.util.Text.GREY + ""
+                            + fluid.amount
+                            + (max > 0 ? "/" + max + MCTranslate.translate("mb") : MCTranslate.translate("mb")));
+                }
 
         return tooltip;
     }
@@ -323,9 +366,11 @@ public class FluidHelper {
         addFluid(field, name, volume, bottleMeta, false, balance, bucketMeta);
     }
 
-    public static void addFluid(String field, String name, int volume, int bottleMeta, boolean isGas, int balance, int bucketMeta) {
-        Fluid fluid = new FluidMari(name, bottleMeta).setUnlocalizedName(name).setGaseous(isGas);
-        if (Fluids.add(field, fluid, balance)) { //If it's not registered, register it
+    public static void addFluid(String field, String name, int volume, int bottleMeta, boolean isGas, int balance,
+        int bucketMeta) {
+        Fluid fluid = new FluidMari(name, bottleMeta).setUnlocalizedName(name)
+            .setGaseous(isGas);
+        if (Fluids.add(field, fluid, balance)) { // If it's not registered, register it
             FluidRegistry.registerFluid(Fluids.getFluid(field));
         }
 
@@ -336,7 +381,8 @@ public class FluidHelper {
         }
 
         if (bucketMeta != -1) {
-            ItemStack filled = FluidContainerRegistry.fillFluidContainer(new FluidStack(fluid, 1000), new ItemStack(Items.bucket));
+            ItemStack filled = FluidContainerRegistry
+                .fillFluidContainer(new FluidStack(fluid, 1000), new ItemStack(Items.bucket));
             if (filled == null) {
                 FluidHelper.registerBucket(fluid, 1000, bucketMeta);
             }
@@ -344,11 +390,17 @@ public class FluidHelper {
     }
 
     public static void registerHeatBottle(Fluid fluid, int vol, int meta) {
-        FluidContainerRegistry.registerFluidContainer(new FluidStack(fluid, vol), new ItemStack(Core.bottles, 1, meta), new ItemStack(Core.bottles, 1, BottleMeta.EMPTY));
+        FluidContainerRegistry.registerFluidContainer(
+            new FluidStack(fluid, vol),
+            new ItemStack(Core.bottles, 1, meta),
+            new ItemStack(Core.bottles, 1, BottleMeta.EMPTY));
     }
 
     public static void registerVanillaBottle(Fluid fluid, int vol, int meta) {
-        FluidContainerRegistry.registerFluidContainer(new FluidStack(fluid, vol), new ItemStack(Core.bottles, 1, meta), new ItemStack(Items.glass_bottle));
+        FluidContainerRegistry.registerFluidContainer(
+            new FluidStack(fluid, vol),
+            new ItemStack(Core.bottles, 1, meta),
+            new ItemStack(Items.glass_bottle));
     }
 
     public static void addFluid(String name, int volume, int bottleMeta, int balance, int bucketMeta) {
@@ -356,12 +408,19 @@ public class FluidHelper {
     }
 
     public static void registerBucket(Fluid fluid, int vol, int meta) {
-        FluidContainerRegistry.registerFluidContainer(new FluidStack(fluid, vol), new ItemStack(Core.buckets, 1, meta), new ItemStack(Items.bucket));
+        FluidContainerRegistry.registerFluidContainer(
+            new FluidStack(fluid, vol),
+            new ItemStack(Core.buckets, 1, meta),
+            new ItemStack(Items.bucket));
     }
 
     public static boolean areEqual(FluidStack fluid1, FluidStack fluid2) {
         if (fluid1 == null || fluid2 == null || fluid1.getFluid() == null || fluid2.getFluid() == null) return false;
-        return fluid1.getFluid().getName().equals(fluid2.getFluid().getName());
+        return fluid1.getFluid()
+            .getName()
+            .equals(
+                fluid2.getFluid()
+                    .getName());
     }
 
     public static void setBlock(Fluid fluid, Block block) {
@@ -382,7 +441,8 @@ public class FluidHelper {
             return Fluids.setBlock(fName, fluid.getBlock());
         } else {
             try {
-                Block block = ((Block) clazz.getDeclaredConstructor(Fluid.class, Material.class).newInstance(fluid, Material.water)).setBlockName(name);
+                Block block = ((Block) clazz.getDeclaredConstructor(Fluid.class, Material.class)
+                    .newInstance(fluid, Material.water)).setBlockName(name);
                 RegistryHelper.registerBlocks(new Block[] { block });
                 return Fluids.setBlock(fName, block);
             } catch (Exception e) {

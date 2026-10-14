@@ -3,20 +3,22 @@ package mariculture.core.helpers;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
-import mariculture.api.core.MaricultureHandlers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import mariculture.api.core.MaricultureHandlers;
+
 public class EnchantHelper {
+
     public static boolean exists(Enchantment enchant) {
         if (enchant == null) return false;
 
         return enchant.effectId > 0;
     }
 
-    //Player Based Methods
+    // Player Based Methods
     public static int getEnchantStrength(Enchantment enchant, EntityPlayer player) {
         if (!exists(enchant)) return 0;
 
@@ -27,14 +29,14 @@ public class EnchantHelper {
         return getEnchantStrength(enchant, player) > 0;
     }
 
-    //Damage Mirror Items
+    // Damage Mirror Items
     public static void damageItems(Enchantment enchant, EntityPlayer player, int dmg) {
         if (!exists(enchant) || player.capabilities.isCreativeMode) return;
 
         MaricultureHandlers.mirror.damageItemsWithEnchantment(player, enchant.effectId, dmg);
     }
 
-    //Item Based Methods
+    // Item Based Methods
     public static int getLevel(Enchantment enchant, ItemStack stack) {
         if (!exists(enchant)) return 0;
 
@@ -47,7 +49,7 @@ public class EnchantHelper {
         return getLevel(getEnchant(id), stack);
     }
 
-    //Has Based Helper
+    // Has Based Helper
     public static boolean hasEnchantment(Enchantment enchant, ItemStack stack) {
         return getLevel(enchant, stack) > 0;
     }
@@ -60,16 +62,17 @@ public class EnchantHelper {
         return Enchantment.enchantmentsList[id];
     }
 
-    //Whether the item is broken
+    // Whether the item is broken
     public static boolean isBroken(ItemStack stack) {
         return stack != null && stack.getItemDamage() >= stack.getMaxDamage();
     }
 
     public static int getEnchantmentValue(ItemStack stack) {
-        //Setup the Maximum Weight
+        // Setup the Maximum Weight
         if (MAX_WEIGHT == 0) setMax();
         int volume = 0;
-        LinkedHashMap<Integer, Integer> maps = (LinkedHashMap<Integer, Integer>) EnchantmentHelper.getEnchantments(stack);
+        LinkedHashMap<Integer, Integer> maps = (LinkedHashMap<Integer, Integer>) EnchantmentHelper
+            .getEnchantments(stack);
         for (Entry<Integer, Integer> i : maps.entrySet()) {
             Enchantment enchant = Enchantment.enchantmentsList[i.getKey()];
             volume += ((i.getValue() * ((MAX_WEIGHT + 1) - (enchant.getWeight()))));

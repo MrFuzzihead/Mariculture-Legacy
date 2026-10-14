@@ -2,20 +2,22 @@ package mariculture.core.items;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.Mariculture;
 import mariculture.api.core.IItemUpgrade;
 import mariculture.core.lib.Modules;
 import mariculture.core.lib.UpgradeMeta;
 import mariculture.core.util.MCTranslate;
 import mariculture.lib.util.Text;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemUpgrade extends ItemMCMeta implements IItemUpgrade {
+
     public static int TEMPERATURE_BASIC;
     public static int TEMPERATURE_STANDARD;
     public static int TEMPERATURE_ADVANCED;
@@ -36,7 +38,7 @@ public class ItemUpgrade extends ItemMCMeta implements IItemUpgrade {
     public static int RF_STANDARD;
     public static int RF_ADVANCED;
     public static int RF_ULTIMATE;
-    
+
     public ItemUpgrade() {
         maxStackSize = 1;
     }
@@ -282,7 +284,7 @@ public class ItemUpgrade extends ItemMCMeta implements IItemUpgrade {
                 list.add(mariculture.lib.util.Text.INDIGO + temp + mariculture.lib.util.Text.DEGREES);
             }
         }
-        
+
         if (stack.getItemDamage() == UpgradeMeta.AQUASCUM) {
             list.add(mariculture.lib.util.Text.INDIGO + Text.localize("mariculture.upgrade.aquascum.desc"));
         }
@@ -303,12 +305,13 @@ public class ItemUpgrade extends ItemMCMeta implements IItemUpgrade {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         int damage = stack.getItemDamage();
-        if(damage == UpgradeMeta.ETERNAL_MALE || damage == UpgradeMeta.ETERNAL_FEMALE) {
+        if (damage == UpgradeMeta.ETERNAL_MALE || damage == UpgradeMeta.ETERNAL_FEMALE) {
             String format = MCTranslate.translate("upgrade.eternal.format");
             String eternal = MCTranslate.translate("upgrade.eternal.life");
             String upgrade = MCTranslate.translate("upgrade.eternal.upgrade");
             format = format.replace("%E", eternal);
-            format = damage == UpgradeMeta.ETERNAL_MALE? format.replace("%S", "\u2642"): format.replace("%S", "\u2640");
+            format = damage == UpgradeMeta.ETERNAL_MALE ? format.replace("%S", "\u2642")
+                : format.replace("%S", "\u2640");
             return format.replace("%U", upgrade);
         } else return super.getItemStackDisplayName(stack);
     }

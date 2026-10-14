@@ -3,12 +3,15 @@ package mariculture.fishery.fish;
 import static mariculture.api.core.Environment.Salinity.SALINE;
 import static mariculture.core.lib.MCLib.dropletWater;
 import static mariculture.core.lib.MCLib.ink;
+
+import net.minecraft.world.World;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
-import net.minecraft.world.World;
 
 public class FishSquid extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 12;

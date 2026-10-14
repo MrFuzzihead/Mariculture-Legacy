@@ -15,23 +15,29 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 public class RenderBlocksCustom extends RenderBlocks {
+
     public static Block getBlockForSide(ItemStack stack, int side) {
         String name = stack.stackTagCompound.getString("BlockIdentifier" + side);
         return (Block) Block.blockRegistry.getObject(name);
     }
 
     public static int getMetaForSide(ItemStack stack, int side) {
-        if (stack.stackTagCompound.getIntArray("BlockMetas").length > 0) return stack.stackTagCompound.getIntArray("BlockMetas")[side];
+        if (stack.stackTagCompound.getIntArray("BlockMetas").length > 0)
+            return stack.stackTagCompound.getIntArray("BlockMetas")[side];
         else return 0;
     }
 
     public static int getSideForSide(ItemStack stack, int side) {
-        if (stack.stackTagCompound.getIntArray("BlockSides").length > 0) return stack.stackTagCompound.getIntArray("BlockSides")[side];
+        if (stack.stackTagCompound.getIntArray("BlockSides").length > 0)
+            return stack.stackTagCompound.getIntArray("BlockSides")[side];
         else return 0;
     }
 
     public IIcon getIconForSide(ItemStack stack, int side) {
-        return getBlockIconFromSideAndMetadata(getBlockForSide(stack, side), getSideForSide(stack, side), getMetaForSide(stack, side));
+        return getBlockIconFromSideAndMetadata(
+            getBlockForSide(stack, side),
+            getSideForSide(stack, side),
+            getMetaForSide(stack, side));
     }
 
     public void renderBlockAsItem(Block block, int meta, float flt, ItemStack stack) {
@@ -258,11 +264,23 @@ public class RenderBlocksCustom extends RenderBlocks {
                     f2 = 0.0625F;
 
                     if (k == 2) {
-                        setRenderBounds(0.5F - f2, 1.0F - f2 * 3.0F, -f2 * 2.0F, 0.5F + f2, 1.0F - f2, 1.0F + f2 * 2.0F);
+                        setRenderBounds(
+                            0.5F - f2,
+                            1.0F - f2 * 3.0F,
+                            -f2 * 2.0F,
+                            0.5F + f2,
+                            1.0F - f2,
+                            1.0F + f2 * 2.0F);
                     }
 
                     if (k == 3) {
-                        setRenderBounds(0.5F - f2, 0.5F - f2 * 3.0F, -f2 * 2.0F, 0.5F + f2, 0.5F - f2, 1.0F + f2 * 2.0F);
+                        setRenderBounds(
+                            0.5F - f2,
+                            0.5F - f2 * 3.0F,
+                            -f2 * 2.0F,
+                            0.5F + f2,
+                            0.5F - f2,
+                            1.0F + f2 * 2.0F);
                     }
 
                     GL11.glTranslatef(-0.5F, -0.5F, -0.5F);

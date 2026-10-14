@@ -1,17 +1,21 @@
 package mariculture.api.fishery;
 
-import mariculture.api.core.Environment.Salinity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-//Only ever called on hat pieces of armour
-/** Guarantees the gender of a fish when this item is worn
- *  Helmet takes priority, boots lowest */
-public interface IHelmetFishManipulator {
-	/** Return 0 for male, or 1 for female **/
-	public Integer getGender(ItemStack stack);
+import mariculture.api.core.Environment.Salinity;
 
-	/** Return the salt of this helmet **/
+// Only ever called on hat pieces of armour
+/**
+ * Guarantees the gender of a fish when this item is worn
+ * Helmet takes priority, boots lowest
+ */
+public interface IHelmetFishManipulator {
+
+    /** Return 0 for male, or 1 for female **/
+    public Integer getGender(ItemStack stack);
+
+    /** Return the salt of this helmet **/
     public Salinity getSalt(ItemStack stack, Salinity salt);
 
     /** Return the temperature of this helmet **/
@@ -19,7 +23,7 @@ public interface IHelmetFishManipulator {
 
     /** Whether we force a loot catch **/
     public boolean forceLoot(ItemStack stack);
-    
+
     /** Whether we force a fish catch **/
     public boolean forceFish(ItemStack stack);
 

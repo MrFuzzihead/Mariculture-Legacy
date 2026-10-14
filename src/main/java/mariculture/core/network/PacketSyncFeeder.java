@@ -1,23 +1,24 @@
 package mariculture.core.network;
 
-import io.netty.buffer.ByteBuf;
-
 import java.util.ArrayList;
 
-import mariculture.api.util.CachedCoords;
-import mariculture.fishery.tile.TileFeeder;
-import mariculture.lib.helpers.ClientHelper;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.api.util.CachedCoords;
+import mariculture.fishery.tile.TileFeeder;
+import mariculture.lib.helpers.ClientHelper;
 
 public class PacketSyncFeeder implements IMessage, IMessageHandler<PacketSyncFeeder, IMessage> {
+
     public NBTTagCompound nbt;
 
     public PacketSyncFeeder() {}

@@ -1,15 +1,17 @@
 package mariculture.core.blocks.base;
 
-import mariculture.Mariculture;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
 
 public class BlockFluid extends BlockFluidClassic {
+
     public IIcon still, flowing;
     protected Fluid fluid;
 

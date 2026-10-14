@@ -2,8 +2,14 @@ package mariculture.core.handlers;
 
 import java.util.Random;
 
-import mariculture.api.core.MaricultureHandlers;
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import cpw.mods.fml.common.IWorldGenerator;
 import mariculture.api.core.Environment.Salinity;
+import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.Core;
 import mariculture.core.config.WorldGeneration.OreGen;
 import mariculture.core.config.WorldGeneration.WorldGen;
@@ -11,15 +17,12 @@ import mariculture.core.helpers.BlockHelper;
 import mariculture.core.lib.RockMeta;
 import mariculture.core.tile.TileOyster;
 import mariculture.core.world.WorldGenOre;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.common.IWorldGenerator;
 
 public class WorldGenHandler implements IWorldGenerator {
+
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator,
+        IChunkProvider chunkProvider) {
         switch (world.provider.dimensionId) {
             case -1:
                 break;
@@ -46,7 +49,8 @@ public class WorldGenHandler implements IWorldGenerator {
                 posX = x + random.nextInt(16);
                 posY = OreGen.BAUXITE_MIN + random.nextInt(OreGen.BAUXITE_MAX - OreGen.BAUXITE_MIN);
                 posZ = z + random.nextInt(16);
-                new WorldGenOre(Core.rocks, RockMeta.BAUXITE, OreGen.BAUXITE_VEIN, Blocks.stone).generate(world, random, posX, posY, posZ);
+                new WorldGenOre(Core.rocks, RockMeta.BAUXITE, OreGen.BAUXITE_VEIN, Blocks.stone)
+                    .generate(world, random, posX, posY, posZ);
             }
         }
     }
@@ -59,7 +63,8 @@ public class WorldGenHandler implements IWorldGenerator {
                 posX = x + random.nextInt(16);
                 posY = OreGen.COPPER_MIN + random.nextInt(OreGen.COPPER_MAX - OreGen.COPPER_MIN);
                 posZ = z + random.nextInt(16);
-                new WorldGenOre(Core.rocks, RockMeta.COPPER, OreGen.COPPER_VEIN, Blocks.stone).generate(world, random, posX, posY, posZ);
+                new WorldGenOre(Core.rocks, RockMeta.COPPER, OreGen.COPPER_VEIN, Blocks.stone)
+                    .generate(world, random, posX, posY, posZ);
             }
         }
     }
@@ -74,16 +79,18 @@ public class WorldGenHandler implements IWorldGenerator {
                     int randX = x - 8 + random.nextInt(4);
                     int randZ = z - 8 + random.nextInt(4);
                     int blockY = world.getTopSolidOrLiquidBlock(randX, randZ);
-                    if (MaricultureHandlers.environment.getSalinity(world, randX, randZ) == Salinity.SALINE) if (Core.water.canBlockStay(world, randX, blockY, randZ)) if (BlockHelper.isWater(world, randX, blockY + 1, randZ)) {
-                        world.setBlock(randX, blockY, randZ, Core.water);
-                        TileOyster oyster = (TileOyster) world.getTileEntity(randX, blockY, randZ);
-                        if (oyster != null) {
-                            oyster.orientation = ForgeDirection.values()[2 + random.nextInt(4)];
-                            if (random.nextInt(WorldGen.OYSTER_PEARL_CHANCE) == 0) {
-                                oyster.setInventorySlotContents(0, PearlGenHandler.getRandomPearl(random));
+                    if (MaricultureHandlers.environment.getSalinity(world, randX, randZ) == Salinity.SALINE)
+                        if (Core.water.canBlockStay(world, randX, blockY, randZ))
+                            if (BlockHelper.isWater(world, randX, blockY + 1, randZ)) {
+                                world.setBlock(randX, blockY, randZ, Core.water);
+                                TileOyster oyster = (TileOyster) world.getTileEntity(randX, blockY, randZ);
+                                if (oyster != null) {
+                                    oyster.orientation = ForgeDirection.values()[2 + random.nextInt(4)];
+                                    if (random.nextInt(WorldGen.OYSTER_PEARL_CHANCE) == 0) {
+                                        oyster.setInventorySlotContents(0, PearlGenHandler.getRandomPearl(random));
+                                    }
+                                }
                             }
-                        }
-                    }
                 }
             }
         }

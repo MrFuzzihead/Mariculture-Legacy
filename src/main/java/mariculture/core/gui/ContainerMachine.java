@@ -1,13 +1,15 @@
 package mariculture.core.gui;
 
-import mariculture.core.network.PacketHandler;
-import mariculture.core.util.IMachine;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 
+import mariculture.core.network.PacketHandler;
+import mariculture.core.util.IMachine;
+
 public class ContainerMachine extends ContainerMariculture {
+
     protected IMachine tile;
 
     public ContainerMachine(IMachine machine) {

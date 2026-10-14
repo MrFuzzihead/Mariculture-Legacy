@@ -1,14 +1,16 @@
 package maritech.handlers;
 
-import mariculture.core.helpers.PlayerHelper;
-import mariculture.core.lib.ArmorSlot;
-import maritech.extensions.modules.ExtensionDiving;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.helpers.PlayerHelper;
+import mariculture.core.lib.ArmorSlot;
+import maritech.extensions.modules.ExtensionDiving;
+
 public class ScubaMask {
+
     private static int tick = 0;
     private static final float LEVEL = 10F;
     private static float oldGamma;
@@ -48,7 +50,8 @@ public class ScubaMask {
                 } else {
                     ItemStack mask = PlayerHelper.getArmor(player, ArmorSlot.HAT, ExtensionDiving.scubaMask);
                     if (mask != null) {
-                        if (mask.hasTagCompound() && mask.stackTagCompound.getBoolean("ScubaMaskOnOutOfWater") == true) {
+                        if (mask.hasTagCompound()
+                            && mask.stackTagCompound.getBoolean("ScubaMaskOnOutOfWater") == true) {
                             activate(player);
                         } else {
                             deactivate(player);

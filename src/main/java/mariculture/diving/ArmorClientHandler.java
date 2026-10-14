@@ -1,14 +1,16 @@
 package mariculture.diving;
 
-import mariculture.core.helpers.PlayerHelper;
-import mariculture.core.lib.ArmorSlot;
-import mariculture.lib.helpers.ClientHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import mariculture.core.helpers.PlayerHelper;
+import mariculture.core.lib.ArmorSlot;
+import mariculture.lib.helpers.ClientHelper;
 
 public class ArmorClientHandler {
+
     @SubscribeEvent
     public void onFogRender(FogDensity event) {
         if (event.block.getMaterial() == Material.water) {

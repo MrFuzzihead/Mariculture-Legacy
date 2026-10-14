@@ -3,6 +3,7 @@ package mariculture.api.fishery;
 import net.minecraft.item.ItemStack;
 
 public interface IFishFoodHandler {
+
     /**
      * Add something as a fish food
      * 

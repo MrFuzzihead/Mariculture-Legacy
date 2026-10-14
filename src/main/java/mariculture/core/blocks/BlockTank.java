@@ -2,28 +2,6 @@ package mariculture.core.blocks;
 
 import java.util.Random;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.Core;
-import mariculture.core.blocks.base.BlockConnected;
-import mariculture.core.handlers.FluidDicHandler;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.helpers.NBTHelper;
-import mariculture.core.lib.BottleMeta;
-import mariculture.core.lib.Modules;
-import mariculture.core.lib.RenderIds;
-import mariculture.core.lib.TankMeta;
-import mariculture.core.network.PacketFishTankSync;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.tile.TileTankAluminum;
-import mariculture.core.tile.TileTankBlock;
-import mariculture.core.tile.TileTankTitanium;
-import mariculture.core.tile.TileVoidBottle;
-import mariculture.factory.tile.TileDictionaryFluid;
-import mariculture.factory.tile.TileGasTank;
-import mariculture.fishery.tile.TileFishTank;
-import mariculture.fishery.tile.TileHatchery;
-import mariculture.lib.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
@@ -46,10 +24,34 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.Core;
+import mariculture.core.blocks.base.BlockConnected;
+import mariculture.core.handlers.FluidDicHandler;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.helpers.NBTHelper;
+import mariculture.core.lib.BottleMeta;
+import mariculture.core.lib.Modules;
+import mariculture.core.lib.RenderIds;
+import mariculture.core.lib.TankMeta;
+import mariculture.core.network.PacketFishTankSync;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.tile.TileTankAluminum;
+import mariculture.core.tile.TileTankBlock;
+import mariculture.core.tile.TileTankTitanium;
+import mariculture.core.tile.TileVoidBottle;
+import mariculture.factory.tile.TileDictionaryFluid;
+import mariculture.factory.tile.TileGasTank;
+import mariculture.fishery.tile.TileFishTank;
+import mariculture.fishery.tile.TileHatchery;
+import mariculture.lib.helpers.ItemHelper;
 
 public class BlockTank extends BlockConnected {
+
     private static IIcon[] fishTank = new IIcon[47];
 
     public BlockTank() {
@@ -110,7 +112,8 @@ public class BlockTank extends BlockConnected {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float clickX, float clickY, float clickZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float clickX,
+        float clickY, float clickZ) {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile == null) return false;
 
@@ -135,7 +138,7 @@ public class BlockTank extends BlockConnected {
 
         if (tile instanceof TileHatchery) {
             TileHatchery hatchery = (TileHatchery) tile;
-            hatchery.updateSurrounding(); //Update info when stuff is 
+            hatchery.updateSurrounding(); // Update info when stuff is
 
             if (hatchery.getStackInSlot(0) != null && player.isSneaking()) {
                 if (!world.isRemote) {
@@ -145,7 +148,8 @@ public class BlockTank extends BlockConnected {
                 ItemHelper.addToPlayerInventory(player, world, x, y + 1, z, hatchery.getStackInSlot(0));
                 hatchery.setInventorySlotContents(0, null);
             } else if (player.getCurrentEquippedItem() != null && hatchery.getStackInSlot(0) == null) {
-                ItemStack stack = player.getCurrentEquippedItem().copy();
+                ItemStack stack = player.getCurrentEquippedItem()
+                    .copy();
                 stack.stackSize = 1;
                 hatchery.setInventorySlotContents(0, stack);
                 if (!player.capabilities.isCreativeMode) {
@@ -175,7 +179,7 @@ public class BlockTank extends BlockConnected {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof TileHatchery) {
             TileHatchery hatchery = (TileHatchery) tile;
-            hatchery.updateSurrounding(); //Update info when stuff is 
+            hatchery.updateSurrounding(); // Update info when stuff is
         }
     }
 
@@ -214,7 +218,8 @@ public class BlockTank extends BlockConnected {
         if (tile instanceof TileTankBlock) {
             TileTankBlock tank = (TileTankBlock) tile;
             FluidStack fluid = tank.getFluid();
-            if (fluid != null) return fluid.getFluid().getLuminosity();
+            if (fluid != null) return fluid.getFluid()
+                .getLuminosity();
         }
 
         return 0;
@@ -236,7 +241,8 @@ public class BlockTank extends BlockConnected {
 
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
-        return world.getBlockMetadata(x, y, z) == TankMeta.BOTTLE ? null : super.getCollisionBoundingBoxFromPool(world, x, y, z);
+        return world.getBlockMetadata(x, y, z) == TankMeta.BOTTLE ? null
+            : super.getCollisionBoundingBoxFromPool(world, x, y, z);
     }
 
     @Override
@@ -285,7 +291,8 @@ public class BlockTank extends BlockConnected {
             } else if (tile instanceof TileFishTank) {
                 TileFishTank tank = (TileFishTank) tile;
                 tank.orientation = ForgeDirection.getOrientation(facing);
-                NBTTagList tagList = stack.getTagCompound().getTagList("Inventory", 10);
+                NBTTagList tagList = stack.getTagCompound()
+                    .getTagList("Inventory", 10);
                 for (int i = 0; i < tagList.tagCount(); i++) {
                     NBTTagCompound tag = tagList.getCompoundTagAt(i);
                     byte slot = tag.getByte("Slot");
@@ -295,13 +302,22 @@ public class BlockTank extends BlockConnected {
                 }
 
                 if (!world.isRemote) {
-                    PacketHandler.sendAround(new PacketFishTankSync(tank.getStackInSlot(0), tank.getStackInSlot(1), tank.getStackInSlot(2), tank.xCoord, tank.yCoord, tank.zCoord, tank.orientation), tile);
+                    PacketHandler.sendAround(
+                        new PacketFishTankSync(
+                            tank.getStackInSlot(0),
+                            tank.getStackInSlot(1),
+                            tank.getStackInSlot(2),
+                            tank.xCoord,
+                            tank.yCoord,
+                            tank.zCoord,
+                            tank.orientation),
+                        tile);
                 }
             }
         }
     }
 
-    //Change back to remove block block by player instead of getDrops for everything
+    // Change back to remove block block by player instead of getDrops for everything
     @Override
     public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
         TileEntity tile = world.getTileEntity(x, y, z);
@@ -313,7 +329,8 @@ public class BlockTank extends BlockConnected {
                     drop.setTagCompound(new NBTTagCompound());
                 }
 
-                tank.getFluid().writeToNBT(drop.stackTagCompound);
+                tank.getFluid()
+                    .writeToNBT(drop.stackTagCompound);
             }
 
             ItemHelper.spawnItem(world, x, y, z, drop);
@@ -336,7 +353,8 @@ public class BlockTank extends BlockConnected {
                 }
             }
 
-            drop.getTagCompound().setTag("Inventory", itemList);
+            drop.getTagCompound()
+                .setTag("Inventory", itemList);
             ItemHelper.spawnItem(world, x, y, z, drop);
             return world.setBlockToAir(x, y, z);
         } else return world.setBlockToAir(x, y, z);
@@ -360,14 +378,17 @@ public class BlockTank extends BlockConnected {
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         int meta = world.getBlockMetadata(x, y, z);
         ItemStack drop = new ItemStack(Core.tanks, 1, meta);
-        if (meta == TankMeta.TANK || meta == TankMeta.TANK_ALUMINUM || meta == TankMeta.TANK_TITANIUM || meta == TankMeta.TANK_GAS) {
+        if (meta == TankMeta.TANK || meta == TankMeta.TANK_ALUMINUM
+            || meta == TankMeta.TANK_TITANIUM
+            || meta == TankMeta.TANK_GAS) {
             TileTankBlock tank = (TileTankBlock) world.getTileEntity(x, y, z);
             if (tank != null && tank.getFluid() != null) {
                 if (!drop.hasTagCompound()) {
                     drop.setTagCompound(new NBTTagCompound());
                 }
 
-                tank.getFluid().writeToNBT(drop.stackTagCompound);
+                tank.getFluid()
+                    .writeToNBT(drop.stackTagCompound);
             }
         } else if (meta == TankMeta.BOTTLE) {
             drop = new ItemStack(Core.bottles, 1, BottleMeta.VOID);
@@ -388,7 +409,8 @@ public class BlockTank extends BlockConnected {
                 }
             }
 
-            drop.getTagCompound().setTag("Inventory", itemList);
+            drop.getTagCompound()
+                .setTag("Inventory", itemList);
         }
 
         return drop;

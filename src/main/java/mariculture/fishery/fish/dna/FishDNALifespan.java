@@ -1,11 +1,13 @@
 package mariculture.fishery.fish.dna;
 
+import net.minecraft.item.ItemStack;
+
 import mariculture.api.fishery.fish.FishDNA;
 import mariculture.api.fishery.fish.FishSpecies;
 import mariculture.core.config.FishMechanics.FussyFish;
-import net.minecraft.item.ItemStack;
 
 public class FishDNALifespan extends FishDNA {
+
     @Override
     public Integer getDNAFromSpecies(FishSpecies species) {
         return species.getLifeSpan() * 20 * 60;
@@ -17,12 +19,12 @@ public class FishDNALifespan extends FishDNA {
         stack.stackTagCompound.setInteger("CurrentLife", data);
         return stack;
     }
-    
+
     @Override
     public int getCopyChance() {
         return 12;
     }
-    
+
     public Integer sanitize(Integer i) {
         return Math.min(360000, Math.max(1, i));
     }

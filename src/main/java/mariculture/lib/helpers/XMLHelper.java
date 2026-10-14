@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class XMLHelper {
+
     public Element e;
 
     public XMLHelper(Element element) {
@@ -15,7 +16,8 @@ public class XMLHelper {
     }
 
     public XMLHelper getHelper(String name) {
-        Node n = e.getElementsByTagName(name).item(0);
+        Node n = e.getElementsByTagName(name)
+            .item(0);
         if (n == null) return this;
         if (n.getNodeType() == Node.ELEMENT_NODE) return new XMLHelper((Element) n);
 
@@ -52,13 +54,18 @@ public class XMLHelper {
     }
 
     public String getElement(String name) {
-        return e.getElementsByTagName(name).item(0).getTextContent();
+        return e.getElementsByTagName(name)
+            .item(0)
+            .getTextContent();
     }
 
     public String getOptionalElement(String str) {
         if (e.getElementsByTagName(str) == null) return "";
-        if (e.getElementsByTagName(str).item(0) == null) return "";
-        return e.getElementsByTagName(str).item(0).getTextContent();
+        if (e.getElementsByTagName(str)
+            .item(0) == null) return "";
+        return e.getElementsByTagName(str)
+            .item(0)
+            .getTextContent();
     }
 
     public Integer getElementAsInteger(String name, int dft) {

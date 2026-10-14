@@ -1,5 +1,22 @@
 package mariculture.core.blocks;
 
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.IFluidHandler;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.Mariculture;
 import mariculture.api.core.MaricultureTab;
 import mariculture.core.blocks.base.BlockFunctionalMulti;
@@ -15,24 +32,9 @@ import mariculture.core.network.PacketHandler;
 import mariculture.core.tile.TileVat;
 import mariculture.fishery.tile.TileSifter;
 import mariculture.lib.helpers.ItemHelper;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.IFluidHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockRenderedMachineMulti extends BlockFunctionalMulti {
+
     public IIcon bar1;
 
     public BlockRenderedMachineMulti() {
@@ -65,7 +67,8 @@ public class BlockRenderedMachineMulti extends BlockFunctionalMulti {
     }
 
     @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX,
+        float hitY, float hitZ) {
         TileEntity tile = world.getTileEntity(x, y, z);
         if (tile == null) return false;
 
@@ -75,7 +78,8 @@ public class BlockRenderedMachineMulti extends BlockFunctionalMulti {
             ItemStack held = player.getCurrentEquippedItem();
             ItemStack input = vat.getStackInSlot(0);
             ItemStack output = vat.getStackInSlot(1);
-            if (FluidHelper.isFluidOrEmpty(player.getCurrentEquippedItem())) return FluidHelper.handleFillOrDrain((IFluidHandler) world.getTileEntity(x, y, z), player, ForgeDirection.UP);
+            if (FluidHelper.isFluidOrEmpty(player.getCurrentEquippedItem())) return FluidHelper
+                .handleFillOrDrain((IFluidHandler) world.getTileEntity(x, y, z), player, ForgeDirection.UP);
 
             if (output != null) {
                 if (!player.inventory.addItemStackToInventory(vat.getStackInSlot(1))) if (!world.isRemote) {
@@ -122,7 +126,9 @@ public class BlockRenderedMachineMulti extends BlockFunctionalMulti {
                     player.openGui(Mariculture.instance, 0, world, sifter.xCoord, sifter.yCoord, sifter.zCoord);
                 } else {
                     if (heldItem != null) {
-                        if (heldItem.getItem() instanceof ItemUpgrade && heldItem.getItemDamage() == UpgradeMeta.BASIC_STORAGE && sifter.hasInventory == false) {
+                        if (heldItem.getItem() instanceof ItemUpgrade
+                            && heldItem.getItemDamage() == UpgradeMeta.BASIC_STORAGE
+                            && sifter.hasInventory == false) {
                             sifter.hasInventory = true;
                             if (!player.capabilities.isCreativeMode) {
                                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
@@ -197,7 +203,8 @@ public class BlockRenderedMachineMulti extends BlockFunctionalMulti {
 
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
-        if (world.getBlockMetadata(x, y, z) == MachineRenderedMultiMeta.VAT) return AxisAlignedBB.getBoundingBox(x + minX, y + minY, z + minZ, x + maxX, (double) y + 0.50001F, z + maxZ);
+        if (world.getBlockMetadata(x, y, z) == MachineRenderedMultiMeta.VAT) return AxisAlignedBB
+            .getBoundingBox(x + minX, y + minY, z + minZ, x + maxX, (double) y + 0.50001F, z + maxZ);
 
         return AxisAlignedBB.getBoundingBox(x + minX, y + minY, z + minZ, x + maxX, y + maxY, z + maxZ);
     }
@@ -241,7 +248,7 @@ public class BlockRenderedMachineMulti extends BlockFunctionalMulti {
     public int getMetaCount() {
         return MachineRenderedMultiMeta.COUNT;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
@@ -249,9 +256,10 @@ public class BlockRenderedMachineMulti extends BlockFunctionalMulti {
         icons = new IIcon[getMetaCount()];
 
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = iconRegister.registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + name + getName(i));
+            icons[i] = iconRegister
+                .registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + name + getName(i));
         }
-        
+
         bar1 = iconRegister.registerIcon(Mariculture.modid + ":bar1");
     }
 }

@@ -1,14 +1,16 @@
 package mariculture.fishery.items;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
+
 import mariculture.api.core.MaricultureTab;
 import mariculture.core.gui.InventoryStorage;
 import mariculture.core.items.ItemMCStorage;
 import mariculture.fishery.gui.ContainerScanner;
 import mariculture.fishery.gui.GuiScanner;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
 
 public class ItemScanner extends ItemMCStorage {
+
     public ItemScanner() {
         super(1, "scanner");
         setCreativeTab(MaricultureTab.tabFishery);

@@ -1,11 +1,5 @@
 package mariculture.magic.gui;
 
-import mariculture.core.gui.GuiStorage;
-import mariculture.core.gui.InventoryStorage;
-import mariculture.core.network.PacketEnchant;
-import mariculture.core.network.PacketHandler;
-import mariculture.magic.ItemMirror;
-import mariculture.magic.Magic;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
@@ -20,7 +14,15 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.util.glu.GLU;
 
+import mariculture.core.gui.GuiStorage;
+import mariculture.core.gui.InventoryStorage;
+import mariculture.core.network.PacketEnchant;
+import mariculture.core.network.PacketHandler;
+import mariculture.magic.ItemMirror;
+import mariculture.magic.Magic;
+
 public class GuiMirror extends GuiStorage {
+
     private int[] enchantLevels = new int[3];
     ItemStack mirror;
 
@@ -32,7 +34,8 @@ public class GuiMirror extends GuiStorage {
 
     @Override
     public String getName() {
-        if (mirror != null) return StatCollector.translateToLocal(((ItemMirror) mirror.getItem()).getUnlocalizedName(mirror) + ".name");
+        if (mirror != null)
+            return StatCollector.translateToLocal(((ItemMirror) mirror.getItem()).getUnlocalizedName(mirror) + ".name");
 
         return "";
     }
@@ -43,7 +46,7 @@ public class GuiMirror extends GuiStorage {
 
         return 0;
     }
-    
+
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
@@ -71,7 +74,11 @@ public class GuiMirror extends GuiStorage {
             GL11.glPushMatrix();
             GL11.glLoadIdentity();
             ScaledResolution var7 = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-            GL11.glViewport((var7.getScaledWidth() - 320) / 2 * var7.getScaleFactor(), (var7.getScaledHeight() - 240) / 2 * var7.getScaleFactor(), 320 * var7.getScaleFactor(), 240 * var7.getScaleFactor());
+            GL11.glViewport(
+                (var7.getScaledWidth() - 320) / 2 * var7.getScaleFactor(),
+                (var7.getScaledHeight() - 240) / 2 * var7.getScaleFactor(),
+                320 * var7.getScaleFactor(),
+                240 * var7.getScaleFactor());
             GL11.glTranslatef(-0.34F, 0.23F, 0.0F);
             GLU.gluPerspective(90.0F, 1.3333334F, 9.0F, 80.0F);
             float var8 = 1.0F;
@@ -143,7 +150,11 @@ public class GuiMirror extends GuiStorage {
                         fontRenderer.drawSplitString(randString, x + 62, y + 16 + 19 * k, 104, (var18 & 16711422) >> 1);
                         fontRenderer = mc.fontRenderer;
                         var18 = 4226832;
-                        fontRenderer.drawStringWithShadow(lvlString, x + 62 + 104 - fontRenderer.getStringWidth(lvlString), y + 16 + 19 * k + 7, var18);
+                        fontRenderer.drawStringWithShadow(
+                            lvlString,
+                            x + 62 + 104 - fontRenderer.getStringWidth(lvlString),
+                            y + 16 + 19 * k + 7,
+                            var18);
                     } else {
                         final int var19 = i - (x + 60);
                         final int var20 = j - (y + 14 + 19 * k);
@@ -158,7 +169,11 @@ public class GuiMirror extends GuiStorage {
                         fontRenderer.drawSplitString(randString, x + 62, y + 16 + 19 * k, 104, var18);
                         fontRenderer = mc.fontRenderer;
                         var18 = 8453920;
-                        fontRenderer.drawStringWithShadow(lvlString, x + 62 + 104 - fontRenderer.getStringWidth(lvlString), y + 16 + 19 * k + 7, var18);
+                        fontRenderer.drawStringWithShadow(
+                            lvlString,
+                            x + 62 + 104 - fontRenderer.getStringWidth(lvlString),
+                            y + 16 + 19 * k + 7,
+                            var18);
                     }
                 }
             }
@@ -176,7 +191,10 @@ public class GuiMirror extends GuiStorage {
                 final int var7 = par1 - (var4 + 60);
                 final int var8 = par2 - (var5 + 14 + 19 * var6);
 
-                if (var7 >= 0 && var8 >= 0 && var7 < 108 && var8 < 19 && ((ContainerMirror) inventorySlots).enchantItem(mc.thePlayer, var6 + 1)) {
+                if (var7 >= 0 && var8 >= 0
+                    && var7 < 108
+                    && var8 < 19
+                    && ((ContainerMirror) inventorySlots).enchantItem(mc.thePlayer, var6 + 1)) {
                     int level = enchantLevels[var6];
                     PacketHandler.sendToServer(new PacketEnchant(mc.thePlayer.openContainer.windowId, level));
                 }

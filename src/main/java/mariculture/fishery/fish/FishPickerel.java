@@ -4,12 +4,15 @@ import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletAqua;
 import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletFrozen;
+
+import net.minecraft.world.World;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
-import net.minecraft.world.World;
 
 public class FishPickerel extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return -5;
@@ -49,7 +52,7 @@ public class FishPickerel extends FishSpecies {
     public int getWaterRequired() {
         return 125;
     }
-   
+
     @Override
     public void addFishProducts() {
         addProduct(dropletFrozen, 12.5D);

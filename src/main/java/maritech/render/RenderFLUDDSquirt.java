@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderFLUDDSquirt extends Render {
+
     /**
      * Actually renders the given argument. This is a synthetic bridge method,
      * always casting down its argument and then handing it off to a worker

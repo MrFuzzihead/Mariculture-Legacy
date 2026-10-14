@@ -1,13 +1,16 @@
 package mariculture.api.core;
 
 public class Environment {
+
     public static class Temperature {
+
         public static int getCoolingSpeed(int temp) {
             return (temp * -1 + 60) / 5;
         }
     }
 
     public static class Height {
+
         // Whether this is considered a cave
         public static boolean isCave(int y) {
             return y <= 48;
@@ -40,6 +43,8 @@ public class Environment {
     }
 
     public static enum Salinity {
-        FRESH, BRACKISH, SALINE
+        FRESH,
+        BRACKISH,
+        SALINE
     }
 }

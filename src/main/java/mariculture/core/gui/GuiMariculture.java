@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import mariculture.Mariculture;
-import mariculture.core.gui.feature.Feature;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.fishery.gui.RenderTankItem;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
@@ -18,7 +14,12 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import mariculture.Mariculture;
+import mariculture.core.gui.feature.Feature;
+import mariculture.core.helpers.BlockHelper;
+
 public abstract class GuiMariculture extends GuiContainer {
+
     protected int redstone = -777;
     protected int eject = -888;
     protected String name;
@@ -29,7 +30,7 @@ public abstract class GuiMariculture extends GuiContainer {
     public int mouseY = 0;
     public ArrayList<String> tooltip = new ArrayList<String>();
     protected ArrayList<Feature> features = new ArrayList<Feature>();
-    
+
     public GuiMariculture(ContainerMariculture container, String texture) {
         this(container, texture, 0);
     }
@@ -41,7 +42,7 @@ public abstract class GuiMariculture extends GuiContainer {
         xSize = 201;
         name = BlockHelper.getName(container.tile);
     }
-    
+
     public GuiMariculture(ContainerMariculture container, ResourceLocation texture, int yOffset) {
         super(container);
         TEXTURE = texture;

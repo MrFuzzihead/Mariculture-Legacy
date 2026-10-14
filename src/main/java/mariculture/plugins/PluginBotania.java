@@ -1,6 +1,13 @@
 package mariculture.plugins;
 
 import static mariculture.Mariculture.modid;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+
+import cpw.mods.fml.common.registry.GameRegistry;
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.Loot;
 import mariculture.api.fishery.Loot.Rarity;
@@ -17,16 +24,12 @@ import mariculture.plugins.Plugins.Plugin;
 import mariculture.plugins.botania.FishMana;
 import mariculture.plugins.botania.ItemLivingRod;
 import mariculture.plugins.enchiridion.ItemGuide;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.common.block.ModBlocks;
 import vazkii.botania.common.item.ModItems;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class PluginBotania extends Plugin {
+
     public PluginBotania(String name) {
         super(name);
     }
@@ -55,11 +58,21 @@ public class PluginBotania extends Plugin {
     @Override
     public void init() {
         PluginEnchiridion.registerBookItem("botania", GuideMeta.BOTANIA);
-        RecipeHelper.addBookRecipe(new ItemStack(PluginEnchiridion.guides, 1, GuideMeta.BOTANIA), new ItemStack(ModItems.petal, 1, OreDictionary.WILDCARD_VALUE));
-        PearlGenHandler.addPearl(OreDictionary.getOres("manaPearl").get(0), GameRegistry.findBlock("Botania", "storage"), 0, 1);
+        RecipeHelper.addBookRecipe(
+            new ItemStack(PluginEnchiridion.guides, 1, GuideMeta.BOTANIA),
+            new ItemStack(ModItems.petal, 1, OreDictionary.WILDCARD_VALUE));
+        PearlGenHandler.addPearl(
+            OreDictionary.getOres("manaPearl")
+                .get(0),
+            GameRegistry.findBlock("Botania", "storage"),
+            0,
+            1);
 
         if (Modules.isActive(Modules.fishery)) {
-            GameRegistry.addShapedRecipe(new ItemStack(rodLiving), new Object[] { "  T", " TS", "T S", 'T', new ItemStack(ModItems.manaResource, 1, 3), 'S', new ItemStack(ModItems.manaResource, 1, 16) });
+            GameRegistry.addShapedRecipe(
+                new ItemStack(rodLiving),
+                new Object[] { "  T", " TS", "T S", 'T', new ItemStack(ModItems.manaResource, 1, 3), 'S',
+                    new ItemStack(ModItems.manaResource, 1, 16) });
 
             Fishing.fishing.addBait(new ItemStack(ModItems.petal, 1, OreDictionary.WILDCARD_VALUE), 70);
             Fishing.fishing.addBaitForQuality(new ItemStack(Fishery.bait, 1, BaitMeta.HOPPER), MANA);
@@ -77,27 +90,66 @@ public class PluginBotania extends Plugin {
                 addLoot(new ItemStack(ModItems.cosmetic, 1, i), Rarity.JUNK, 10);
             }
         }
-        
-        //Flower Cycling with botania
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.yellow_flower), new ItemStack(Blocks.red_flower, 1, 0), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 0), new ItemStack(Blocks.red_flower, 1, 1), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 1), new ItemStack(Blocks.red_flower, 1, 2), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 2), new ItemStack(Blocks.red_flower, 1, 3), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 3), new ItemStack(Blocks.red_flower, 1, 4), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 4), new ItemStack(Blocks.red_flower, 1, 5), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 5), new ItemStack(Blocks.red_flower, 1, 6), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 6), new ItemStack(Blocks.red_flower, 1, 7), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 7), new ItemStack(Blocks.red_flower, 1, 8), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.red_flower, 1, 8), new ItemStack(Blocks.yellow_flower), 10);
-        
-        //Tall Plant cycling with botania
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.double_plant, 1, 0), new ItemStack(Blocks.double_plant, 1, 4), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.double_plant, 1, 4), new ItemStack(Blocks.double_plant, 1, 5), 10);
-        BotaniaAPI.registerManaInfusionRecipe(new ItemStack(Blocks.double_plant, 1, 5), new ItemStack(Blocks.double_plant, 1, 0), 10);
+
+        // Flower Cycling with botania
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.yellow_flower),
+            new ItemStack(Blocks.red_flower, 1, 0),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 0),
+            new ItemStack(Blocks.red_flower, 1, 1),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 1),
+            new ItemStack(Blocks.red_flower, 1, 2),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 2),
+            new ItemStack(Blocks.red_flower, 1, 3),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 3),
+            new ItemStack(Blocks.red_flower, 1, 4),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 4),
+            new ItemStack(Blocks.red_flower, 1, 5),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 5),
+            new ItemStack(Blocks.red_flower, 1, 6),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 6),
+            new ItemStack(Blocks.red_flower, 1, 7),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 7),
+            new ItemStack(Blocks.red_flower, 1, 8),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.red_flower, 1, 8),
+            new ItemStack(Blocks.yellow_flower),
+            10);
+
+        // Tall Plant cycling with botania
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.double_plant, 1, 0),
+            new ItemStack(Blocks.double_plant, 1, 4),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.double_plant, 1, 4),
+            new ItemStack(Blocks.double_plant, 1, 5),
+            10);
+        BotaniaAPI.registerManaInfusionRecipe(
+            new ItemStack(Blocks.double_plant, 1, 5),
+            new ItemStack(Blocks.double_plant, 1, 0),
+            10);
     }
 
     @Override
     public void postInit() {
-        
+
     }
 }

@@ -1,15 +1,5 @@
 package maritech.tile;
 
-import mariculture.api.core.IBlacklisted;
-import mariculture.core.config.Machines.MachineSettings;
-import mariculture.core.config.Machines.Ticks;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.tile.base.TileTank;
-import mariculture.core.util.Fluids;
-import mariculture.core.util.IFaceable;
-import mariculture.core.util.Tank;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockStaticLiquid;
@@ -28,7 +18,19 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import mariculture.api.core.IBlacklisted;
+import mariculture.core.config.Machines.MachineSettings;
+import mariculture.core.config.Machines.Ticks;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.tile.base.TileTank;
+import mariculture.core.util.Fluids;
+import mariculture.core.util.IFaceable;
+import mariculture.core.util.Tank;
+
 public class TileSluice extends TileTank implements IBlacklisted, IFaceable {
+
     public ForgeDirection orientation = ForgeDirection.UP;
     protected int height = 0;
     protected int distance;
@@ -107,7 +109,11 @@ public class TileSluice extends TileTank implements IBlacklisted, IFaceable {
     public void placeInTank() {
         TileEntity tile = mariculture.core.helpers.cofh.BlockHelper.getAdjacentTileEntity(this, orientation);
         if (tile != null && tile instanceof IFluidHandler) {
-            removeFluid((IFluidHandler) tile, xCoord - orientation.offsetX, yCoord - orientation.offsetY, zCoord - orientation.offsetZ);
+            removeFluid(
+                (IFluidHandler) tile,
+                xCoord - orientation.offsetX,
+                yCoord - orientation.offsetY,
+                zCoord - orientation.offsetZ);
         }
     }
 
@@ -152,9 +158,14 @@ public class TileSluice extends TileTank implements IBlacklisted, IFaceable {
     }
 
     public void pullFromTank() {
-        TileEntity tile = mariculture.core.helpers.cofh.BlockHelper.getAdjacentTileEntity(this, orientation.getOpposite());
+        TileEntity tile = mariculture.core.helpers.cofh.BlockHelper
+            .getAdjacentTileEntity(this, orientation.getOpposite());
         if (tile instanceof IFluidHandler) {
-            placeFluid((IFluidHandler) tile, xCoord + orientation.offsetX, yCoord + orientation.offsetY, zCoord + orientation.offsetZ);
+            placeFluid(
+                (IFluidHandler) tile,
+                xCoord + orientation.offsetX,
+                yCoord + orientation.offsetY,
+                zCoord + orientation.offsetZ);
         }
     }
 
@@ -165,7 +176,8 @@ public class TileSluice extends TileTank implements IBlacklisted, IFaceable {
         int x3 = xCoord + orientation.getOpposite().offsetX;
         int y3 = yCoord + orientation.getOpposite().offsetY;
         int z3 = zCoord + orientation.getOpposite().offsetZ;
-        if (worldObj.getTileEntity(x2, y2, z2) instanceof IFluidHandler && worldObj.getTileEntity(x3, y3, z3) instanceof IFluidHandler) {
+        if (worldObj.getTileEntity(x2, y2, z2) instanceof IFluidHandler
+            && worldObj.getTileEntity(x3, y3, z3) instanceof IFluidHandler) {
             IFluidHandler tankFrom = (IFluidHandler) worldObj.getTileEntity(x3, y3, z3);
             IFluidHandler tankTo = (IFluidHandler) worldObj.getTileEntity(x2, y2, z2);
             if (tankTo instanceof TileSluice) return;
@@ -200,17 +212,31 @@ public class TileSluice extends TileTank implements IBlacklisted, IFaceable {
             worldObj.setBlockToAir(x, yCoord, z);
         }
 
-        for (height = 0; BlockHelper.isWater(worldObj, xCoord - orientation.offsetX, yCoord + height, zCoord - orientation.offsetZ); height++) {}
+        for (height = 0; BlockHelper.isWater(
+            worldObj,
+            xCoord - orientation.offsetX,
+            yCoord + height,
+            zCoord - orientation.offsetZ); height++) {}
         if ((BlockHelper.isHPWater(worldObj, x, yCoord, z)) && height > 0) {
-            for (distance = 1; isValid(worldObj, xCoord + (orientation.offsetX * distance), yCoord, zCoord + (orientation.offsetZ * distance)) && distance < 16; distance++) {}
+            for (distance = 1; isValid(
+                worldObj,
+                xCoord + (orientation.offsetX * distance),
+                yCoord,
+                zCoord + (orientation.offsetZ * distance)) && distance < 16; distance++) {}
         } else distance = 0;
     }
 
     public void pushToGenerator() {
         if (distance > 0) {
-            TileEntity tile = worldObj.getTileEntity(xCoord + (orientation.offsetX * distance), yCoord, zCoord + (orientation.offsetZ * distance));
+            TileEntity tile = worldObj.getTileEntity(
+                xCoord + (orientation.offsetX * distance),
+                yCoord,
+                zCoord + (orientation.offsetZ * distance));
             if (tile instanceof TileRotor) {
-                ((TileRotor) tile).addEnergy(orientation.getOpposite(), getEnergyGenerated(distance) >> 6, MachineSettings.SLUICE_DAMAGE);
+                ((TileRotor) tile).addEnergy(
+                    orientation.getOpposite(),
+                    getEnergyGenerated(distance) >> 6,
+                    MachineSettings.SLUICE_DAMAGE);
             }
         }
     }

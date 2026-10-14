@@ -2,7 +2,6 @@ package mariculture.core.tile.base;
 
 import java.util.ArrayList;
 
-import mariculture.core.network.PacketHandler;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -11,7 +10,10 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.core.network.PacketHandler;
+
 public class TileMultiBlock extends TileEntity {
+
     protected boolean needsInit = false;
     protected boolean init = false;
     public ForgeDirection facing = ForgeDirection.UNKNOWN;
@@ -19,6 +21,7 @@ public class TileMultiBlock extends TileEntity {
     public MultiPart master;
 
     public static class MultiPart {
+
         public int xCoord;
         public int yCoord;
         public int zCoord;
@@ -107,16 +110,18 @@ public class TileMultiBlock extends TileEntity {
         return tile instanceof TileMultiBlock ? ((TileMultiBlock) tile).master != null : false;
     }
 
-    //Sets the Master and the Slave Blocks
+    // Sets the Master and the Slave Blocks
     public void onBlockPlaced() {
-        if (isPart(xCoord, yCoord + 1, zCoord) && !isPart(xCoord, yCoord - 1, zCoord) && !isPart(xCoord, yCoord + 2, zCoord)) {
+        if (isPart(xCoord, yCoord + 1, zCoord) && !isPart(xCoord, yCoord - 1, zCoord)
+            && !isPart(xCoord, yCoord + 2, zCoord)) {
             MultiPart mstr = new MultiPart(xCoord, yCoord, zCoord);
             ArrayList<MultiPart> parts = new ArrayList<MultiPart>();
             parts.add(setAsSlave(mstr, xCoord, yCoord + 1, zCoord));
             setAsMaster(mstr, parts);
         }
 
-        if (isPart(xCoord, yCoord - 1, zCoord) && !isPart(xCoord, yCoord + 1, zCoord) && !isPart(xCoord, yCoord - 2, zCoord)) {
+        if (isPart(xCoord, yCoord - 1, zCoord) && !isPart(xCoord, yCoord + 1, zCoord)
+            && !isPart(xCoord, yCoord - 2, zCoord)) {
             MultiPart mstr = new MultiPart(xCoord, yCoord - 1, zCoord);
             ArrayList<MultiPart> parts = new ArrayList<MultiPart>();
             parts.add(setAsSlave(mstr, xCoord, yCoord, zCoord));
@@ -128,14 +133,15 @@ public class TileMultiBlock extends TileEntity {
 
     public void onBlockBreak() {
         if (master != null) {
-            //Get the Master Tile Entity
+            // Get the Master Tile Entity
             TileMultiBlock mstr = (TileMultiBlock) worldObj.getTileEntity(master.xCoord, master.yCoord, master.zCoord);
             if (mstr != null) {
-                //Clear out the slaves
+                // Clear out the slaves
                 if (mstr.slaves != null) {
                     for (MultiPart part : mstr.slaves)
                         if (worldObj.getTileEntity(part.xCoord, part.yCoord, part.zCoord) != null) {
-                            TileMultiBlock te = (TileMultiBlock) worldObj.getTileEntity(part.xCoord, part.yCoord, part.zCoord);
+                            TileMultiBlock te = (TileMultiBlock) worldObj
+                                .getTileEntity(part.xCoord, part.yCoord, part.zCoord);
                             te.setMaster(null);
                             te.setInit(false);
                             te.setFacing(ForgeDirection.UNKNOWN);
@@ -145,7 +151,7 @@ public class TileMultiBlock extends TileEntity {
                         }
                 }
 
-                //Clear out the slaves and the master for the master tile, and the direction
+                // Clear out the slaves and the master for the master tile, and the direction
                 mstr.setSlaves(null);
                 mstr.setMaster(null);
                 mstr.setInit(false);
@@ -177,9 +183,9 @@ public class TileMultiBlock extends TileEntity {
         }
     }
 
-    //Initialize
+    // Initialize
     public void init() {
-        //Init Master
+        // Init Master
         TileMultiBlock master = getMaster();
 
         if (!worldObj.isRemote) {
@@ -188,7 +194,8 @@ public class TileMultiBlock extends TileEntity {
 
         for (MultiPart slave : slaves) {
             TileEntity te = worldObj.getTileEntity(slave.xCoord, slave.yCoord, slave.zCoord);
-            if (te != null && te.getClass().equals(getTEClass())) {
+            if (te != null && te.getClass()
+                .equals(getTEClass())) {
                 PacketHandler.syncMultiBlock(master, te, ((TileMultiBlock) te).facing);
             }
         }

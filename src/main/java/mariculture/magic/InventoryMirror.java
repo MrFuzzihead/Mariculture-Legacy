@@ -1,13 +1,15 @@
 package mariculture.magic;
 
-import mariculture.core.gui.ContainerStorage;
-import mariculture.core.gui.InventoryStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import mariculture.core.gui.ContainerStorage;
+import mariculture.core.gui.InventoryStorage;
+
 public class InventoryMirror extends InventoryStorage {
+
     private ItemStack[] inventory;
 
     public InventoryMirror(EntityPlayer player) {
@@ -66,7 +68,9 @@ public class InventoryMirror extends InventoryStorage {
 
     @Override
     public String getInventoryName() {
-        return StatCollector.translateToLocal(player.getCurrentEquippedItem().getUnlocalizedName());
+        return StatCollector.translateToLocal(
+            player.getCurrentEquippedItem()
+                .getUnlocalizedName());
     }
 
     @Override
@@ -87,12 +91,12 @@ public class InventoryMirror extends InventoryStorage {
 
     @Override
     public void openInventory() {
-        //onInventoryChanged();
+        // onInventoryChanged();
     }
 
     @Override
     public void closeInventory() {
-        //onInventoryChanged();
+        // onInventoryChanged();
     }
 
     @Override

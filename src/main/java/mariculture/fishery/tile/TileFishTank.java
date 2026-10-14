@@ -2,14 +2,6 @@ package mariculture.fishery.tile;
 
 import java.util.ArrayList;
 
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.helpers.NBTHelper;
-import mariculture.core.network.PacketFishTankSync;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.util.IFaceable;
-import mariculture.core.util.IMachine;
-import mariculture.fishery.gui.ContainerFishTank;
-import mariculture.fishery.items.ItemFishy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -20,10 +12,20 @@ import net.minecraft.network.Packet;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.helpers.NBTHelper;
+import mariculture.core.network.PacketFishTankSync;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.util.IFaceable;
+import mariculture.core.util.IMachine;
+import mariculture.fishery.gui.ContainerFishTank;
+import mariculture.fishery.items.ItemFishy;
+
 public class TileFishTank extends TileEntity implements IInventory, IMachine, IFaceable, ISidedInventory {
+
     public ForgeDirection orientation = ForgeDirection.UNKNOWN;
     protected ItemStack[] inventory;
-    
+
     public TileFishTank() {
         inventory = new ItemStack[54];
     }
@@ -119,7 +121,8 @@ public class TileFishTank extends TileEntity implements IInventory, IMachine, IF
 
     @Override
     public boolean isUseableByPlayer(EntityPlayer player) {
-        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+        return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this
+            && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
     }
 
     @Override
@@ -132,10 +135,18 @@ public class TileFishTank extends TileEntity implements IInventory, IMachine, IF
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
         return stack.getItem() instanceof ItemFishy;
     }
-    
+
     @Override
     public Packet getDescriptionPacket() {
-        return PacketHandler.getPacket(new PacketFishTankSync(getStackInSlot(0), getStackInSlot(1), getStackInSlot(2), xCoord, yCoord, zCoord, orientation));
+        return PacketHandler.getPacket(
+            new PacketFishTankSync(
+                getStackInSlot(0),
+                getStackInSlot(1),
+                getStackInSlot(2),
+                xCoord,
+                yCoord,
+                zCoord,
+                orientation));
     }
 
     @Override
@@ -150,7 +161,7 @@ public class TileFishTank extends TileEntity implements IInventory, IMachine, IF
                 inventory[slot] = NBTHelper.getItemStackFromNBT(tag);
             }
         }
-        
+
         orientation = ForgeDirection.getOrientation(nbt.getInteger("Orientation"));
     }
 
@@ -209,9 +220,10 @@ public class TileFishTank extends TileEntity implements IInventory, IMachine, IF
             PacketHandler.updateOrientation(this);
         }
     }
-    
-    private static final int[] all_slots = new int[] { 0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-        23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53 }; 
+
+    private static final int[] all_slots = new int[] { 0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46,
+        47, 48, 49, 50, 51, 52, 53 };
 
     @Override
     public int[] getAccessibleSlotsFromSide(int slot) {

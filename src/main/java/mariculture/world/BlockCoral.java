@@ -4,15 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.Core;
-import mariculture.core.blocks.base.BlockMCBaseMeta;
-import mariculture.core.config.Gardening;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.lib.CoralMeta;
-import mariculture.core.lib.RockMeta;
-import mariculture.lib.util.IHasMetaBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -28,10 +19,21 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.Core;
+import mariculture.core.blocks.base.BlockMCBaseMeta;
+import mariculture.core.config.Gardening;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.lib.CoralMeta;
+import mariculture.core.lib.RockMeta;
+import mariculture.lib.util.IHasMetaBlock;
 
 public class BlockCoral extends BlockMCBaseMeta implements IPlantable, IHasMetaBlock {
+
     protected BlockCoral(boolean tick, String prefix) {
         super(Material.water);
         float f = 0.375F;
@@ -135,18 +137,25 @@ public class BlockCoral extends BlockMCBaseMeta implements IPlantable, IHasMetaB
         return world.getBlockMetadata(x, y, z);
     }
 
-    //Static Methods
+    // Static Methods
     public static boolean canSustainPlant(Block block, int meta) {
         return meta <= CoralMeta.KELP_MIDDLE ? canSustainKelp(block, meta) : canSustainCoral(block, meta);
     }
 
     public static boolean canSustainCoral(Block block, int meta) {
-        return block == Core.sands || block == Core.limestone || block == Blocks.sand || block == Blocks.cobblestone || block == Blocks.mossy_cobblestone || block == Core.rocks && meta == RockMeta.CORAL_ROCK;
+        return block == Core.sands || block == Core.limestone
+            || block == Blocks.sand
+            || block == Blocks.cobblestone
+            || block == Blocks.mossy_cobblestone
+            || block == Core.rocks && meta == RockMeta.CORAL_ROCK;
     }
 
     public static boolean canSustainKelp(Block block, int meta) {
-        if (block == Blocks.cobblestone || block == Blocks.mossy_cobblestone || block == Blocks.sand || block == Blocks.gravel) return true;
-        if (block == Core.rocks && meta == RockMeta.CORAL_ROCK || block == Core.limestone || block == Core.sands) return true;
+        if (block == Blocks.cobblestone || block == Blocks.mossy_cobblestone
+            || block == Blocks.sand
+            || block == Blocks.gravel) return true;
+        if (block == Core.rocks && meta == RockMeta.CORAL_ROCK || block == Core.limestone || block == Core.sands)
+            return true;
         return isKelp(block, meta);
     }
 
@@ -189,7 +198,8 @@ public class BlockCoral extends BlockMCBaseMeta implements IPlantable, IHasMetaB
     private void updateMoss(World world, int x, int y, int z, Random rand) {
         if (rand.nextInt(Gardening.KELP_SPREAD_CHANCE) == 0) {
             Block block = world.getBlock(x, y - 1, z);
-            if (block == Blocks.mossy_cobblestone || block == Blocks.stonebrick && world.getBlockMetadata(x, y - 1, z) == 1) {
+            if (block == Blocks.mossy_cobblestone
+                || block == Blocks.stonebrick && world.getBlockMetadata(x, y - 1, z) == 1) {
                 int randX = rand.nextInt(8) - 4;
                 int randZ = rand.nextInt(8) - 4;
                 if (world.getBlock(randX, y + 1, randZ) == Blocks.water) {
@@ -219,7 +229,11 @@ public class BlockCoral extends BlockMCBaseMeta implements IPlantable, IHasMetaB
                     randX = x + 1 + rand.nextInt(4) - 2 - rand.nextInt(2);
                     randY = y + rand.nextInt(3) - 1;
                     randZ = z + 1 + rand.nextInt(4) - 2 - rand.nextInt(2);
-                    if (world.getBlock(randX, randY, randZ) == Blocks.water && world.getBlock(randX, randY + 1, randZ) == Blocks.water && canSustainCoral(world.getBlock(randX, randY - 1, randZ), world.getBlockMetadata(randX, randY - 1, randZ))) {
+                    if (world.getBlock(randX, randY, randZ) == Blocks.water
+                        && world.getBlock(randX, randY + 1, randZ) == Blocks.water
+                        && canSustainCoral(
+                            world.getBlock(randX, randY - 1, randZ),
+                            world.getBlockMetadata(randX, randY - 1, randZ))) {
                         world.setBlock(randX, randY, randZ, WorldPlus.plantGrowable, newMeta, 2);
                     }
                 }
@@ -233,7 +247,9 @@ public class BlockCoral extends BlockMCBaseMeta implements IPlantable, IHasMetaB
         outcomes.put(CoralMeta.RED + "|" + CoralMeta.LIGHT_BLUE, new Integer[] { CoralMeta.PURPLE, CoralMeta.MAGENTA });
         outcomes.put(CoralMeta.RED + "|" + CoralMeta.YELLOW, new Integer[] { CoralMeta.ORANGE, CoralMeta.BROWN });
         outcomes.put(CoralMeta.WHITE + "|" + CoralMeta.GREY, new Integer[] { CoralMeta.LIGHT_GREY });
-        outcomes.put(CoralMeta.WHITE + "|" + CoralMeta.PURPLE, new Integer[] { CoralMeta.LIGHT_BLUE, CoralMeta.GREY, CoralMeta.LIGHT_GREY });
+        outcomes.put(
+            CoralMeta.WHITE + "|" + CoralMeta.PURPLE,
+            new Integer[] { CoralMeta.LIGHT_BLUE, CoralMeta.GREY, CoralMeta.LIGHT_GREY });
         outcomes.put(CoralMeta.WHITE + "|" + CoralMeta.LIGHT_BLUE, new Integer[] { CoralMeta.GREY });
         outcomes.put(CoralMeta.PURPLE + "|" + CoralMeta.RED, new Integer[] { CoralMeta.MAGENTA });
         outcomes.put(CoralMeta.ORANGE + "|" + CoralMeta.RED, new Integer[] { CoralMeta.YELLOW, CoralMeta.BROWN });
@@ -269,10 +285,9 @@ public class BlockCoral extends BlockMCBaseMeta implements IPlantable, IHasMetaB
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item item, CreativeTabs creativeTabs, List list) {
         if (creativeTabs == MaricultureTab.tabWorld) {
-            for (int meta = 0; meta < CoralMeta.COUNT; ++meta)
-                if (meta != CoralMeta.KELP_MIDDLE) {
-                    list.add(new ItemStack(item, 1, meta));
-                }
+            for (int meta = 0; meta < CoralMeta.COUNT; ++meta) if (meta != CoralMeta.KELP_MIDDLE) {
+                list.add(new ItemStack(item, 1, meta));
+            }
         }
     }
 

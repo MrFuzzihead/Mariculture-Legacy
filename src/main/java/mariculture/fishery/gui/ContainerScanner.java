@@ -1,15 +1,17 @@
 package mariculture.fishery.gui;
 
-import mariculture.core.gui.ContainerStorage;
-import mariculture.core.gui.InventoryStorage;
-import mariculture.core.items.ItemMCStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.core.gui.ContainerStorage;
+import mariculture.core.gui.InventoryStorage;
+import mariculture.core.items.ItemMCStorage;
+
 public class ContainerScanner extends ContainerStorage {
+
     public ContainerScanner(IInventory inventory, InventoryStorage storage, World world) {
         super(inventory, storage, world, 30);
     }
@@ -28,11 +30,12 @@ public class ContainerScanner extends ContainerStorage {
 
             if (slotID < size) {
                 if (!mergeItemStack(stack, size, high, true)) return null;
-            } else if (!(stack.getItem() instanceof ItemMCStorage) && ((ItemMCStorage) player.getCurrentEquippedItem().getItem()).isItemValid(stack)) {
-                if (!mergeItemStack(stack, 0, storage.getSizeInventory(), false)) return null;
-            } else if (slotID >= size && slotID < low) {
-                if (!mergeItemStack(stack, low, high, false)) return null;
-            } else if (slotID >= low && slotID < high && !mergeItemStack(stack, size, low, false)) return null;
+            } else if (!(stack.getItem() instanceof ItemMCStorage) && ((ItemMCStorage) player.getCurrentEquippedItem()
+                .getItem()).isItemValid(stack)) {
+                    if (!mergeItemStack(stack, 0, storage.getSizeInventory(), false)) return null;
+                } else if (slotID >= size && slotID < low) {
+                    if (!mergeItemStack(stack, low, high, false)) return null;
+                } else if (slotID >= low && slotID < high && !mergeItemStack(stack, size, low, false)) return null;
 
             if (stack.stackSize == 0) {
                 slot.putStack((ItemStack) null);

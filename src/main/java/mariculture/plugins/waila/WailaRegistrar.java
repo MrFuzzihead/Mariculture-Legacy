@@ -6,6 +6,7 @@ import mariculture.core.blocks.BlockTank;
 import mcp.mobius.waila.api.IWailaRegistrar;
 
 public class WailaRegistrar {
+
     public static void register(IWailaRegistrar registrar) {
         registrar.registerBodyProvider(new CasterDataProvider(), BlockRenderedMachine.class);
         registrar.registerBodyProvider(new CopperTankDataProvider(), BlockTank.class);

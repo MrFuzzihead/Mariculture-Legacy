@@ -1,12 +1,14 @@
 package maritech.tile;
 
-import mariculture.core.lib.Modules;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.TileEnergyHandler;
+import mariculture.core.lib.Modules;
 
 public class TileSponge extends TileEnergyHandler {
+
     boolean posXFound, negXFound, posZFound, negZFound, posYFound = false;
     int posX, negX, posZ, negZ, posY = 0;
 
@@ -60,9 +62,11 @@ public class TileSponge extends TileEnergyHandler {
             for (int z = negZ; z <= posZ; z++) {
                 for (int y = yCoord; y <= posY; y++)
                     // Now that we are looping through each block
-                    if (worldObj.getBlock(x, y, z).getMaterial().isLiquid() || worldObj.getBlock(x, y, z) == Blocks.sponge) {
-                        worldObj.setBlockToAir(x, y, z);
-                    }
+                    if (worldObj.getBlock(x, y, z)
+                        .getMaterial()
+                        .isLiquid() || worldObj.getBlock(x, y, z) == Blocks.sponge) {
+                            worldObj.setBlockToAir(x, y, z);
+                        }
             }
         }
     }

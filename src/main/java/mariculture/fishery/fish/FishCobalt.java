@@ -2,13 +2,16 @@ package mariculture.fishery.fish;
 
 import static mariculture.core.lib.MCLib.dropletCobalt;
 import static mariculture.core.lib.MCLib.dropletNether;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishCobalt extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 70;
@@ -23,17 +26,17 @@ public class FishCobalt extends FishSpecies {
     public Salinity getSalinityBase() {
         return Salinity.FRESH;
     }
-    
+
     @Override
     public boolean isLavaFish() {
         return true;
     }
-    
+
     @Override
     public Block getWater1() {
         return Blocks.lava;
     }
-    
+
     @Override
     public Block getWater2() {
         return Blocks.lava;
@@ -58,17 +61,17 @@ public class FishCobalt extends FishSpecies {
     public int getFertility() {
         return 1300;
     }
-    
+
     @Override
     public int getBaseProductivity() {
         return 0;
     }
-    
+
     @Override
     public double getFishOilVolume() {
         return 0.0D;
     }
-    
+
     @Override
     public int getFoodStat() {
         return -1;
@@ -84,7 +87,7 @@ public class FishCobalt extends FishSpecies {
     public RodType getRodNeeded() {
         return RodType.FLUX;
     }
-    
+
     @Override
     public int getFishMealSize() {
         return 0;

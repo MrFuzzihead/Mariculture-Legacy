@@ -1,11 +1,5 @@
 package mariculture.factory.items;
 
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.Core;
-import mariculture.core.items.ItemMCDamageable;
-import mariculture.core.lib.AirMeta;
-import mariculture.factory.Factory;
-import mariculture.factory.tile.TileCustom;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -13,7 +7,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.Core;
+import mariculture.core.items.ItemMCDamageable;
+import mariculture.core.lib.AirMeta;
+import mariculture.factory.Factory;
+import mariculture.factory.tile.TileCustom;
+
 public class ItemPaintbrush extends ItemMCDamageable {
+
     public ItemPaintbrush(int dmg) {
         super(dmg);
         setCreativeTab(MaricultureTab.tabFactory);
@@ -22,8 +24,10 @@ public class ItemPaintbrush extends ItemMCDamageable {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (stack.hasTagCompound()) {
-            Item item = Item.getItemFromBlock((Block) Block.blockRegistry.getObject(stack.stackTagCompound.getString("Block")));
-            if (item != null) return super.getItemStackDisplayName(stack) + " - " + item.getItemStackDisplayName(new ItemStack(item, 1, stack.stackTagCompound.getInteger("Meta")));
+            Item item = Item
+                .getItemFromBlock((Block) Block.blockRegistry.getObject(stack.stackTagCompound.getString("Block")));
+            if (item != null) return super.getItemStackDisplayName(stack) + " - "
+                + item.getItemStackDisplayName(new ItemStack(item, 1, stack.stackTagCompound.getInteger("Meta")));
         }
 
         return super.getItemStackDisplayName(stack);
@@ -47,7 +51,8 @@ public class ItemPaintbrush extends ItemMCDamageable {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+        float par8, float par9, float par10) {
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
         } else if (world.isRemote) {
@@ -69,7 +74,7 @@ public class ItemPaintbrush extends ItemMCDamageable {
             }
         } else if (world.getTileEntity(x, y, z) instanceof TileCustom) {
             Block block = Block.getBlockFromName(stack.stackTagCompound.getString("Block"));
-            if(block != null) {
+            if (block != null) {
                 int meta = stack.stackTagCompound.getInteger("Meta");
                 int texSide = stack.stackTagCompound.getInteger("Side");
                 TileCustom tile = (TileCustom) world.getTileEntity(x, y, z);

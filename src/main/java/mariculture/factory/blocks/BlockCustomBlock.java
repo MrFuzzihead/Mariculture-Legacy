@@ -1,10 +1,12 @@
 package mariculture.factory.blocks;
 
-import mariculture.core.lib.PlansMeta;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.IBlockAccess;
 
+import mariculture.core.lib.PlansMeta;
+
 public class BlockCustomBlock extends BlockCustomBase {
+
     public BlockCustomBlock() {
         super(Material.rock);
     }

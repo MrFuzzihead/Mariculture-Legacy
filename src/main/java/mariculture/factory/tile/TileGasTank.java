@@ -1,16 +1,18 @@
 package mariculture.factory.tile;
 
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
+
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.config.Machines.MachineSettings;
 import mariculture.core.tile.TileTankBlock;
 import mariculture.core.util.Fluids;
 import mariculture.core.util.Tank;
 import maritech.tile.TileRotor;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidStack;
 
 public class TileGasTank extends TileTankBlock {
+
     private boolean hasGas = false;
     private TileRotor rotor = null;
     private ForgeDirection rotorDir = null;
@@ -58,7 +60,7 @@ public class TileGasTank extends TileTankBlock {
             hasGas = false;
         } else hasGas = true;
     }
-    
+
     public boolean isSolid(int x, int y, int z) {
         return worldObj.isBlockNormalCubeDefault(x, y, z, false);
     }
@@ -68,14 +70,15 @@ public class TileGasTank extends TileTankBlock {
         rotorDir = null;
 
         for (ForgeDirection orientation : ForgeDirection.values()) {
-            TileEntity tile = worldObj.getTileEntity(xCoord + orientation.offsetX, yCoord, zCoord + orientation.offsetZ);
+            TileEntity tile = worldObj
+                .getTileEntity(xCoord + orientation.offsetX, yCoord, zCoord + orientation.offsetZ);
             if (tile instanceof TileRotor) {
                 rotor = ((TileRotor) tile);
                 rotorDir = orientation;
                 break;
             }
         }
-        
+
         if (rotor != null && rotorDir != null) {
             int airCount = 0;
             int solidCount = 0;
@@ -83,7 +86,7 @@ public class TileGasTank extends TileTankBlock {
                 for (int z = -2; z <= 2; z++) {
                     for (int y = -2; y <= 2; y++) {
                         if (z >= -1 && z <= 1 && y >= -1 && y <= 1) {
-                            if(worldObj.isAirBlock(rotor.xCoord, rotor.yCoord + y, rotor.zCoord + z)) {
+                            if (worldObj.isAirBlock(rotor.xCoord, rotor.yCoord + y, rotor.zCoord + z)) {
                                 airCount++;
                             }
                         } else {
@@ -97,18 +100,18 @@ public class TileGasTank extends TileTankBlock {
                 for (int x = -2; x <= 2; x++) {
                     for (int y = -2; y <= 2; y++) {
                         if (x >= -1 && x <= 1 && y >= -1 && y <= 1) {
-                            if(worldObj.isAirBlock(rotor.xCoord + x, rotor.yCoord + y, rotor.zCoord)) {
+                            if (worldObj.isAirBlock(rotor.xCoord + x, rotor.yCoord + y, rotor.zCoord)) {
                                 airCount++;
                             }
                         } else {
                             if (isSolid(rotor.xCoord + x, rotor.yCoord + y, rotor.zCoord)) {
-                                solidCount ++;
+                                solidCount++;
                             }
                         }
                     }
                 }
             }
-                        
+
             if (airCount != 8 || solidCount != 16) {
                 rotor = null;
                 rotorDir = null;
@@ -120,8 +123,8 @@ public class TileGasTank extends TileTankBlock {
         rotor.addEnergy(rotorDir.getOpposite(), MachineSettings.GAS_TURBINE_POWER, MachineSettings.GAS_TURBINE_DAMAGE);
         tank.drain(1, true);
         updateHasGas();
-        
-        //Recheck the tank every 1000mB (works out as every 5000 ticks). Or every 4 minutes
+
+        // Recheck the tank every 1000mB (works out as every 5000 ticks). Or every 4 minutes
         if (tank.getFluidAmount() % 1000 == 0) {
             updateRotor();
         }

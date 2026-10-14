@@ -2,13 +2,6 @@ package mariculture.magic.gui;
 
 import java.util.List;
 
-import mariculture.core.Core;
-import mariculture.core.gui.ContainerStorage;
-import mariculture.core.gui.InventoryStorage;
-import mariculture.core.items.ItemPearl;
-import mariculture.magic.MirrorEnchantHelper;
-import mariculture.magic.jewelry.ItemJewelry;
-import mariculture.magic.jewelry.ItemJewelry.JewelryType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +11,16 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.core.Core;
+import mariculture.core.gui.ContainerStorage;
+import mariculture.core.gui.InventoryStorage;
+import mariculture.core.items.ItemPearl;
+import mariculture.magic.MirrorEnchantHelper;
+import mariculture.magic.jewelry.ItemJewelry;
+import mariculture.magic.jewelry.ItemJewelry.JewelryType;
+
 public class ContainerMirror extends ContainerStorage {
+
     ItemStack mirror;
 
     public ContainerMirror(IInventory inventory, InventoryStorage storage, World world, ItemStack stack) {
@@ -29,7 +31,8 @@ public class ContainerMirror extends ContainerStorage {
     @Override
     public boolean enchantItem(EntityPlayer player, int levelToEnchant) {
         ItemStack stack = storage.getStackInSlot(3);
-        if (levelToEnchant > 0 && stack != null && (player.experienceLevel >= levelToEnchant || player.capabilities.isCreativeMode)) {
+        if (levelToEnchant > 0 && stack != null
+            && (player.experienceLevel >= levelToEnchant || player.capabilities.isCreativeMode)) {
             if (!player.worldObj.isRemote) {
                 List list = MirrorEnchantHelper.buildEnchantmentList(player.worldObj.rand, stack, levelToEnchant, 0);
                 boolean flag = stack.getItem() == Items.book;
@@ -48,7 +51,8 @@ public class ContainerMirror extends ContainerStorage {
                             Items.enchanted_book.addEnchantment(stack, enchantmentdata);
                         } else if (stack.getItem() == Core.pearls) {
                             ItemPearl pearl = (ItemPearl) stack.getItem();
-                            Enchantment enchant = pearl.getBiasedEnchantment(player.worldObj.rand, levelToEnchant, stack.getItemDamage());
+                            Enchantment enchant = pearl
+                                .getBiasedEnchantment(player.worldObj.rand, levelToEnchant, stack.getItemDamage());
                             if (enchant != null) {
                                 stack.addEnchantment(enchant, player.worldObj.rand.nextInt(enchant.getMaxLevel()) + 1);
                                 break;
@@ -78,7 +82,7 @@ public class ContainerMirror extends ContainerStorage {
             if (var2 != null) {
                 player.dropPlayerItemWithRandomChoice(var2, false);
             }
-            
+
             storage.setInventorySlotContents(3, null);
         }
 
@@ -109,15 +113,19 @@ public class ContainerMirror extends ContainerStorage {
                     ((Slot) inventorySlots.get(3)).putStack(new ItemStack(stack.getItem(), 1, stack.getItemDamage()));
                     --stack.stackSize;
                 }
-            } else if (stack.getItem() instanceof ItemJewelry && ((ItemJewelry) stack.getItem()).getType() == JewelryType.RING) {
-                if (!mergeItemStack(stack, 0, 1, false)) return null;
-            } else if (stack.getItem() instanceof ItemJewelry && ((ItemJewelry) stack.getItem()).getType() == JewelryType.BRACELET) {
-                if (!mergeItemStack(stack, 1, 2, false)) return null;
-            } else if (stack.getItem() instanceof ItemJewelry && ((ItemJewelry) stack.getItem()).getType() == JewelryType.NECKLACE) {
-                if (!mergeItemStack(stack, 2, 3, false)) return null;
-            } else if (slotID >= size && slotID < low) {
-                if (!mergeItemStack(stack, low, high, false)) return null;
-            } else if (slotID >= low && slotID < high && !mergeItemStack(stack, size, low, false)) return null;
+            } else if (stack.getItem() instanceof ItemJewelry
+                && ((ItemJewelry) stack.getItem()).getType() == JewelryType.RING) {
+                    if (!mergeItemStack(stack, 0, 1, false)) return null;
+                } else if (stack.getItem() instanceof ItemJewelry
+                    && ((ItemJewelry) stack.getItem()).getType() == JewelryType.BRACELET) {
+                        if (!mergeItemStack(stack, 1, 2, false)) return null;
+                    } else if (stack.getItem() instanceof ItemJewelry
+                        && ((ItemJewelry) stack.getItem()).getType() == JewelryType.NECKLACE) {
+                            if (!mergeItemStack(stack, 2, 3, false)) return null;
+                        } else if (slotID >= size && slotID < low) {
+                            if (!mergeItemStack(stack, low, high, false)) return null;
+                        } else
+                            if (slotID >= low && slotID < high && !mergeItemStack(stack, size, low, false)) return null;
 
             if (stack.stackSize == 0) {
                 slot.putStack((ItemStack) null);

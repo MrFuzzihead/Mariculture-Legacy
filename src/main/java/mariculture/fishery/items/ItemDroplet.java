@@ -2,13 +2,6 @@ package mariculture.fishery.items;
 
 import java.util.List;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.items.ItemMCMeta;
-import mariculture.core.lib.DropletMeta;
-import mariculture.core.util.Fluids;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,10 +11,19 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.items.ItemMCMeta;
+import mariculture.core.lib.DropletMeta;
+import mariculture.core.util.Fluids;
+import mariculture.core.util.MCTranslate;
 
 public class ItemDroplet extends ItemMCMeta {
+
     public ItemDroplet() {
         setCreativeTab(MaricultureTab.tabFishery);
     }
@@ -35,7 +37,14 @@ public class ItemDroplet extends ItemMCMeta {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool) {
         FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
         int amount = fluid == null ? 0 : fluid.amount;
-        list.add(MCTranslate.translate("contains") + " " + amount + MCTranslate.translate("mb") + " " + MCTranslate.translate("of") + " " + FluidHelper.getFluidName(fluid));
+        list.add(
+            MCTranslate.translate("contains") + " "
+                + amount
+                + MCTranslate.translate("mb")
+                + " "
+                + MCTranslate.translate("of")
+                + " "
+                + FluidHelper.getFluidName(fluid));
     }
 
     @Override
@@ -121,7 +130,7 @@ public class ItemDroplet extends ItemMCMeta {
                 return super.getPotionEffect(stack);
         }
     }
-    
+
     public FluidStack getNuggetStack(String name) {
         FluidStack stack = Fluids.getBalancedStack(name);
         stack.amount = stack.amount / 9;
@@ -151,9 +160,9 @@ public class ItemDroplet extends ItemMCMeta {
             case DropletMeta.EARTH:
                 return Fluids.getBalancedStack("dirt");
             case DropletMeta.FROZEN:
-                return Fluids.getBalancedStack("ice"); //Add Molten Ice Liquid (TE Cryotheum)
+                return Fluids.getBalancedStack("ice"); // Add Molten Ice Liquid (TE Cryotheum)
             case DropletMeta.PLANT:
-                return Fluids.getBalancedStack("chlorophyll"); //Add Chlorophyll Liquid
+                return Fluids.getBalancedStack("chlorophyll"); // Add Chlorophyll Liquid
             case DropletMeta.AIR:
                 return Fluids.getBalancedStack("wind");
             case DropletMeta.XP:
@@ -192,28 +201,37 @@ public class ItemDroplet extends ItemMCMeta {
                 return null;
         }
     }
-    
+
     @Override
     public boolean isActive(int dmg) {
         switch (dmg) {
             case DropletMeta.SILVER:
-                return OreDictionary.getOres("ingotSilver").size() > 0;
+                return OreDictionary.getOres("ingotSilver")
+                    .size() > 0;
             case DropletMeta.LEAD:
-                return OreDictionary.getOres("ingotLead").size() > 0;
+                return OreDictionary.getOres("ingotLead")
+                    .size() > 0;
             case DropletMeta.TIN:
-                return OreDictionary.getOres("ingotTin").size() > 0;
+                return OreDictionary.getOres("ingotTin")
+                    .size() > 0;
             case DropletMeta.PLATINUM:
-                return OreDictionary.getOres("ingotPlatinum").size() > 0;
+                return OreDictionary.getOres("ingotPlatinum")
+                    .size() > 0;
             case DropletMeta.NICKEL:
-                return OreDictionary.getOres("ingotNickel").size() > 0;
+                return OreDictionary.getOres("ingotNickel")
+                    .size() > 0;
             case DropletMeta.COBALT:
-                return OreDictionary.getOres("ingotCobalt").size() > 0;
+                return OreDictionary.getOres("ingotCobalt")
+                    .size() > 0;
             case DropletMeta.ARDITE:
-                return OreDictionary.getOres("ingotArdite").size() > 0;
+                return OreDictionary.getOres("ingotArdite")
+                    .size() > 0;
             case DropletMeta.OSMIUM:
-                return OreDictionary.getOres("ingotOsmium").size() > 0;
+                return OreDictionary.getOres("ingotOsmium")
+                    .size() > 0;
             case DropletMeta.ZINC:
-                return OreDictionary.getOres("ingotZinc").size() > 0;
+                return OreDictionary.getOres("ingotZinc")
+                    .size() > 0;
             default:
                 return true;
         }
@@ -226,7 +244,11 @@ public class ItemDroplet extends ItemMCMeta {
         for (int i = 0; i < icons.length; i++) {
             if (isActive(i)) {
                 String name = getName(new ItemStack(this, 1, i));
-                icons[i] = iconRegister.registerIcon(Mariculture.modid + ":droplet" + name.substring(0, 1).toUpperCase() + name.substring(1));
+                icons[i] = iconRegister.registerIcon(
+                    Mariculture.modid + ":droplet"
+                        + name.substring(0, 1)
+                            .toUpperCase()
+                        + name.substring(1));
             }
         }
     }

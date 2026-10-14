@@ -1,17 +1,19 @@
 package mariculture.core.network;
 
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.lib.helpers.ClientHelper;
-import mariculture.magic.MirrorHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.lib.helpers.ClientHelper;
+import mariculture.magic.MirrorHelper;
 
 public class PacketSyncMirror extends PacketNBT {
+
     public PacketSyncMirror() {}
 
     public PacketSyncMirror(ItemStack[] inventory) {

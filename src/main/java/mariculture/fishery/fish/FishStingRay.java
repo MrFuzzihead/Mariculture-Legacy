@@ -5,16 +5,18 @@ import static mariculture.core.lib.MCLib.dropletPoison;
 
 import java.util.Random;
 
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishStingRay extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 24;
@@ -74,7 +76,7 @@ public class FishStingRay extends FishSpecies {
     public void onConsumed(World world, EntityPlayer player) {
         player.addPotionEffect(new PotionEffect(Potion.confusion.id, 800, 1));
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;

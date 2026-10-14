@@ -1,17 +1,20 @@
 package mariculture.core.network;
 
-import mariculture.lib.helpers.ClientHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import mariculture.lib.helpers.ClientHelper;
 
 public class PacketInventorySync extends PacketNBT {
+
     public PacketInventorySync() {}
+
     public PacketInventorySync(int x, int y, int z, ItemStack[] inventory) {
         super(inventory);
         nbt.setInteger("x", x);

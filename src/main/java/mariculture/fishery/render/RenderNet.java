@@ -5,6 +5,7 @@ import mariculture.core.lib.TickingMeta;
 import mariculture.core.render.RenderBase;
 
 public class RenderNet extends RenderBase {
+
     public RenderNet() {}
 
     @Override

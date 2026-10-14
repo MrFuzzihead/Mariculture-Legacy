@@ -11,9 +11,11 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class RecipeRemover {
+
     public static void remove(ItemStack resultItem) {
         ItemStack recipeResult = null;
-        ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
+        ArrayList recipes = (ArrayList) CraftingManager.getInstance()
+            .getRecipeList();
 
         for (int scan = 0; scan < recipes.size(); scan++) {
             IRecipe tmpRecipe = (IRecipe) recipes.get(scan);

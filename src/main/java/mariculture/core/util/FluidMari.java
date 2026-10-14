@@ -1,13 +1,15 @@
 package mariculture.core.util;
 
-import mariculture.core.blocks.BlockPressurisedWater;
-import mariculture.core.blocks.base.BlockFluid;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 
+import mariculture.core.blocks.BlockPressurisedWater;
+import mariculture.core.blocks.base.BlockFluid;
+
 public class FluidMari extends Fluid {
+
     String name;
     private int bottle;
 
@@ -34,6 +36,7 @@ public class FluidMari extends Fluid {
         if (name.contains("fastwater")) return Blocks.water.getIcon(0, 0);
         if (bottle < 0 && block != null && block instanceof BlockFluid) return ((BlockFluid) block).flowing;
         else if (bottle < 0) return BlockLiquid.getLiquidIcon("water_flow");
-        return BlockPressurisedWater.flowing != null ? BlockPressurisedWater.flowing[bottle] : Blocks.water.getIcon(0, 0);
+        return BlockPressurisedWater.flowing != null ? BlockPressurisedWater.flowing[bottle]
+            : Blocks.water.getIcon(0, 0);
     }
 }

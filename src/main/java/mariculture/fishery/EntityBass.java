@@ -8,6 +8,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class EntityBass extends EntityThrowable {
+
     public EntityBass(World world) {
         super(world);
     }

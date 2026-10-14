@@ -3,25 +3,24 @@ package mariculture.plugins.enchiridion;
 import java.util.ArrayList;
 import java.util.List;
 
-import joshie.enchiridion.api.EnchiridionAPI;
-import joshie.enchiridion.api.IItemStack;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
 import joshie.enchiridion.api.IRecipeHandler;
 import joshie.enchiridion.designer.recipe.RecipeHandlerBase;
 import joshie.enchiridion.designer.recipe.WrappedStack;
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.fish.FishProduct;
 import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.lib.helpers.ClientHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 
 public class RecipeHandlerFishProduct extends RecipeHandlerBase {
+
     public RecipeHandlerFishProduct() {}
+
     public RecipeHandlerFishProduct(FishSpecies species, ArrayList<FishProduct> list) {
         int x = 0;
         int y = 0;
-        for (FishProduct product: list) {
+        for (FishProduct product : list) {
             stackList.add(new WrappedStack(product.product, (x * 24), -10D + (y * 60), 1.2F));
             x++;
             if (x > 5) {
@@ -29,7 +28,7 @@ public class RecipeHandlerFishProduct extends RecipeHandlerBase {
                 y++;
             }
         }
-        
+
         addToUnique(species.getName());
     }
 
@@ -40,10 +39,11 @@ public class RecipeHandlerFishProduct extends RecipeHandlerBase {
         if (theSpecies == null) theSpecies = Fishing.fishHelper.getSpecies(output.getItemDamage());
         for (FishSpecies species : FishSpecies.species.values()) {
             if (species == theSpecies) {
-                if (species.getProductList().size() > 0) {
+                if (species.getProductList()
+                    .size() > 0) {
                     list.add(new RecipeHandlerFishProduct(species, species.getProductList()));
                 }
-                
+
                 break;
             }
         }

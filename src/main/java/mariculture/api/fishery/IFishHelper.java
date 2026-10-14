@@ -2,12 +2,17 @@ package mariculture.api.fishery;
 
 import java.util.Random;
 
-import mariculture.api.fishery.fish.FishSpecies;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.fishery.fish.FishSpecies;
+
 public interface IFishHelper {
-    /** Registers a fish, with a default id, You must register your fish in PreInit, as Fish IDs are assigned in Init, So do not do any recipes on them until init, or to be extra safe postinit **/
+
+    /**
+     * Registers a fish, with a default id, You must register your fish in PreInit, as Fish IDs are assigned in Init, So
+     * do not do any recipes on them until init, or to be extra safe postinit
+     **/
     public FishSpecies registerFish(String modid, Class<? extends FishSpecies> species);
 
     public FishSpecies registerFish(String modid, Class<? extends FishSpecies> species, int default_id);
@@ -15,7 +20,8 @@ public interface IFishHelper {
     /**
      * @param The input fish stack
      * @param The fish type you want to make a pure bred of
-     * @return Returns a pure bred fish */
+     * @return Returns a pure bred fish
+     */
     public ItemStack makePureFish(FishSpecies fish);
 
     /** Makes a bred fish, using the mutation chance modifier, from an egg, returns a fish **/
@@ -30,17 +36,17 @@ public interface IFishHelper {
     /** Whether this fish can live at the current coordinates or not **/
     @Deprecated
     public boolean canLive(World world, int x, int y, int z, ItemStack fish);
-    
+
     /** Pass the daytime as the client seems to always return true **/
     public boolean canLive(World world, int x, int y, int z, ItemStack fish, boolean isDaytime);
 
-    /** Returns whether a fish is pure bred or not  **/
+    /** Returns whether a fish is pure bred or not **/
     public boolean isPure(ItemStack stack);
 
     /** Returns whether a fish is male or nnot **/
     public boolean isMale(ItemStack stack);
 
-    /** Returns whether a fish is female or not  **/
+    /** Returns whether a fish is female or not **/
     public boolean isFemale(ItemStack stack);
 
     /** Checks whether the item stack is a fish egg **/

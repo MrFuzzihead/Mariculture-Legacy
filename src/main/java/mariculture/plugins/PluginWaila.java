@@ -1,9 +1,10 @@
 package mariculture.plugins;
 
-import mariculture.plugins.Plugins.Plugin;
 import cpw.mods.fml.common.event.FMLInterModComms;
+import mariculture.plugins.Plugins.Plugin;
 
 public class PluginWaila extends Plugin {
+
     public PluginWaila(String name) {
         super(name);
     }

@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class EntityItemFireImmune extends EntityItem {
+
     public EntityItemFireImmune(World world) {
         super(world);
     }

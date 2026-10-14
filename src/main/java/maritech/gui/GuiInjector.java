@@ -2,22 +2,22 @@ package maritech.gui;
 
 import java.util.List;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
 import mariculture.core.gui.GuiMariculture;
 import mariculture.core.gui.feature.FeatureEject;
 import mariculture.core.gui.feature.FeaturePower;
-import mariculture.core.gui.feature.FeatureRedExtras;
 import mariculture.core.gui.feature.FeatureRedstone;
 import mariculture.core.gui.feature.FeatureTank;
 import mariculture.core.gui.feature.FeatureTank.TankSize;
 import mariculture.core.gui.feature.FeatureUpgrades;
 import maritech.lib.MTModInfo;
 import maritech.tile.TileInjector;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiInjector extends GuiMariculture {
+
     public static final ResourceLocation texture = new ResourceLocation(MTModInfo.MODPATH, "textures/gui/injector.png");
     private TileInjector tile;
 

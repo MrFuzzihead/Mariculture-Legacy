@@ -1,25 +1,9 @@
 package mariculture.core.blocks;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.core.Core;
-import mariculture.core.blocks.base.BlockFunctional;
-import mariculture.core.events.MaricultureEvents;
-import mariculture.core.events.IconEvent.IconRegisterEvent;
-import mariculture.core.lib.MachineMeta;
-import mariculture.core.lib.MetalMeta;
-import mariculture.core.lib.Modules;
-import mariculture.core.lib.WoodMeta;
-import mariculture.core.tile.TileBookshelf;
-import mariculture.factory.tile.TileDictionaryItem;
-import mariculture.factory.tile.TileFishSorter;
-import mariculture.factory.tile.TileSawmill;
-import mariculture.factory.tile.TileUnpacker;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
@@ -30,10 +14,27 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureTab;
+import mariculture.core.Core;
+import mariculture.core.blocks.base.BlockFunctional;
+import mariculture.core.events.IconEvent.IconRegisterEvent;
+import mariculture.core.events.MaricultureEvents;
+import mariculture.core.lib.MachineMeta;
+import mariculture.core.lib.MetalMeta;
+import mariculture.core.lib.Modules;
+import mariculture.core.lib.WoodMeta;
+import mariculture.core.tile.TileBookshelf;
+import mariculture.factory.tile.TileDictionaryItem;
+import mariculture.factory.tile.TileFishSorter;
+import mariculture.factory.tile.TileSawmill;
+import mariculture.factory.tile.TileUnpacker;
 
 public class BlockMachine extends BlockFunctional {
+
     private IIcon[] fishSorter;
     private IIcon unpacker;
 
@@ -133,7 +134,8 @@ public class BlockMachine extends BlockFunctional {
 
     @Override
     public int getComparatorInputOverride(World world, int x, int y, int z, int side) {
-        if (world.getBlockMetadata(x, y, z) == MachineMeta.BOOKSHELF) return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(x, y, z));
+        if (world.getBlockMetadata(x, y, z) == MachineMeta.BOOKSHELF)
+            return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(x, y, z));
         else return super.getComparatorInputOverride(world, x, y, z, side);
     }
 
@@ -166,7 +168,7 @@ public class BlockMachine extends BlockFunctional {
     public int getMetaCount() {
         return MachineMeta.COUNT;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
@@ -174,18 +176,19 @@ public class BlockMachine extends BlockFunctional {
         icons = new IIcon[getMetaCount()];
 
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = iconRegister.registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + name + getName(i));
+            icons[i] = iconRegister
+                .registerIcon(MaricultureEvents.getMod(this, i, "mariculture") + ":" + name + getName(i));
         }
-        
-      //Register other icons
+
+        // Register other icons
         fishSorter = new IIcon[6];
         for (int i = 0; i < 6; i++) {
             fishSorter[i] = iconRegister.registerIcon(Mariculture.modid + ":fishsorter" + (i + 1));
         }
 
         unpacker = iconRegister.registerIcon(Mariculture.modid + ":unpackerTop");
-        
-        //Register EXTRA ICONS
+
+        // Register EXTRA ICONS
         IconRegisterEvent event = new IconRegisterEvent(iconRegister);
         MinecraftForge.EVENT_BUS.post(event);
     }

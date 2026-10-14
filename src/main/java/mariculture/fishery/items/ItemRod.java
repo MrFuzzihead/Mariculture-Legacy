@@ -1,11 +1,5 @@
 package mariculture.fishery.items;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureTab;
-import mariculture.api.fishery.Fishing;
-import mariculture.core.helpers.OreDicHelper;
-import mariculture.core.lib.Modules;
-import mariculture.lib.util.Text;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,12 +8,19 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+
 import cofh.api.energy.IEnergyContainerItem;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.api.core.MaricultureTab;
+import mariculture.api.fishery.Fishing;
+import mariculture.core.helpers.OreDicHelper;
+import mariculture.core.lib.Modules;
+import mariculture.lib.util.Text;
 
 public class ItemRod extends ItemFishingRod {
+
     protected String mod;
     protected String path;
     private ItemStack repair;
@@ -63,7 +64,8 @@ public class ItemRod extends ItemFishingRod {
     public boolean getIsRepairable(ItemStack stack1, ItemStack stack2) {
         if (stack1.getItem() instanceof IEnergyContainerItem) return false;
         ItemStack toRepairWith = repair != null ? repair : new ItemStack(Items.stick);
-        return OreDicHelper.convert(stack2).equals(OreDicHelper.convert(toRepairWith));
+        return OreDicHelper.convert(stack2)
+            .equals(OreDicHelper.convert(toRepairWith));
     }
 
     @Override
@@ -95,13 +97,15 @@ public class ItemRod extends ItemFishingRod {
         if (!(this instanceof ItemVanillaRod)) {
             GameRegistry.registerItem(this, name.replace(".", "_"));
         }
-        
+
         return this;
     }
 
     @Override
     public String getUnlocalizedName() {
-        return mod + "." + super.getUnlocalizedName().replace("item.", "").replace("_", ".");
+        return mod + "."
+            + super.getUnlocalizedName().replace("item.", "")
+                .replace("_", ".");
     }
 
     @Override
@@ -113,7 +117,8 @@ public class ItemRod extends ItemFishingRod {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister iconRegister) {
         String path = this.path != null ? this.path : mod + ":";
-        String name = super.getUnlocalizedName().replace("item.", "").toLowerCase();
+        String name = super.getUnlocalizedName().replace("item.", "")
+            .toLowerCase();
         itemIcon = iconRegister.registerIcon(path + Text.removeDecimals(name));
     }
 }

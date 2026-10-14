@@ -8,11 +8,6 @@ import static mariculture.core.lib.MCLib.string;
 
 import java.util.ArrayList;
 
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +17,14 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+
 public class FishSpider extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 8;

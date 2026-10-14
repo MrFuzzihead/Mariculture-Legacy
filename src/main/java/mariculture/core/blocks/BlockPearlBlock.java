@@ -1,10 +1,12 @@
 package mariculture.core.blocks;
 
-import mariculture.core.blocks.base.BlockMCBaseMeta;
-import mariculture.core.lib.PearlColor;
 import net.minecraft.block.material.Material;
 
+import mariculture.core.blocks.base.BlockMCBaseMeta;
+import mariculture.core.lib.PearlColor;
+
 public class BlockPearlBlock extends BlockMCBaseMeta {
+
     public BlockPearlBlock(String prefix) {
         super(Material.rock);
         setResistance(20F);

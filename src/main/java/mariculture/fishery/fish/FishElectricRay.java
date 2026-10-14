@@ -7,21 +7,22 @@ import static mariculture.core.lib.MCLib.dropletWater;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import cofh.api.energy.IEnergyReceiver;
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
 import mariculture.api.util.CachedCoords;
 import mariculture.core.util.Fluids;
 import mariculture.lib.helpers.PowerHelper;
-import net.minecraft.block.Block;
-import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyReceiver;
 
 public class FishElectricRay extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 14;
@@ -66,7 +67,7 @@ public class FishElectricRay extends FishSpecies {
     public int getWaterRequired() {
         return 175;
     }
-    
+
     @Override
     public Block getWater1() {
         return Fluids.getFluidBlock("ender");
@@ -102,11 +103,17 @@ public class FishElectricRay extends FishSpecies {
     @Override
     public void affectWorld(World world, int x, int y, int z, ArrayList<CachedCoords> coords) {
         if (world.rand.nextInt(512) == 0) {
-            world.addWeatherEffect(new EntityLightningBolt(world, x + world.rand.nextInt(5) - world.rand.nextInt(10), y, z + world.rand.nextInt(5) - world.rand.nextInt(10)));
+            world.addWeatherEffect(
+                new EntityLightningBolt(
+                    world,
+                    x + world.rand.nextInt(5) - world.rand.nextInt(10),
+                    y,
+                    z + world.rand.nextInt(5) - world.rand.nextInt(10)));
         }
-        
-        for (ForgeDirection dir: ForgeDirection.VALID_DIRECTIONS) {
-            IEnergyReceiver handler = PowerHelper.isEnergyHandler(world, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
+
+        for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+            IEnergyReceiver handler = PowerHelper
+                .isEnergyHandler(world, x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
             if (handler.canConnectEnergy(ForgeDirection.DOWN)) {
                 handler.receiveEnergy(ForgeDirection.UP, 200, false);
             }

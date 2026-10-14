@@ -1,11 +1,7 @@
 package mariculture.fishery;
 
-import io.netty.buffer.ByteBuf;
-
 import java.util.List;
 
-import mariculture.api.fishery.Fishing;
-import mariculture.core.config.FishMechanics;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -22,9 +18,14 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
+import io.netty.buffer.ByteBuf;
+import mariculture.api.fishery.Fishing;
+import mariculture.core.config.FishMechanics;
 
 public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawnData {
+
     private float damage = 0.0F;
     private int baitQuality;
 
@@ -63,7 +64,11 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                 if (field_146042_b != null && !field_146042_b.isDead) {
                     itemstack = field_146042_b.getCurrentEquippedItem();
                 }
-                if (field_146042_b == null || field_146042_b.isDead || !field_146042_b.isEntityAlive() || itemstack == null || !(itemstack.getItem() instanceof ItemFishingRod) || getDistanceSqToEntity(field_146042_b) > 1024.0D) {
+                if (field_146042_b == null || field_146042_b.isDead
+                    || !field_146042_b.isEntityAlive()
+                    || itemstack == null
+                    || !(itemstack.getItem() instanceof ItemFishingRod)
+                    || getDistanceSqToEntity(field_146042_b) > 1024.0D) {
                     setDead();
                     if (field_146042_b != null) {
                         field_146042_b.fishEntity = null;
@@ -116,11 +121,17 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
             vec3 = Vec3.createVectorHelper(posX + motionX, posY + motionY, posZ + motionZ);
 
             if (movingobjectposition != null) {
-                vec3 = Vec3.createVectorHelper(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                vec3 = Vec3.createVectorHelper(
+                    movingobjectposition.hitVec.xCoord,
+                    movingobjectposition.hitVec.yCoord,
+                    movingobjectposition.hitVec.zCoord);
             }
 
             Entity entity = null;
-            List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox.addCoord(motionX, motionY, motionZ).expand(1.0D, 1.0D, 1.0D));
+            List list = worldObj.getEntitiesWithinAABBExcludingEntity(
+                this,
+                boundingBox.addCoord(motionX, motionY, motionZ)
+                    .expand(1.0D, 1.0D, 1.0D));
             double d0 = 0.0D;
             double d2;
 
@@ -148,7 +159,8 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
             }
 
             if (movingobjectposition != null) if (movingobjectposition.entityHit != null) {
-                if (movingobjectposition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, field_146042_b), damage)) {
+                if (movingobjectposition.entityHit
+                    .attackEntityFrom(DamageSource.causeThrownDamage(this, field_146042_b), damage)) {
                     field_146043_c = movingobjectposition.entityHit;
                 }
             } else {
@@ -160,7 +172,8 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                 float f5 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
                 rotationYaw = (float) (Math.atan2(motionX, motionZ) * 180.0D / Math.PI);
 
-                for (rotationPitch = (float) (Math.atan2(motionY, f5) * 180.0D / Math.PI); rotationPitch - prevRotationPitch < -180.0F; prevRotationPitch -= 360.0F) {
+                for (rotationPitch = (float) (Math.atan2(motionY, f5) * 180.0D / Math.PI); rotationPitch
+                    - prevRotationPitch < -180.0F; prevRotationPitch -= 360.0F) {
                     ;
                 }
 
@@ -188,11 +201,17 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                 double d10 = 0.0D;
 
                 for (int j = 0; j < b0; ++j) {
-                    double d3 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (j + 0) / b0 - 0.125D + 0.125D;
-                    double d4 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (j + 1) / b0 - 0.125D + 0.125D;
-                    AxisAlignedBB axisalignedbb1 = AxisAlignedBB.getBoundingBox(boundingBox.minX, d3, boundingBox.minZ, boundingBox.maxX, d4, boundingBox.maxZ);
+                    double d3 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (j + 0) / b0
+                        - 0.125D
+                        + 0.125D;
+                    double d4 = boundingBox.minY + (boundingBox.maxY - boundingBox.minY) * (j + 1) / b0
+                        - 0.125D
+                        + 0.125D;
+                    AxisAlignedBB axisalignedbb1 = AxisAlignedBB
+                        .getBoundingBox(boundingBox.minX, d3, boundingBox.minZ, boundingBox.maxX, d4, boundingBox.maxZ);
 
-                    if (worldObj.isAABBInMaterial(axisalignedbb1, Material.water) || worldObj.provider.isHellWorld && worldObj.isAABBInMaterial(axisalignedbb1, Material.lava)) {
+                    if (worldObj.isAABBInMaterial(axisalignedbb1, Material.water)
+                        || worldObj.provider.isHellWorld && worldObj.isAABBInMaterial(axisalignedbb1, Material.lava)) {
                         d10 += 0.65D / b0;
                     }
                 }
@@ -201,11 +220,17 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                     WorldServer worldserver = (WorldServer) worldObj;
                     int k = 1;
 
-                    if (rand.nextFloat() < 0.25F && worldObj.canLightningStrikeAt(MathHelper.floor_double(posX), MathHelper.floor_double(posY) + 1, MathHelper.floor_double(posZ))) {
+                    if (rand.nextFloat() < 0.25F && worldObj.canLightningStrikeAt(
+                        MathHelper.floor_double(posX),
+                        MathHelper.floor_double(posY) + 1,
+                        MathHelper.floor_double(posZ))) {
                         k = 2;
                     }
 
-                    if (rand.nextFloat() < 0.5F && !worldObj.canBlockSeeTheSky(MathHelper.floor_double(posX), MathHelper.floor_double(posY) + 1, MathHelper.floor_double(posZ))) {
+                    if (rand.nextFloat() < 0.5F && !worldObj.canBlockSeeTheSky(
+                        MathHelper.floor_double(posX),
+                        MathHelper.floor_double(posY) + 1,
+                        MathHelper.floor_double(posZ))) {
                         --k;
                     }
 
@@ -229,8 +254,26 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                                 motionY -= 0.20000000298023224D;
                                 playSound("random.splash", 0.25F, 1.0F + (rand.nextFloat() - rand.nextFloat()) * 0.4F);
                                 f1 = MathHelper.floor_double(boundingBox.minY);
-                                worldserver.func_147487_a("bubble", posX, f1 + 1.0F, posZ, (int) (1.0F + width * 20.0F), width, 0.0D, width, 0.20000000298023224D);
-                                worldserver.func_147487_a("wake", posX, f1 + 1.0F, posZ, (int) (1.0F + width * 20.0F), width, 0.0D, width, 0.20000000298023224D);
+                                worldserver.func_147487_a(
+                                    "bubble",
+                                    posX,
+                                    f1 + 1.0F,
+                                    posZ,
+                                    (int) (1.0F + width * 20.0F),
+                                    width,
+                                    0.0D,
+                                    width,
+                                    0.20000000298023224D);
+                                worldserver.func_147487_a(
+                                    "wake",
+                                    posX,
+                                    f1 + 1.0F,
+                                    posZ,
+                                    (int) (1.0F + width * 20.0F),
+                                    width,
+                                    0.0D,
+                                    width,
+                                    0.20000000298023224D);
                                 field_146045_ax = MathHelper.getRandomIntegerInRange(rand, 20, 50);
                             } else {
                                 field_146054_aA = (float) (field_146054_aA + rand.nextGaussian() * 4.0D);
@@ -242,7 +285,16 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                                 d6 = posZ + f2 * field_146038_az * 0.1F;
 
                                 if (rand.nextFloat() < 0.15F) {
-                                    worldserver.func_147487_a("bubble", d11, d5 - 0.10000000149011612D, d6, 1, f7, 0.1D, f2, 0.0D);
+                                    worldserver.func_147487_a(
+                                        "bubble",
+                                        d11,
+                                        d5 - 0.10000000149011612D,
+                                        d6,
+                                        1,
+                                        f7,
+                                        0.1D,
+                                        f2,
+                                        0.0D);
                                 }
 
                                 float f3 = f7 * 0.04F;
@@ -254,7 +306,7 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                             if (FishMechanics.SPEED_MULTIPLIER > 0) {
                                 field_146040_ay -= FishMechanics.SPEED_MULTIPLIER;
                             }
-                            
+
                             field_146040_ay -= k;
                             f1 = 0.15F;
 
@@ -272,7 +324,16 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                                 d11 = posX + MathHelper.sin(f7) * f2 * 0.1F;
                                 d5 = MathHelper.floor_double(boundingBox.minY) + 1.0F;
                                 d6 = posZ + MathHelper.cos(f7) * f2 * 0.1F;
-                                worldserver.func_147487_a("splash", d11, d5, d6, 2 + rand.nextInt(2), 0.10000000149011612D, 0.0D, 0.10000000149011612D, 0.0D);
+                                worldserver.func_147487_a(
+                                    "splash",
+                                    d11,
+                                    d5,
+                                    d6,
+                                    2 + rand.nextInt(2),
+                                    0.10000000149011612D,
+                                    0.0D,
+                                    0.10000000149011612D,
+                                    0.0D);
                             }
 
                             if (field_146040_ay <= 0) {
@@ -280,8 +341,11 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                                 field_146038_az = MathHelper.getRandomIntegerInRange(rand, 20, 80);
                             }
                         } else {
-                            field_146040_ay = MathHelper.getRandomIntegerInRange(rand, 100, baitQuality > 0 ? 900 : 1500);
-                            field_146040_ay -= EnchantmentHelper.func_151387_h(field_146042_b) * 25 * 5 * (baitQuality > 0 ? baitQuality / 10 : 0.75);
+                            field_146040_ay = MathHelper
+                                .getRandomIntegerInRange(rand, 100, baitQuality > 0 ? 900 : 1500);
+                            field_146040_ay -= EnchantmentHelper.func_151387_h(field_146042_b) * 25
+                                * 5
+                                * (baitQuality > 0 ? baitQuality / 10 : 0.75);
                         }
                     }
 
@@ -323,7 +387,13 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                 field_146043_c.motionZ += d4 * d8;
                 b0 = 3;
             } else if (field_146045_ax > 0) {
-                ItemStack result = Fishing.fishing.getCatch(worldObj, (int) posX, (int) posY, (int) posZ, field_146042_b, field_146042_b.getHeldItem());
+                ItemStack result = Fishing.fishing.getCatch(
+                    worldObj,
+                    (int) posX,
+                    (int) posY,
+                    (int) posZ,
+                    field_146042_b,
+                    field_146042_b.getHeldItem());
                 if (result != null) {
                     EntityItemFireImmune entityitem = new EntityItemFireImmune(worldObj, posX, posY, posZ, result);
                     double d1 = field_146042_b.posX - posX;
@@ -335,7 +405,13 @@ public class EntityHook extends EntityFishHook implements IEntityAdditionalSpawn
                     entityitem.motionY = d3 * d9 + MathHelper.sqrt_double(d7) * 0.08D;
                     entityitem.motionZ = d5 * d9;
                     worldObj.spawnEntityInWorld(entityitem);
-                    field_146042_b.worldObj.spawnEntityInWorld(new EntityXPOrb(field_146042_b.worldObj, field_146042_b.posX, field_146042_b.posY + 0.5D, field_146042_b.posZ + 0.5D, rand.nextInt(6) + 1));
+                    field_146042_b.worldObj.spawnEntityInWorld(
+                        new EntityXPOrb(
+                            field_146042_b.worldObj,
+                            field_146042_b.posX,
+                            field_146042_b.posY + 0.5D,
+                            field_146042_b.posZ + 0.5D,
+                            rand.nextInt(6) + 1));
                     b0 = 1;
                 } else {
                     b0 = 0;

@@ -13,6 +13,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * 
  */
 public final class CoFhItemHelper {
+
     private CoFhItemHelper() {
 
     }
@@ -27,17 +28,22 @@ public final class CoFhItemHelper {
     }
 
     public static final boolean isPlayerHoldingItem(Item item, EntityPlayer player) {
-        Item equipped = player.getCurrentEquippedItem() != null ? player.getCurrentEquippedItem().getItem() : null;
+        Item equipped = player.getCurrentEquippedItem() != null ? player.getCurrentEquippedItem()
+            .getItem() : null;
         return item == null ? equipped == null : item.equals(equipped);
     }
 
     public static final boolean areItemStackEqualNoNull(ItemStack stackA, ItemStack stackB) {
-        return stackA.isItemEqual(stackB) && (stackA.stackTagCompound != null ? stackB.stackTagCompound != null && stackA.stackTagCompound.equals(stackB.stackTagCompound) : stackB.stackTagCompound != null ? false : true);
+        return stackA.isItemEqual(stackB) && (stackA.stackTagCompound != null
+            ? stackB.stackTagCompound != null && stackA.stackTagCompound.equals(stackB.stackTagCompound)
+            : stackB.stackTagCompound != null ? false : true);
     }
 
     public static boolean areItemStacksEqualNoNBT(ItemStack stackA, ItemStack stackB) {
         if (stackB == null) return false;
-        return stackA.getItem() == stackB.getItem() && (stackA.getItemDamage() == OreDictionary.WILDCARD_VALUE ? true : stackB.getItemDamage() == OreDictionary.WILDCARD_VALUE ? true : stackA.getHasSubtypes() == false ? true : stackB.getItemDamage() == stackA.getItemDamage());
+        return stackA.getItem() == stackB.getItem() && (stackA.getItemDamage() == OreDictionary.WILDCARD_VALUE ? true
+            : stackB.getItemDamage() == OreDictionary.WILDCARD_VALUE ? true
+                : stackA.getHasSubtypes() == false ? true : stackB.getItemDamage() == stackA.getItemDamage());
     }
 
     public static boolean areItemStacksEqualWithNBT(ItemStack stackA, ItemStack stackB) {
@@ -45,11 +51,16 @@ public final class CoFhItemHelper {
 
         if (!doNBTsMatch(stackA.stackTagCompound, stackB.stackTagCompound)) return false;
 
-        return stackA.getItem() == stackB.getItem() && (stackA.getItemDamage() == OreDictionary.WILDCARD_VALUE ? true : stackB.getItemDamage() == OreDictionary.WILDCARD_VALUE ? true : stackA.getHasSubtypes() == false ? true : stackB.getItemDamage() == stackA.getItemDamage());
+        return stackA.getItem() == stackB.getItem() && (stackA.getItemDamage() == OreDictionary.WILDCARD_VALUE ? true
+            : stackB.getItemDamage() == OreDictionary.WILDCARD_VALUE ? true
+                : stackA.getHasSubtypes() == false ? true : stackB.getItemDamage() == stackA.getItemDamage());
     }
 
     public static boolean itemsEqualWithMetadata(ItemStack stackA, ItemStack stackB, boolean checkNBT) {
-        return stackA == null ? stackB == null ? true : false : stackB != null && stackA.getItem() == stackB.getItem() && stackA.getItemDamage() == stackB.getItemDamage() && (!checkNBT || doNBTsMatch(stackA.stackTagCompound, stackB.stackTagCompound));
+        return stackA == null ? stackB == null ? true : false
+            : stackB != null && stackA.getItem() == stackB.getItem()
+                && stackA.getItemDamage() == stackB.getItemDamage()
+                && (!checkNBT || doNBTsMatch(stackA.stackTagCompound, stackB.stackTagCompound));
     }
 
     public static boolean doNBTsMatch(NBTTagCompound nbtA, NBTTagCompound nbtB) {

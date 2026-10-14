@@ -6,16 +6,19 @@ import static mariculture.core.lib.MCLib.glassLens;
 import static mariculture.core.lib.MCLib.leather;
 import static mariculture.core.lib.MCLib.reeds;
 import static mariculture.core.lib.MCLib.string;
-import mariculture.core.lib.RenderIds;
-import mariculture.core.lib.Modules.RegistrationModule;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import mariculture.core.lib.Modules.RegistrationModule;
+import mariculture.core.lib.RenderIds;
 
 public class Diving extends RegistrationModule {
+
     public static Item divingHelmet;
     public static Item divingTop;
     public static Item divingPants;
@@ -29,7 +32,8 @@ public class Diving extends RegistrationModule {
     @Override
     public void registerHandlers() {
         MinecraftForge.EVENT_BUS.register(new DivingEventHandler());
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+        if (FMLCommonHandler.instance()
+            .getSide() == Side.CLIENT) {
             MinecraftForge.EVENT_BUS.register(new ArmorClientHandler());
         }
     }

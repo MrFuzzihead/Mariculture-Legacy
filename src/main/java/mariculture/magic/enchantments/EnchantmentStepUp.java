@@ -1,11 +1,13 @@
 package mariculture.magic.enchantments;
 
-import mariculture.core.helpers.EnchantHelper;
-import mariculture.magic.Magic;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 
+import mariculture.core.helpers.EnchantHelper;
+import mariculture.magic.Magic;
+
 public class EnchantmentStepUp extends EnchantmentJewelry {
+
     public EnchantmentStepUp(int i, int weight, EnumEnchantmentType type) {
         super(i, weight, type);
         setName("stepUp");
@@ -25,11 +27,14 @@ public class EnchantmentStepUp extends EnchantmentJewelry {
         float steps = 0.5F * (step + 1);
         if (steps != player.stepHeight) {
             player.stepHeight = steps;
-            player.getEntityData().setBoolean("HasStepUp", true);
+            player.getEntityData()
+                .setBoolean("HasStepUp", true);
         }
 
-        if (step == 0 && player.getEntityData().hasKey("HasStepUp")) {
-            player.getEntityData().removeTag("HasStepUp");
+        if (step == 0 && player.getEntityData()
+            .hasKey("HasStepUp")) {
+            player.getEntityData()
+                .removeTag("HasStepUp");
             player.stepHeight = 0.5F;
         }
 

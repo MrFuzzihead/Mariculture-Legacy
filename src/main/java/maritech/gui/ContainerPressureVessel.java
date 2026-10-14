@@ -1,5 +1,11 @@
 package maritech.gui;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+
 import mariculture.api.core.IItemUpgrade;
 import mariculture.api.core.IPVChargeable;
 import mariculture.core.gui.ContainerMachine;
@@ -7,13 +13,9 @@ import mariculture.core.gui.SlotFluidContainer;
 import mariculture.core.gui.SlotOutput;
 import mariculture.core.helpers.FluidHelper;
 import maritech.tile.TilePressureVessel;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 
 public class ContainerPressureVessel extends ContainerMachine {
+
     public ContainerPressureVessel(TilePressureVessel tile, InventoryPlayer playerInventory) {
         super(tile);
 
@@ -24,7 +26,7 @@ public class ContainerPressureVessel extends ContainerMachine {
 
         bindPlayerInventory(playerInventory, 10);
     }
-    
+
     @Override
     public boolean canInteractWith(EntityPlayer player) {
         return true;

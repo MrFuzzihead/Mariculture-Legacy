@@ -3,11 +3,13 @@ package mariculture.fishery.fish;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletLead;
 import static mariculture.core.lib.MCLib.dropletPoison;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
 
 public class FishLead extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 5;
@@ -42,22 +44,22 @@ public class FishLead extends FishSpecies {
     public int getFertility() {
         return 2000;
     }
-    
+
     @Override
     public int getBaseProductivity() {
         return 0;
     }
-    
+
     @Override
     public double getFishOilVolume() {
         return 0.0D;
     }
-    
+
     @Override
     public int getFoodStat() {
         return -1;
     }
-    
+
     @Override
     public int getFishMealSize() {
         return 0;

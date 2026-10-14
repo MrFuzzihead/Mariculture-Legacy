@@ -2,9 +2,6 @@ package mariculture.core.tile.base;
 
 import java.util.List;
 
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.util.ITank;
-import mariculture.core.util.Tank;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -14,7 +11,12 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.util.ITank;
+import mariculture.core.util.Tank;
+
 public class TileTank extends TileEntity implements IFluidHandler, ITank {
+
     public Tank tank;
 
     public TileTank() {

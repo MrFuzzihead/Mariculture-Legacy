@@ -5,6 +5,7 @@ import java.util.Map;
 import minetweaker.IUndoableAction;
 
 public abstract class MapRemoveAction implements IUndoableAction {
+
     private final Map map;
     private final Object key;
     private Object value;

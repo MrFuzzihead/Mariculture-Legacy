@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import mariculture.magic.enchantments.EnchantmentJewelry;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.init.Items;
@@ -15,7 +14,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 
+import mariculture.magic.enchantments.EnchantmentJewelry;
+
 public class MirrorEnchantHelper {
+
     private static Random rand = new Random();
 
     public static List buildEnchantmentList(Random rand, ItemStack stack, int level, int falseEnchantability) {
@@ -48,7 +50,8 @@ public class MirrorEnchantHelper {
                     arraylist.add(enchantmentdata);
 
                     for (int i1 = l; rand.nextInt(chance) <= i1; i1 >>= 1) {
-                        Iterator iterator = map.keySet().iterator();
+                        Iterator iterator = map.keySet()
+                            .iterator();
 
                         while (iterator.hasNext()) {
                             Integer integer = (Integer) iterator.next();
@@ -58,7 +61,8 @@ public class MirrorEnchantHelper {
                             while (true) {
                                 if (iterator1.hasNext()) {
                                     EnchantmentData enchantmentdata1 = (EnchantmentData) iterator1.next();
-                                    if (enchantmentdata1.enchantmentobj.canApplyTogether(Enchantment.enchantmentsList[integer.intValue()])) {
+                                    if (enchantmentdata1.enchantmentobj
+                                        .canApplyTogether(Enchantment.enchantmentsList[integer.intValue()])) {
                                         continue;
                                     }
 
@@ -74,7 +78,8 @@ public class MirrorEnchantHelper {
                         }
 
                         if (!map.isEmpty()) {
-                            EnchantmentData enchantmentdata2 = (EnchantmentData) WeightedRandom.getRandomItem(rand, map.values());
+                            EnchantmentData enchantmentdata2 = (EnchantmentData) WeightedRandom
+                                .getRandomItem(rand, map.values());
                             arraylist.add(enchantmentdata2);
                         }
                     }
@@ -98,23 +103,29 @@ public class MirrorEnchantHelper {
                 continue;
             }
 
-            if (enchantment.canApplyAtEnchantingTable(stack) || (item == Items.book && enchantment.isAllowedOnBooks())) {
+            if (enchantment.canApplyAtEnchantingTable(stack)
+                || (item == Items.book && enchantment.isAllowedOnBooks())) {
                 for (int l = enchantment.getMinLevel(); l <= enchantment.getMaxLevel(); ++l)
-                    if (enchantment instanceof EnchantmentJewelry && enchantability <= enchantment.getMaxEnchantability(l) || !(enchantment instanceof EnchantmentJewelry)) if (enchantability >= enchantment.getMinEnchantability(l)) {
-                        if (hashmap == null) {
-                            hashmap = new HashMap();
-                        }
+                    if (enchantment instanceof EnchantmentJewelry
+                        && enchantability <= enchantment.getMaxEnchantability(l)
+                        || !(enchantment instanceof EnchantmentJewelry))
+                        if (enchantability >= enchantment.getMinEnchantability(l)) {
+                            if (hashmap == null) {
+                                hashmap = new HashMap();
+                            }
 
-                        if (orig > 30) if (enchantment != Enchantment.protection && enchantment != Enchantment.fortune && enchantment.getMaxLevel() != 1 && !(enchantment instanceof EnchantmentJewelry)) {
-                            int chanceDoubled = orig > 55 ? 2 : 1;
-                            for (int i = 0; i < chanceDoubled; i++)
-                                if (rand.nextInt() < orig) {
-                                    l += 1;
-                                }
-                        }
+                            if (orig > 30)
+                                if (enchantment != Enchantment.protection && enchantment != Enchantment.fortune
+                                    && enchantment.getMaxLevel() != 1
+                                    && !(enchantment instanceof EnchantmentJewelry)) {
+                                        int chanceDoubled = orig > 55 ? 2 : 1;
+                                        for (int i = 0; i < chanceDoubled; i++) if (rand.nextInt() < orig) {
+                                            l += 1;
+                                        }
+                                    }
 
-                        hashmap.put(Integer.valueOf(enchantment.effectId), new EnchantmentData(enchantment, l));
-                    }
+                            hashmap.put(Integer.valueOf(enchantment.effectId), new EnchantmentData(enchantment, l));
+                        }
             }
         }
 
@@ -128,7 +139,9 @@ public class MirrorEnchantHelper {
             for (Enchantment enchant : Enchantment.enchantmentsList) {
                 if (enchant == null) continue;
                 if (rand.nextInt(20) == 0) {
-                    hashmap.put(Integer.valueOf(enchant.effectId), new EnchantmentData(enchant, 1 + rand.nextInt(enchant.getMaxLevel())));
+                    hashmap.put(
+                        Integer.valueOf(enchant.effectId),
+                        new EnchantmentData(enchant, 1 + rand.nextInt(enchant.getMaxLevel())));
                 }
             }
         }

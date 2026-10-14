@@ -1,17 +1,21 @@
 package mariculture.core.render;
 
-import mariculture.core.Core;
-import mariculture.core.events.MaricultureEvents;
-import mariculture.core.lib.MachineRenderedMeta;
-import mariculture.diving.render.ModelAirPump;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
+import mariculture.core.Core;
+import mariculture.core.events.MaricultureEvents;
+import mariculture.core.lib.MachineRenderedMeta;
+import mariculture.diving.render.ModelAirPump;
+
 public class RenderSingleItem implements IItemRenderer {
-    private static final ResourceLocation AIR_PUMP = new ResourceLocation("mariculture", "textures/blocks/air_pump_texture.png");
+
+    private static final ResourceLocation AIR_PUMP = new ResourceLocation(
+        "mariculture",
+        "textures/blocks/air_pump_texture.png");
     private final ModelAirPump pump = new ModelAirPump();
 
     @Override
@@ -40,13 +44,18 @@ public class RenderSingleItem implements IItemRenderer {
     }
 
     private void bindTexture(ResourceLocation resource) {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
+        Minecraft.getMinecraft()
+            .getTextureManager()
+            .bindTexture(resource);
     }
 
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-        if (item.getItem() == Item.getItemFromBlock(Core.renderedMachines) && item.getItemDamage() == MachineRenderedMeta.AIR_PUMP) {
-            Minecraft.getMinecraft().getTextureManager().bindTexture(AIR_PUMP);
+        if (item.getItem() == Item.getItemFromBlock(Core.renderedMachines)
+            && item.getItemDamage() == MachineRenderedMeta.AIR_PUMP) {
+            Minecraft.getMinecraft()
+                .getTextureManager()
+                .bindTexture(AIR_PUMP);
             pump.renderInventory(type);
         }
 

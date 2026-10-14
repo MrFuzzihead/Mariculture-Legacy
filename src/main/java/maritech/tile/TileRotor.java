@@ -1,5 +1,15 @@
 package maritech.tile;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.api.core.INeighborNotify;
 import mariculture.api.core.ISpecialPickblock;
 import mariculture.api.util.CachedCoords;
@@ -8,28 +18,20 @@ import mariculture.core.lib.MetalMeta;
 import mariculture.core.network.PacketHandler;
 import mariculture.core.util.IFaceable;
 import maritech.network.PacketRotorSpin;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraftforge.common.util.ForgeDirection;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /* This block does nothing, except animation */
 public abstract class TileRotor extends TileEntity implements IFaceable, INeighborNotify, ISpecialPickblock {
+
     public ForgeDirection orientation = ForgeDirection.NORTH;
     public CachedCoords master;
 
-    //Client Sided animation stuff
+    // Client Sided animation stuff
     public int damage = 0;
     public int isAnimating;
     public ForgeDirection dir;
     public float angle;
 
-    //Set by the Rotor
+    // Set by the Rotor
     private final int maxDamage;
     private final double tier;
 
@@ -82,7 +84,7 @@ public abstract class TileRotor extends TileEntity implements IFaceable, INeighb
         this.master = master;
     }
 
-    //Adds Power from a certain direction
+    // Adds Power from a certain direction
     public void addEnergy(ForgeDirection dir, int energy, int dmg) {
         TileGenerator generator = getMaster();
         if (generator != null) {
@@ -108,12 +110,12 @@ public abstract class TileRotor extends TileEntity implements IFaceable, INeighb
         } else return null;
     }
 
-    //Called when this block is removed, or when it receives a block update, to reset the master
+    // Called when this block is removed, or when it receives a block update, to reset the master
     @Override
     public void recheck() {
         TileGenerator tile = getMaster();
         if (tile instanceof TileGenerator) {
-            master = null; //Set the master to null, as this block may have been removed from the net
+            master = null; // Set the master to null, as this block may have been removed from the net
             ((TileGenerator) tile).reset();
         }
     }

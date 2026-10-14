@@ -3,6 +3,7 @@ package maritech.extensions.items;
 import mariculture.core.lib.CraftingMeta;
 
 public class ExtensionCrafting extends ExtensionItemsBase {
+
     @Override
     public String getName(int meta, String name) {
         switch (meta) {
@@ -34,7 +35,7 @@ public class ExtensionCrafting extends ExtensionItemsBase {
             case CraftingMeta.CREATIVE_BATTERY:
                 return "maritech";
         }
-        
+
         return mod;
     }
 }

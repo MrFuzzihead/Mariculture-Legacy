@@ -1,14 +1,17 @@
 package maritech.render;
 
-import maritech.lib.MTModInfo;
-import maritech.model.ModelSpeedBoat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
+import maritech.lib.MTModInfo;
+import maritech.model.ModelSpeedBoat;
+
 public class RenderSpeedBoatItem implements IItemRenderer {
-    private static final ResourceLocation resource = new ResourceLocation(MTModInfo.MODPATH + ":textures/entity/speedboat.png");
+
+    private static final ResourceLocation resource = new ResourceLocation(
+        MTModInfo.MODPATH + ":textures/entity/speedboat.png");
     private ModelSpeedBoat modelBoat;
     private static final float scale = (float) (1.0 / 20.0);
 
@@ -28,7 +31,9 @@ public class RenderSpeedBoatItem implements IItemRenderer {
 
     @Override
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
+        Minecraft.getMinecraft()
+            .getTextureManager()
+            .bindTexture(resource);
         modelBoat.renderInventory(type, scale);
     }
 }

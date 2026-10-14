@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class LimestoneMeta {
+
     public static final int COUNT = 16;
     public static final int RAW = 0;
     public static final int SMOOTH = 1;

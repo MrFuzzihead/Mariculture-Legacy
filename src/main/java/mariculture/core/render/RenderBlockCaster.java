@@ -1,14 +1,16 @@
 package mariculture.core.render;
 
+import net.minecraft.item.ItemStack;
+
 import mariculture.core.Core;
 import mariculture.core.handlers.CastingHandler;
 import mariculture.core.lib.MachineRenderedMeta;
 import mariculture.core.lib.MachineRenderedMultiMeta;
 import mariculture.core.lib.MetalRates;
 import mariculture.core.tile.TileBlockCaster;
-import net.minecraft.item.ItemStack;
 
 public class RenderBlockCaster extends RenderBase {
+
     public RenderBlockCaster() {}
 
     @Override

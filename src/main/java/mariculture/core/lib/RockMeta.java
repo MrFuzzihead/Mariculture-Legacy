@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class RockMeta {
+
     public static final int COUNT = 5;
     public static final int CORAL_ROCK = 0;
     public static final int COPPER = 1;

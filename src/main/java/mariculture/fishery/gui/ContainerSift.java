@@ -1,13 +1,15 @@
 package mariculture.fishery.gui;
 
-import mariculture.core.gui.ContainerMariculture;
-import mariculture.fishery.tile.TileSifter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.gui.ContainerMariculture;
+import mariculture.fishery.tile.TileSifter;
+
 public class ContainerSift extends ContainerMariculture {
+
     private TileSifter tile;
 
     public ContainerSift(TileSifter tile, InventoryPlayer playerInventory) {

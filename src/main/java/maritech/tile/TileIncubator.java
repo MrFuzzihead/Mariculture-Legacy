@@ -7,6 +7,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.IIncubator;
@@ -21,13 +27,9 @@ import mariculture.core.util.IHasNotification;
 import mariculture.fishery.items.ItemEgg;
 import maritech.extensions.config.ExtensionMachines.ExtendedSettings;
 import maritech.tile.base.TileMultiMachinePowered;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class TileIncubator extends TileMultiMachinePowered implements IHasNotification, IIncubator, IMutationModifier {
+
     private HashSet<IMutationModifier> modifiers = new HashSet();
     private int cooldown = 0;
 
@@ -39,7 +41,7 @@ public class TileIncubator extends TileMultiMachinePowered implements IHasNotifi
         modifiers.add(this);
     }
 
-    //Sets the mutation modifier for this incubator
+    // Sets the mutation modifier for this incubator
     public void addMutationModifier(IMutationModifier modifier) {
         TileIncubator tile = (TileIncubator) getMaster();
         if (tile != null) {
@@ -61,7 +63,9 @@ public class TileIncubator extends TileMultiMachinePowered implements IHasNotifi
 
     @Override
     public boolean canInsertItem(int slot, ItemStack stack, int side) {
-        return slot > 3 && slot < 13 && (Fishing.fishHelper.isEgg(stack) || stack.getItem() == Items.egg || stack.getItem() == Item.getItemFromBlock(Blocks.dragon_egg));
+        return slot > 3 && slot < 13
+            && (Fishing.fishHelper.isEgg(stack) || stack.getItem() == Items.egg
+                || stack.getItem() == Item.getItemFromBlock(Blocks.dragon_egg));
     }
 
     @Override
@@ -133,8 +137,7 @@ public class TileIncubator extends TileMultiMachinePowered implements IHasNotifi
     }
 
     private boolean hasEgg() {
-        for (Integer i : in)
-            if (inventory[i] != null) return true;
+        for (Integer i : in) if (inventory[i] != null) return true;
 
         return false;
     }
@@ -160,8 +163,7 @@ public class TileIncubator extends TileMultiMachinePowered implements IHasNotifi
 
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(inArray));
         Collections.shuffle(list);
-        for (Integer j : list)
-            if (inventory[j] != null) if (openEgg(j)) return true;
+        for (Integer j : list) if (inventory[j] != null) if (openEgg(j)) return true;
 
         return false;
     }
@@ -197,7 +199,9 @@ public class TileIncubator extends TileMultiMachinePowered implements IHasNotifi
             decrStackSize(slot, 1);
             return true;
         } else if (inventory[slot].getItem() == Item.getItemFromBlock(Blocks.dragon_egg)) {
-            int chance = MaricultureHandlers.upgrades.hasUpgrade("ethereal", this) ? ExtendedSettings.DRAGON_EGG_ETHEREAL : ExtendedSettings.DRAGON_EGG_BASE;
+            int chance = MaricultureHandlers.upgrades.hasUpgrade("ethereal", this)
+                ? ExtendedSettings.DRAGON_EGG_ETHEREAL
+                : ExtendedSettings.DRAGON_EGG_BASE;
             if (worldObj.rand.nextInt(chance) == 0) {
                 helper.insertStack(new ItemStack(Core.crafting, 1, CraftingMeta.DRAGON_EGG), output);
             }
@@ -273,10 +277,12 @@ public class TileIncubator extends TileMultiMachinePowered implements IHasNotifi
     }
 
     public boolean isBase(int x, int y, int z) {
-        return worldObj.getBlock(x, y, z) == getBlockType() && worldObj.getBlockMetadata(x, y, z) == MachineMultiMeta.INCUBATOR_BASE;
+        return worldObj.getBlock(x, y, z) == getBlockType()
+            && worldObj.getBlockMetadata(x, y, z) == MachineMultiMeta.INCUBATOR_BASE;
     }
 
     public boolean isTop(int x, int y, int z) {
-        return worldObj.getBlock(x, y, z) == getBlockType() && worldObj.getBlockMetadata(x, y, z) == MachineMultiMeta.INCUBATOR_TOP;
+        return worldObj.getBlock(x, y, z) == getBlockType()
+            && worldObj.getBlockMetadata(x, y, z) == MachineMultiMeta.INCUBATOR_TOP;
     }
 }

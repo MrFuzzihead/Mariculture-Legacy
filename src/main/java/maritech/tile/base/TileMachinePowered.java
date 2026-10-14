@@ -3,16 +3,18 @@ package maritech.tile.base;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import mariculture.core.tile.base.TileMachine;
-import mariculture.core.util.IPowered;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyContainerItem;
 import cofh.api.energy.IEnergyReceiver;
+import mariculture.core.tile.base.TileMachine;
+import mariculture.core.util.IPowered;
 
 public abstract class TileMachinePowered extends TileMachine implements IEnergyReceiver, IPowered {
+
     protected EnergyStorage energyStorage;
     protected int usage = -1;
 
@@ -83,7 +85,7 @@ public abstract class TileMachinePowered extends TileMachine implements IEnergyR
             if (ret <= 0) {
                 updateCanWork();
             }
-            
+
             processed += speed;
             if (processed >= max) {
                 process();
@@ -99,7 +101,9 @@ public abstract class TileMachinePowered extends TileMachine implements IEnergyR
     public void update() {
         super.update();
         if (inventory[3] != null) {
-            int rf = inventory[3] != null && inventory[3].getItem() instanceof IEnergyContainerItem ? ((IEnergyContainerItem) inventory[3].getItem()).extractEnergy(inventory[3], 1000, true) : 0;
+            int rf = inventory[3] != null && inventory[3].getItem() instanceof IEnergyContainerItem
+                ? ((IEnergyContainerItem) inventory[3].getItem()).extractEnergy(inventory[3], 1000, true)
+                : 0;
             if (rf > 0) {
                 int drain = receiveEnergy(ForgeDirection.UP, rf, true);
                 if (drain > 0) {
@@ -113,7 +117,7 @@ public abstract class TileMachinePowered extends TileMachine implements IEnergyR
             }
         }
     }
-    
+
     @Override
     public void setGUIData(int id, int value) {
         super.setGUIData(id, value);
@@ -129,23 +133,24 @@ public abstract class TileMachinePowered extends TileMachine implements IEnergyR
                 break;
         }
     }
-    
+
     protected int lastEnergy;
     protected int lastCapacity;
     protected int lastUsage;
-    
+
     @Override
     public boolean hasChanged() {
-        return super.hasChanged() || energyStorage.getEnergyStored() != lastEnergy || energyStorage.getMaxEnergyStored() != lastCapacity || lastUsage != (canWork ? getPowerPerTick() : 0);
+        return super.hasChanged() || energyStorage.getEnergyStored() != lastEnergy
+            || energyStorage.getMaxEnergyStored() != lastCapacity
+            || lastUsage != (canWork ? getPowerPerTick() : 0);
     }
-
 
     @Override
     public ArrayList<Integer> getGUIData() {
         lastEnergy = energyStorage.getEnergyStored();
         lastCapacity = energyStorage.getMaxEnergyStored();
         lastUsage = canWork ? getPowerPerTick() : 0;
-        
+
         ArrayList<Integer> list = super.getGUIData();
         list.addAll(new ArrayList(Arrays.asList(new Integer[] { lastEnergy, lastCapacity, lastUsage })));
         return list;

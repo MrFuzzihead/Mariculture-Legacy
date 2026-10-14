@@ -1,21 +1,25 @@
 package maritech.gui;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
+
 import mariculture.core.gui.GuiMariculture;
 import mariculture.core.gui.feature.FeatureBubbles;
 import mariculture.core.gui.feature.FeatureEject;
 import mariculture.core.gui.feature.FeatureNotifications;
+import mariculture.core.gui.feature.FeatureNotifications.NotificationType;
 import mariculture.core.gui.feature.FeaturePower;
 import mariculture.core.gui.feature.FeatureRedstone;
 import mariculture.core.gui.feature.FeatureUpgrades;
-import mariculture.core.gui.feature.FeatureNotifications.NotificationType;
 import maritech.lib.MTModInfo;
 import maritech.tile.TileAutofisher;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiAutofisher extends GuiMariculture {
-    public static final ResourceLocation texture = new ResourceLocation(MTModInfo.MODPATH, "textures/gui/autofisher.png");
-    
+
+    public static final ResourceLocation texture = new ResourceLocation(
+        MTModInfo.MODPATH,
+        "textures/gui/autofisher.png");
+
     private TileAutofisher tile;
 
     public GuiAutofisher(InventoryPlayer player, TileAutofisher tile) {
@@ -23,7 +27,11 @@ public class GuiAutofisher extends GuiMariculture {
         features.add(new FeatureUpgrades());
         features.add(new FeaturePower(tile, 9, 17));
         features.add(new FeatureBubbles(tile, 87, 16));
-        features.add(new FeatureNotifications(tile, new NotificationType[] { NotificationType.NO_ROD, NotificationType.NO_BAIT, NotificationType.NOT_FISHABLE, NotificationType.NO_RF }));
+        features.add(
+            new FeatureNotifications(
+                tile,
+                new NotificationType[] { NotificationType.NO_ROD, NotificationType.NO_BAIT,
+                    NotificationType.NOT_FISHABLE, NotificationType.NO_RF }));
         features.add(new FeatureRedstone(tile));
         features.add(new FeatureEject(tile));
 

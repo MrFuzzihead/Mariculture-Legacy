@@ -4,16 +4,19 @@ import static mariculture.api.core.Environment.Salinity.SALINE;
 import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletPoison;
 import static mariculture.core.lib.MCLib.dropletWater;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishManOWar extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 32;
@@ -96,7 +99,7 @@ public class FishManOWar extends FishSpecies {
         player.addPotionEffect(new PotionEffect(Potion.harm.id, 5, 1));
         player.addPotionEffect(new PotionEffect(Potion.confusion.id, 1000, 1));
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;
@@ -112,7 +115,7 @@ public class FishManOWar extends FishSpecies {
     public RodType getRodNeeded() {
         return RodType.OLD;
     }
-    
+
     @Override
     public double getCatchChance(World world, int height) {
         return 5D;

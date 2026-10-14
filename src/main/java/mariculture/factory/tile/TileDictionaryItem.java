@@ -3,6 +3,12 @@ package mariculture.factory.tile;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import mariculture.core.gui.feature.Feature;
 import mariculture.core.gui.feature.FeatureEject.EjectSetting;
 import mariculture.core.handlers.OreDicHandler;
@@ -13,13 +19,10 @@ import mariculture.core.util.IEjectable;
 import mariculture.core.util.IItemDropBlacklist;
 import mariculture.core.util.IMachine;
 import mariculture.factory.items.ItemFilter;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.common.util.ForgeDirection;
 
-public class TileDictionaryItem extends TileStorage implements IItemDropBlacklist, IMachine, ISidedInventory, IEjectable {
+public class TileDictionaryItem extends TileStorage
+    implements IItemDropBlacklist, IMachine, ISidedInventory, IEjectable {
+
     private BlockTransferHelper helper;
     private EjectSetting setting;
 
@@ -33,7 +36,8 @@ public class TileDictionaryItem extends TileStorage implements IItemDropBlacklis
         return i < 9 ? false : true;
     }
 
-    private static final int[] filter = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
+    private static final int[] filter = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        19, 20, 21, 22, 23 };
     private static final int[] in = new int[] { 24 };
     private static final int[] out = new int[] { 25, 26, 27, 28 };
 
@@ -65,10 +69,9 @@ public class TileDictionaryItem extends TileStorage implements IItemDropBlacklis
         }
         if (canInsertItem(slot, stack, 0) && hasRoom() && stack != null) {
             int size = stack.stackSize;
-            for (int i = 0; i < size; i++)
-                if (stack != null) {
-                    swap();
-                }
+            for (int i = 0; i < size; i++) if (stack != null) {
+                swap();
+            }
         }
 
         markDirty();
@@ -76,75 +79,71 @@ public class TileDictionaryItem extends TileStorage implements IItemDropBlacklis
 
     private boolean hasRoom() {
         if (setting.canEject(EjectSetting.ITEM)) return true;
-        for (int i : in)
-            if (getStackInSlot(i) != null) {
-                ItemStack orig = getStackInSlot(i).copy();
-                orig.stackSize = 1;
-                ItemStack stack = convert(orig).copy();
-                stack.stackSize = 1;
-                if (InventoryHelper.canAddItemStackToInventory(inventory, stack, out)) return true;
-            }
+        for (int i : in) if (getStackInSlot(i) != null) {
+            ItemStack orig = getStackInSlot(i).copy();
+            orig.stackSize = 1;
+            ItemStack stack = convert(orig).copy();
+            stack.stackSize = 1;
+            if (InventoryHelper.canAddItemStackToInventory(inventory, stack, out)) return true;
+        }
 
         return false;
     }
 
     private boolean hasItem() {
-        for (int i : in)
-            if (getStackInSlot(i) != null) return true;
+        for (int i : in) if (getStackInSlot(i) != null) return true;
 
         return false;
     }
 
     private void swap() {
-        for (int i : in)
-            if (getStackInSlot(i) != null) {
-                ItemStack orig = getStackInSlot(i).copy();
-                orig.stackSize = 1;
-                ItemStack stack = convert(orig).copy();
-                stack.stackSize = 1;
-                helper.insertStack(stack, out);
-                decrStackSize(i, 1);
-            }
+        for (int i : in) if (getStackInSlot(i) != null) {
+            ItemStack orig = getStackInSlot(i).copy();
+            orig.stackSize = 1;
+            ItemStack stack = convert(orig).copy();
+            stack.stackSize = 1;
+            helper.insertStack(stack, out);
+            decrStackSize(i, 1);
+        }
     }
 
     private ItemStack convert(ItemStack stack) {
-        for (int i : filter)
-            if (getStackInSlot(i) != null) {
-                ItemStack filtered = getStackInSlot(i);
-                if (filtered.getItem() instanceof ItemFilter && filtered.hasTagCompound()) {
-                    NBTTagList tagList = filtered.stackTagCompound.getTagList("Inventory", 10);
-                    if (tagList != null) {
-                        for (int j = 0; j < tagList.tagCount(); j++) {
-                            NBTTagCompound nbt = tagList.getCompoundTagAt(j);
-                            byte byte0 = nbt.getByte("Slot");
-                            if (byte0 >= 0 && byte0 < ItemFilter.SIZE) {
-                                ItemStack aStack = ItemStack.loadItemStackFromNBT(nbt);
-                                if (OreDicHandler.areEqual(aStack, stack)) {
-                                    ItemStack stack2 = aStack.copy();
-                                    if (stack2.hasTagCompound() && stack2.stackTagCompound.hasKey("OreDictionaryDisplay")) {
-                                        stack2.stackTagCompound.removeTag("OreDictionaryDisplay");
-                                        if (stack2.stackTagCompound.hasNoTags()) {
-                                            stack2.setTagCompound(null);
-                                        }
+        for (int i : filter) if (getStackInSlot(i) != null) {
+            ItemStack filtered = getStackInSlot(i);
+            if (filtered.getItem() instanceof ItemFilter && filtered.hasTagCompound()) {
+                NBTTagList tagList = filtered.stackTagCompound.getTagList("Inventory", 10);
+                if (tagList != null) {
+                    for (int j = 0; j < tagList.tagCount(); j++) {
+                        NBTTagCompound nbt = tagList.getCompoundTagAt(j);
+                        byte byte0 = nbt.getByte("Slot");
+                        if (byte0 >= 0 && byte0 < ItemFilter.SIZE) {
+                            ItemStack aStack = ItemStack.loadItemStackFromNBT(nbt);
+                            if (OreDicHandler.areEqual(aStack, stack)) {
+                                ItemStack stack2 = aStack.copy();
+                                if (stack2.hasTagCompound() && stack2.stackTagCompound.hasKey("OreDictionaryDisplay")) {
+                                    stack2.stackTagCompound.removeTag("OreDictionaryDisplay");
+                                    if (stack2.stackTagCompound.hasNoTags()) {
+                                        stack2.setTagCompound(null);
                                     }
-
-                                    return stack2;
                                 }
+
+                                return stack2;
                             }
                         }
                     }
-                } else if (OreDicHandler.areEqual(filtered, stack)) {
-                    ItemStack stack2 = filtered.copy();
-                    if (stack2.hasTagCompound() && stack2.stackTagCompound.hasKey("OreDictionaryDisplay")) {
-                        stack2.stackTagCompound.removeTag("OreDictionaryDisplay");
-                        if (stack2.stackTagCompound.hasNoTags()) {
-                            stack2.setTagCompound(null);
-                        }
-                    }
-
-                    return stack2;
                 }
+            } else if (OreDicHandler.areEqual(filtered, stack)) {
+                ItemStack stack2 = filtered.copy();
+                if (stack2.hasTagCompound() && stack2.stackTagCompound.hasKey("OreDictionaryDisplay")) {
+                    stack2.stackTagCompound.removeTag("OreDictionaryDisplay");
+                    if (stack2.stackTagCompound.hasNoTags()) {
+                        stack2.setTagCompound(null);
+                    }
+                }
+
+                return stack2;
             }
+        }
 
         return stack;
     }
@@ -155,14 +154,14 @@ public class TileDictionaryItem extends TileStorage implements IItemDropBlacklis
             setting = EjectSetting.values()[value];
         }
     }
-    
+
     private int lastSetting;
-    
+
     @Override
     public boolean hasChanged() {
         return lastSetting != setting.ordinal();
     }
-    
+
     @Override
     public ArrayList<Integer> getGUIData() {
         lastSetting = setting.ordinal();
@@ -203,9 +202,9 @@ public class TileDictionaryItem extends TileStorage implements IItemDropBlacklis
 
     @Override
     public boolean canEject(ForgeDirection dir) {
-    	return true;
+        return true;
     }
-    
+
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);

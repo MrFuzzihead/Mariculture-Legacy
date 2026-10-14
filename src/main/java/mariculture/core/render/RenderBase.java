@@ -1,7 +1,5 @@
 package mariculture.core.render;
 
-import mariculture.core.tile.base.TileMultiBlock;
-import mariculture.core.util.IFaceable;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
@@ -14,7 +12,11 @@ import net.minecraftforge.fluids.FluidStack;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.tile.base.TileMultiBlock;
+import mariculture.core.util.IFaceable;
+
 public abstract class RenderBase {
+
     private static final double RENDER_OFFSET = 0.0010000000474974513D;
     static final float LIGHT_Y_POS = 1.0F;
 
@@ -33,7 +35,7 @@ public abstract class RenderBase {
 
     public RenderBase() {}
 
-    //World Based Rendering
+    // World Based Rendering
     public boolean render(RenderBlocks render, IBlockAccess world, int x, int y, int z) {
         isItem = false;
         this.render = render;
@@ -48,7 +50,7 @@ public abstract class RenderBase {
         return true;
     }
 
-    //Item Based Rendering
+    // Item Based Rendering
     public void render(RenderBlocks render, Block block, int meta) {
         isItem = true;
         this.render = render;
@@ -110,8 +112,9 @@ public abstract class RenderBase {
         setTexture(block, 0);
     }
 
-    //Can only be called by the in world renderer
-    protected void renderColoredBlock(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Block block) {
+    // Can only be called by the in world renderer
+    protected void renderColoredBlock(double minX, double minY, double minZ, double maxX, double maxY, double maxZ,
+        Block block) {
         render.renderAllFaces = true;
         render.setRenderBounds(minX, minY, minZ, maxX, maxY, maxZ);
         render.renderStandardBlock(block, x, y, z);
@@ -126,8 +129,9 @@ public abstract class RenderBase {
         }
     }
 
-    private void renderFace(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3, double x4, double y4, double z4) {
-        //Diagonal Guessing
+    private void renderFace(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+        double z3, double x4, double y4, double z4) {
+        // Diagonal Guessing
         Tessellator tessellator = Tessellator.instance;
         IIcon iicon = icon;
         if (!isItem()) {
@@ -167,7 +171,10 @@ public abstract class RenderBase {
     }
 
     protected void renderFluid(FluidStack fluid, int max, double scale, int xPlus, int yPlus, int zPlus) {
-        if (fluid == null || fluid.getFluid() == null || fluid.getFluid().getIcon() == null) return;
+        if (fluid == null || fluid.getFluid() == null
+            || fluid.getFluid()
+                .getIcon() == null)
+            return;
         int x2 = x + xPlus;
         int y2 = y + yPlus;
         int z2 = z + zPlus;
@@ -180,7 +187,8 @@ public abstract class RenderBase {
 
         double extra = (double) fluid.amount / max * scale;
         double height = 0.4D + extra;
-        IIcon iconStill = fluid.getFluid().getIcon();
+        IIcon iconStill = fluid.getFluid()
+            .getIcon();
 
         height += RENDER_OFFSET;
 
@@ -219,11 +227,13 @@ public abstract class RenderBase {
         render.renderAllFaces = false;
     }
 
-    protected void renderAngledBlock(double x2, double y2, double z2, double x3, double y3, double z3, double x1, double y1, double z1, double x4, double y4, double z4) {
+    protected void renderAngledBlock(double x2, double y2, double z2, double x3, double y3, double z3, double x1,
+        double y1, double z1, double x4, double y4, double z4) {
         renderAngledBlock(x2, y2, z2, x3, y3, z3, x1, y1, z1, x4, y4, z4, 0D, 0D, 0D);
     }
 
-    protected void renderAngledBlock(double x2, double y2, double z2, double x3, double y3, double z3, double x1, double y1, double z1, double x4, double y4, double z4, double xDim, double height, double zDim) {
+    protected void renderAngledBlock(double x2, double y2, double z2, double x3, double y3, double z3, double x1,
+        double y1, double z1, double x4, double y4, double z4, double xDim, double height, double zDim) {
         if (icon == null) return;
         renderFace(x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4);
         renderFace(x1, y1 + height, z1, x2, y2 + height, z2, x3, y3 + height, z3, x4, y4 + height, z4);

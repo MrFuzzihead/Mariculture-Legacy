@@ -28,7 +28,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderFakeItem extends Render {
-    private static final ResourceLocation field_110798_h = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+
+    private static final ResourceLocation field_110798_h = new ResourceLocation(
+        "textures/misc/enchanted_item_glint.png");
     private RenderBlocks itemRenderBlocks = new RenderBlocks();
 
     /** The RNG used in RenderItem (for bobbing itemstacks on the ground) */
@@ -65,91 +67,100 @@ public class RenderFakeItem extends Render {
             float f6;
             int i;
 
-            //field_147909_c = renderBlocks
-            if (ForgeHooksClient.renderEntityItem(entity, itemstack, f2, f3, random, renderManager.renderEngine, field_147909_c, b0)) {
+            // field_147909_c = renderBlocks
+            if (ForgeHooksClient
+                .renderEntityItem(entity, itemstack, f2, f3, random, renderManager.renderEngine, field_147909_c, b0)) {
                 ;
-            } else if (itemstack.getItemSpriteNumber() == 0 && itemstack.getItem() instanceof ItemBlock && RenderBlocks.renderItemIn3d(Block.getBlockFromItem(itemstack.getItem()).getRenderType())) {
-                Block block = Block.getBlockFromItem(itemstack.getItem());
-                GL11.glRotatef(f3, 0.0F, 1.0F, 0.0F);
+            } else if (itemstack.getItemSpriteNumber() == 0 && itemstack.getItem() instanceof ItemBlock
+                && RenderBlocks.renderItemIn3d(
+                    Block.getBlockFromItem(itemstack.getItem())
+                        .getRenderType())) {
+                            Block block = Block.getBlockFromItem(itemstack.getItem());
+                            GL11.glRotatef(f3, 0.0F, 1.0F, 0.0F);
 
-                if (renderInFrame) {
-                    GL11.glScalef(1.25F, 1.25F, 1.25F);
-                    GL11.glTranslatef(0.0F, 0.05F, 0.0F);
-                    GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-                }
+                            if (renderInFrame) {
+                                GL11.glScalef(1.25F, 1.25F, 1.25F);
+                                GL11.glTranslatef(0.0F, 0.05F, 0.0F);
+                                GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
+                            }
 
-                float f7 = 0.25F;
-                int j = block.getRenderType();
+                            float f7 = 0.25F;
+                            int j = block.getRenderType();
 
-                if (j == 1 || j == 19 || j == 12 || j == 2) {
-                    f7 = 0.5F;
-                }
+                            if (j == 1 || j == 19 || j == 12 || j == 2) {
+                                f7 = 0.5F;
+                            }
 
-                GL11.glScalef(f7, f7, f7);
+                            GL11.glScalef(f7, f7, f7);
 
-                for (i = 0; i < b0; ++i) {
-                    GL11.glPushMatrix();
+                            for (i = 0; i < b0; ++i) {
+                                GL11.glPushMatrix();
 
-                    if (i > 0) {
-                        f5 = (random.nextFloat() * 2.0F - 1.0F) * 0.2F / f7;
-                        f4 = (random.nextFloat() * 2.0F - 1.0F) * 0.2F / f7;
-                        f6 = (random.nextFloat() * 2.0F - 1.0F) * 0.2F / f7;
-                        GL11.glTranslatef(f5, f4, f6);
-                    }
+                                if (i > 0) {
+                                    f5 = (random.nextFloat() * 2.0F - 1.0F) * 0.2F / f7;
+                                    f4 = (random.nextFloat() * 2.0F - 1.0F) * 0.2F / f7;
+                                    f6 = (random.nextFloat() * 2.0F - 1.0F) * 0.2F / f7;
+                                    GL11.glTranslatef(f5, f4, f6);
+                                }
 
-                    f5 = 1.0F;
-                    itemRenderBlocks.renderBlockAsItem(block, itemstack.getItemDamage(), f5);
-                    GL11.glPopMatrix();
-                }
-            } else {
-                float f8;
-
-                if (itemstack.getItemSpriteNumber() == 1 && itemstack.getItem().requiresMultipleRenderPasses()) {
-                    if (renderInFrame) {
-                        GL11.glScalef(0.5128205F, 0.5128205F, 0.5128205F);
-                        GL11.glTranslatef(0.0F, -0.05F, 0.0F);
-                    } else {
-                        GL11.glScalef(0.5F, 0.5F, 0.5F);
-                    }
-
-                    for (int k = 0; k < itemstack.getItem().getRenderPasses(itemstack.getItemDamage()); ++k) {
-                        random.setSeed(187L);
-                        IIcon icon = itemstack.getItem().getIcon(itemstack, k);
-                        f8 = 1.0F;
-
-                        if (renderWithColor) {
-                            i = itemstack.getItem().getColorFromItemStack(itemstack, k);
-                            f5 = (i >> 16 & 255) / 255.0F;
-                            f4 = (i >> 8 & 255) / 255.0F;
-                            f6 = (i & 255) / 255.0F;
-                            GL11.glColor4f(f5 * f8, f4 * f8, f6 * f8, 1.0F);
-                            this.renderDroppedItem(entity, icon, b0, par9, f5 * f8, f4 * f8, f6 * f8, k);
+                                f5 = 1.0F;
+                                itemRenderBlocks.renderBlockAsItem(block, itemstack.getItemDamage(), f5);
+                                GL11.glPopMatrix();
+                            }
                         } else {
-                            this.renderDroppedItem(entity, icon, b0, par9, 1.0F, 1.0F, 1.0F, k);
+                            float f8;
+
+                            if (itemstack.getItemSpriteNumber() == 1 && itemstack.getItem()
+                                .requiresMultipleRenderPasses()) {
+                                if (renderInFrame) {
+                                    GL11.glScalef(0.5128205F, 0.5128205F, 0.5128205F);
+                                    GL11.glTranslatef(0.0F, -0.05F, 0.0F);
+                                } else {
+                                    GL11.glScalef(0.5F, 0.5F, 0.5F);
+                                }
+
+                                for (int k = 0; k < itemstack.getItem()
+                                    .getRenderPasses(itemstack.getItemDamage()); ++k) {
+                                    random.setSeed(187L);
+                                    IIcon icon = itemstack.getItem()
+                                        .getIcon(itemstack, k);
+                                    f8 = 1.0F;
+
+                                    if (renderWithColor) {
+                                        i = itemstack.getItem()
+                                            .getColorFromItemStack(itemstack, k);
+                                        f5 = (i >> 16 & 255) / 255.0F;
+                                        f4 = (i >> 8 & 255) / 255.0F;
+                                        f6 = (i & 255) / 255.0F;
+                                        GL11.glColor4f(f5 * f8, f4 * f8, f6 * f8, 1.0F);
+                                        this.renderDroppedItem(entity, icon, b0, par9, f5 * f8, f4 * f8, f6 * f8, k);
+                                    } else {
+                                        this.renderDroppedItem(entity, icon, b0, par9, 1.0F, 1.0F, 1.0F, k);
+                                    }
+                                }
+                            } else {
+                                if (renderInFrame) {
+                                    GL11.glScalef(0.5128205F, 0.5128205F, 0.5128205F);
+                                    GL11.glTranslatef(0.0F, -0.05F, 0.0F);
+                                } else {
+                                    GL11.glScalef(0.5F, 0.5F, 0.5F);
+                                }
+
+                                IIcon icon1 = itemstack.getIconIndex();
+
+                                if (renderWithColor) {
+                                    int l = itemstack.getItem()
+                                        .getColorFromItemStack(itemstack, 0);
+                                    f8 = (l >> 16 & 255) / 255.0F;
+                                    float f9 = (l >> 8 & 255) / 255.0F;
+                                    f5 = (l & 255) / 255.0F;
+                                    f4 = 1.0F;
+                                    this.renderDroppedItem(entity, icon1, b0, par9, f8 * f4, f9 * f4, f5 * f4);
+                                } else {
+                                    this.renderDroppedItem(entity, icon1, b0, par9, 1.0F, 1.0F, 1.0F);
+                                }
+                            }
                         }
-                    }
-                } else {
-                    if (renderInFrame) {
-                        GL11.glScalef(0.5128205F, 0.5128205F, 0.5128205F);
-                        GL11.glTranslatef(0.0F, -0.05F, 0.0F);
-                    } else {
-                        GL11.glScalef(0.5F, 0.5F, 0.5F);
-                    }
-
-                    IIcon icon1 = itemstack.getIconIndex();
-
-                    if (renderWithColor) {
-                        int l = itemstack.getItem().getColorFromItemStack(itemstack, 0);
-                        f8 = (l >> 16 & 255) / 255.0F;
-                        float f9 = (l >> 8 & 255) / 255.0F;
-                        f5 = (l & 255) / 255.0F;
-                        f4 = 1.0F;
-                        this.renderDroppedItem(entity, icon1, b0, par9, f8 * f4, f9 * f4, f5 * f4);
-                    } else {
-                        this.renderDroppedItem(entity, icon1, b0, par9, 1.0F, 1.0F, 1.0F);
-                    }
-                }
-            }
 
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             GL11.glPopMatrix();
@@ -157,19 +168,26 @@ public class RenderFakeItem extends Render {
     }
 
     protected ResourceLocation getEntityTexture(EntityItem entity) {
-        return renderManager.renderEngine.getResourceLocation(entity.getEntityItem().getItemSpriteNumber());
+        return renderManager.renderEngine.getResourceLocation(
+            entity.getEntityItem()
+                .getItemSpriteNumber());
     }
 
-    private void renderDroppedItem(EntityItem par1EntityItem, IIcon par2Icon, int par3, float par4, float par5, float par6, float par7) {
+    private void renderDroppedItem(EntityItem par1EntityItem, IIcon par2Icon, int par3, float par4, float par5,
+        float par6, float par7) {
         renderDroppedItem(par1EntityItem, par2Icon, par3, par4, par5, par6, par7, 0);
     }
 
-    private void renderDroppedItem(EntityItem par1EntityItem, IIcon par2Icon, int par3, float par4, float par5, float par6, float par7, int pass) {
+    private void renderDroppedItem(EntityItem par1EntityItem, IIcon par2Icon, int par3, float par4, float par5,
+        float par6, float par7, int pass) {
         Tessellator tessellator = Tessellator.instance;
 
         if (par2Icon == null) {
-            TextureManager texturemanager = Minecraft.getMinecraft().getTextureManager();
-            ResourceLocation resourcelocation = texturemanager.getResourceLocation(par1EntityItem.getEntityItem().getItemSpriteNumber());
+            TextureManager texturemanager = Minecraft.getMinecraft()
+                .getTextureManager();
+            ResourceLocation resourcelocation = texturemanager.getResourceLocation(
+                par1EntityItem.getEntityItem()
+                    .getItemSpriteNumber());
             par2Icon = ((TextureMap) texturemanager.getTexture(resourcelocation)).getAtlasSprite("missingno");
         }
 
@@ -187,7 +205,11 @@ public class RenderFakeItem extends Render {
         if (renderInFrame) {
             GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
         } else {
-            GL11.glRotatef(((par1EntityItem.age + par4) / 20.0F + par1EntityItem.hoverStart) * (180F / (float) Math.PI), 0.0F, 1.0F, 0.0F);
+            GL11.glRotatef(
+                ((par1EntityItem.age + par4) / 20.0F + par1EntityItem.hoverStart) * (180F / (float) Math.PI),
+                0.0F,
+                1.0F,
+                0.0F);
         }
 
         float f12 = 0.0625F;
@@ -216,7 +238,8 @@ public class RenderFakeItem extends Render {
             }
 
             GL11.glColor4f(par5, par6, par7, 1.0F);
-            ItemRenderer.renderItemIn2D(tessellator, f5, f6, f4, f7, par2Icon.getIconWidth(), par2Icon.getIconHeight(), f12);
+            ItemRenderer
+                .renderItemIn2D(tessellator, f5, f6, f4, f7, par2Icon.getIconWidth(), par2Icon.getIconHeight(), f12);
 
             if (itemstack.hasEffect(pass)) {
                 GL11.glDepthFunc(GL11.GL_EQUAL);
@@ -256,11 +279,13 @@ public class RenderFakeItem extends Render {
     /**
      * Renders the item's icon or block into the UI at the specified position.
      */
-    public void renderItemIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager, ItemStack par3ItemStack, int par4, int par5) {
+    public void renderItemIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager,
+        ItemStack par3ItemStack, int par4, int par5) {
         renderItemIntoGUI(par1FontRenderer, par2TextureManager, par3ItemStack, par4, par5, false);
     }
 
-    public void renderItemIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager, ItemStack par3ItemStack, int par4, int par5, boolean renderEffect) {
+    public void renderItemIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager,
+        ItemStack par3ItemStack, int par4, int par5, boolean renderEffect) {
         int l = par3ItemStack.getItemDamage();
         Object object = par3ItemStack.getIconIndex();
         float f;
@@ -268,7 +293,9 @@ public class RenderFakeItem extends Render {
         float f1;
         float f2;
 
-        if (par3ItemStack.getItemSpriteNumber() == 0 && RenderBlocks.renderItemIn3d(Block.getBlockFromItem(par3ItemStack.getItem()).getRenderType())) {
+        if (par3ItemStack.getItemSpriteNumber() == 0 && RenderBlocks.renderItemIn3d(
+            Block.getBlockFromItem(par3ItemStack.getItem())
+                .getRenderType())) {
             par2TextureManager.bindTexture(TextureMap.locationBlocksTexture);
             Block block = Block.getBlockFromItem(par3ItemStack.getItem());
             GL11.glPushMatrix();
@@ -278,7 +305,8 @@ public class RenderFakeItem extends Render {
             GL11.glScalef(1.0F, 1.0F, -1.0F);
             GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
             GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
-            i1 = par3ItemStack.getItem().getColorFromItemStack(par3ItemStack, 0);
+            i1 = par3ItemStack.getItem()
+                .getColorFromItemStack(par3ItemStack, 0);
             f = (i1 >> 16 & 255) / 255.0F;
             f1 = (i1 >> 8 & 255) / 255.0F;
             f2 = (i1 & 255) / 255.0F;
@@ -292,55 +320,63 @@ public class RenderFakeItem extends Render {
             itemRenderBlocks.renderBlockAsItem(block, l, 1.0F);
             itemRenderBlocks.useInventoryTint = true;
             GL11.glPopMatrix();
-        } else if (par3ItemStack.getItem().requiresMultipleRenderPasses()) {
-            GL11.glDisable(GL11.GL_LIGHTING);
+        } else if (par3ItemStack.getItem()
+            .requiresMultipleRenderPasses()) {
+                GL11.glDisable(GL11.GL_LIGHTING);
 
-            Item item = par3ItemStack.getItem();
-            for (int j1 = 0; j1 < item.getRenderPasses(l); ++j1) {
-                par2TextureManager.bindTexture(par3ItemStack.getItemSpriteNumber() == 0 ? TextureMap.locationBlocksTexture : TextureMap.locationItemsTexture);
-                IIcon icon = item.getIcon(par3ItemStack, l);
-                int k1 = par3ItemStack.getItem().getColorFromItemStack(par3ItemStack, l);
-                f1 = (k1 >> 16 & 255) / 255.0F;
-                f2 = (k1 >> 8 & 255) / 255.0F;
-                float f3 = (k1 & 255) / 255.0F;
+                Item item = par3ItemStack.getItem();
+                for (int j1 = 0; j1 < item.getRenderPasses(l); ++j1) {
+                    par2TextureManager.bindTexture(
+                        par3ItemStack.getItemSpriteNumber() == 0 ? TextureMap.locationBlocksTexture
+                            : TextureMap.locationItemsTexture);
+                    IIcon icon = item.getIcon(par3ItemStack, l);
+                    int k1 = par3ItemStack.getItem()
+                        .getColorFromItemStack(par3ItemStack, l);
+                    f1 = (k1 >> 16 & 255) / 255.0F;
+                    f2 = (k1 >> 8 & 255) / 255.0F;
+                    float f3 = (k1 & 255) / 255.0F;
 
-                if (renderWithColor) {
-                    GL11.glColor4f(f1, f2, f3, 1.0F);
+                    if (renderWithColor) {
+                        GL11.glColor4f(f1, f2, f3, 1.0F);
+                    }
+
+                    renderIcon(par4, par5, icon, 16, 16);
+
+                    if (par3ItemStack.hasEffect(j1)) {
+                        renderEffect(par2TextureManager, par4, par5);
+                    }
                 }
 
-                renderIcon(par4, par5, icon, 16, 16);
+                GL11.glEnable(GL11.GL_LIGHTING);
+            } else {
+                GL11.glDisable(GL11.GL_LIGHTING);
+                ResourceLocation resourcelocation = par2TextureManager
+                    .getResourceLocation(par3ItemStack.getItemSpriteNumber());
+                par2TextureManager.bindTexture(resourcelocation);
 
-                if (par3ItemStack.hasEffect(j1)) {
+                if (object == null) {
+                    object = ((TextureMap) Minecraft.getMinecraft()
+                        .getTextureManager()
+                        .getTexture(resourcelocation)).getAtlasSprite("missingno");
+                }
+
+                i1 = par3ItemStack.getItem()
+                    .getColorFromItemStack(par3ItemStack, 0);
+                f = (i1 >> 16 & 255) / 255.0F;
+                f1 = (i1 >> 8 & 255) / 255.0F;
+                f2 = (i1 & 255) / 255.0F;
+
+                if (renderWithColor) {
+                    GL11.glColor4f(f, f1, f2, 1.0F);
+                }
+
+                renderIcon(par4, par5, (IIcon) object, 16, 16);
+                GL11.glEnable(GL11.GL_LIGHTING);
+
+                if (par3ItemStack.hasEffect(0)) {
                     renderEffect(par2TextureManager, par4, par5);
                 }
             }
-
-            GL11.glEnable(GL11.GL_LIGHTING);
-        } else {
-            GL11.glDisable(GL11.GL_LIGHTING);
-            ResourceLocation resourcelocation = par2TextureManager.getResourceLocation(par3ItemStack.getItemSpriteNumber());
-            par2TextureManager.bindTexture(resourcelocation);
-
-            if (object == null) {
-                object = ((TextureMap) Minecraft.getMinecraft().getTextureManager().getTexture(resourcelocation)).getAtlasSprite("missingno");
-            }
-
-            i1 = par3ItemStack.getItem().getColorFromItemStack(par3ItemStack, 0);
-            f = (i1 >> 16 & 255) / 255.0F;
-            f1 = (i1 >> 8 & 255) / 255.0F;
-            f2 = (i1 & 255) / 255.0F;
-
-            if (renderWithColor) {
-                GL11.glColor4f(f, f1, f2, 1.0F);
-            }
-
-            renderIcon(par4, par5, (IIcon) object, 16, 16);
-            GL11.glEnable(GL11.GL_LIGHTING);
-
-            if (par3ItemStack.hasEffect(0)) {
-                renderEffect(par2TextureManager, par4, par5);
-            }
-        }
 
         GL11.glEnable(GL11.GL_CULL_FACE);
     }
@@ -365,10 +401,18 @@ public class RenderFakeItem extends Render {
     /**
      * Render the item's icon or block into the GUI, including the glint effect.
      */
-    public void renderItemAndEffectIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager, ItemStack par3ItemStack, int par4, int par5) {
-        if (par3ItemStack != null) if (!ForgeHooksClient.renderInventoryItem(field_147909_c, par2TextureManager, par3ItemStack, renderWithColor, zLevel, par4, par5)) {
-            this.renderItemIntoGUI(par1FontRenderer, par2TextureManager, par3ItemStack, par4, par5, true);
-        }
+    public void renderItemAndEffectIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager,
+        ItemStack par3ItemStack, int par4, int par5) {
+        if (par3ItemStack != null) if (!ForgeHooksClient.renderInventoryItem(
+            field_147909_c,
+            par2TextureManager,
+            par3ItemStack,
+            renderWithColor,
+            zLevel,
+            par4,
+            par5)) {
+                this.renderItemIntoGUI(par1FontRenderer, par2TextureManager, par3ItemStack, par4, par5, true);
+            }
     }
 
     private void renderGlint(int par1, int par2, int par3, int par4, int par5) {
@@ -394,31 +438,40 @@ public class RenderFakeItem extends Render {
 
             tessellator.startDrawingQuads();
             tessellator.addVertexWithUV(par2 + 0, par3 + par5, zLevel, (f2 + par5 * f4) * f, (f3 + par5) * f1);
-            tessellator.addVertexWithUV(par2 + par4, par3 + par5, zLevel, (f2 + par4 + par5 * f4) * f, (f3 + par5) * f1);
+            tessellator
+                .addVertexWithUV(par2 + par4, par3 + par5, zLevel, (f2 + par4 + par5 * f4) * f, (f3 + par5) * f1);
             tessellator.addVertexWithUV(par2 + par4, par3 + 0, zLevel, (f2 + par4) * f, (f3 + 0.0F) * f1);
             tessellator.addVertexWithUV(par2 + 0, par3 + 0, zLevel, (f2 + 0.0F) * f, (f3 + 0.0F) * f1);
             tessellator.draw();
         }
     }
 
-    public void renderItemOverlayIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager, ItemStack par3ItemStack, int par4, int par5) {
+    public void renderItemOverlayIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager,
+        ItemStack par3ItemStack, int par4, int par5) {
         this.renderItemOverlayIntoGUI(par1FontRenderer, par2TextureManager, par3ItemStack, par4, par5, (String) null);
     }
 
-    public void renderItemOverlayIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager, ItemStack par3ItemStack, int par4, int par5, String par6Str) {
+    public void renderItemOverlayIntoGUI(FontRenderer par1FontRenderer, TextureManager par2TextureManager,
+        ItemStack par3ItemStack, int par4, int par5, String par6Str) {
         if (par3ItemStack != null) {
             if (par3ItemStack.stackSize > 1 || par6Str != null) {
                 String s1 = par6Str == null ? String.valueOf(par3ItemStack.stackSize) : par6Str;
                 GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
-                par1FontRenderer.drawStringWithShadow(s1, par4 + 19 - 2 - par1FontRenderer.getStringWidth(s1), par5 + 6 + 3, 16777215);
+                par1FontRenderer.drawStringWithShadow(
+                    s1,
+                    par4 + 19 - 2 - par1FontRenderer.getStringWidth(s1),
+                    par5 + 6 + 3,
+                    16777215);
                 GL11.glEnable(GL11.GL_LIGHTING);
                 GL11.glEnable(GL11.GL_DEPTH_TEST);
             }
 
             if (par3ItemStack.isItemDamaged()) {
-                int k = (int) Math.round(13.0D - par3ItemStack.getItemDamageForDisplay() * 13.0D / par3ItemStack.getMaxDamage());
-                int l = (int) Math.round(255.0D - par3ItemStack.getItemDamageForDisplay() * 255.0D / par3ItemStack.getMaxDamage());
+                int k = (int) Math
+                    .round(13.0D - par3ItemStack.getItemDamageForDisplay() * 13.0D / par3ItemStack.getMaxDamage());
+                int l = (int) Math
+                    .round(255.0D - par3ItemStack.getItemDamageForDisplay() * 255.0D / par3ItemStack.getMaxDamage());
                 GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glDisable(GL11.GL_DEPTH_TEST);
                 GL11.glDisable(GL11.GL_TEXTURE_2D);

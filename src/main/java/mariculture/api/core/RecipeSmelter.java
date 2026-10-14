@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public class RecipeSmelter {
+
     public int temp;
     public ItemStack input;
     public FluidStack fluid;
@@ -26,7 +27,8 @@ public class RecipeSmelter {
         this.chance = chance;
     }
 
-    public RecipeSmelter(ItemStack input, int temp, FluidStack[] fluids, Integer rands[], ItemStack output, int chance) {
+    public RecipeSmelter(ItemStack input, int temp, FluidStack[] fluids, Integer rands[], ItemStack output,
+        int chance) {
         fluid = fluids[0];
         this.input = input;
         this.temp = temp;
@@ -36,7 +38,8 @@ public class RecipeSmelter {
         this.chance = chance;
     }
 
-    public RecipeSmelter(ItemStack input, ItemStack input2, int temp, FluidStack fluid, ItemStack output, int chance, Integer[] rands) {
+    public RecipeSmelter(ItemStack input, ItemStack input2, int temp, FluidStack fluid, ItemStack output, int chance,
+        Integer[] rands) {
         this(input, temp, fluid, output, chance);
         this.rands = rands;
     }
@@ -46,9 +49,13 @@ public class RecipeSmelter {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((fluid == null) ? 0 : fluid.hashCode());
-        result = prime * result + ((input == null) ? 0 : input.getItem().hashCode());
+        result = prime * result + ((input == null) ? 0
+            : input.getItem()
+                .hashCode());
         result = prime * result + ((input == null) ? 0 : input.getItemDamage());
-        result = prime * result + ((output == null) ? 0 : output.getItem().hashCode());
+        result = prime * result + ((output == null) ? 0
+            : output.getItem()
+                .hashCode());
         result = prime * result + ((output == null) ? 0 : output.getItemDamage());
         result = prime * result + Arrays.hashCode(random);
         return result;
@@ -65,10 +72,12 @@ public class RecipeSmelter {
         } else if (!fluid.equals(other.fluid)) return false;
         if (input == null) {
             if (other.input != null) return false;
-        } else if (!input.getItem().equals(other.input.getItem()) || input.getItemDamage() != other.input.getItemDamage()) return false;
+        } else if (!input.getItem()
+            .equals(other.input.getItem()) || input.getItemDamage() != other.input.getItemDamage()) return false;
         if (output == null) {
             if (other.output != null) return false;
-        } else if (!output.getItem().equals(other.output.getItem()) || output.getItemDamage() != other.output.getItemDamage()) return false;
+        } else if (!output.getItem()
+            .equals(other.output.getItem()) || output.getItemDamage() != other.output.getItemDamage()) return false;
         if (!Arrays.equals(random, other.random)) return false;
         return true;
     }

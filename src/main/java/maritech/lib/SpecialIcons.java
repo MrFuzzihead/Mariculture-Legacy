@@ -1,10 +1,10 @@
 package maritech.lib;
 
-import mariculture.Mariculture;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 
 public class SpecialIcons {
+
     public static IIcon sluiceAdvanced;
     public static IIcon sluiceAdvancedBack;
     public static IIcon sluiceAdvancedUp;
@@ -24,7 +24,7 @@ public class SpecialIcons {
         sluiceAdvancedDown = register.registerIcon(MTModInfo.MODPATH + ":sluiceAdvancedDown");
         sluiceAdvanced = register.registerIcon(MTModInfo.MODPATH + ":sluiceAdvancedSide");
         generatorBack = register.registerIcon(MTModInfo.MODPATH + ":generatorBack");
-        //Extra Icons for the blocks
+        // Extra Icons for the blocks
         incubatorIcons = new IIcon[2];
         incubatorIcons[0] = register.registerIcon(MTModInfo.MODPATH + ":incubatorBottom");
         incubatorIcons[1] = register.registerIcon(MTModInfo.MODPATH + ":incubatorTopTop");

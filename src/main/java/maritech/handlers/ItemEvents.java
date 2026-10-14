@@ -2,14 +2,14 @@ package maritech.handlers;
 
 import java.util.HashMap;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mariculture.core.events.ItemEvent;
 import maritech.util.IItemExtension;
-import net.minecraft.item.Item;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ItemEvents {
+
     public static HashMap<Class, IItemExtension> items = new HashMap();
-    
+
     public static void register(Class clazz, IItemExtension extension) {
         items.put(clazz, extension);
     }

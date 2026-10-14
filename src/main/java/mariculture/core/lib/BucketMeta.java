@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class BucketMeta {
+
     public static final int COUNT = 36;
     public static final int PRESSURE = 0;
     public static final int FISH_OIL = 1;

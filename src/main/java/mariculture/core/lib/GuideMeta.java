@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class GuideMeta {
+
     public static final int COUNT = 9;
     public static final int PROCESSING = 0;
     public static final int DIVING = 1;

@@ -1,18 +1,20 @@
 package mariculture.fishery.gui;
 
-import mariculture.api.core.ISpecialSorting;
-import mariculture.core.gui.ContainerMachine;
-import mariculture.core.gui.SlotFake;
-import mariculture.fishery.items.ItemFishy;
-import mariculture.fishery.tile.TileFishTank;
-import mariculture.lib.helpers.ClientHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import mariculture.api.core.ISpecialSorting;
+import mariculture.core.gui.ContainerMachine;
+import mariculture.core.gui.SlotFake;
+import mariculture.fishery.items.ItemFishy;
+import mariculture.fishery.tile.TileFishTank;
+import mariculture.lib.helpers.ClientHelper;
+
 public class ContainerFishTank extends ContainerMachine {
+
     public TileFishTank tank;
 
     public ContainerFishTank(TileFishTank tile, InventoryPlayer playerInventory) {
@@ -56,16 +58,17 @@ public class ContainerFishTank extends ContainerMachine {
     public ItemStack transferStackInSlot(EntityPlayer player, int slotID) {
         Slot slot = ((Slot) inventorySlots.get(slotID));
         ItemStack itemShifting = ((Slot) inventorySlots.get(slotID)).getStack();
-        //So we look for the same fish item stack first, if we fail then we do the loop again, but look for an empty slot
+        // So we look for the same fish item stack first, if we fail then we do the loop again, but look for an empty
+        // slot
         if (itemShifting != null && itemShifting.getItem() instanceof ItemFishy) {
             long thisClick = System.currentTimeMillis();
             long difference = thisClick - lastClick;
             lastClick = thisClick;
-            //This is for slots outside the inventory
+            // This is for slots outside the inventory
             if (slotID >= 54) {
                 for (int i = 0; i < tile.getInventory().length; i++) {
                     ItemStack inSlot = tile.getInventory()[i];
-                    if (inSlot == null) continue; //First time we go through, we search for the same stuff
+                    if (inSlot == null) continue; // First time we go through, we search for the same stuff
                     if (isFishEqual(itemShifting, inSlot)) {
                         ItemStack cloned = inSlot.copy();
                         cloned.stackSize += itemShifting.stackSize;
@@ -75,10 +78,10 @@ public class ContainerFishTank extends ContainerMachine {
                     }
                 }
 
-                //New fishies
+                // New fishies
                 for (int i = 0; i < tile.getInventory().length; i++) {
                     ItemStack inSlot = tile.getInventory()[i];
-                    if (inSlot != null) continue; //First time we go through, we search for the same stuff
+                    if (inSlot != null) continue; // First time we go through, we search for the same stuff
                     ItemStack cloned = itemShifting.copy();
                     cloned.stackSize = itemShifting.stackSize;
                     tank.setInventorySlotContents(i, cloned);
@@ -86,7 +89,7 @@ public class ContainerFishTank extends ContainerMachine {
                     return null;
                 }
             } else {
-                //54 > 89
+                // 54 > 89
                 for (int i = 54; i <= 89; i++) {
                     Slot thisSlot = ((Slot) inventorySlots.get(i));
                     ItemStack inSlot = thisSlot.getStack();
@@ -110,7 +113,7 @@ public class ContainerFishTank extends ContainerMachine {
                     }
                 }
 
-                //Step two attempt to place the item in empty slot
+                // Step two attempt to place the item in empty slot
                 for (int i = 54; i <= 89; i++) {
                     Slot thisSlot = ((Slot) inventorySlots.get(i));
                     ItemStack inSlot = thisSlot.getStack();
@@ -136,8 +139,9 @@ public class ContainerFishTank extends ContainerMachine {
     }
 
     private class SlotFishTank extends SlotFake {
+
         private TileFishTank tank;
-        
+
         public SlotFishTank(TileFishTank invent, int slot, int x, int y) {
             super(invent, slot, x, y);
             this.tank = invent;

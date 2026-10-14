@@ -1,14 +1,16 @@
 package mariculture.fishery.gui;
 
-import mariculture.core.gui.SlotFake;
-import mariculture.factory.tile.TileFishSorter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.gui.SlotFake;
+import mariculture.factory.tile.TileFishSorter;
+
 public class SlotSorter extends SlotFake {
+
     private IInventory tile;
 
     public SlotSorter(IInventory inv, int id, int x, int y) {

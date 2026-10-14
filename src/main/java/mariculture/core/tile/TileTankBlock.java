@@ -2,11 +2,6 @@ package mariculture.core.tile;
 
 import java.util.List;
 
-import mariculture.core.config.Machines.MachineSettings;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.util.ITank;
-import mariculture.core.util.Tank;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -22,7 +17,14 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import mariculture.core.config.Machines.MachineSettings;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.util.ITank;
+import mariculture.core.util.Tank;
+
 public class TileTankBlock extends TileEntity implements IFluidHandler, ITank, IInventory {
+
     public static final int COPPER_CAPACITY = 32000;
     public static final int ALUMINUM_CAPACITY = 64000;
     public static final int TITANIUM_CAPACITY = 128000;

@@ -4,6 +4,7 @@ import mariculture.core.gui.GuiMariculture;
 import mariculture.core.util.IProgressable;
 
 public class FeatureArrow extends Feature {
+
     private IProgressable machine;
     private int xPoz;
     private int yPoz;

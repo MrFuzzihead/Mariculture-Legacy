@@ -1,5 +1,16 @@
 package mariculture;
 
+import net.minecraft.client.renderer.entity.RenderFish;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.MinecraftForgeClient;
+
+import org.lwjgl.input.Keyboard;
+
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import mariculture.core.Core;
 import mariculture.core.config.Machines.Client;
 import mariculture.core.lib.MachineRenderedMeta;
@@ -55,23 +66,18 @@ import mariculture.fishery.tile.TileHatchery;
 import mariculture.world.EntityRockhopper;
 import mariculture.world.render.ModelRockhopper;
 import mariculture.world.render.RenderRockhopper;
-import net.minecraft.client.renderer.entity.RenderFish;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.MinecraftForgeClient;
-
-import org.lwjgl.input.Keyboard;
-
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class MCClientProxy extends MCCommonProxy {
-    private static final ResourceLocation AIR_PUMP = new ResourceLocation(Mariculture.modid, "textures/blocks/air_pump_texture.png");
-    private static final ResourceLocation SIFT = new ResourceLocation(Mariculture.modid, "textures/blocks/sift_texture.png");
-    private static final ResourceLocation FEEDER = new ResourceLocation(Mariculture.modid, "textures/blocks/feeder_texture.png");
 
+    private static final ResourceLocation AIR_PUMP = new ResourceLocation(
+        Mariculture.modid,
+        "textures/blocks/air_pump_texture.png");
+    private static final ResourceLocation SIFT = new ResourceLocation(
+        Mariculture.modid,
+        "textures/blocks/sift_texture.png");
+    private static final ResourceLocation FEEDER = new ResourceLocation(
+        Mariculture.modid,
+        "textures/blocks/feeder_texture.png");
 
     public static KeyBinding key_activate;
     public static KeyBinding key_toggle;
@@ -93,7 +99,8 @@ public class MCClientProxy extends MCCommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileVat.class, new VatSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAnvil.class, new AnvilSpecialRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileAutohammer.class, new HammerSpecialRenderer());
-        ClientRegistry.bindTileEntitySpecialRenderer(TileAirPump.class, new RenderSpecialHandler(new ModelAirPump(), AIR_PUMP));
+        ClientRegistry
+            .bindTileEntitySpecialRenderer(TileAirPump.class, new RenderSpecialHandler(new ModelAirPump(), AIR_PUMP));
         RenderHandler.register(Core.water, WaterMeta.OYSTER, RenderOyster.class);
         RenderHandler.register(Core.renderedMachines, MachineRenderedMeta.ANVIL, RenderAnvil.class);
         RenderHandler.register(Core.renderedMachines, MachineRenderedMeta.NUGGET_CASTER, RenderNuggetCaster.class);
@@ -113,16 +120,26 @@ public class MCClientProxy extends MCCommonProxy {
         }
 
         if (Modules.isActive(Modules.factory)) {
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customBlock), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customFlooring), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customSlabs), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customSlabsDouble), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customStairs), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customFence), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customGate), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customLight), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customWall), new RenderCustomItem());
-            MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(Factory.customRFWall), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customBlock), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customFlooring), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customSlabs), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customSlabsDouble), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customStairs), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customFence), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customGate), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customLight), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customWall), new RenderCustomItem());
+            MinecraftForgeClient
+                .registerItemRenderer(Item.getItemFromBlock(Factory.customRFWall), new RenderCustomItem());
             RenderHandler.register(Core.renderedMachines, MachineRenderedMeta.GEYSER, RenderGeyser.class);
             RenderHandler.register(Core.tanks, TankMeta.DIC, RenderFluidDictionary.class);
         }
@@ -131,7 +148,8 @@ public class MCClientProxy extends MCCommonProxy {
             RenderIds.FISHING = RenderingRegistry.addNewArmourRendererPrefix("fishing");
             RenderingRegistry.registerEntityRenderingHandler(EntityItemFireImmune.class, new RenderItem());
             RenderingRegistry.registerEntityRenderingHandler(EntityHook.class, new RenderFish());
-            RenderingRegistry.registerEntityRenderingHandler(EntityBass.class, new RenderProjectileFish(Fish.bass.getID()));
+            RenderingRegistry
+                .registerEntityRenderingHandler(EntityBass.class, new RenderProjectileFish(Fish.bass.getID()));
             ClientRegistry.bindTileEntitySpecialRenderer(TileFeeder.class, new FishFeederSpecialRenderer());
             ClientRegistry.bindTileEntitySpecialRenderer(TileFishTank.class, new FishTankSpecialRenderer());
             ClientRegistry.bindTileEntitySpecialRenderer(TileHatchery.class, new HatcherySpecialRenderer());
@@ -143,9 +161,11 @@ public class MCClientProxy extends MCCommonProxy {
                 RenderHandler.register(Core.renderedMachines, MachineRenderedMeta.FISH_FEEDER, RenderFeeder.class);
             }
         }
-        
+
         if (Modules.isActive(Modules.worldplus)) {
-            RenderingRegistry.registerEntityRenderingHandler(EntityRockhopper.class, new RenderRockhopper(new ModelRockhopper(), 1F));
+            RenderingRegistry.registerEntityRenderingHandler(
+                EntityRockhopper.class,
+                new RenderRockhopper(new ModelRockhopper(), 1F));
         }
     }
 }

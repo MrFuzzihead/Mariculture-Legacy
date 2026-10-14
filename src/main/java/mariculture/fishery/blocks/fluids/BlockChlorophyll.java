@@ -2,12 +2,14 @@ package mariculture.fishery.blocks.fluids;
 
 import java.util.Random;
 
-import mariculture.core.blocks.base.BlockFluid;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 
+import mariculture.core.blocks.base.BlockFluid;
+
 public class BlockChlorophyll extends BlockFluid {
+
     public BlockChlorophyll(Fluid fluid, Material material) {
         super(fluid, material);
         quantaPerBlock = 7;
@@ -20,7 +22,8 @@ public class BlockChlorophyll extends BlockFluid {
             int x2 = x + world.rand.nextInt(16) - 8;
             int z2 = z + world.rand.nextInt(16) - 8;
             int y2 = world.getTopSolidOrLiquidBlock(x2, z2);
-            world.getBiomeGenForCoords(x2, z2).plantFlower(world, world.rand, x2, y2, z2);
+            world.getBiomeGenForCoords(x2, z2)
+                .plantFlower(world, world.rand, x2, y2, z2);
         }
 
         super.updateTick(world, x, y, z, rand);

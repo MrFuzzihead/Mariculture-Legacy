@@ -1,10 +1,7 @@
 /*
  * The MIT License (MIT)
- *
  * Copyright (c) 2014 Zoe Lee (Kihira) and iLexiconn
- *
  * Some code used from CodeChickenCore under the MIT License
- *
  * See LICENSE for full License
  */
 
@@ -19,7 +16,6 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.net.URL;
 
-import mariculture.core.lib.MCModInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiErrorScreen;
@@ -47,8 +43,10 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.versioning.VersionParser;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.lib.MCModInfo;
 
 public class EnchiridionManager {
+
     public static final String requiredVersion = "1.1";
     public static final String latestVersion = "1.2b";
     public static final String latestFileName = "Enchiridion-1.7.X-" + latestVersion + ".jar";
@@ -56,19 +54,28 @@ public class EnchiridionManager {
     public static final String downloadFallback = "http://minecraft.curseforge.com/mc-mods/76612-enchiridion/files";
     public static final Logger logger = LogManager.getLogger("Enchiridion Manager");
 
-    @SidedProxy(serverSide = MCModInfo.JAVAPATH + "EnchiridionManager$CommonProxy", clientSide = MCModInfo.JAVAPATH + "EnchiridionManager$ClientProxy")
+    @SidedProxy(
+        serverSide = MCModInfo.JAVAPATH + "EnchiridionManager$CommonProxy",
+        clientSide = MCModInfo.JAVAPATH + "EnchiridionManager$ClientProxy")
     public static CommonProxy proxy;
     long totalSize;
 
     public static boolean isPresent() {
         if (!isLoaded()) {
             logger.error("Enchiridion is not installed!");
-            if (FMLCommonHandler.instance().getEffectiveSide().isClient()) {
-                FMLCommonHandler.instance().bus().register(new EnchiridionManager());
+            if (FMLCommonHandler.instance()
+                .getEffectiveSide()
+                .isClient()) {
+                FMLCommonHandler.instance()
+                    .bus()
+                    .register(new EnchiridionManager());
             } else {
-                String s = StatCollector.translateToLocalFormatted("enchiridion.downloader.missing", MCModInfo.MODID, downloadFallback);
+                String s = StatCollector
+                    .translateToLocalFormatted("enchiridion.downloader.missing", MCModInfo.MODID, downloadFallback);
                 FMLLog.bigWarning(s);
-                FMLCommonHandler.instance().getSidedDelegate().haltGame(s, null);
+                FMLCommonHandler.instance()
+                    .getSidedDelegate()
+                    .haltGame(s, null);
             }
         } else if (!isVersionCorrect()) {
             logger.error("Enchiridion is not the correct version!");
@@ -85,33 +92,46 @@ public class EnchiridionManager {
     }
 
     private static boolean isVersionCorrect() {
-        return VersionParser.parseRange(requiredVersion).containsVersion(Loader.instance().getIndexedModList().get("Enchiridion").getProcessedVersion());
+        return VersionParser.parseRange(requiredVersion)
+            .containsVersion(
+                Loader.instance()
+                    .getIndexedModList()
+                    .get("Enchiridion")
+                    .getProcessedVersion());
     }
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onClientTick(TickEvent.ClientTickEvent e) {
         if (Minecraft.getMinecraft().currentScreen instanceof GuiMainMenu) {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiYesNo(new GuiYesNoCallback() {
-                @Override
-                public void confirmClicked(boolean yesButton, int screenID) {
-                    if (yesButton) {
-                        download();
-                    } else {
-                        FMLLog.bigWarning("enchiridion.downloader.missing", downloadFallback);
-                        Minecraft.getMinecraft().shutdown();
+            Minecraft.getMinecraft()
+                .displayGuiScreen(new GuiYesNo(new GuiYesNoCallback() {
+
+                    @Override
+                    public void confirmClicked(boolean yesButton, int screenID) {
+                        if (yesButton) {
+                            download();
+                        } else {
+                            FMLLog.bigWarning("enchiridion.downloader.missing", downloadFallback);
+                            Minecraft.getMinecraft()
+                                .shutdown();
+                        }
                     }
-                }
-            }, I18n.format("enchiridion.downloader.0", MCModInfo.MODID), I18n.format("enchiridion.downloader.1"), 0));
+                },
+                    I18n.format("enchiridion.downloader.0", MCModInfo.MODID),
+                    I18n.format("enchiridion.downloader.1"),
+                    0));
         }
     }
 
     @SideOnly(Side.CLIENT)
     public void download() {
         final GuiScreenWorking screenWorking = new GuiScreenWorking();
-        Minecraft.getMinecraft().displayGuiScreen(screenWorking);
+        Minecraft.getMinecraft()
+            .displayGuiScreen(screenWorking);
 
         final Thread downloadThread = new Thread(new Runnable() {
+
             @Override
             public void run() {
                 screenWorking.resetProgressAndMessage(I18n.format("enchiridion.downloader.downloading"));
@@ -122,19 +142,27 @@ public class EnchiridionManager {
                 OutputStream output = null;
                 InputStream input = null;
                 try {
-                    target = new File(Minecraft.getMinecraft().mcDataDir + File.separator + "mods" + File.separator + latestFileName);
+                    target = new File(
+                        Minecraft.getMinecraft().mcDataDir + File.separator + "mods" + File.separator + latestFileName);
                     download = new URL(downloadLink);
                     output = new FileOutputStream(target);
                     input = download.openStream();
-                    DownloadCountingOutputStream countingOutputStream = new DownloadCountingOutputStream(output, screenWorking);
+                    DownloadCountingOutputStream countingOutputStream = new DownloadCountingOutputStream(
+                        output,
+                        screenWorking);
 
-                    totalSize = Long.valueOf(download.openConnection().getHeaderField("Content-Length"));
-                    screenWorking.displayProgressMessage(String.format("Downloading file (%.3f MB)...", totalSize / 1000000F));
+                    totalSize = Long.valueOf(
+                        download.openConnection()
+                            .getHeaderField("Content-Length"));
+                    screenWorking
+                        .displayProgressMessage(String.format("Downloading file (%.3f MB)...", totalSize / 1000000F));
 
                     IOUtils.copy(input, countingOutputStream);
                 } catch (IOException e) {
-                    //Delete file on close cause it could be corrupt
-                    new File(Minecraft.getMinecraft().mcDataDir + File.separator + "mods" + File.separator + latestFileName).deleteOnExit();
+                    // Delete file on close cause it could be corrupt
+                    new File(
+                        Minecraft.getMinecraft().mcDataDir + File.separator + "mods" + File.separator + latestFileName)
+                            .deleteOnExit();
                     e.printStackTrace();
 
                     proxy.showFailedScreen();
@@ -172,6 +200,7 @@ public class EnchiridionManager {
 
     @SideOnly(Side.CLIENT)
     private static class GuiScreenHold extends GuiScreen {
+
         private String topMessage;
         private String bottomMessage;
 
@@ -190,8 +219,10 @@ public class EnchiridionManager {
     }
 
     public static class CommonProxy {
+
         public void throwError() {
-            FMLLog.bigWarning(StatCollector.translateToLocalFormatted("enchiridion.downloader.outofdate", downloadFallback));
+            FMLLog.bigWarning(
+                StatCollector.translateToLocalFormatted("enchiridion.downloader.outofdate", downloadFallback));
         }
 
         public void showRestartScreen() {}
@@ -201,36 +232,53 @@ public class EnchiridionManager {
 
     @SideOnly(Side.CLIENT)
     public static class ClientProxy extends CommonProxy {
+
         public void throwError() {
             throw new CustomModLoadingErrorDisplayException() {
+
                 @Override
                 public void initGui(GuiErrorScreen errorScreen, FontRenderer fontRenderer) {
                     try {
-                        Desktop.getDesktop().browse(URI.create(downloadFallback));
+                        Desktop.getDesktop()
+                            .browse(URI.create(downloadFallback));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
                 @Override
-                public void drawScreen(GuiErrorScreen errorScreen, FontRenderer fontRenderer, int mouseRelX, int mouseRelY, float tickTime) {
+                public void drawScreen(GuiErrorScreen errorScreen, FontRenderer fontRenderer, int mouseRelX,
+                    int mouseRelY, float tickTime) {
                     String s = I18n.format("enchiridion.downloader.outofdate");
-                    fontRenderer.drawString(s, (errorScreen.width / 2) - (fontRenderer.getStringWidth(s) / 2), errorScreen.height / 2, 0xFFFFFFFF);
+                    fontRenderer.drawString(
+                        s,
+                        (errorScreen.width / 2) - (fontRenderer.getStringWidth(s) / 2),
+                        errorScreen.height / 2,
+                        0xFFFFFFFF);
                 }
             };
         }
 
         public void showRestartScreen() {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiScreenHold(I18n.format("enchiridion.downloader.success"), I18n.format("enchiridion.downloader.restart")));
+            Minecraft.getMinecraft()
+                .displayGuiScreen(
+                    new GuiScreenHold(
+                        I18n.format("enchiridion.downloader.success"),
+                        I18n.format("enchiridion.downloader.restart")));
         }
 
         public void showFailedScreen() {
             try {
-                Desktop.getDesktop().browse(URI.create(downloadFallback));
+                Desktop.getDesktop()
+                    .browse(URI.create(downloadFallback));
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Minecraft.getMinecraft().displayGuiScreen(new GuiScreenHold(I18n.format("enchiridion.downloader.failed.0", downloadFallback), I18n.format("enchiridion.downloader.failed.1")));
+            Minecraft.getMinecraft()
+                .displayGuiScreen(
+                    new GuiScreenHold(
+                        I18n.format("enchiridion.downloader.failed.0", downloadFallback),
+                        I18n.format("enchiridion.downloader.failed.1")));
         }
     }
 }

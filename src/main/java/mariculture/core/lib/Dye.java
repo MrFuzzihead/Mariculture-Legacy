@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class Dye {
+
     public static final int LIGHT_BLUE = 12;
     public static final int MAGENTA = 13;
     public static final int ORANGE = 14;

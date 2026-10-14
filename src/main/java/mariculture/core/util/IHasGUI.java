@@ -1,3 +1,4 @@
 package mariculture.core.util;
 
-public interface IHasGUI {}
+public interface IHasGUI {
+}

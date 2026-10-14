@@ -1,5 +1,10 @@
 package mariculture.core.handlers;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 import mariculture.core.helpers.EnchantHelper;
 import mariculture.core.helpers.KeyHelper;
 import mariculture.core.lib.Modules;
@@ -12,12 +17,9 @@ import mariculture.magic.enchantments.EnchantmentFlight;
 import mariculture.magic.enchantments.EnchantmentGlide;
 import mariculture.magic.enchantments.EnchantmentSpider;
 import mariculture.magic.jewelry.ItemJewelry;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class ClientFMLEvents {
+
     @SubscribeEvent
     public void onKeyPress(KeyInputEvent event) {
         if (KeyHelper.isActivateKeyPressed()) {
@@ -28,7 +30,8 @@ public class ClientFMLEvents {
 
             if (Modules.isActive(Modules.magic)) {
                 EntityPlayer player = ClientHelper.getPlayer();
-                if (KeyHelper.isToggleKeyPressed() && player.capabilities.isFlying && EnchantHelper.hasEnchantment(Magic.flight, player)) {
+                if (KeyHelper.isToggleKeyPressed() && player.capabilities.isFlying
+                    && EnchantHelper.hasEnchantment(Magic.flight, player)) {
                     if (EnchantmentFlight.mode < EnchantmentFlight.maxMode) {
                         EnchantmentFlight.mode++;
                     } else {

@@ -1,15 +1,17 @@
 package mariculture.core.gui;
 
-import mariculture.api.core.IItemUpgrade;
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.tile.TileCrucible;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import mariculture.api.core.IItemUpgrade;
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.tile.TileCrucible;
+
 public class ContainerCrucible extends ContainerMachine {
+
     public ContainerCrucible(TileCrucible tile, InventoryPlayer inventory) {
         super(tile);
 

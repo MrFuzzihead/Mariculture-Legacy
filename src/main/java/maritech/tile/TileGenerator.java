@@ -1,9 +1,5 @@
 package maritech.tile;
 
-import mariculture.api.util.CachedCoords;
-import mariculture.core.helpers.BlockTransferHelper;
-import mariculture.core.helpers.cofh.BlockHelper;
-import mariculture.core.util.IFaceable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -11,21 +7,35 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cofh.api.energy.IEnergyProvider;
 import cofh.api.energy.IEnergyReceiver;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.helpers.BlockTransferHelper;
+import mariculture.core.helpers.cofh.BlockHelper;
+import mariculture.core.util.IFaceable;
 
 public class TileGenerator extends TileEntity implements IEnergyProvider, IFaceable {
+
     public ForgeDirection orientation = ForgeDirection.NORTH;
 
     public boolean onTick(int i) {
         return worldObj.getTotalWorldTime() % i == 0;
     }
 
-    //This needs to be called when this block is placed, and everytime something affects a rotor
+    // This needs to be called when this block is placed, and everytime something affects a rotor
     public void reset() {
         if (orientation != null) {
-            for (int i = 1; isRotor(worldObj, xCoord + (orientation.getOpposite().offsetX * i), yCoord, zCoord + (orientation.getOpposite().offsetZ * i)); i++) {
-                ((TileRotor) worldObj.getTileEntity(xCoord + (orientation.getOpposite().offsetX * i), yCoord, zCoord + (orientation.getOpposite().offsetZ * i))).setMaster(new CachedCoords(xCoord, yCoord, zCoord));
+            for (int i = 1; isRotor(
+                worldObj,
+                xCoord + (orientation.getOpposite().offsetX * i),
+                yCoord,
+                zCoord + (orientation.getOpposite().offsetZ * i)); i++) {
+                ((TileRotor) worldObj.getTileEntity(
+                    xCoord + (orientation.getOpposite().offsetX * i),
+                    yCoord,
+                    zCoord + (orientation.getOpposite().offsetZ * i)))
+                        .setMaster(new CachedCoords(xCoord, yCoord, zCoord));
             }
         }
     }
@@ -50,10 +60,10 @@ public class TileGenerator extends TileEntity implements IEnergyProvider, IFacea
 
     public void addEnergy(int energy) {
         if (energy >= 0) {
-            //Take the power inside of me and pass it to all 'sides'
+            // Take the power inside of me and pass it to all 'sides'
             for (Integer i : BlockTransferHelper.getSides()) {
                 ForgeDirection dir = ForgeDirection.values()[i];
-                //Don't output the front or back of the generator, any other side is valid
+                // Don't output the front or back of the generator, any other side is valid
                 if (orientation != null) {
                     if (dir != orientation.getOpposite()) {
                         TileEntity tile = BlockHelper.getAdjacentTileEntity(worldObj, xCoord, yCoord, zCoord, dir);
@@ -80,10 +90,10 @@ public class TileGenerator extends TileEntity implements IEnergyProvider, IFacea
     }
 
     @Override
-    public void setFacing(ForgeDirection dir) {        
+    public void setFacing(ForgeDirection dir) {
         orientation = dir;
     }
-    
+
     @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound nbttagcompound = new NBTTagCompound();

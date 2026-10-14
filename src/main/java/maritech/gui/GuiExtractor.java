@@ -2,6 +2,10 @@ package maritech.gui;
 
 import java.util.List;
 
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+
 import mariculture.core.gui.GuiMariculture;
 import mariculture.core.gui.feature.FeatureEject;
 import mariculture.core.gui.feature.FeaturePower;
@@ -11,12 +15,12 @@ import mariculture.core.gui.feature.FeatureTank.TankSize;
 import mariculture.core.gui.feature.FeatureUpgrades;
 import maritech.lib.MTModInfo;
 import maritech.tile.TileExtractor;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiExtractor extends GuiMariculture {
-    public static final ResourceLocation texture = new ResourceLocation(MTModInfo.MODPATH, "textures/gui/extractor.png");
+
+    public static final ResourceLocation texture = new ResourceLocation(
+        MTModInfo.MODPATH,
+        "textures/gui/extractor.png");
     private TileExtractor tile;
 
     public GuiExtractor(InventoryPlayer player, TileExtractor tile) {

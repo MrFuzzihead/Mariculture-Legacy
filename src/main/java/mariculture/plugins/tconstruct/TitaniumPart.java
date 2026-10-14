@@ -1,16 +1,18 @@
 package mariculture.plugins.tconstruct;
 
-import mariculture.Mariculture;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import tconstruct.library.TConstructRegistry;
-import tconstruct.library.util.IToolPart;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import tconstruct.library.TConstructRegistry;
+import tconstruct.library.util.IToolPart;
 
 public class TitaniumPart extends Item implements IToolPart {
+
     public TitaniumPart() {
         setCreativeTab(TConstructRegistry.materialTab);
         setMaxStackSize(64);
@@ -28,7 +30,11 @@ public class TitaniumPart extends Item implements IToolPart {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister icon) {
-        itemIcon = icon.registerIcon(Mariculture.modid + ":parts/" + this.getUnlocalizedName().replace(".", "_").substring(5));
+        itemIcon = icon.registerIcon(
+            Mariculture.modid + ":parts/"
+                + this.getUnlocalizedName()
+                    .replace(".", "_")
+                    .substring(5));
     }
 
     @Override

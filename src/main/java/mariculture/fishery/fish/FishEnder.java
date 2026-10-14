@@ -6,12 +6,6 @@ import static mariculture.core.lib.MCLib.enderPearl;
 
 import java.util.ArrayList;
 
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.util.Fluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,7 +13,15 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.util.Fluids;
+
 public class FishEnder extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 3;
@@ -100,7 +102,8 @@ public class FishEnder extends FishSpecies {
             if (BlockHelper.chunkExists(world, x, z)) {
                 int y = world.getTopSolidOrLiquidBlock(x, z);
 
-                if (world.getBlock(x, y, z).getMaterial() != Material.lava) {
+                if (world.getBlock(x, y, z)
+                    .getMaterial() != Material.lava) {
                     world.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);
                     player.setPositionAndUpdate(x, y, z);
                     world.playSoundEffect(player.posX, player.posY, player.posZ, "mob.endermen.portal", 1.0F, 1.0F);

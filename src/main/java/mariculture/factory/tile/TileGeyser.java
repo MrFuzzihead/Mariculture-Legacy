@@ -2,16 +2,6 @@ package mariculture.factory.tile;
 
 import java.util.List;
 
-import mariculture.core.Core;
-import mariculture.core.config.Machines.Client;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.helpers.cofh.InventoryHelper;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.tile.base.TileTank;
-import mariculture.core.util.Fluids;
-import mariculture.core.util.IFaceable;
-import mariculture.core.util.Tank;
-import mariculture.lib.helpers.ItemHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLogic;
 import net.minecraft.block.material.MaterialTransparent;
@@ -31,7 +21,19 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import mariculture.core.Core;
+import mariculture.core.config.Machines.Client;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.helpers.cofh.InventoryHelper;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.tile.base.TileTank;
+import mariculture.core.util.Fluids;
+import mariculture.core.util.IFaceable;
+import mariculture.core.util.Tank;
+import mariculture.lib.helpers.ItemHelper;
+
 public class TileGeyser extends TileTank implements IFaceable {
+
     public ForgeDirection orientation = ForgeDirection.UP;
     private int machineTick;
     private boolean canWork;
@@ -51,7 +53,10 @@ public class TileGeyser extends TileTank implements IFaceable {
     }
 
     public boolean canWork() {
-        return tank.getFluidAmount() > 0 && canUseFluid(tank.getFluid().getFluid()) && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
+        return tank.getFluidAmount() > 0 && canUseFluid(
+            tank.getFluid()
+                .getFluid())
+            && !worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
     }
 
     private boolean canUseFluid(Fluid fluid) {
@@ -84,7 +89,7 @@ public class TileGeyser extends TileTank implements IFaceable {
                 if (tank.getFluidAmount() <= 0 && !worldObj.isRemote) {
                     PacketHandler.syncFluids(this, this.getFluid());
                 }
-                
+
                 pullFromInventory();
             }
         }
@@ -98,11 +103,15 @@ public class TileGeyser extends TileTank implements IFaceable {
             z = zCoord + orientation.offsetZ * dist;
 
             if (dist > 0) {
-                Material mat = worldObj.getBlock((int) x, (int) y, (int) z).getMaterial();
-                if (!(mat instanceof MaterialLogic || mat instanceof MaterialTransparent || isNet((int) x, (int) y, (int) z))) return;
+                Material mat = worldObj.getBlock((int) x, (int) y, (int) z)
+                    .getMaterial();
+                if (!(mat instanceof MaterialLogic || mat instanceof MaterialTransparent
+                    || isNet((int) x, (int) y, (int) z))) return;
             }
 
-            List list = worldObj.getEntitiesWithinAABB(Entity.class, Blocks.stone.getCollisionBoundingBoxFromPool(worldObj, (int) x, (int) y, (int) z));
+            List list = worldObj.getEntitiesWithinAABB(
+                Entity.class,
+                Blocks.stone.getCollisionBoundingBoxFromPool(worldObj, (int) x, (int) y, (int) z));
 
             for (Object i : list) {
                 Entity entity = (Entity) i;
@@ -121,17 +130,28 @@ public class TileGeyser extends TileTank implements IFaceable {
 
             if (Client.GEYSER_ANIM && worldObj.isRemote) if (onTick(4)) {
                 for (float i = dist > 0 ? -0.45F : -0.1F; i <= 0.35F; i += 0.05F) {
-                    worldObj.spawnParticle("cloud", x + 0.5F + i * orientation.offsetX, y + 0.5F + i * orientation.offsetY, z + 0.5F + i * orientation.offsetZ, 0, 0, 0);
+                    worldObj.spawnParticle(
+                        "cloud",
+                        x + 0.5F + i * orientation.offsetX,
+                        y + 0.5F + i * orientation.offsetY,
+                        z + 0.5F + i * orientation.offsetZ,
+                        0,
+                        0,
+                        0);
                 }
             }
         }
     }
 
     public void pullFromInventory() {
-        TileEntity tile = worldObj.getTileEntity(xCoord - orientation.offsetX, yCoord - orientation.offsetY, zCoord - orientation.offsetZ);
+        TileEntity tile = worldObj
+            .getTileEntity(xCoord - orientation.offsetX, yCoord - orientation.offsetY, zCoord - orientation.offsetZ);
         if (tile != null) {
             if (tile instanceof IInventory) {
-                ItemStack stack = InventoryHelper.extractItemStackFromInventory((IInventory) tile, orientation.getOpposite().ordinal());
+                ItemStack stack = InventoryHelper.extractItemStackFromInventory(
+                    (IInventory) tile,
+                    orientation.getOpposite()
+                        .ordinal());
                 if (stack != null) {
                     ItemHelper.spawnItem(worldObj, xCoord, yCoord, zCoord, stack, false);
                 }

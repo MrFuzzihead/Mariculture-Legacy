@@ -1,11 +1,13 @@
 package mariculture.core.blocks.items;
 
-import mariculture.core.blocks.base.ItemBlockMariculture;
-import mariculture.core.lib.WoodMeta;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.blocks.base.ItemBlockMariculture;
+import mariculture.core.lib.WoodMeta;
+
 public class ItemBlockWood extends ItemBlockMariculture {
+
     public ItemBlockWood(Block block) {
         super(block);
     }

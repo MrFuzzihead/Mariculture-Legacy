@@ -3,13 +3,6 @@ package mariculture.fishery.tile;
 import java.util.ArrayList;
 import java.util.Random;
 
-import mariculture.api.fishery.Fishing;
-import mariculture.api.fishery.RecipeSifter;
-import mariculture.core.helpers.cofh.InventoryHelper;
-import mariculture.core.network.PacketCrack;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.tile.base.TileMultiStorage;
-import mariculture.lib.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ISidedInventory;
@@ -22,7 +15,16 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.api.fishery.Fishing;
+import mariculture.api.fishery.RecipeSifter;
+import mariculture.core.helpers.cofh.InventoryHelper;
+import mariculture.core.network.PacketCrack;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.tile.base.TileMultiStorage;
+import mariculture.lib.helpers.ItemHelper;
+
 public class TileSifter extends TileMultiStorage implements ISidedInventory {
+
     public ItemStack texture = new ItemStack(Blocks.planks);
     public boolean hasInventory;
     private int[] slots = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -78,8 +80,22 @@ public class TileSifter extends TileMultiStorage implements ISidedInventory {
             ItemStack display = fullStack.getItem() instanceof ItemBlock ? fullStack : null;
             if (!worldObj.isRemote) {
                 if (display == null) display = new ItemStack(Blocks.dirt);
-                PacketHandler.sendAround(new PacketCrack(Block.getIdFromBlock(Block.getBlockFromItem(display.getItem())), display.getItemDamage(), xCoord, yCoord, zCoord), this);
-                PacketHandler.sendAround(new PacketCrack(Block.getIdFromBlock(Block.getBlockFromItem(display.getItem())), display.getItemDamage(), slaves.get(0).xCoord, slaves.get(0).yCoord, slaves.get(0).zCoord), this);
+                PacketHandler.sendAround(
+                    new PacketCrack(
+                        Block.getIdFromBlock(Block.getBlockFromItem(display.getItem())),
+                        display.getItemDamage(),
+                        xCoord,
+                        yCoord,
+                        zCoord),
+                    this);
+                PacketHandler.sendAround(
+                    new PacketCrack(
+                        Block.getIdFromBlock(Block.getBlockFromItem(display.getItem())),
+                        display.getItemDamage(),
+                        slaves.get(0).xCoord,
+                        slaves.get(0).yCoord,
+                        slaves.get(0).zCoord),
+                    this);
             }
 
             worldObj.playSoundEffect(xCoord, yCoord, zCoord, "minecraft" + ":step.grass", 1.0F, 1.0F);
@@ -95,9 +111,19 @@ public class TileSifter extends TileMultiStorage implements ISidedInventory {
                             InventoryHelper.addItemStackToInventory(inventory, ret, slots);
                         } else if (!worldObj.isRemote) {
                             if (rand.nextInt(2) == 0 && slaves.size() > 0) {
-                                ItemHelper.spawnItem(worldObj, slaves.get(0).xCoord, slaves.get(0).yCoord + 1, slaves.get(0).zCoord, ret.copy(), true, 0, 10, 0.25F);
+                                ItemHelper.spawnItem(
+                                    worldObj,
+                                    slaves.get(0).xCoord,
+                                    slaves.get(0).yCoord + 1,
+                                    slaves.get(0).zCoord,
+                                    ret.copy(),
+                                    true,
+                                    0,
+                                    10,
+                                    0.25F);
                             } else {
-                                ItemHelper.spawnItem(worldObj, xCoord, yCoord + 1, zCoord, ret.copy(), true, 0, 10, 0.25F);
+                                ItemHelper
+                                    .spawnItem(worldObj, xCoord, yCoord + 1, zCoord, ret.copy(), true, 0, 10, 0.25F);
                             }
                         }
                     }
@@ -114,7 +140,8 @@ public class TileSifter extends TileMultiStorage implements ISidedInventory {
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] == null) return i;
 
-            if (inventory[i].getItemDamage() == item.getItemDamage() && inventory[i].getItem() == item.getItem() && inventory[i].stackSize + item.stackSize <= inventory[i].getMaxStackSize()) return i;
+            if (inventory[i].getItemDamage() == item.getItemDamage() && inventory[i].getItem() == item.getItem()
+                && inventory[i].stackSize + item.stackSize <= inventory[i].getMaxStackSize()) return i;
         }
 
         return 10;

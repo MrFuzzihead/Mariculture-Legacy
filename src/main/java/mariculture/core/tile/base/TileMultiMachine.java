@@ -3,6 +3,11 @@ package mariculture.core.tile.base;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+
 import mariculture.api.core.IUpgradable;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.config.Machines.Ticks;
@@ -14,27 +19,25 @@ import mariculture.core.util.IEjectable;
 import mariculture.core.util.IMachine;
 import mariculture.core.util.IProgressable;
 import mariculture.core.util.IRedstoneControlled;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.util.ForgeDirection;
 
-public abstract class TileMultiMachine extends TileMultiStorage implements IUpgradable, IMachine, ISidedInventory, IRedstoneControlled, IEjectable, IProgressable {
+public abstract class TileMultiMachine extends TileMultiStorage
+    implements IUpgradable, IMachine, ISidedInventory, IRedstoneControlled, IEjectable, IProgressable {
+
     protected BlockTransferHelper helper;
-    //General Tick
+    // General Tick
     private int machineTick = 0;
-    //Upgrade Stats
+    // Upgrade Stats
     protected int purity = 0;
     protected int heat = 0;
     protected int storage = 0;
     protected int speed = 0;
     protected int rf = 0;
-    //Tile Configuration
+    // Tile Configuration
     protected EjectSetting setting;
     protected RedstoneMode mode;
-    //GUI INT offset
+    // GUI INT offset
     protected int offset = 6;
-    //Machine vars
+    // Machine vars
     protected int max;
     protected boolean canWork;
     protected int processed = 0;
@@ -87,7 +90,7 @@ public abstract class TileMultiMachine extends TileMultiStorage implements IUpgr
         return true;
     }
 
-    //Call to update canWork
+    // Call to update canWork
     public final void updateCanWork() {
         canWork = canWork();
     }
@@ -97,10 +100,12 @@ public abstract class TileMultiMachine extends TileMultiStorage implements IUpgr
             TileMultiMachine mstr = (TileMultiMachine) getMaster();
             RedstoneMode mode = mstr.mode;
             if (mode == RedstoneMode.DISABLED) return true;
-            for (MultiPart block : mstr.slaves)
-                if (mode.equals(RedstoneMode.LOW)) {
-                    if (!RedstoneMode.canWork(worldObj.getTileEntity(block.xCoord, block.yCoord, block.zCoord), mode)) return false;
-                } else if (mode.equals(RedstoneMode.HIGH)) if (RedstoneMode.canWork(worldObj.getTileEntity(block.xCoord, block.yCoord, block.zCoord), mode)) return true;
+            for (MultiPart block : mstr.slaves) if (mode.equals(RedstoneMode.LOW)) {
+                if (!RedstoneMode.canWork(worldObj.getTileEntity(block.xCoord, block.yCoord, block.zCoord), mode))
+                    return false;
+            } else if (mode.equals(RedstoneMode.HIGH))
+                if (RedstoneMode.canWork(worldObj.getTileEntity(block.xCoord, block.yCoord, block.zCoord), mode))
+                    return true;
 
             return RedstoneMode.canWork(getMaster(), mode);
         }
@@ -137,22 +142,21 @@ public abstract class TileMultiMachine extends TileMultiStorage implements IUpgr
         }
     }
 
-    //Called at all times
+    // Called at all times
     public void updateTheMaster() {
         autoeject();
     }
 
     public void autoeject() {
         if (output.length > 0 && onTick(Ticks.ITEM_EJECT_TICK)) if (setting.canEject(EjectSetting.ITEM)) {
-            for (int i : output)
-                if (inventory[i] != null) {
-                    ItemStack ejecting = inventory[i].copy();
-                    inventory[i] = null;
-                    if (ejecting != null) {
-                        helper.insertStack(ejecting, output);
-                        updateCanWork();
-                    }
+            for (int i : output) if (inventory[i] != null) {
+                ItemStack ejecting = inventory[i].copy();
+                inventory[i] = null;
+                if (ejecting != null) {
+                    helper.insertStack(ejecting, output);
+                    updateCanWork();
                 }
+            }
         }
     }
 
@@ -189,7 +193,7 @@ public abstract class TileMultiMachine extends TileMultiStorage implements IUpgr
                 break;
         }
     }
-    
+
     protected int lastMode;
     protected int lastSetting;
     protected int lastProcessed;
@@ -199,7 +203,11 @@ public abstract class TileMultiMachine extends TileMultiStorage implements IUpgr
 
     @Override
     public boolean hasChanged() {
-        return lastMode != mode.ordinal() || lastSetting != setting.ordinal() || lastProcessed != processed || lastMasterX != getGuiMasterX() || lastMasterY != getGuiMasterY() || lastMasterZ != getGuiMasterZ();
+        return lastMode != mode.ordinal() || lastSetting != setting.ordinal()
+            || lastProcessed != processed
+            || lastMasterX != getGuiMasterX()
+            || lastMasterY != getGuiMasterY()
+            || lastMasterZ != getGuiMasterZ();
     }
 
     @Override
@@ -210,9 +218,13 @@ public abstract class TileMultiMachine extends TileMultiStorage implements IUpgr
         lastMasterX = getGuiMasterX();
         lastMasterY = getGuiMasterY();
         lastMasterZ = getGuiMasterZ();
-        
-        return new ArrayList(Arrays.asList(new Integer[] { mode.ordinal(), setting.ordinal(), processed, master != null ? master.xCoord : 0, master != null ? master.yCoord : 0, master != null ? master.zCoord : 0 }));
+
+        return new ArrayList(
+            Arrays.asList(
+                new Integer[] { mode.ordinal(), setting.ordinal(), processed, master != null ? master.xCoord : 0,
+                    master != null ? master.yCoord : 0, master != null ? master.zCoord : 0 }));
     }
+
     private int getGuiMasterX() {
         return master != null ? master.xCoord : 0;
     }
@@ -256,10 +268,10 @@ public abstract class TileMultiMachine extends TileMultiStorage implements IUpgr
         this.setting = setting;
         updateCanWork();
     }
-    
+
     @Override
     public boolean canEject(ForgeDirection dir) {
-    	return true;
+        return true;
     }
 
     @Override

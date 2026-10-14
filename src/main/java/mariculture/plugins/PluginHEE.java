@@ -1,11 +1,13 @@
 package mariculture.plugins;
 
-import mariculture.core.util.Fluids;
-import mariculture.plugins.Plugins.Plugin;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
+import mariculture.core.util.Fluids;
+import mariculture.plugins.Plugins.Plugin;
+
 public class PluginHEE extends Plugin {
+
     public PluginHEE(String name) {
         super(name);
     }
@@ -13,7 +15,7 @@ public class PluginHEE extends Plugin {
     @Override
     public void preInit() {
         Fluid fluid = FluidRegistry.getFluid("enderGoo");
-        if(fluid != null) {
+        if (fluid != null) {
             Fluids.add("ender", FluidRegistry.getFluid("enderGoo"), 250, true);
         }
     }

@@ -1,14 +1,16 @@
 package mariculture.magic.jewelry.parts;
 
-import mariculture.core.Core;
-import mariculture.core.lib.PearlColor;
-import mariculture.magic.jewelry.ItemJewelry.JewelryType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
+import mariculture.core.Core;
+import mariculture.core.lib.PearlColor;
+import mariculture.magic.jewelry.ItemJewelry.JewelryType;
+
 public class MaterialPearlWhite extends JewelryMaterial {
+
     @Override
     public String getColor() {
         return mariculture.lib.util.Text.WHITE;

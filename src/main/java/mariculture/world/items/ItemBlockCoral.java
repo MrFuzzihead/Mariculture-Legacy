@@ -1,12 +1,5 @@
 package mariculture.world.items;
 
-import mariculture.Mariculture;
-import mariculture.core.blocks.base.ItemBlockMariculture;
-import mariculture.core.lib.CoralMeta;
-import mariculture.core.lib.PearlColor;
-import mariculture.core.util.MCTranslate;
-import mariculture.world.BlockCoral;
-import mariculture.world.WorldPlus;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -15,10 +8,18 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.core.blocks.base.ItemBlockMariculture;
+import mariculture.core.lib.CoralMeta;
+import mariculture.core.util.MCTranslate;
+import mariculture.world.BlockCoral;
+import mariculture.world.WorldPlus;
 
 public class ItemBlockCoral extends ItemBlockMariculture {
+
     private IIcon[] icons;
     private Block spawnBlock;
 
@@ -26,11 +27,12 @@ public class ItemBlockCoral extends ItemBlockMariculture {
         super(block);
         spawnBlock = block;
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         String format = MCTranslate.translate("coral.format");
-        format = format.replace("%D ", spawnBlock == WorldPlus.plantGrowable? "" : MCTranslate.translate("coral.dried") + " ");
+        format = format
+            .replace("%D ", spawnBlock == WorldPlus.plantGrowable ? "" : MCTranslate.translate("coral.dried") + " ");
         return format.replace("%C", MCTranslate.translate("coral." + getName(stack)));
     }
 
@@ -82,8 +84,9 @@ public class ItemBlockCoral extends ItemBlockMariculture {
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float par8, float par9, float par10) {    	
-    	Block block = world.getBlock(x, y, z);
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side,
+        float par8, float par9, float par10) {
+        Block block = world.getBlock(x, y, z);
         if (block == Blocks.snow && (world.getBlockMetadata(x, y, z) & 7) < 1) {
             side = 1;
         } else if (block != Blocks.vine && block != Blocks.tallgrass && block != Blocks.deadbush) {
@@ -111,7 +114,7 @@ public class ItemBlockCoral extends ItemBlockMariculture {
                 ++x;
             }
         }
-        
+
         if (!player.canPlayerEdit(x, y, z, side, stack)) return false;
         else if (stack.stackSize == 0) return false;
         else {
@@ -123,7 +126,13 @@ public class ItemBlockCoral extends ItemBlockMariculture {
                         spawnBlock.onPostBlockPlaced(world, x, y, z, j1);
                     }
 
-                    world.playSoundEffect(x + 0.5F, y + 0.5F, z + 0.5F, block.stepSound.func_150496_b(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+                    world.playSoundEffect(
+                        x + 0.5F,
+                        y + 0.5F,
+                        z + 0.5F,
+                        block.stepSound.func_150496_b(),
+                        (block.stepSound.getVolume() + 1.0F) / 2.0F,
+                        block.stepSound.getPitch() * 0.8F);
                     --stack.stackSize;
 
                     return true;
@@ -137,8 +146,9 @@ public class ItemBlockCoral extends ItemBlockMariculture {
     private boolean canPlaceBlockOnSide(World world, int x, int y, int z, int side, ItemStack stack) {
         if (side != 1) return false;
 
-        if (world.getBlock(x, y + 1, z).getMaterial() != Material.water) return false;
-        
+        if (world.getBlock(x, y + 1, z)
+            .getMaterial() != Material.water) return false;
+
         Block block = world.getBlock(x, y - 1, z);
         int meta = world.getBlockMetadata(x, y - 1, z);
         if (stack.getItemDamage() == CoralMeta.KELP) return BlockCoral.canSustainKelp(block, meta);
@@ -158,7 +168,8 @@ public class ItemBlockCoral extends ItemBlockMariculture {
         icons = new IIcon[getMetaCount()];
 
         for (int i = 0; i < icons.length; i++) {
-            icons[i] = iconRegister.registerIcon(Mariculture.modid + ":" + "coral_" + getName(new ItemStack(this, 1, i)));
+            icons[i] = iconRegister
+                .registerIcon(Mariculture.modid + ":" + "coral_" + getName(new ItemStack(this, 1, i)));
         }
     }
 }

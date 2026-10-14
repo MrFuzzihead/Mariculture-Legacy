@@ -1,18 +1,20 @@
 package mariculture.core.render;
 
+import net.minecraftforge.common.util.ForgeDirection;
+
 import mariculture.core.Core;
 import mariculture.core.lib.MachineRenderedMultiMeta;
 import mariculture.core.tile.TileVat;
-import net.minecraftforge.common.util.ForgeDirection;
 
 public class RenderVat extends RenderBase {
+
     public RenderVat() {}
 
     @Override
     public void renderBlock() {
         setTexture(Core.renderedMachinesMulti, MachineRenderedMultiMeta.VAT);
         if (dir == ForgeDirection.UNKNOWN || isItem()) {
-            //Edge Inner - Edge Outer
+            // Edge Inner - Edge Outer
             renderBlock(0, 0.3, 0, 0.1, 0.9, 1);
             renderBlock(-0.1, 0.35, 0.1, 0, 0.85, 0.9);
             renderBlock(0.9, 0.3, 0, 1, 0.9, 1);
@@ -21,15 +23,15 @@ public class RenderVat extends RenderBase {
             renderBlock(0.1, 0.35, -0.1, 0.9, 0.85, 0);
             renderBlock(0.1, 0.3, 0.9, 0.9, 0.9, 1);
             renderBlock(0.1, 0.35, 1, 0.9, 0.85, 1.1);
-            //Legs
+            // Legs
             renderBlock(0.1, 0, 0.1, 0.2, 0.3, 0.2);
             renderBlock(0.8, 0, 0.1, 0.9, 0.3, 0.2);
             renderBlock(0.1, 0, 0.8, 0.2, 0.3, 0.9);
             renderBlock(0.8, 0, 0.8, 0.9, 0.3, 0.9);
-            //Bottom
+            // Bottom
             renderBlock(0.2, 0.2, 0.2, 0.8, 0.3, 0.8);
             renderBlock(0.1, 0.3, 0.1, 0.9, 0.4, 0.9);
-            //Liquid
+            // Liquid
             if (!isItem()) {
                 TileVat tile = (TileVat) world.getTileEntity(x, y, z);
                 if (tile.getFluid((byte) 1) != null) {
@@ -44,14 +46,14 @@ public class RenderVat extends RenderBase {
             }
 
         } else if (dir == ForgeDirection.NORTH) {
-            //Edge Inner - Edge Outer
+            // Edge Inner - Edge Outer
             renderBlock(0.9, 0.3, 0, 1, 1, 1);
             renderBlock(1, 0.35, 0, 1.1, 0.95, 0.9);
             renderBlock(0, 0.3, 0.9, 0.9, 1, 1);
             renderBlock(0, 0.35, 1, 0.9, 0.95, 1.1);
-            //Legs
+            // Legs
             renderBlock(0.8, 0, 0.8, 0.9, 0.3, 0.9);
-            //Bottom
+            // Bottom
             renderBlock(0, 0.2, 0, 0.8, 0.3, 0.8);
             renderBlock(0, 0.3, 0, 0.9, 0.4, 0.9);
         } else if (dir == ForgeDirection.EAST) {
@@ -59,9 +61,9 @@ public class RenderVat extends RenderBase {
             renderBlock(-0.1, 0.35, 0, 0, 0.95, 0.9);
             renderBlock(0.1, 0.3, 0.9, 1, 1, 1);
             renderBlock(0.1, 0.35, 1, 1, 0.95, 1.1);
-            //Legs
+            // Legs
             renderBlock(0.1, 0, 0.8, 0.2, 0.3, 0.9);
-            //Bottom
+            // Bottom
             renderBlock(0.2, 0.2, 0, 1, 0.3, 0.8);
             renderBlock(0.1, 0.3, 0, 1, 0.4, 0.9);
         } else if (dir == ForgeDirection.SOUTH) {
@@ -69,12 +71,12 @@ public class RenderVat extends RenderBase {
             renderBlock(-0.1, 0.35, 0.1, 0, 0.95, 1);
             renderBlock(0.1, 0.3, 0, 1, 1, 0.1);
             renderBlock(0.1, 0.35, -0.1, 1, 0.95, 0);
-            //Legs
+            // Legs
             renderBlock(0.1, 0, 0.1, 0.2, 0.3, 0.2);
-            //Bottom
+            // Bottom
             renderBlock(0.2, 0.2, 0.2, 1, 0.3, 1);
             renderBlock(0.1, 0.3, 0.1, 1, 0.4, 1);
-            //Liquid
+            // Liquid
             TileVat tile = (TileVat) world.getTileEntity(x, y, z);
             if (tile.getFluid((byte) 1) != null) {
                 renderFluid(tile.getFluid((byte) 1), tile.max_lrg, 0.56D, 0, 0, 0);
@@ -101,9 +103,9 @@ public class RenderVat extends RenderBase {
             renderBlock(1, 0.35, 0.1, 1.1, 0.95, 1);
             renderBlock(0, 0.3, 0, 0.9, 1, 0.1);
             renderBlock(0, 0.35, -0.1, 0.9, 0.95, 0);
-            //Legs
+            // Legs
             renderBlock(0.8, 0, 0.1, 0.9, 0.3, 0.2);
-            //Bottom
+            // Bottom
             renderBlock(0, 0.2, 0.2, 0.8, 0.3, 1);
             renderBlock(0, 0.3, 0.1, 0.9, 0.4, 1);
         }

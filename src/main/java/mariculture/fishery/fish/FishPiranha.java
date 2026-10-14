@@ -6,17 +6,20 @@ import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletWater;
 import static mariculture.core.lib.MCLib.rottenFlesh;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.lib.MaricultureDamage;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.lib.MaricultureDamage;
+
 public class FishPiranha extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 25;
@@ -85,7 +88,7 @@ public class FishPiranha extends FishSpecies {
     public void onConsumed(World world, EntityPlayer player) {
         player.addPotionEffect(new PotionEffect(Potion.harm.id, 20, 0));
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;

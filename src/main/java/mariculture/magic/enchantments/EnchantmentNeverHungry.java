@@ -2,14 +2,16 @@ package mariculture.magic.enchantments;
 
 import java.util.List;
 
-import mariculture.core.helpers.EnchantHelper;
-import mariculture.magic.Magic;
-import mariculture.magic.gui.ContainerMirror;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.helpers.EnchantHelper;
+import mariculture.magic.Magic;
+import mariculture.magic.gui.ContainerMirror;
+
 public class EnchantmentNeverHungry extends EnchantmentJewelry {
+
     public EnchantmentNeverHungry(final int i, final int weight, final EnumEnchantmentType type) {
         super(i, weight, type);
         setName("hungry");
@@ -27,10 +29,12 @@ public class EnchantmentNeverHungry extends EnchantmentJewelry {
             if (EnchantHelper.hasEnchantment(Magic.hungry, player)) {
                 int level = EnchantHelper.getEnchantStrength(Magic.hungry, player);
 
-                if (player.getFoodStats().getFoodLevel() < 20) {
+                if (player.getFoodStats()
+                    .getFoodLevel() < 20) {
                     float saturation = 0.05F * level;
 
-                    player.getFoodStats().addStats(1, saturation);
+                    player.getFoodStats()
+                        .addStats(1, saturation);
 
                     if (!(player.openContainer instanceof ContainerMirror)) {
                         EnchantHelper.damageItems(Magic.hungry, player, 1);
@@ -41,7 +45,8 @@ public class EnchantmentNeverHungry extends EnchantmentJewelry {
 
             }
 
-            if (player.openContainer instanceof ContainerMirror && player.getFoodStats().getFoodLevel() < 20) {
+            if (player.openContainer instanceof ContainerMirror && player.getFoodStats()
+                .getFoodLevel() < 20) {
                 List mirror = player.openContainer.getInventory();
                 for (int i = 0; i < mirror.size() - 1; i++)
                     if (mirror.get(i) != null && EnchantHelper.getLevel(Magic.hungry, (ItemStack) mirror.get(i)) > 0) {

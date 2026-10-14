@@ -2,9 +2,6 @@ package mariculture.plugins.bloodmagic;
 
 import java.util.List;
 
-import mariculture.core.handlers.LogHandler;
-import mariculture.core.util.MCTranslate;
-import mariculture.magic.ItemMobMagnet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,8 +13,12 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.Level;
 
 import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
+import mariculture.core.handlers.LogHandler;
+import mariculture.core.util.MCTranslate;
+import mariculture.magic.ItemMobMagnet;
 
 public class ItemMobMagnetBloodEdition extends ItemMobMagnet {
+
     public ItemMobMagnetBloodEdition(int dmg) {
         super(dmg);
     }
@@ -29,7 +30,8 @@ public class ItemMobMagnetBloodEdition extends ItemMobMagnet {
             list.add(MCTranslate.translate("noBound2"));
             return;
         } else {
-            if (!stack.stackTagCompound.getString("ownerName").equals("")) {
+            if (!stack.stackTagCompound.getString("ownerName")
+                .equals("")) {
                 list.add("Current owner: " + stack.stackTagCompound.getString("ownerName"));
             }
 
@@ -46,17 +48,17 @@ public class ItemMobMagnetBloodEdition extends ItemMobMagnet {
             SoulNetworkHandler.checkAndSetItemOwner(stack, player);
             boolean teleported = false;
             Entity entity = EntityList.createEntityByName(stack.stackTagCompound.getString("MobName"), world);
-            List<EntityMob> enemies = world.getEntitiesWithinAABB(entity.getClass(), player.boundingBox.expand(32D, 32D, 32D));
+            List<EntityMob> enemies = world
+                .getEntitiesWithinAABB((Class) entity.getClass(), player.boundingBox.expand(32D, 32D, 32D));
             int x = (int) player.posX;
             int y = (int) (player.posY + 1);
             int z = (int) player.posZ;
-            for (Object i : enemies)
-                if (i instanceof EntityLivingBase) {
-                    EntityLivingBase living = (EntityLivingBase) i;
-                    living.setPositionAndUpdate(x, y, z);
-                    teleported = true;
-                    SoulNetworkHandler.syphonAndDamageFromNetwork(stack, player, (int) (100 * living.getHealth()));
-                }
+            for (Object i : enemies) if (i instanceof EntityLivingBase) {
+                EntityLivingBase living = (EntityLivingBase) i;
+                living.setPositionAndUpdate(x, y, z);
+                teleported = true;
+                SoulNetworkHandler.syphonAndDamageFromNetwork(stack, player, (int) (100 * living.getHealth()));
+            }
 
             if (teleported) {
                 world.playSoundEffect(x, y, z, "mob.endermen.portal", 1.0F, 1.0F);

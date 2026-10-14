@@ -2,9 +2,6 @@ package maritech.tile;
 
 import java.util.LinkedList;
 
-import mariculture.api.util.CachedCoords;
-import mariculture.core.config.Machines.Ticks;
-import maritech.extensions.config.ExtensionMachines.ExtendedSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.tileentity.TileEntity;
@@ -12,7 +9,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fluids.IFluidHandler;
 
+import mariculture.api.util.CachedCoords;
+import mariculture.core.config.Machines.Ticks;
+import maritech.extensions.config.ExtensionMachines.ExtendedSettings;
+
 public class TileSluiceAdvanced extends TileSluice {
+
     public LinkedList<CachedCoords> queue;
 
     @Override
@@ -31,7 +33,7 @@ public class TileSluiceAdvanced extends TileSluice {
             if (!worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord)) placeInTank();
             else pullFromTank();
 
-            //Do the TankSwitching Always
+            // Do the TankSwitching Always
             switchTanks();
         }
     }
@@ -141,7 +143,8 @@ public class TileSluiceAdvanced extends TileSluice {
 
     @Override
     public void pullFromTank() {
-        TileEntity tile = mariculture.core.helpers.cofh.BlockHelper.getAdjacentTileEntity(this, orientation.getOpposite());
+        TileEntity tile = mariculture.core.helpers.cofh.BlockHelper
+            .getAdjacentTileEntity(this, orientation.getOpposite());
         if (tile != null && tile instanceof IFluidHandler) {
             CachedCoords cord = getNextCoordinates(false);
             if (cord != null) {

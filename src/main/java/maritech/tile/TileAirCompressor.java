@@ -2,17 +2,19 @@ package maritech.tile;
 
 import java.util.ArrayList;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import cofh.api.energy.EnergyStorage;
+import cofh.api.energy.IEnergyReceiver;
 import mariculture.core.lib.MachineRenderedMultiMeta;
 import mariculture.core.network.PacketHandler;
 import mariculture.core.tile.base.TileMultiBlock;
 import maritech.network.PacketCompressor;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.EnergyStorage;
-import cofh.api.energy.IEnergyReceiver;
 
 public class TileAirCompressor extends TileMultiBlock implements IEnergyReceiver {
+
     private int machineTick;
     public static final int max = 480;
     public int storedAir = 0;
@@ -31,7 +33,7 @@ public class TileAirCompressor extends TileMultiBlock implements IEnergyReceiver
                 ((TileAirCompressor) getMaster()).energyStorage.receiveEnergy(maxReceive, simulate);
             }
         }
-        
+
         return 0;
     }
 
@@ -85,7 +87,9 @@ public class TileAirCompressor extends TileMultiBlock implements IEnergyReceiver
             if (storedAir < max) {
                 storedAir++;
                 if (!worldObj.isRemote) {
-                    PacketHandler.sendAround(new PacketCompressor(xCoord, yCoord, zCoord, storedAir, getEnergyStored(ForgeDirection.UP)), this);
+                    PacketHandler.sendAround(
+                        new PacketCompressor(xCoord, yCoord, zCoord, storedAir, getEnergyStored(ForgeDirection.UP)),
+                        this);
                 }
             }
         }
@@ -100,7 +104,7 @@ public class TileAirCompressor extends TileMultiBlock implements IEnergyReceiver
         return this.getClass();
     }
 
-    //Master Stuff
+    // Master Stuff
     @Override
     public boolean isPartnered(int x, int y, int z) {
         TileEntity tile = worldObj.getTileEntity(x, y, z);
@@ -108,11 +112,13 @@ public class TileAirCompressor extends TileMultiBlock implements IEnergyReceiver
     }
 
     public boolean isBaseBlock(int x, int y, int z) {
-        return worldObj.getBlock(x, y, z) == getBlockType() && worldObj.getBlockMetadata(x, y, z) == MachineRenderedMultiMeta.COMPRESSOR_BASE;
+        return worldObj.getBlock(x, y, z) == getBlockType()
+            && worldObj.getBlockMetadata(x, y, z) == MachineRenderedMultiMeta.COMPRESSOR_BASE;
     }
 
     public boolean isTopBlock(int x, int y, int z) {
-        return worldObj.getBlock(x, y, z) == getBlockType() && worldObj.getBlockMetadata(x, y, z) == MachineRenderedMultiMeta.COMPRESSOR_TOP;
+        return worldObj.getBlock(x, y, z) == getBlockType()
+            && worldObj.getBlockMetadata(x, y, z) == MachineRenderedMultiMeta.COMPRESSOR_TOP;
     }
 
     public boolean isBase(int x, int y, int z) {
@@ -133,7 +139,7 @@ public class TileAirCompressor extends TileMultiBlock implements IEnergyReceiver
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
     }
 
-    //Base Setting of Master Block
+    // Base Setting of Master Block
     public void onBlockPlacedBase(int x, int y, int z) {
         if (isBase(x, y, z) && isBase(x + 1, y, z) && isTop(x, y + 1, z) && isTop(x + 1, y + 1, z)) {
             MultiPart mstr = new MultiPart(x, y, z);
@@ -172,7 +178,7 @@ public class TileAirCompressor extends TileMultiBlock implements IEnergyReceiver
         }
     }
 
-    //Top Setting of Master Block
+    // Top Setting of Master Block
     public void onBlockPlacedTop(int x, int y, int z) {
         if (isBase(x, y - 1, z) && isBase(x + 1, y - 1, z) && isTop(x, y, z) && isTop(x + 1, y, z)) {
             MultiPart mstr = new MultiPart(x, y - 1, z);

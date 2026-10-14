@@ -1,5 +1,8 @@
 package mariculture.plugins.minetweaker;
 
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+
 import mariculture.api.core.FuelInfo;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.api.core.RecipeSmelter;
@@ -13,21 +16,30 @@ import minetweaker.MineTweakerAPI;
 import minetweaker.api.item.IItemStack;
 import minetweaker.api.liquid.ILiquidStack;
 import minetweaker.api.minecraft.MineTweakerMC;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 
 @ZenClass("mods.mariculture.Crucible")
 public class Crucible {
+
     @ZenMethod
-    public static void addRecipe(int temp, IItemStack input, ILiquidStack fluid, @Optional IItemStack output, @Optional int chance) {
+    public static void addRecipe(int temp, IItemStack input, ILiquidStack fluid, @Optional IItemStack output,
+        @Optional int chance) {
         ItemStack out = output != null ? MineTweakerMC.getItemStack(output) : null;
-        MineTweakerAPI.apply(new AddRecipe(new RecipeSmelter(MineTweakerMC.getItemStack(input), null, temp, MineTweakerMC.getLiquidStack(fluid), out, chance)));
+        MineTweakerAPI.apply(
+            new AddRecipe(
+                new RecipeSmelter(
+                    MineTweakerMC.getItemStack(input),
+                    null,
+                    temp,
+                    MineTweakerMC.getLiquidStack(fluid),
+                    out,
+                    chance)));
     }
 
     private static class AddRecipe extends CollectionAddAction {
+
         public AddRecipe(RecipeSmelter recipe) {
             super("Mariculture Crucible", MaricultureHandlers.crucible.getRecipeList(), recipe);
         }
@@ -44,6 +56,7 @@ public class Crucible {
     }
 
     private static class RemoveRecipe extends CollectionRemoveAction {
+
         public RemoveRecipe(ItemStack stack) {
             super("Mariculture Crucible", MaricultureHandlers.crucible.getRecipeList(), stack);
         }
@@ -76,14 +89,15 @@ public class Crucible {
     }
 
     private static class AddFuel extends MapAddAction {
+
         private final String name;
 
         public AddFuel(Object input, FuelInfo info) {
             super(CrucibleHandler.fuels, PluginMineTweaker3.getKey(input), info);
             if (input instanceof ItemStack) {
-                name = ((ItemStack)input).getDisplayName();
+                name = ((ItemStack) input).getDisplayName();
             } else if (input instanceof FluidStack) {
-                name = ((FluidStack)input).getLocalizedName();
+                name = ((FluidStack) input).getLocalizedName();
             } else if (input instanceof String) {
                 name = (String) input;
             } else name = "null";
@@ -99,7 +113,7 @@ public class Crucible {
             return "Removing " + name + " as a Crucible Furnace fuel";
         }
     }
-    
+
     @ZenMethod
     public static void removeFuel(IItemStack fuel) {
         MineTweakerAPI.apply(new RemoveFuel(fuel));
@@ -114,16 +128,17 @@ public class Crucible {
     public static void removeFuel(String fuel) {
         MineTweakerAPI.apply(new RemoveFuel(fuel));
     }
-   
+
     private static class RemoveFuel extends MapRemoveAction {
+
         private final String name;
 
         public RemoveFuel(Object input) {
             super(CrucibleHandler.fuels, PluginMineTweaker3.getKey(input));
             if (input instanceof ItemStack) {
-                name = ((ItemStack)input).getDisplayName();
+                name = ((ItemStack) input).getDisplayName();
             } else if (input instanceof FluidStack) {
-                name = ((FluidStack)input).getLocalizedName();
+                name = ((FluidStack) input).getLocalizedName();
             } else if (input instanceof String) {
                 name = (String) input;
             } else {

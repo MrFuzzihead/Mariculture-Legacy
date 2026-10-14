@@ -3,13 +3,16 @@ package mariculture.fishery.fish;
 import static mariculture.core.lib.MCLib.dropletArdite;
 import static mariculture.core.lib.MCLib.dropletDestroy;
 import static mariculture.core.lib.MCLib.dropletNether;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishArdite extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 70;
@@ -59,17 +62,17 @@ public class FishArdite extends FishSpecies {
     public int getFertility() {
         return 4000;
     }
-    
+
     @Override
     public int getBaseProductivity() {
         return 0;
     }
-    
+
     @Override
     public double getFishOilVolume() {
         return 0.0D;
     }
-    
+
     @Override
     public int getFoodStat() {
         return -1;
@@ -86,7 +89,7 @@ public class FishArdite extends FishSpecies {
     public RodType getRodNeeded() {
         return RodType.FLUX;
     }
-    
+
     @Override
     public int getFishMealSize() {
         return 0;

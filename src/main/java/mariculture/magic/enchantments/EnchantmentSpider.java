@@ -1,12 +1,14 @@
 package mariculture.magic.enchantments;
 
-import mariculture.core.helpers.EnchantHelper;
-import mariculture.core.util.MCTranslate;
-import mariculture.magic.Magic;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.player.EntityPlayer;
 
+import mariculture.core.helpers.EnchantHelper;
+import mariculture.core.util.MCTranslate;
+import mariculture.magic.Magic;
+
 public class EnchantmentSpider extends EnchantmentJewelry {
+
     public static boolean activated = false;
     public static boolean toggledOn = false;
     private static int damageTicker = 0;

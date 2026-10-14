@@ -1,7 +1,5 @@
 package mariculture.diving.render;
 
-import mariculture.core.render.IModelMariculture;
-import mariculture.core.tile.TileAirPump;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.tileentity.TileEntity;
@@ -10,7 +8,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
+import mariculture.core.render.IModelMariculture;
+import mariculture.core.tile.TileAirPump;
+
 public class ModelAirPump extends ModelBase implements IModelMariculture {
+
     private static final float scale = (float) (1.0 / 20.0);
     private ModelRenderer base;
     private ModelRenderer leg1;

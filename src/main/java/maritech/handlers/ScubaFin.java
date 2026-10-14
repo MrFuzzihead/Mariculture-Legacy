@@ -1,14 +1,16 @@
 package maritech.handlers;
 
-import mariculture.core.helpers.PlayerHelper;
-import mariculture.core.lib.ArmorSlot;
-import mariculture.lib.helpers.EntityHelper;
-import maritech.extensions.modules.ExtensionDiving;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.player.EntityPlayer;
 
+import mariculture.core.helpers.PlayerHelper;
+import mariculture.core.lib.ArmorSlot;
+import mariculture.lib.helpers.EntityHelper;
+import maritech.extensions.modules.ExtensionDiving;
+
 public class ScubaFin {
+
     private static final float SPEED_STANDARD = 0.025F;
     private static final float SPEED_WETSUIT = 0.05F;
 
@@ -30,10 +32,13 @@ public class ScubaFin {
         if (!player.capabilities.isFlying) {
             player.capabilities.allowFlying = true;
             player.capabilities.isFlying = true;
-            player.getEntityData().setBoolean("scubaFinIsFlying", true);
+            player.getEntityData()
+                .setBoolean("scubaFinIsFlying", true);
 
-            if (player.capabilities.getFlySpeed() != SPEED_STANDARD && player.capabilities.getFlySpeed() != SPEED_WETSUIT) {
-                player.getEntityData().setFloat("speedBeforeScubaSpin", player.capabilities.getFlySpeed());
+            if (player.capabilities.getFlySpeed() != SPEED_STANDARD
+                && player.capabilities.getFlySpeed() != SPEED_WETSUIT) {
+                player.getEntityData()
+                    .setFloat("speedBeforeScubaSpin", player.capabilities.getFlySpeed());
             }
 
             if (PlayerHelper.hasArmor(player, ArmorSlot.LEG, ExtensionDiving.scubaSuit)) {
@@ -45,11 +50,15 @@ public class ScubaFin {
     }
 
     private static void deactivate(EntityPlayer player) {
-        if (player.getEntityData().getBoolean("scubaFinIsFlying") == true) {
+        if (player.getEntityData()
+            .getBoolean("scubaFinIsFlying") == true) {
             player.capabilities.allowFlying = false;
             player.capabilities.isFlying = false;
-            player.getEntityData().setBoolean("scubaFinIsFlying", false);
-            player.capabilities.setFlySpeed(player.getEntityData().getFloat("speedBeforeScubaSpin"));
+            player.getEntityData()
+                .setBoolean("scubaFinIsFlying", false);
+            player.capabilities.setFlySpeed(
+                player.getEntityData()
+                    .getFloat("speedBeforeScubaSpin"));
         }
 
         if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindForward)) {

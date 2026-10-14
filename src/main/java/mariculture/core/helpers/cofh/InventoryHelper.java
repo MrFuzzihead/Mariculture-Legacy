@@ -13,42 +13,43 @@ public class InventoryHelper {
      * Add an ItemStack to an inventory. Return true if the entire stack was added.
      * 
      * @param inventory
-     *            The inventory.
+     *                   The inventory.
      * @param stack
-     *            ItemStack to add.
+     *                   ItemStack to add.
      * @param startIndex
-     *            First slot to attempt to add into. Does not loop around fully.
+     *                   First slot to attempt to add into. Does not loop around fully.
      */
     private static boolean addItemStackToInventory(ItemStack[] inventory, ItemStack stack, int startIndex) {
         if (stack == null) return true;
         int openSlot = -1;
         for (int i = startIndex; i < inventory.length; i++)
-            if (CoFhItemHelper.areItemStacksEqualWithNBT(stack, inventory[i]) && inventory[i].getMaxStackSize() > inventory[i].stackSize) {
-                int hold = inventory[i].getMaxStackSize() - inventory[i].stackSize;
-                if (hold >= stack.stackSize) {
-                    inventory[i].stackSize += stack.stackSize;
-                    stack = null;
-                    return true;
-                } else {
-                    stack.stackSize -= hold;
-                    inventory[i].stackSize += hold;
+            if (CoFhItemHelper.areItemStacksEqualWithNBT(stack, inventory[i])
+                && inventory[i].getMaxStackSize() > inventory[i].stackSize) {
+                    int hold = inventory[i].getMaxStackSize() - inventory[i].stackSize;
+                    if (hold >= stack.stackSize) {
+                        inventory[i].stackSize += stack.stackSize;
+                        stack = null;
+                        return true;
+                    } else {
+                        stack.stackSize -= hold;
+                        inventory[i].stackSize += hold;
+                    }
+                } else if (inventory[i] == null && openSlot == -1) {
+                    openSlot = i;
                 }
-            } else if (inventory[i] == null && openSlot == -1) {
-                openSlot = i;
-            }
         if (stack != null) if (openSlot > -1) {
             inventory[openSlot] = stack;
         } else return false;
         return true;
     }
 
-    //Copy of the above, but instead of a start index, able to specify WHICH slots
+    // Copy of the above, but instead of a start index, able to specify WHICH slots
     public static boolean addItemStackToInventory(ItemStack[] inventory, ItemStack stack, int[] slots) {
         if (stack == null) return true;
         if (slots == null) return false;
         int openSlot = -1;
-        for (int i : slots)
-            if (CoFhItemHelper.areItemStacksEqualWithNBT(stack, inventory[i]) && inventory[i].getMaxStackSize() > inventory[i].stackSize) {
+        for (int i : slots) if (CoFhItemHelper.areItemStacksEqualWithNBT(stack, inventory[i])
+            && inventory[i].getMaxStackSize() > inventory[i].stackSize) {
                 int hold = inventory[i].getMaxStackSize() - inventory[i].stackSize;
                 if (hold >= stack.stackSize) {
                     inventory[i].stackSize += stack.stackSize;
@@ -67,15 +68,15 @@ public class InventoryHelper {
         return true;
     }
 
-    //Copy of the above but simulates
+    // Copy of the above but simulates
     public static boolean canAddItemStackToInventory(ItemStack[] inventory, ItemStack stack, int[] slots) {
         if (stack == null) return true;
         int openSlot = -1;
-        for (int i : slots)
-            if (CoFhItemHelper.areItemStacksEqualWithNBT(stack, inventory[i]) && inventory[i].getMaxStackSize() > inventory[i].stackSize) return true;
-            else if (inventory[i] == null && openSlot == -1) {
-                openSlot = i;
-            }
+        for (int i : slots) if (CoFhItemHelper.areItemStacksEqualWithNBT(stack, inventory[i])
+            && inventory[i].getMaxStackSize() > inventory[i].stackSize) return true;
+        else if (inventory[i] == null && openSlot == -1) {
+            openSlot = i;
+        }
 
         if (openSlot > -1) return true;
         else return false;
@@ -89,15 +90,17 @@ public class InventoryHelper {
         if (theInventory instanceof ISidedInventory) {
             ISidedInventory sidedInv = (ISidedInventory) theInventory;
             int slots[] = sidedInv.getAccessibleSlotsFromSide(side);
-            for (int i = 0; i < slots.length && retStack == null; i++)
-                if (sidedInv.getStackInSlot(i) != null && sidedInv.canExtractItem(i, sidedInv.getStackInSlot(i), side)) {
-                    retStack = sidedInv.getStackInSlot(i).copy();
+            for (int i = 0; i < slots.length && retStack == null; i++) if (sidedInv.getStackInSlot(i) != null
+                && sidedInv.canExtractItem(i, sidedInv.getStackInSlot(i), side)) {
+                    retStack = sidedInv.getStackInSlot(i)
+                        .copy();
                     sidedInv.setInventorySlotContents(i, null);
                 }
         } else {
             for (int i = 0; i < theInventory.getSizeInventory() && retStack == null; i++)
                 if (theInventory.getStackInSlot(i) != null) {
-                    retStack = theInventory.getStackInSlot(i).copy();
+                    retStack = theInventory.getStackInSlot(i)
+                        .copy();
                     theInventory.setInventorySlotContents(i, null);
                 }
         }
@@ -114,9 +117,10 @@ public class InventoryHelper {
         if (theInventory instanceof ISidedInventory) {
             ISidedInventory sidedInv = (ISidedInventory) theInventory;
             int slots[] = sidedInv.getAccessibleSlotsFromSide(side);
-            for (int i = 0; i < slots.length && retStack == null; i++)
-                if (sidedInv.getStackInSlot(i) != null && sidedInv.canExtractItem(i, sidedInv.getStackInSlot(i), side)) {
-                    retStack = sidedInv.getStackInSlot(i).copy();
+            for (int i = 0; i < slots.length && retStack == null; i++) if (sidedInv.getStackInSlot(i) != null
+                && sidedInv.canExtractItem(i, sidedInv.getStackInSlot(i), side)) {
+                    retStack = sidedInv.getStackInSlot(i)
+                        .copy();
                     if (retStack.getItem() instanceof IFluidContainerItem) {
                         sidedInv.setInventorySlotContents(i, null);
                     } else retStack = null;
@@ -124,7 +128,8 @@ public class InventoryHelper {
         } else {
             for (int i = 0; i < theInventory.getSizeInventory() && retStack == null; i++)
                 if (theInventory.getStackInSlot(i) != null) {
-                    retStack = theInventory.getStackInSlot(i).copy();
+                    retStack = theInventory.getStackInSlot(i)
+                        .copy();
                     if (retStack.getItem() instanceof IFluidContainerItem) {
                         theInventory.setInventorySlotContents(i, null);
                     } else retStack = null;
@@ -148,8 +153,8 @@ public class InventoryHelper {
             int slots[] = sidedInv.getAccessibleSlotsFromSide(side);
 
             if (slots == null) return stack;
-            for (int i = 0; i < slots.length && stack != null; i++)
-                if (sidedInv.canInsertItem(slots[i], stack, side) && CoFhItemHelper.itemsEqualWithMetadata(stack, theInventory.getStackInSlot(slots[i]), true)) {
+            for (int i = 0; i < slots.length && stack != null; i++) if (sidedInv.canInsertItem(slots[i], stack, side)
+                && CoFhItemHelper.itemsEqualWithMetadata(stack, theInventory.getStackInSlot(slots[i]), true)) {
                     stack = addToOccupiedInventorySlot(sidedInv, slots[i], stack);
                 }
             for (int i = 0; i < slots.length && stack != null; i++)
@@ -163,10 +168,9 @@ public class InventoryHelper {
                     stack = addToOccupiedInventorySlot(theInventory, i, stack);
                 }
 
-            for (int i = 0; i < invSize && stack != null; i++)
-                if (theInventory.getStackInSlot(i) == null) {
-                    stack = addToEmptyInventorySlot(theInventory, i, stack);
-                }
+            for (int i = 0; i < invSize && stack != null; i++) if (theInventory.getStackInSlot(i) == null) {
+                stack = addToEmptyInventorySlot(theInventory, i, stack);
+            }
         }
 
         if (stack == null || stack.stackSize != stackSize) {
@@ -176,7 +180,7 @@ public class InventoryHelper {
         return stack;
     }
 
-    //Copy of the above but simulates
+    // Copy of the above but simulates
     public static boolean canInsertItemStackIntoInventory(IInventory theInventory, ItemStack stack, int side) {
         if (stack == null) return false;
         ItemStack original = stack.copy();
@@ -187,8 +191,8 @@ public class InventoryHelper {
             int slots[] = sidedInv.getAccessibleSlotsFromSide(side);
 
             if (slots == null) return false;
-            for (int i = 0; i < slots.length && stack != null; i++)
-                if (sidedInv.canInsertItem(slots[i], stack, side) && CoFhItemHelper.itemsEqualWithMetadata(stack, theInventory.getStackInSlot(slots[i]), true)) {
+            for (int i = 0; i < slots.length && stack != null; i++) if (sidedInv.canInsertItem(slots[i], stack, side)
+                && CoFhItemHelper.itemsEqualWithMetadata(stack, theInventory.getStackInSlot(slots[i]), true)) {
                     stack = simulateAddToOccupiedInventorySlot(sidedInv, slots[i], stack);
                 }
             for (int i = 0; i < slots.length && stack != null; i++)
@@ -202,10 +206,9 @@ public class InventoryHelper {
                     stack = simulateAddToOccupiedInventorySlot(theInventory, i, stack);
                 }
 
-            for (int i = 0; i < invSize && stack != null; i++)
-                if (theInventory.getStackInSlot(i) == null) {
-                    stack = simulateAddToEmptyInventorySlot(theInventory, i, stack);
-                }
+            for (int i = 0; i < invSize && stack != null; i++) if (theInventory.getStackInSlot(i) == null) {
+                stack = simulateAddToEmptyInventorySlot(theInventory, i, stack);
+            }
         }
 
         if (stack == null || stack.stackSize == 0) {
@@ -219,7 +222,8 @@ public class InventoryHelper {
     private static ItemStack addToEmptyInventorySlot(IInventory theInventory, int slot, ItemStack stack) {
         if (!theInventory.isItemValidForSlot(slot, stack)) return stack;
         int stackLimit = theInventory.getInventoryStackLimit();
-        theInventory.setInventorySlotContents(slot, CoFhItemHelper.cloneStack(stack, Math.min(stack.stackSize, stackLimit)));
+        theInventory
+            .setInventorySlotContents(slot, CoFhItemHelper.cloneStack(stack, Math.min(stack.stackSize, stackLimit)));
         return stackLimit >= stack.stackSize ? null : stack.splitStack(stack.stackSize - stackLimit);
     }
 

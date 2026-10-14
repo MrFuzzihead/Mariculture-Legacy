@@ -1,13 +1,15 @@
 package mariculture.core.network;
 
-import io.netty.buffer.ByteBuf;
-import mariculture.magic.gui.ContainerMirror;
 import net.minecraft.entity.player.EntityPlayer;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.magic.gui.ContainerMirror;
 
 public class PacketEnchant implements IMessage, IMessageHandler<PacketEnchant, IMessage> {
+
     public int windowID;
     public int level;
 
@@ -33,7 +35,8 @@ public class PacketEnchant implements IMessage, IMessageHandler<PacketEnchant, I
     @Override
     public IMessage onMessage(PacketEnchant message, MessageContext ctx) {
         EntityPlayer player = ctx.getServerHandler().playerEntity;
-        if (player.openContainer.windowId == message.windowID && player.openContainer.isPlayerNotUsingContainer(player)) {
+        if (player.openContainer.windowId == message.windowID
+            && player.openContainer.isPlayerNotUsingContainer(player)) {
             ContainerMirror mirror = (ContainerMirror) player.openContainer;
             mirror.windowId = message.windowID;
             mirror.enchantItem(player, message.level);

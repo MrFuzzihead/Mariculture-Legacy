@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-import mariculture.plugins.Plugins.Plugin;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 
+import mariculture.plugins.Plugins.Plugin;
+
 public class PluginModdedTweaks extends Plugin {
+
     public PluginModdedTweaks(String name) {
         super(name);
     }
@@ -25,13 +27,18 @@ public class PluginModdedTweaks extends Plugin {
     }
 
     private boolean isAluminum(String str) {
-        return str.equals("oreAluminum") || str.equals("oreAluminium") || str.equals("oreNaturalAluminum") || str.equals("oreBauxite");
+        return str.equals("oreAluminum") || str.equals("oreAluminium")
+            || str.equals("oreNaturalAluminum")
+            || str.equals("oreBauxite");
     }
 
     @Override
     public void postInit() {
         ArrayList<ItemStack> toRemove = new ArrayList();
-        Iterator<Map.Entry<ItemStack, ItemStack>> iter = FurnaceRecipes.smelting().getSmeltingList().entrySet().iterator();
+        Iterator<Map.Entry<ItemStack, ItemStack>> iter = FurnaceRecipes.smelting()
+            .getSmeltingList()
+            .entrySet()
+            .iterator();
         while (iter.hasNext()) {
             Map.Entry<ItemStack, ItemStack> entry = iter.next();
             int[] ids = OreDictionary.getOreIDs(entry.getKey());
@@ -45,7 +52,9 @@ public class PluginModdedTweaks extends Plugin {
         }
 
         for (ItemStack stack : toRemove) {
-            FurnaceRecipes.smelting().getSmeltingList().remove(stack);
+            FurnaceRecipes.smelting()
+                .getSmeltingList()
+                .remove(stack);
         }
     }
 }

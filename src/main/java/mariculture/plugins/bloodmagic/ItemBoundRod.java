@@ -2,14 +2,6 @@ package mariculture.plugins.bloodmagic;
 
 import java.util.List;
 
-import mariculture.Mariculture;
-import mariculture.api.fishery.Fishing;
-import mariculture.core.config.FishMechanics;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.util.MCTranslate;
-import mariculture.fishery.items.ItemFishy;
-import mariculture.fishery.items.ItemRod;
-import mariculture.plugins.PluginBloodMagic;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -22,15 +14,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import WayofTime.alchemicalWizardry.AlchemicalWizardry;
-import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 
 import com.google.common.collect.Multimap;
 
+import WayofTime.alchemicalWizardry.AlchemicalWizardry;
+import WayofTime.alchemicalWizardry.api.soulNetwork.SoulNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.Mariculture;
+import mariculture.api.fishery.Fishing;
+import mariculture.core.config.FishMechanics;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.util.MCTranslate;
+import mariculture.fishery.items.ItemFishy;
+import mariculture.fishery.items.ItemRod;
+import mariculture.plugins.PluginBloodMagic;
 
 public class ItemBoundRod extends ItemRod {
+
     private IIcon passiveIcon;
 
     public ItemBoundRod() {
@@ -60,7 +61,9 @@ public class ItemBoundRod extends ItemRod {
 
     public int hasDemonShard(EntityPlayer player, int slot) {
         ItemStack stack = player.inventory.getStackInSlot(slot);
-        if (stack != null) return stack.getItem() == PluginBloodMagic.weakBloodShard.getItem() ? FishMechanics.WEAK_FISH_LIMIT : stack.getItem() == PluginBloodMagic.demonBloodShard.getItem() ? FishMechanics.DEMON_FISH_LIMIT : -1;
+        if (stack != null)
+            return stack.getItem() == PluginBloodMagic.weakBloodShard.getItem() ? FishMechanics.WEAK_FISH_LIMIT
+                : stack.getItem() == PluginBloodMagic.demonBloodShard.getItem() ? FishMechanics.DEMON_FISH_LIMIT : -1;
         else return -1;
     }
 
@@ -81,7 +84,8 @@ public class ItemBoundRod extends ItemRod {
                     }
 
                     if (BlockHelper.isWater(world, x2, y2, z2) && world.rand.nextInt(5) == 0) {
-                        ItemStack loot = Fishing.fishing.getCatch(world, x2, y2, z2, player, player.getCurrentEquippedItem());
+                        ItemStack loot = Fishing.fishing
+                            .getCatch(world, x2, y2, z2, player, player.getCurrentEquippedItem());
                         if (!world.isRemote && loot != null) {
                             float f = 0.7F;
                             double d0 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
@@ -98,7 +102,13 @@ public class ItemBoundRod extends ItemRod {
                             world.spawnEntityInWorld(entityitem);
 
                             player.addStat(StatList.fishCaughtStat, 1);
-                            player.worldObj.spawnEntityInWorld(new EntityXPOrb(world, player.posX, player.posY + 0.5D, player.posZ + 0.5D, world.rand.nextInt(6) + 1));
+                            player.worldObj.spawnEntityInWorld(
+                                new EntityXPOrb(
+                                    world,
+                                    player.posX,
+                                    player.posY + 0.5D,
+                                    player.posZ + 0.5D,
+                                    world.rand.nextInt(6) + 1));
                         }
 
                         catches++;
@@ -168,8 +178,10 @@ public class ItemBoundRod extends ItemRod {
                 list.add(MCTranslate.translate("rodBlood.deactivated"));
             }
 
-            if (!stack.stackTagCompound.getString("ownerName").equals("")) {
-                list.add(MCTranslate.translate("rodBlood.owner") + ": " + stack.stackTagCompound.getString("ownerName"));
+            if (!stack.stackTagCompound.getString("ownerName")
+                .equals("")) {
+                list.add(
+                    MCTranslate.translate("rodBlood.owner") + ": " + stack.stackTagCompound.getString("ownerName"));
             }
         }
 
@@ -179,7 +191,9 @@ public class ItemBoundRod extends ItemRod {
     @Override
     public Multimap getAttributeModifiers(ItemStack stack) {
         Multimap multimap = super.getAttributeModifiers(stack);
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", 7.0F, 0));
+        multimap.put(
+            SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(),
+            new AttributeModifier(field_111210_e, "Weapon modifier", 7.0F, 0));
         return multimap;
     }
 

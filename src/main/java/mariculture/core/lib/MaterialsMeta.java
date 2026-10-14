@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class MaterialsMeta {
+
     public static final int COUNT = 39;
 
     public static final int INGOT_ALUMINUM = 0;

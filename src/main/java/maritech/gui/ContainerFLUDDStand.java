@@ -1,17 +1,19 @@
 package maritech.gui;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+
 import mariculture.api.core.IItemUpgrade;
 import mariculture.core.gui.ContainerMachine;
 import mariculture.core.gui.SlotFluidContainer;
 import mariculture.core.gui.SlotOutput;
 import mariculture.core.helpers.FluidHelper;
 import maritech.tile.TileFLUDDStand;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 
 public class ContainerFLUDDStand extends ContainerMachine {
+
     public TileFLUDDStand tile;
 
     public ContainerFLUDDStand(TileFLUDDStand tile, InventoryPlayer playerInventory) {

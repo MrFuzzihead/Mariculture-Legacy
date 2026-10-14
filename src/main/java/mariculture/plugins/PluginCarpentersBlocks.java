@@ -4,6 +4,7 @@ import mariculture.core.blocks.BlockAir;
 import mariculture.plugins.Plugins.Plugin;
 
 public class PluginCarpentersBlocks extends Plugin {
+
     public PluginCarpentersBlocks(String name) {
         super(name);
     }

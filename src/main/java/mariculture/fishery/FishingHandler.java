@@ -8,6 +8,20 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomFishable;
+import net.minecraft.world.World;
+import net.minecraftforge.common.FishingHooks;
+import net.minecraftforge.oredict.OreDictionary;
+
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.api.fishery.Fishing;
@@ -24,21 +38,9 @@ import mariculture.core.helpers.PlayerHelper;
 import mariculture.core.lib.ArmorSlot;
 import mariculture.core.util.RecipeItem;
 import mariculture.fishery.items.ItemVanillaRod;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandomFishable;
-import net.minecraft.world.World;
-import net.minecraftforge.common.FishingHooks;
-import net.minecraftforge.oredict.OreDictionary;
-
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 
 public class FishingHandler implements IFishing {
+
     // Registering Fishing Rods
     private static final HashMap<Item, RodType> registry = new HashMap();
 
@@ -60,7 +62,9 @@ public class FishingHandler implements IFishing {
     @Override
     public ItemStack handleRightClick(ItemStack stack, World world, EntityPlayer player) {
         RodType rodType = getRodType(stack);
-        if (!world.isRemote && !rodType.canFish(world, (int) player.posX, (int) player.posY, (int) player.posZ, player, stack)) return stack;
+        if (!world.isRemote
+            && !rodType.canFish(world, (int) player.posX, (int) player.posY, (int) player.posZ, player, stack))
+            return stack;
         int baitQuality = getBait(player, stack)[0];
         int baitSlot = getBait(player, stack)[1];
         if (player.fishEntity != null) {
@@ -96,18 +100,20 @@ public class FishingHandler implements IFishing {
 
         if (currentSlot > 0) {
             int leftSlot = currentSlot - 1;
-            if (player.inventory.getStackInSlot(leftSlot) != null) if (canUseBait(rod, player.inventory.getStackInSlot(leftSlot))) {
-                baitQuality = getBaitQuality(player.inventory.getStackInSlot(leftSlot));
-                foundSlot = leftSlot;
-            }
+            if (player.inventory.getStackInSlot(leftSlot) != null)
+                if (canUseBait(rod, player.inventory.getStackInSlot(leftSlot))) {
+                    baitQuality = getBaitQuality(player.inventory.getStackInSlot(leftSlot));
+                    foundSlot = leftSlot;
+                }
         }
 
         if (foundSlot == -1 && currentSlot < 8) {
             int rightSlot = currentSlot + 1;
-            if (player.inventory.getStackInSlot(rightSlot) != null) if (canUseBait(rod, player.inventory.getStackInSlot(rightSlot))) {
-                baitQuality = getBaitQuality(player.inventory.getStackInSlot(rightSlot));
-                foundSlot = rightSlot;
-            }
+            if (player.inventory.getStackInSlot(rightSlot) != null)
+                if (canUseBait(rod, player.inventory.getStackInSlot(rightSlot))) {
+                    baitQuality = getBaitQuality(player.inventory.getStackInSlot(rightSlot));
+                    foundSlot = rightSlot;
+                }
         }
 
         return new int[] { baitQuality, foundSlot };
@@ -153,8 +159,7 @@ public class FishingHandler implements IFishing {
         if (canUse.containsKey(quality)) {
             ArrayList<ItemStack> baitList = canUse.get(quality);
             if (baitList != null && baitList.size() > 0) {
-                for (ItemStack l : baitList)
-                    if (RecipeItem.equals(bait, l)) return true;
+                for (ItemStack l : baitList) if (RecipeItem.equals(bait, l)) return true;
 
                 return false;
             } else return false;
@@ -170,7 +175,8 @@ public class FishingHandler implements IFishing {
 
     @Override
     public void addLoot(Loot loot) {
-        fishing_loot.get(loot.rarity).add(loot);
+        fishing_loot.get(loot.rarity)
+            .add(loot);
         if (loot.quality == null) {
             addVanillaLoot(loot.rarity, new WeightedRandomFishable(loot.loot, (int) Math.max(loot.chance / 10, 1)));
         }
@@ -185,21 +191,21 @@ public class FishingHandler implements IFishing {
         }
     }
 
-    //Returns whether this dimension is valid or not
+    // Returns whether this dimension is valid or not
     private boolean isDimensionValid(World world, int id) {
         if (id == Short.MAX_VALUE) return true;
         else if (id == 0) return !world.provider.isHellWorld && world.provider.dimensionId != 1;
         else return id == world.provider.dimensionId;
     }
 
-    //Returns whether this fishing rod is valid to catch the loot
+    // Returns whether this fishing rod is valid to catch the loot
     private boolean isFishingRodValid(RodType rod, RodType quality, boolean exact) {
         if (quality == null) return true;
         else if (exact) return rod == quality;
         else return rod.getQuality() >= quality.getQuality();
     }
 
-    //Returns a fishing loot catch for this location
+    // Returns a fishing loot catch for this location
     private ItemStack getLoot(World world, RodType rod, Rarity rarity) {
         ArrayList<Loot> loots = new ArrayList(fishing_loot.get(rarity));
         Collections.shuffle(loots);
@@ -212,7 +218,8 @@ public class FishingHandler implements IFishing {
             }
         }
 
-        return rarity == Rarity.JUNK ? FishingHooks.getRandomFishable(world.rand, 0.05F) : FishingHooks.getRandomFishable(world.rand, 0.1F);
+        return rarity == Rarity.JUNK ? FishingHooks.getRandomFishable(world.rand, 0.05F)
+            : FishingHooks.getRandomFishable(world.rand, 0.1F);
     }
 
     private ItemStack getVanillaLoot(World world, EntityPlayer player, ItemStack stack, int loot, int speed) {
@@ -235,14 +242,25 @@ public class FishingHandler implements IFishing {
             if (type != null) {
                 ItemStack loot = null;
                 int lootBonus = EnchantmentHelper.getEnchantmentLevel(Enchantment.field_151370_z.effectId, stack);
-                if (lootBonus > 0 && world.rand.nextInt(200) < lootBonus * 10 || world.rand.nextInt(1000) < Math.max(0.01D, type.getChances().get(2) * 10)) {
+                if (lootBonus > 0 && world.rand.nextInt(200) < lootBonus * 10 || world.rand.nextInt(1000) < Math.max(
+                    0.01D,
+                    type.getChances()
+                        .get(2) * 10)) {
                     loot = getLoot(world, type, Rarity.RARE);
                 } else {
-                    if (lootBonus > 0 && world.rand.nextInt(250) < lootBonus * 10 || world.rand.nextInt(1000) < Math.max(0.01D, type.getChances().get(1) * 10)) {
+                    if (lootBonus > 0 && world.rand.nextInt(250) < lootBonus * 10
+                        || world.rand.nextInt(1000) < Math.max(
+                            0.01D,
+                            type.getChances()
+                                .get(1) * 10)) {
                         loot = getLoot(world, type, Rarity.GOOD);
-                    } else if (lootBonus > 0 && world.rand.nextInt(300) < lootBonus * 10 || world.rand.nextInt(1000) < Math.max(0.01D, type.getChances().get(0) * 10)) {
-                        loot = getLoot(world, type, Rarity.JUNK);
-                    }
+                    } else if (lootBonus > 0 && world.rand.nextInt(300) < lootBonus * 10
+                        || world.rand.nextInt(1000) < Math.max(
+                            0.01D,
+                            type.getChances()
+                                .get(0) * 10)) {
+                                    loot = getLoot(world, type, Rarity.JUNK);
+                                }
                 }
 
                 boolean forceLoot = false;
@@ -276,7 +294,8 @@ public class FishingHandler implements IFishing {
                     }
 
                     if (helmet instanceof IHelmetFishManipulator) {
-                        loot = ((IHelmetFishManipulator) helmet).getLoot(PlayerHelper.getArmorStack(player, ArmorSlot.HAT), loot);
+                        loot = ((IHelmetFishManipulator) helmet)
+                            .getLoot(PlayerHelper.getArmorStack(player, ArmorSlot.HAT), loot);
                     }
 
                     return loot;
@@ -297,7 +316,7 @@ public class FishingHandler implements IFishing {
             }
         }
 
-        //Creates the catchable fish list if it doesn't exist
+        // Creates the catchable fish list if it doesn't exist
         if (catchables == null) {
             catchables = new ArrayList();
             for (Entry<Integer, FishSpecies> species : FishSpecies.species.entrySet()) {
@@ -324,9 +343,20 @@ public class FishingHandler implements IFishing {
             Collections.shuffle(catchables);
             for (FishSpecies fish : catchables) {
                 double catchChance = fish.getCatchChance(fakeWorld, x, yHeight, z, salt, temperature);
-                if (catchChance > 0 && type.getQuality() >= fish.getRodNeeded().getQuality() && fakeWorld.rand.nextInt(1000) < catchChance) {
-                    if (FishMechanics.IGNORE_BIOMES) catchFish(player, fakeWorld.rand, fish, type, fish.getCaughtAliveChance(fakeWorld, yHeight) * (modifier * 1.5D));
-                    else return catchFish(player, fakeWorld.rand, fish, type, fish.getCaughtAliveChance(fakeWorld, x, yHeight, z, salt, temperature) * (modifier));
+                if (catchChance > 0 && type.getQuality() >= fish.getRodNeeded()
+                    .getQuality() && fakeWorld.rand.nextInt(1000) < catchChance) {
+                    if (FishMechanics.IGNORE_BIOMES) catchFish(
+                        player,
+                        fakeWorld.rand,
+                        fish,
+                        type,
+                        fish.getCaughtAliveChance(fakeWorld, yHeight) * (modifier * 1.5D));
+                    else return catchFish(
+                        player,
+                        fakeWorld.rand,
+                        fish,
+                        type,
+                        fish.getCaughtAliveChance(fakeWorld, x, yHeight, z, salt, temperature) * (modifier));
                 }
             }
         }
@@ -346,11 +376,11 @@ public class FishingHandler implements IFishing {
         if (helmet instanceof IHelmetFishManipulator) {
             IHelmetFishManipulator manipulator = ((IHelmetFishManipulator) helmet);
             ItemStack stack = PlayerHelper.getArmorStack(player, ArmorSlot.HAT);
-            if (alive) { //If the fish is alive, check if it's always meant to be dead
+            if (alive) { // If the fish is alive, check if it's always meant to be dead
                 alive = !manipulator.alwaysDead(stack);
             }
 
-            if (alive) { //Add the dna to fish, for determing gender
+            if (alive) { // Add the dna to fish, for determing gender
                 Fish.gender.addDNA(ret, manipulator.getGender(stack));
                 ret = manipulator.getLoot(stack, ret);
             }

@@ -1,13 +1,15 @@
 package mariculture.core.gui;
 
-import mariculture.core.items.ItemMCStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
+import mariculture.core.items.ItemMCStorage;
+
 public class InventoryStorage implements IInventory {
+
     private ItemStack[] inventory;
     public EntityPlayer player;
     public long seed;
@@ -70,7 +72,9 @@ public class InventoryStorage implements IInventory {
 
     @Override
     public String getInventoryName() {
-        return StatCollector.translateToLocal(player.getCurrentEquippedItem().getUnlocalizedName());
+        return StatCollector.translateToLocal(
+            player.getCurrentEquippedItem()
+                .getUnlocalizedName());
     }
 
     @Override
@@ -91,12 +95,12 @@ public class InventoryStorage implements IInventory {
 
     @Override
     public void openInventory() {
-        //onInventoryChanged();
+        // onInventoryChanged();
     }
 
     @Override
     public void closeInventory() {
-        //onInventoryChanged();
+        // onInventoryChanged();
     }
 
     @Override
@@ -135,9 +139,11 @@ public class InventoryStorage implements IInventory {
     }
 
     public void save(EntityPlayer player, ItemStack[] mirrorContents) {
-        if (!player.worldObj.isRemote) if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() instanceof ItemMCStorage) {
-            ItemMCStorage storage = (ItemMCStorage) player.getCurrentEquippedItem().getItem();
-            storage.save(player, mirrorContents);
-        }
+        if (!player.worldObj.isRemote) if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem()
+            .getItem() instanceof ItemMCStorage) {
+                ItemMCStorage storage = (ItemMCStorage) player.getCurrentEquippedItem()
+                    .getItem();
+                storage.save(player, mirrorContents);
+            }
     }
 }

@@ -1,14 +1,18 @@
 package maritech.render;
 
-import mariculture.lib.helpers.ClientHelper;
-import maritech.lib.MTModInfo;
-import maritech.model.ModelFLUDD;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
+import mariculture.lib.helpers.ClientHelper;
+import maritech.lib.MTModInfo;
+import maritech.model.ModelFLUDD;
+
 public class RenderFLUDDItem implements IItemRenderer {
-    private static final ResourceLocation FLUDD = new ResourceLocation(MTModInfo.MODPATH, "textures/blocks/fludd_texture.png");
+
+    private static final ResourceLocation FLUDD = new ResourceLocation(
+        MTModInfo.MODPATH,
+        "textures/blocks/fludd_texture.png");
     private final ModelFLUDD fludd = new ModelFLUDD();
 
     @Override

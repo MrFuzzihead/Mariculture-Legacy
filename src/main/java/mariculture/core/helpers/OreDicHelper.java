@@ -8,6 +8,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class OreDicHelper {
+
     public static boolean isInDictionary(ItemStack stack) {
         if (stack.getItem() instanceof ItemFishFood) return false;
 
@@ -75,7 +76,8 @@ public class OreDicHelper {
     public static boolean matches(String entry, ItemStack input) {
         int[] ids = OreDictionary.getOreIDs(input);
         for (int i : ids) {
-            if (OreDictionary.getOreName(i).equals(entry)) {
+            if (OreDictionary.getOreName(i)
+                .equals(entry)) {
                 return true;
             }
         }

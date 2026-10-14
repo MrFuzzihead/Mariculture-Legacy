@@ -23,9 +23,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientHelper {
+
     /** Returns the client Minecraft instance **/
     public static Minecraft getMinecraft() {
-        return FMLClientHandler.instance().getClient();
+        return FMLClientHandler.instance()
+            .getClient();
     }
 
     /** Returns the client player **/
@@ -53,7 +55,13 @@ public class ClientHelper {
     /** Calls a for a re-render of all surrounding blocks **/
     public static void refresh() {
         EntityPlayer player = getPlayer();
-        getMinecraft().renderGlobal.markBlockRangeForRenderUpdate((int) player.posX - 176, 0, (int) player.posZ - 176, (int) player.posX + 176, 256, (int) player.posZ + 176);
+        getMinecraft().renderGlobal.markBlockRangeForRenderUpdate(
+            (int) player.posX - 176,
+            0,
+            (int) player.posZ - 176,
+            (int) player.posX + 176,
+            256,
+            (int) player.posZ + 176);
     }
 
     /** Returns the world the player is in **/
@@ -73,19 +81,21 @@ public class ClientHelper {
 
     /** Add text to the game chat **/
     public static void addToChatAndTranslate(String str) {
-        getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentTranslation(str, new Object[0]));
+        getMinecraft().ingameGUI.getChatGUI()
+            .printChatMessage(new ChatComponentTranslation(str, new Object[0]));
     }
 
     /** Add text to the game chat **/
     public static void addToChat(String str) {
-        getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(str));
+        getMinecraft().ingameGUI.getChatGUI()
+            .printChatMessage(new ChatComponentText(str));
     }
 
-    //Keybindings
+    // Keybindings
     public static boolean isSneakingPressed() {
         return GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak);
     }
-    
+
     public static boolean isSprintingPressed() {
         return GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSprint);
     }
@@ -97,31 +107,35 @@ public class ClientHelper {
     public static boolean isJumpPressed() {
         return GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindJump);
     }
-    
+
     public static boolean isShiftPressed() {
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
-    
-    //Mouse Helper
+
+    // Mouse Helper
     public static Point getMouse(GuiContainer container) {
         Minecraft mc = getMinecraft();
         ScaledResolution res = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
         Dimension size = new Dimension(res.getScaledWidth(), res.getScaledHeight());
         Dimension resolution = new Dimension(mc.displayWidth, mc.displayHeight);
-        Point mousepos = new Point(Mouse.getX() * size.width / resolution.width, size.height - Mouse.getY() * size.height / resolution.height - 1);
+        Point mousepos = new Point(
+            Mouse.getX() * size.width / resolution.width,
+            size.height - Mouse.getY() * size.height / resolution.height - 1);
         int guiLeft = (container.width - container.xSize) / 2;
         int guiTop = (container.height - container.ySize) / 2;
         Point relMouse = new Point(mousepos.x - guiLeft, mousepos.y - guiTop);
         return relMouse;
     }
-    
-    //Binds a texture
+
+    // Binds a texture
     public static void bindTexture(ResourceLocation texture) {
-        getMinecraft().getTextureManager().bindTexture(texture);
+        getMinecraft().getTextureManager()
+            .bindTexture(texture);
     }
 
-    //returns the lang currently in use
+    // returns the lang currently in use
     public static String getLang() {
-        return FMLClientHandler.instance().getCurrentLanguage();
+        return FMLClientHandler.instance()
+            .getCurrentLanguage();
     }
 }

@@ -1,15 +1,17 @@
 package maritech.extensions.blocks.icons;
 
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import mariculture.core.Core;
 import mariculture.core.lib.MachineRenderedMeta;
 import mariculture.core.lib.MetalMeta;
 import maritech.util.IIconExtension;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ExtensionIconRenderedMachine implements IIconExtension {
+
     @SideOnly(Side.CLIENT)
     @Override
     public IIcon getInventoryIcon(int meta, int side, IIcon icon) {

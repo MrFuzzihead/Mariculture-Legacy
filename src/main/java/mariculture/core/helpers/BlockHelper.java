@@ -2,9 +2,6 @@ package mariculture.core.helpers;
 
 import java.util.Random;
 
-import mariculture.core.tile.base.TileMultiBlock;
-import mariculture.core.util.Fluids;
-import mariculture.core.util.IItemDropBlacklist;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -17,6 +14,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import mariculture.core.tile.base.TileMultiBlock;
+import mariculture.core.util.Fluids;
+import mariculture.core.util.IItemDropBlacklist;
 
 public class BlockHelper {
 
@@ -42,7 +43,8 @@ public class BlockHelper {
     }
 
     public static boolean isAir(World world, int x, int y, int z) {
-        if (world.getChunkProvider().chunkExists(x >> 4, z >> 4)) {
+        if (world.getChunkProvider()
+            .chunkExists(x >> 4, z >> 4)) {
             try {
                 return world.isAirBlock(x, y, z);
             } catch (Exception e) {}
@@ -52,7 +54,8 @@ public class BlockHelper {
     }
 
     public static void setBlock(World world, int x, int y, int z, Block block, int meta) {
-        if (world.getChunkProvider().chunkExists(x >> 4, z >> 4)) {
+        if (world.getChunkProvider()
+            .chunkExists(x >> 4, z >> 4)) {
             try {
                 world.setBlock(x, y, z, block, meta, 3);
             } catch (Exception e) {}
@@ -60,7 +63,8 @@ public class BlockHelper {
     }
 
     public static Block getBlock(World world, int x, int y, int z) {
-        if (world.getChunkProvider().chunkExists(x >> 4, z >> 4)) {
+        if (world.getChunkProvider()
+            .chunkExists(x >> 4, z >> 4)) {
             try {
                 return world.getBlock(x, y, z);
             } catch (Exception e) {}
@@ -70,7 +74,8 @@ public class BlockHelper {
     }
 
     public static int getMeta(World world, int x, int y, int z) {
-        if (world.getChunkProvider().chunkExists(x >> 4, z >> 4)) {
+        if (world.getChunkProvider()
+            .chunkExists(x >> 4, z >> 4)) {
             try {
                 return world.getBlockMetadata(x, y, z);
             } catch (Exception e) {}
@@ -80,11 +85,13 @@ public class BlockHelper {
     }
 
     public static boolean chunkExists(World world, int x, int z) {
-        return world.getChunkProvider().chunkExists(x >> 4, z >> 4);
+        return world.getChunkProvider()
+            .chunkExists(x >> 4, z >> 4);
     }
 
     public static String getName(ItemStack stack) {
-        return stack != null ? stack.getItem().getItemStackDisplayName(stack) : "";
+        return stack != null ? stack.getItem()
+            .getItemStackDisplayName(stack) : "";
     }
 
     public static String getName(TileEntity tile) {
@@ -131,10 +138,18 @@ public class BlockHelper {
                     float ry = rand.nextFloat() * 0.6F + 0.1F;
                     float rz = rand.nextFloat() * 0.6F + 0.1F;
 
-                    EntityItem entity_item = new EntityItem(world, x + rx, y + ry, z + rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
+                    EntityItem entity_item = new EntityItem(
+                        world,
+                        x + rx,
+                        y + ry,
+                        z + rz,
+                        new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
                     if (item.hasTagCompound()) {
-                        entity_item.getEntityItem().setTagCompound((NBTTagCompound) item.getTagCompound().copy());
+                        entity_item.getEntityItem()
+                            .setTagCompound(
+                                (NBTTagCompound) item.getTagCompound()
+                                    .copy());
                     }
 
                     float factor = 0.05F;
@@ -177,7 +192,13 @@ public class BlockHelper {
         }
 
         int l = world.getBlockMetadata(x, y, z);
-        world.playAuxSFXAtEntity(player, 2001, x, y, z, Block.getIdFromBlock(block) + (world.getBlockMetadata(x, y, z) << 12));
+        world.playAuxSFXAtEntity(
+            player,
+            2001,
+            x,
+            y,
+            z,
+            Block.getIdFromBlock(block) + (world.getBlockMetadata(x, y, z) << 12));
         boolean flag = removeBlock(world, player, x, y, z);
         if (flag) {
             block.harvestBlock(world, player, x, y, z, l);

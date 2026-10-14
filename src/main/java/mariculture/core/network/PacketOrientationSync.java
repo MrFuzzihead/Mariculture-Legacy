@@ -1,15 +1,17 @@
 package mariculture.core.network;
 
-import io.netty.buffer.ByteBuf;
-import mariculture.core.util.IFaceable;
-import mariculture.lib.helpers.ClientHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.core.util.IFaceable;
+import mariculture.lib.helpers.ClientHelper;
 
 public class PacketOrientationSync extends PacketCoords implements IMessageHandler<PacketOrientationSync, IMessage> {
+
     ForgeDirection dir;
 
     public PacketOrientationSync() {}

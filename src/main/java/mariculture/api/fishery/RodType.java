@@ -8,10 +8,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-/** This class determines what quality of fishing rod you are using
- *  You can extend the class, for special RodTypes, For different ways of handling
- *  damage, or whether you can fish, it's essentially the handler for your fishing rods */
+/**
+ * This class determines what quality of fishing rod you are using
+ * You can extend the class, for special RodTypes, For different ways of handling
+ * damage, or whether you can fish, it's essentially the handler for your fishing rods
+ */
 public class RodType {
+
     public static final RodType NET = new RodType("NET", 25, 0D, 0D, 0D, 0);
     public static final RodType DIRE = new RodType("DIRE", 10, 45D, 0D, 0D, 5);
     public static final RodType OLD = new RodType("OLD", 25, 27.5D, 5.5D, 0D, 10);
@@ -19,24 +22,28 @@ public class RodType {
     public static final RodType SUPER = new RodType("SUPER", 75, 1D, 15.5D, 5D, 30);
     public static final RodType FLUX = new RodTypeFlux("FLUX", 90, 0D, 13D, 7.5D, 15);
 
-    /** The following are called in sequence, when attempting to catch loot, 
+    /**
+     * The following are called in sequence, when attempting to catch loot,
      * JUNK, GOOD, RARE, UNIQUE, If all of these fail, the rod will catch fish loot
      * If you set one to 0, this rodquality cannot catch that rarity of loot.
      * If you were to set GOOD to 100, the chance to catch rare or fish loot will be 0, as you will
-     * always catch loot, based on the order it is called. */
+     * always catch loot, based on the order it is called.
+     */
     private final LinkedList<Double> chances;
 
-    /** This variable is the ranking of this rod, it can go from any number to any number
-     * I'd recommend to keep the rank, between 0-100. It is what determines, which rod are better than others */
+    /**
+     * This variable is the ranking of this rod, it can go from any number to any number
+     * I'd recommend to keep the rank, between 0-100. It is what determines, which rod are better than others
+     */
     private final int quality;
 
     /** This is the maximum level, that this quality of rod will attempt to enchant caught items to **/
     private final int enchantment;
-    
+
     public static final ArrayList<RodType> rodTypes = new ArrayList();
-    
+
     public String name;
-    
+
     public RodType(String name, int quality, double junk, double good, double rare, int enchantment) {
         this(quality, junk, good, rare, enchantment);
         this.name = name;
@@ -70,8 +77,10 @@ public class RodType {
         return 0.0F;
     }
 
-    /** If you want certain fish to be caught alive by this rod quality
-     * you can create your own class, and override this method */
+    /**
+     * If you want certain fish to be caught alive by this rod quality
+     * you can create your own class, and override this method
+     */
     public boolean caughtAlive(String species) {
         return false;
     }
@@ -88,7 +97,7 @@ public class RodType {
         } else if (stack.attemptDamageItem(1, rand)) {
             stack = null;
         }
-        
+
         if (stack.getItemDamage() >= stack.getMaxDamage()) {
             stack = null;
         }
@@ -113,11 +122,12 @@ public class RodType {
     }
 
     public static class RodTypeFlux extends RodType {
+
         public RodTypeFlux(String name, int quality, double junk, double good, double rare, int enchantment) {
             this(quality, junk, good, rare, enchantment);
             this.name = name;
         }
-        
+
         @Deprecated
         public RodTypeFlux(int quality, double junk, double good, double rare, int enchantment) {
             super(quality, junk, good, rare, enchantment);

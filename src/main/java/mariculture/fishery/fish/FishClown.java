@@ -10,12 +10,6 @@ import static mariculture.core.lib.MCLib.orangeDye;
 
 import java.util.ArrayList;
 
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
-import mariculture.core.util.Fluids;
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityChicken;
@@ -26,7 +20,15 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.util.Fluids;
+
 public class FishClown extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 25;
@@ -76,7 +78,7 @@ public class FishClown extends FishSpecies {
     public int getWaterRequired() {
         return 200;
     }
-    
+
     @Override
     public Block getWater2() {
         return Fluids.getFluidBlock("custard");
@@ -136,7 +138,8 @@ public class FishClown extends FishSpecies {
                     animal = new EntitySheep(world);
                 } else if (world.rand.nextInt(5) == 0) {
                     animal = new EntityPig(world);
-                } if (world.rand.nextInt(6) == 0) {
+                }
+                if (world.rand.nextInt(6) == 0) {
                     animal = new EntityHorse(world);
                 } else animal = new EntityChicken(world);
 

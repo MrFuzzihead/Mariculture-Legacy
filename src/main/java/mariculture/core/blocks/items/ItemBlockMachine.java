@@ -1,10 +1,5 @@
 package mariculture.core.blocks.items;
 
-import mariculture.core.Core;
-import mariculture.core.blocks.base.ItemBlockMariculture;
-import mariculture.core.events.MaricultureEvents;
-import mariculture.core.lib.MachineMeta;
-import mariculture.lib.util.Text;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +8,13 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 
+import mariculture.core.blocks.base.ItemBlockMariculture;
+import mariculture.core.events.MaricultureEvents;
+import mariculture.core.lib.MachineMeta;
+import mariculture.lib.util.Text;
+
 public class ItemBlockMachine extends ItemBlockMariculture {
+
     public ItemBlockMachine(Block block) {
         super(block);
     }
@@ -36,14 +37,20 @@ public class ItemBlockMachine extends ItemBlockMariculture {
 
         return MaricultureEvents.getItemName(field_150939_a, meta, "machines");
     }
-    
+
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        String unlocalized = field_150939_a.getUnlocalizedName().replace("tile.", "").replace("_", ".");
-        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2").toLowerCase();
-        return Text.localize(unlocalized.replace("mariculture.", MaricultureEvents.getMod(stack.getItem(), stack.getItemDamage(), "mariculture") + ".") + "." + name);
+        String unlocalized = field_150939_a.getUnlocalizedName()
+            .replace("tile.", "")
+            .replace("_", ".");
+        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2")
+            .toLowerCase();
+        return Text.localize(
+            unlocalized.replace(
+                "mariculture.",
+                MaricultureEvents.getMod(stack.getItem(), stack.getItemDamage(), "mariculture") + ".") + "." + name);
     }
-    
+
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (stack.getItemDamage() != MachineMeta.AUTOFISHER) return stack;
@@ -57,7 +64,9 @@ public class ItemBlockMachine extends ItemBlockMariculture {
 
                 if (!world.canMineBlock(player, x, y, z)) return stack;
                 if (!player.canPlayerEdit(x, y, z, object.sideHit, stack)) return stack;
-                if (world.getBlock(x, y, z).getMaterial() == Material.water && world.getBlockMetadata(x, y, z) == 0 && world.isAirBlock(x, y + 1, z)) {
+                if (world.getBlock(x, y, z)
+                    .getMaterial() == Material.water && world.getBlockMetadata(x, y, z) == 0
+                    && world.isAirBlock(x, y + 1, z)) {
                     world.setBlock(x, y + 1, z, field_150939_a, MachineMeta.AUTOFISHER, 2);
 
                     if (!player.capabilities.isCreativeMode) {

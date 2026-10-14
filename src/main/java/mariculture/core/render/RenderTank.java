@@ -1,11 +1,11 @@
 package mariculture.core.render;
 
-import org.lwjgl.opengl.GL11;
-
-import mariculture.core.tile.TileTankBlock;
 import net.minecraftforge.fluids.FluidStack;
 
+import mariculture.core.tile.TileTankBlock;
+
 public class RenderTank extends RenderBase {
+
     public RenderTank() {}
 
     @Override
@@ -17,12 +17,19 @@ public class RenderTank extends RenderBase {
                     FluidStack fluid = tank.tank.getFluid();
                     if (fluid != null) {
                         double height = fluid.amount * 1D / tank.getCapacity();
-                        setTexture(fluid.getFluid().getStillIcon());
-                        if (fluid.getFluid().getBlock() != null) {
-                            setTexture(fluid.getFluid().getBlock().getIcon(world, x, y, z, 0));
+                        setTexture(
+                            fluid.getFluid()
+                                .getStillIcon());
+                        if (fluid.getFluid()
+                            .getBlock() != null) {
+                            setTexture(
+                                fluid.getFluid()
+                                    .getBlock()
+                                    .getIcon(world, x, y, z, 0));
                         }
 
-                        if (fluid.getFluid().isGaseous()) {
+                        if (fluid.getFluid()
+                            .isGaseous()) {
                             renderFluidBlock(0, 1 - height, 0, 1, 1, 1);
                         } else {
                             renderFluidBlock(0, 0, 0, 1, height, 1);

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface IVatHandler {
+
     /** add a Vat Recipe **/
     public void addRecipe(RecipeVat recipe);
 

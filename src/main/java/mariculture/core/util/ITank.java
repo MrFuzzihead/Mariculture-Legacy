@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraftforge.fluids.FluidStack;
 
 public interface ITank {
+
     public FluidStack getFluid(int transfer);
 
     public int getTankScaled(int i);

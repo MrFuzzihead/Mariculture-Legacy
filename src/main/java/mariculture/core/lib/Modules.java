@@ -2,21 +2,22 @@ package mariculture.core.lib;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.Level;
+
 import mariculture.core.events.MaricultureEvents;
 import mariculture.core.handlers.LogHandler;
 import mariculture.plugins.Plugins.Plugin.Stage;
 
-import org.apache.logging.log4j.Level;
-
 public class Modules {
-    //Whether the high tech parts of the mod are activated
+
+    // Whether the high tech parts of the mod are activated
     public static final ArrayList<Module> modules = new ArrayList();
-    //Base Modules
+    // Base Modules
     public static Module core;
     public static Module compat;
     public static Module plugins;
 
-    //Other Modules	
+    // Other Modules
     public static Module aesthetics;
     public static Module diving;
     public static Module factory;
@@ -26,19 +27,28 @@ public class Modules {
     public static Module transport;
     public static Module worldplus;
 
-    //Returns whether this module is activated or not
+    // Returns whether this module is activated or not
     public static boolean isActive(Module module) {
         return module != null;
     }
-    
+
     public static boolean isAllActive() {
-        return aesthetics != null && diving != null && factory != null && fishery != null && magic != null && sealife != null && transport != null && worldplus != null;
+        return aesthetics != null && diving != null
+            && factory != null
+            && fishery != null
+            && magic != null
+            && sealife != null
+            && transport != null
+            && worldplus != null;
     }
 
     public void setup(Class<? extends Module> clazz, boolean isActive) {
         if (isActive) {
             try {
-                getClass().getField(clazz.getSimpleName().toLowerCase()).set(null, clazz.newInstance());
+                getClass().getField(
+                    clazz.getSimpleName()
+                        .toLowerCase())
+                    .set(null, clazz.newInstance());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -46,13 +56,17 @@ public class Modules {
     }
 
     public abstract static class Module {
+
         public Module() {
             modules.add(this);
         }
 
-        //Just a display helper
+        // Just a display helper
         public void setLoaded(String str) {
-            LogHandler.log(Level.INFO, this.getClass().getSimpleName() + " Module Finished Loading");
+            LogHandler.log(
+                Level.INFO,
+                this.getClass()
+                    .getSimpleName() + " Module Finished Loading");
         }
 
         public abstract void preInit();
@@ -63,6 +77,7 @@ public class Modules {
     }
 
     public abstract static class RegistrationModule extends Module {
+
         public abstract void registerHandlers();
 
         public abstract void registerBlocks();

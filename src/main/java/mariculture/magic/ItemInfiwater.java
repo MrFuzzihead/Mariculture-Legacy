@@ -1,11 +1,13 @@
 package mariculture.magic;
 
-import mariculture.core.items.ItemFluidStorage;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import mariculture.core.items.ItemFluidStorage;
+
 public class ItemInfiwater extends ItemFluidStorage {
+
     public ItemInfiwater() {
         super(1000);
     }

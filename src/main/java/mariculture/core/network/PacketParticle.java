@@ -1,12 +1,13 @@
 package mariculture.core.network;
 
-import mariculture.lib.helpers.ClientHelper;
-import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.lib.helpers.ClientHelper;
 
 public class PacketParticle implements IMessage, IMessageHandler<PacketParticle, IMessage> {
+
     public Particle part;
     public byte loop;
     public double x, y, z;
@@ -42,14 +43,24 @@ public class PacketParticle implements IMessage, IMessageHandler<PacketParticle,
     @Override
     public IMessage onMessage(PacketParticle message, MessageContext ctx) {
         for (int i = 0; i < message.loop; i++) {
-            ClientHelper.getPlayer().worldObj.spawnParticle(message.part.getParticle(), message.x + 0.5D, message.y + 0.85D, message.z + 0.5D, 0, 0, 0);
+            ClientHelper.getPlayer().worldObj.spawnParticle(
+                message.part.getParticle(),
+                message.x + 0.5D,
+                message.y + 0.85D,
+                message.z + 0.5D,
+                0,
+                0,
+                0);
         }
 
         return null;
     }
 
     public static enum Particle {
-        SPLASH("splash"), EXPLODE_SML("explode"), EXPLODE_LRG("hugeexplosion");
+
+        SPLASH("splash"),
+        EXPLODE_SML("explode"),
+        EXPLODE_LRG("hugeexplosion");
 
         public final String string;
 

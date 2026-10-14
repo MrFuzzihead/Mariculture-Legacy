@@ -4,19 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.core.MaricultureTab;
-import mariculture.api.fishery.ICaughtAliveModifier;
-import mariculture.api.fishery.IHelmetFishManipulator;
-import mariculture.core.items.ItemMCBaseArmor;
-import mariculture.core.lib.PearlColor;
-import mariculture.core.util.MCTranslate;
-import mariculture.fishery.Fishery;
-import mariculture.fishery.FishyHelper;
-import mariculture.fishery.render.ModelFishingHat;
-import mariculture.lib.helpers.ClientHelper;
-import mariculture.lib.util.Text;
-import mariculture.magic.MirrorEnchantHelper;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,10 +17,25 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.core.MaricultureTab;
+import mariculture.api.fishery.ICaughtAliveModifier;
+import mariculture.api.fishery.IHelmetFishManipulator;
+import mariculture.core.items.ItemMCBaseArmor;
+import mariculture.core.lib.PearlColor;
+import mariculture.core.util.MCTranslate;
+import mariculture.fishery.Fishery;
+import mariculture.fishery.FishyHelper;
+import mariculture.fishery.render.ModelFishingHat;
+import mariculture.lib.helpers.ClientHelper;
+import mariculture.lib.util.Text;
+import mariculture.magic.MirrorEnchantHelper;
 
 public class ItemArmorFishingHat extends ItemMCBaseArmor implements ICaughtAliveModifier, IHelmetFishManipulator {
+
     private IIcon greyscale;
 
     private Random rand = new Random();
@@ -47,10 +49,10 @@ public class ItemArmorFishingHat extends ItemMCBaseArmor implements ICaughtAlive
     public double getModifier() {
         return 5D;
     }
-    
+
     @Override
     public double getModifier(ItemStack stack) {
-        return getColor(stack) < 0? 15D: 5D;
+        return getColor(stack) < 0 ? 15D : 5D;
     }
 
     @Override
@@ -76,14 +78,14 @@ public class ItemArmorFishingHat extends ItemMCBaseArmor implements ICaughtAlive
     @Override
     public IIcon getIcon(ItemStack stack, int pass) {
         int color = getColor(stack);
-        return color < 0? super.getIcon(stack, pass): greyscale;
+        return color < 0 ? super.getIcon(stack, pass) : greyscale;
     }
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         int color = getColor(stack);
         if (color < 0) return super.getItemStackDisplayName(stack);
-        
+
         String translate = MCTranslate.translate("pearl.color." + PearlColor.get(color) + ".hat");
         if (!translate.equals("mariculture.pearl.color." + PearlColor.get(color) + ".hat")) {
             return translate;
@@ -140,7 +142,8 @@ public class ItemArmorFishingHat extends ItemMCBaseArmor implements ICaughtAlive
             return -1;
         }
 
-        return stack.getTagCompound().getInteger("Color");
+        return stack.getTagCompound()
+            .getInteger("Color");
     }
 
     @Override
@@ -168,7 +171,8 @@ public class ItemArmorFishingHat extends ItemMCBaseArmor implements ICaughtAlive
     public static ItemStack getDyed(int color) {
         ItemStack stack = new ItemStack(Fishery.fishinghat);
         stack.setTagCompound(new NBTTagCompound());
-        stack.getTagCompound().setInteger("Color", color);
+        stack.getTagCompound()
+            .setInteger("Color", color);
         return stack;
     }
 
@@ -205,9 +209,9 @@ public class ItemArmorFishingHat extends ItemMCBaseArmor implements ICaughtAlive
         } else if (color == PearlColor.YELLOW) {
             return Salinity.BRACKISH;
         } else if (color == PearlColor.GREEN) {
-            return Salinity.FRESH; //The salinity of jungle
+            return Salinity.FRESH; // The salinity of jungle
         } else if (color == PearlColor.RED) {
-            return Salinity.FRESH; //The salinity of the nether
+            return Salinity.FRESH; // The salinity of the nether
         }
 
         return salt;
@@ -217,9 +221,9 @@ public class ItemArmorFishingHat extends ItemMCBaseArmor implements ICaughtAlive
     public int getTemperature(ItemStack stack, int temperature) {
         int color = getColor(stack);
         if (color == PearlColor.GREEN) {
-            return 24; //The default temperature of tetra/damselfish
+            return 24; // The default temperature of tetra/damselfish
         } else if (color == PearlColor.RED) {
-            return 90; //Nether temperature
+            return 90; // Nether temperature
         }
 
         return temperature;

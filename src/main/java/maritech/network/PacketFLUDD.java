@@ -1,20 +1,22 @@
 package maritech.network;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
 import io.netty.buffer.ByteBuf;
 import mariculture.Mariculture;
 import mariculture.core.network.PacketHandler;
 import mariculture.lib.helpers.ClientHelper;
 import maritech.entity.EntityFLUDDSquirt;
 import maritech.handlers.FLUDDEvents;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.relauncher.Side;
 
 public class PacketFLUDD implements IMessage, IMessageHandler<PacketFLUDD, IMessage> {
+
     public static final int DAMAGEPREVENT = -44;
     public static final int SQUIRT = -33;
     public static final int DAMAGE = -22;
@@ -43,7 +45,8 @@ public class PacketFLUDD implements IMessage, IMessageHandler<PacketFLUDD, IMess
 
     @Override
     public IMessage onMessage(PacketFLUDD message, MessageContext ctx) {
-        Side side = FMLCommonHandler.instance().getEffectiveSide();
+        Side side = FMLCommonHandler.instance()
+            .getEffectiveSide();
         EntityPlayer player = side == Side.CLIENT ? ClientHelper.getPlayer() : ctx.getServerHandler().playerEntity;
         World world = player.worldObj;
         if (message.type == SQUIRT) {
@@ -58,7 +61,12 @@ public class PacketFLUDD implements IMessage, IMessageHandler<PacketFLUDD, IMess
         } else if (message.type != ANIMATE) {
             FLUDDEvents.damageFLUDD(player, message.mode);
         } else if (side == Side.SERVER) {
-            PacketHandler.sendAround(new PacketFLUDD(player.getEntityId(), message.mode), world.provider.dimensionId, player.posX, player.posY, player.posZ);
+            PacketHandler.sendAround(
+                new PacketFLUDD(player.getEntityId(), message.mode),
+                world.provider.dimensionId,
+                player.posX,
+                player.posY,
+                player.posZ);
         } else {
             FLUDDEvents.playSmoke(mode, (EntityPlayer) world.getEntityByID(message.type), false);
         }

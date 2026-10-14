@@ -9,17 +9,19 @@ import static mariculture.core.lib.MCLib.gunpowder;
 
 import java.util.Random;
 
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.fishery.EntityBass;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.fishery.EntityBass;
+
 public class FishBass extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 15;
@@ -118,12 +120,12 @@ public class FishBass extends FishSpecies {
 
         return stack;
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;
     }
-    
+
     @Override
     public void affectLiving(EntityLivingBase entity) {
         entity.worldObj.createExplosion(entity, entity.posX, entity.posY + 1D, entity.posZ, 1, true);

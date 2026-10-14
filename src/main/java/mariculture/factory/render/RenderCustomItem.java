@@ -7,6 +7,7 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 public class RenderCustomItem implements IItemRenderer {
+
     private static final RenderBlocksCustom renderBlocks = new RenderBlocksCustom();
 
     @Override
@@ -34,14 +35,16 @@ public class RenderCustomItem implements IItemRenderer {
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         switch (type) {
             case ENTITY:
-                renderBlocks.renderBlockAsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage(), 1.0F, item);
+                renderBlocks
+                    .renderBlockAsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage(), 1.0F, item);
                 renderBlocks.clearOverrideBlockTexture();
                 break;
             case EQUIPPED:
                 GL11.glPushMatrix();
                 GL11.glTranslatef(0.75F, 0.0F, 0.0F);
                 GL11.glScalef(0.85F, 0.85F, 0.85F);
-                renderBlocks.renderBlockAsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage(), 1.0F, item);
+                renderBlocks
+                    .renderBlockAsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage(), 1.0F, item);
                 GL11.glPopMatrix();
                 renderBlocks.clearOverrideBlockTexture();
                 break;
@@ -49,14 +52,16 @@ public class RenderCustomItem implements IItemRenderer {
                 GL11.glPushMatrix();
                 GL11.glScalef(0.35F, 0.35F, 0.35F);
                 GL11.glTranslatef(1.7F, 1.1F, -1F);
-                //GL11.glRotatef(45, 0F, 0F, 1F);
-                //GL11.glRotatef(75, 1F, 1F, 0F);
-                renderBlocks.renderBlockAsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage(), 1.0F, item);
+                // GL11.glRotatef(45, 0F, 0F, 1F);
+                // GL11.glRotatef(75, 1F, 1F, 0F);
+                renderBlocks
+                    .renderBlockAsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage(), 1.0F, item);
                 renderBlocks.clearOverrideBlockTexture();
                 GL11.glPopMatrix();
                 break;
             case INVENTORY:
-                renderBlocks.renderBlockAsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage(), 1.0F, item);
+                renderBlocks
+                    .renderBlockAsItem(Block.getBlockFromItem(item.getItem()), item.getItemDamage(), 1.0F, item);
                 renderBlocks.clearOverrideBlockTexture();
                 break;
             default:

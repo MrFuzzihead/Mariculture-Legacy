@@ -7,11 +7,6 @@ import static mariculture.core.lib.MCLib.dropletWater;
 import java.util.ArrayList;
 import java.util.List;
 
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
-import mariculture.core.helpers.PlayerHelper;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -19,7 +14,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.helpers.PlayerHelper;
+
 public class FishDamsel extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 24;
@@ -111,7 +113,9 @@ public class FishDamsel extends FishSpecies {
         if (world.rand.nextInt(10) == 0) {
             ArrayList<EntityAnimal> entities = new ArrayList();
             for (CachedCoords coord : coords) {
-                List list = world.getEntitiesWithinAABB(EntityAnimal.class, Blocks.stone.getCollisionBoundingBoxFromPool(world, coord.x, coord.y, coord.z));
+                List list = world.getEntitiesWithinAABB(
+                    EntityAnimal.class,
+                    Blocks.stone.getCollisionBoundingBoxFromPool(world, coord.x, coord.y, coord.z));
                 if (!list.isEmpty()) {
                     entities.addAll(list);
                 }

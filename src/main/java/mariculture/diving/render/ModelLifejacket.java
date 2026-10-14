@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
 
 public class ModelLifejacket extends ModelBiped {
+
     private static final float scale = (float) (1.0 / 20.0);
     private ModelRenderer Log;
     private ModelRenderer Strap1;

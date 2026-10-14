@@ -4,9 +4,11 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class PluginHelper {
+
     protected String name;
 
     public PluginHelper(String str) {

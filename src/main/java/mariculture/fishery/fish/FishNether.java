@@ -3,10 +3,7 @@ package mariculture.fishery.fish;
 import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletNether;
 import static mariculture.core.lib.MCLib.netherWart;
-import mariculture.api.core.Environment.Height;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -14,7 +11,13 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Height;
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishNether extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 72;
@@ -59,12 +62,12 @@ public class FishNether extends FishSpecies {
     public int getWaterRequired() {
         return 55;
     }
-    
+
     @Override
     public Block getWater1() {
         return Blocks.lava;
     }
-    
+
     @Override
     public Block getWater2() {
         return Blocks.lava;

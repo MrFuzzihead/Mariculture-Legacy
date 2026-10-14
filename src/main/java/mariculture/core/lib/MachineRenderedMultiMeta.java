@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 public class MachineRenderedMultiMeta {
+
     public static final int COUNT = 5;
     public static final int COMPRESSOR_BASE = 0;
     public static final int COMPRESSOR_TOP = 1;

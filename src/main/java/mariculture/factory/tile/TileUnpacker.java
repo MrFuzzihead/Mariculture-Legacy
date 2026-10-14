@@ -1,15 +1,17 @@
 package mariculture.factory.tile;
 
-import mariculture.core.helpers.cofh.InventoryHelper;
-import mariculture.core.tile.base.TileStorage;
-import mariculture.factory.UnpackerHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.core.helpers.cofh.InventoryHelper;
+import mariculture.core.tile.base.TileStorage;
+import mariculture.factory.UnpackerHelper;
+
 public class TileUnpacker extends TileStorage implements ISidedInventory {
+
     public static final int INPUT = 0;
     public static final int[] SLOTS = new int[] { INPUT };
 
@@ -21,7 +23,10 @@ public class TileUnpacker extends TileStorage implements ISidedInventory {
     public void setInventorySlotContents(int slot, ItemStack stack) {
         TileEntity tile = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
         if (tile instanceof IInventory) {
-            InventoryHelper.insertItemStackIntoInventory((IInventory) tile, UnpackerHelper.unpack(worldObj, stack), ForgeDirection.UP.ordinal());
+            InventoryHelper.insertItemStackIntoInventory(
+                (IInventory) tile,
+                UnpackerHelper.unpack(worldObj, stack),
+                ForgeDirection.UP.ordinal());
         }
     }
 
@@ -38,7 +43,8 @@ public class TileUnpacker extends TileStorage implements ISidedInventory {
             else {
                 TileEntity tile = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
                 if (tile instanceof IInventory) {
-                    return InventoryHelper.canInsertItemStackIntoInventory((IInventory) tile, ret, ForgeDirection.UP.ordinal());
+                    return InventoryHelper
+                        .canInsertItemStackIntoInventory((IInventory) tile, ret, ForgeDirection.UP.ordinal());
                 } else return false;
             }
         } else return false;

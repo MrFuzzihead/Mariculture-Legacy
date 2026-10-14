@@ -2,7 +2,6 @@ package mariculture.core.helpers;
 
 import java.util.UUID;
 
-import mariculture.core.lib.ArmorSlot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -13,7 +12,10 @@ import net.minecraftforge.common.util.FakePlayer;
 
 import com.mojang.authlib.GameProfile;
 
+import mariculture.core.lib.ArmorSlot;
+
 public class PlayerHelper {
+
     public static ItemStack getArmor(EntityPlayer player, int slot, Item item) {
         ItemStack[] armor = player.inventory.armorInventory;
         if (slot > -1 && slot < 4) {
@@ -46,7 +48,8 @@ public class PlayerHelper {
         for (int i = 0; i < player.inventory.mainInventory.length; i++) {
             ItemStack stack = player.inventory.mainInventory[i];
             if (stack != null) {
-                if (stack.getItem() == match.getItem() && (stack.getItemDamage() == match.getItemDamage() || damageable)) return i;
+                if (stack.getItem() == match.getItem()
+                    && (stack.getItemDamage() == match.getItemDamage() || damageable)) return i;
             }
         }
 
@@ -54,14 +57,17 @@ public class PlayerHelper {
     }
 
     public static FakePlayer getFakePlayer(World world) {
-        return new FakePlayer((WorldServer) world, new GameProfile(UUID.fromString("A932BC89-AA6D-3B61-5A76-9823A5D89C4B"), "Mariculture"));
+        return new FakePlayer(
+            (WorldServer) world,
+            new GameProfile(UUID.fromString("A932BC89-AA6D-3B61-5A76-9823A5D89C4B"), "Mariculture"));
     }
 
     public static boolean isFake(EntityPlayer player) {
-        return player instanceof FakePlayer || player.getDisplayName().equals("[CoFH]") ? true : false;
+        return player instanceof FakePlayer || player.getDisplayName()
+            .equals("[CoFH]") ? true : false;
     }
 
-    //Player can be null, returns a stick otherwise
+    // Player can be null, returns a stick otherwise
     public static Item getHelmet(EntityPlayer player) {
         if (player == null) return Items.stick;
         else {

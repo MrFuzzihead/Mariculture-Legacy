@@ -1,17 +1,19 @@
 package mariculture.core.network;
 
-import io.netty.buffer.ByteBuf;
-import mariculture.fishery.tile.TileFishTank;
-import mariculture.lib.helpers.ClientHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import io.netty.buffer.ByteBuf;
+import mariculture.fishery.tile.TileFishTank;
+import mariculture.lib.helpers.ClientHelper;
 
 public class PacketFishTankSync extends PacketCoords implements IMessageHandler<PacketFishTankSync, IMessage> {
+
     private ForgeDirection dir;
     private ItemStack stack0;
     private ItemStack stack1;
@@ -19,7 +21,8 @@ public class PacketFishTankSync extends PacketCoords implements IMessageHandler<
 
     public PacketFishTankSync() {}
 
-    public PacketFishTankSync(ItemStack stack0, ItemStack stack1, ItemStack stack2, int x, int y, int z, ForgeDirection dir) {
+    public PacketFishTankSync(ItemStack stack0, ItemStack stack1, ItemStack stack2, int x, int y, int z,
+        ForgeDirection dir) {
         super(x, y, z);
         this.dir = dir;
         this.stack0 = stack0;

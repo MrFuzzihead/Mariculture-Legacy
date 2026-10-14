@@ -2,9 +2,6 @@ package mariculture.factory.blocks;
 
 import java.util.Random;
 
-import mariculture.core.lib.PlansMeta;
-import mariculture.factory.tile.TileCustom;
-import mariculture.lib.util.IHasMetaBlock;
 import net.minecraft.block.BlockWall;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,8 +16,12 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.lib.PlansMeta;
+import mariculture.factory.tile.TileCustom;
+import mariculture.lib.util.IHasMetaBlock;
 
 public class BlockCustomWall extends BlockWall implements IHasMetaBlock {
 
@@ -61,7 +62,8 @@ public class BlockCustomWall extends BlockWall implements IHasMetaBlock {
     }
 
     @Override
-    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ) {
+    public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
         return BlockCustomHelper.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 

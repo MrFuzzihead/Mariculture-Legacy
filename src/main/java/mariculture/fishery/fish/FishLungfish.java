@@ -4,16 +4,19 @@ import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletAir;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletPlant;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishLungfish extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 13;
@@ -58,12 +61,12 @@ public class FishLungfish extends FishSpecies {
     public int getWaterRequired() {
         return 50;
     }
-    
+
     @Override
     public int getOnLandLifespan(FishSpecies fishy) {
         return 1200;
     }
-   
+
     @Override
     public void addFishProducts() {
         addProduct(dropletAir, 15D);
@@ -75,22 +78,22 @@ public class FishLungfish extends FishSpecies {
     public double getFishOilVolume() {
         return 4.3D;
     }
-    
+
     @Override
     public boolean hasLivingEffect() {
         return true;
     }
-    
+
     @Override
     public void affectLiving(EntityLivingBase entity) {
         entity.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 1, 500));
     }
-    
+
     @Override
     public void onConsumed(World world, EntityPlayer player) {
         player.addPotionEffect(new PotionEffect(Potion.waterBreathing.id, 1, 2000));
     }
-    
+
     @Override
     public RodType getRodNeeded() {
         return RodType.OLD;

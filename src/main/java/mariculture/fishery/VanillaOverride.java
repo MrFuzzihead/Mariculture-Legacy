@@ -3,8 +3,6 @@ package mariculture.fishery;
 import java.util.Arrays;
 import java.util.Map;
 
-import mariculture.core.handlers.LogHandler;
-import mariculture.core.lib.MCModInfo;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 import org.apache.logging.log4j.Level;
@@ -24,8 +22,10 @@ import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
+import mariculture.core.handlers.LogHandler;
 
 public class VanillaOverride extends DummyModContainer implements IFMLLoadingPlugin, IClassTransformer {
+
     public VanillaOverride() {
         super(new ModMetadata());
         ModMetadata meta = getMetadata();
@@ -68,7 +68,7 @@ public class VanillaOverride extends DummyModContainer implements IFMLLoadingPlu
 
     @Override
     public String getAccessTransformerClass() {
-        return MCModInfo.JAVAPATH + "core.AccessTransformers";
+        return null;
     }
 
     private FMLDeobfuscatingRemapper remapper;
@@ -119,15 +119,19 @@ public class VanillaOverride extends DummyModContainer implements IFMLLoadingPlu
                         LdcInsnNode ldcInstruction = (LdcInsnNode) instruction;
                         if (ldcInstruction.cst.equals("fishing_rod")) {
                             if (!rodFound) {
-                                ((TypeInsnNode) method.instructions.get(j + 1)).desc = "mariculture/fishery/items/ItemVanillaRod";
-                                ((MethodInsnNode) method.instructions.get(j + 3)).owner = "mariculture/fishery/items/ItemVanillaRod";
+                                ((TypeInsnNode) method.instructions
+                                    .get(j + 1)).desc = "mariculture/fishery/items/ItemVanillaRod";
+                                ((MethodInsnNode) method.instructions
+                                    .get(j + 3)).owner = "mariculture/fishery/items/ItemVanillaRod";
                             }
 
                             rodFound = true;
                         } else if (ldcInstruction.cst.equals("fish")) {
                             if (!fishFound) {
-                                ((TypeInsnNode) method.instructions.get(j + 1)).desc = "mariculture/fishery/items/ItemVanillaFish";
-                                ((MethodInsnNode) method.instructions.get(j + 4)).owner = "mariculture/fishery/items/ItemVanillaFish";
+                                ((TypeInsnNode) method.instructions
+                                    .get(j + 1)).desc = "mariculture/fishery/items/ItemVanillaFish";
+                                ((MethodInsnNode) method.instructions
+                                    .get(j + 4)).owner = "mariculture/fishery/items/ItemVanillaFish";
                             }
 
                             fishFound = true;

@@ -1,12 +1,14 @@
 package mariculture.fishery.items;
 
-import mariculture.api.core.MaricultureTab;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.api.core.MaricultureTab;
 
 public class ItemVanillaRod extends ItemRod {
+
     @SideOnly(Side.CLIENT)
     private IIcon theIcon;
 

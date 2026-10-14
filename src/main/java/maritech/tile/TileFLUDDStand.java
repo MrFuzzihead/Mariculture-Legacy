@@ -2,23 +2,6 @@ package maritech.tile;
 
 import java.util.List;
 
-import mariculture.api.core.ISpecialPickblock;
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.core.Core;
-import mariculture.core.gui.feature.FeatureEject.EjectSetting;
-import mariculture.core.gui.feature.FeatureNotifications.NotificationType;
-import mariculture.core.gui.feature.FeatureRedstone.RedstoneMode;
-import mariculture.core.helpers.BlockHelper;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.helpers.cofh.InventoryHelper;
-import mariculture.core.lib.MaricultureDamage;
-import mariculture.core.network.PacketHandler;
-import mariculture.core.tile.base.TileMachineTankOld;
-import mariculture.core.util.Fluids;
-import mariculture.core.util.IFaceable;
-import mariculture.core.util.IHasNotification;
-import maritech.extensions.config.ExtensionMachines.ExtendedSettings;
-import maritech.extensions.modules.ExtensionFactory;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLogic;
@@ -40,6 +23,24 @@ import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
+import mariculture.api.core.ISpecialPickblock;
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.core.Core;
+import mariculture.core.gui.feature.FeatureEject.EjectSetting;
+import mariculture.core.gui.feature.FeatureNotifications.NotificationType;
+import mariculture.core.gui.feature.FeatureRedstone.RedstoneMode;
+import mariculture.core.helpers.BlockHelper;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.helpers.cofh.InventoryHelper;
+import mariculture.core.lib.MaricultureDamage;
+import mariculture.core.network.PacketHandler;
+import mariculture.core.tile.base.TileMachineTankOld;
+import mariculture.core.util.Fluids;
+import mariculture.core.util.IFaceable;
+import mariculture.core.util.IHasNotification;
+import maritech.extensions.config.ExtensionMachines.ExtendedSettings;
+import maritech.extensions.modules.ExtensionFactory;
 
 public class TileFLUDDStand extends TileMachineTankOld implements IHasNotification, IFaceable, ISpecialPickblock {
 
@@ -95,22 +96,33 @@ public class TileFLUDDStand extends TileMachineTankOld implements IHasNotificati
             z = zCoord + orientation.offsetZ * dist;
 
             if (dist > 0) {
-                Material mat = worldObj.getBlock((int) x, (int) y, (int) z).getMaterial();
-                if (!(mat instanceof MaterialLogic || mat instanceof MaterialTransparent || isNet((int) x, (int) y, (int) z))) return;
+                Material mat = worldObj.getBlock((int) x, (int) y, (int) z)
+                    .getMaterial();
+                if (!(mat instanceof MaterialLogic || mat instanceof MaterialTransparent
+                    || isNet((int) x, (int) y, (int) z))) return;
             }
 
-            List list = worldObj.getEntitiesWithinAABB(Entity.class, Blocks.stone.getCollisionBoundingBoxFromPool(worldObj, (int) x, (int) y, (int) z));
+            List list = worldObj.getEntitiesWithinAABB(
+                Entity.class,
+                Blocks.stone.getCollisionBoundingBoxFromPool(worldObj, (int) x, (int) y, (int) z));
 
-            //Entity Stuff
+            // Entity Stuff
             for (Object i : list) {
                 Entity entity = (Entity) i;
                 entity.fallDistance = 0F;
                 if (dist == 1 && !worldObj.isRemote && onTick(20) && reverse && entity instanceof EntityItem) {
                     EntityItem item = (EntityItem) entity;
                     ItemStack stack = item.getEntityItem();
-                    TileEntity tile = worldObj.getTileEntity(xCoord - orientation.offsetX, yCoord - orientation.offsetY, zCoord - orientation.offsetZ);
+                    TileEntity tile = worldObj.getTileEntity(
+                        xCoord - orientation.offsetX,
+                        yCoord - orientation.offsetY,
+                        zCoord - orientation.offsetZ);
                     if (tile != null && tile instanceof IInventory) {
-                        ItemStack newStack = InventoryHelper.insertItemStackIntoInventory((IInventory) tile, stack, orientation.getOpposite().ordinal());
+                        ItemStack newStack = InventoryHelper.insertItemStackIntoInventory(
+                            (IInventory) tile,
+                            stack,
+                            orientation.getOpposite()
+                                .ordinal());
                         if (newStack == null) {
                             item.setDead();
                         } else {
@@ -121,9 +133,15 @@ public class TileFLUDDStand extends TileMachineTankOld implements IHasNotificati
 
                 if (orientation != ForgeDirection.UP) {
                     if (reverse) {
-                        entity.addVelocity(-orientation.offsetX * boostXZ, -orientation.offsetY * boostXZ, -orientation.offsetZ * boostXZ);
+                        entity.addVelocity(
+                            -orientation.offsetX * boostXZ,
+                            -orientation.offsetY * boostXZ,
+                            -orientation.offsetZ * boostXZ);
                     } else {
-                        entity.addVelocity(orientation.offsetX * boostXZ, orientation.offsetY * boostXZ, orientation.offsetZ * boostXZ);
+                        entity.addVelocity(
+                            orientation.offsetX * boostXZ,
+                            orientation.offsetY * boostXZ,
+                            orientation.offsetZ * boostXZ);
                     }
                 } else if (entity.motionY <= boostY - 0.1) {
                     entity.motionY += boostY;
@@ -139,7 +157,7 @@ public class TileFLUDDStand extends TileMachineTankOld implements IHasNotificati
                 }
             }
 
-            //Block Stuff
+            // Block Stuff
             if (heat < 0) {
                 int x2 = (int) (x + orientation.offsetX);
                 int y2 = (int) (y + orientation.offsetY);
@@ -148,13 +166,23 @@ public class TileFLUDDStand extends TileMachineTankOld implements IHasNotificati
                 if (block != null) {
                     float blockHardness = block.getBlockHardness(worldObj, x2, y2, z2);
                     if (worldObj.isRemote) {
-                        block.addHitEffects(worldObj, new MovingObjectPosition(x2, y2, z2, orientation.getOpposite().ordinal(), Vec3.createVectorHelper(x2, y2, z2)), Minecraft.getMinecraft().effectRenderer);
+                        block.addHitEffects(
+                            worldObj,
+                            new MovingObjectPosition(
+                                x2,
+                                y2,
+                                z2,
+                                orientation.getOpposite()
+                                    .ordinal(),
+                                Vec3.createVectorHelper(x2, y2, z2)),
+                            Minecraft.getMinecraft().effectRenderer);
                     }
                     int chance = (int) (blockHardness * 10 > 0 ? blockHardness * 10 : 10);
                     if (worldObj.rand.nextInt(chance) == 0) if (blockHardness <= hardnessMax) {
                         int meta = worldObj.getBlockMetadata(x2, y2, z2);
                         if (worldObj.isRemote) {
-                            block.addDestroyEffects(worldObj, x2, y2, z2, meta, Minecraft.getMinecraft().effectRenderer);
+                            block
+                                .addDestroyEffects(worldObj, x2, y2, z2, meta, Minecraft.getMinecraft().effectRenderer);
                         }
                         BlockHelper.destroyBlock(worldObj, x2, y2, z2);
                     }
@@ -163,7 +191,14 @@ public class TileFLUDDStand extends TileMachineTankOld implements IHasNotificati
 
             if (ExtendedSettings.FLUDD_BLOCK_ANIM && worldObj.isRemote) if (onTick(4)) {
                 for (float i = dist > 0 ? -0.45F : 0.3F; i <= 0.35F; i += 0.05F) {
-                    worldObj.spawnParticle("cloud", x + 0.5F + i * orientation.offsetX, y + 0.7F + i * orientation.offsetY, z + 0.5F + i * orientation.offsetZ, 0, 0, 0);
+                    worldObj.spawnParticle(
+                        "cloud",
+                        x + 0.5F + i * orientation.offsetX,
+                        y + 0.7F + i * orientation.offsetY,
+                        z + 0.5F + i * orientation.offsetZ,
+                        0,
+                        0,
+                        0);
                 }
             }
         }
@@ -171,7 +206,8 @@ public class TileFLUDDStand extends TileMachineTankOld implements IHasNotificati
 
     @Override
     public boolean canMachineWork() {
-        return tank.getFluidAmount() > 0 && (tank.getFluid() != null && tank.getFluid().getFluid() == Fluids.getFluid("hp_water")) && RedstoneMode.canWork(this, mode);
+        return tank.getFluidAmount() > 0 && (tank.getFluid() != null && tank.getFluid()
+            .getFluid() == Fluids.getFluid("hp_water")) && RedstoneMode.canWork(this, mode);
     }
 
     private boolean isNet(int x, int y, int z) {

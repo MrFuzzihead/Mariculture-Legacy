@@ -5,6 +5,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipeVat {
+
     /** The first input for a fluid can NOT be null, this first fluid must always exist **/
     public FluidStack inputFluid1;
     /** The second fluid in the recipe, can be null **/
@@ -82,7 +83,8 @@ public class RecipeVat {
     }
 
     // Takes two fluids and an item and makes a fluid and an item
-    public RecipeVat(Object input, FluidStack fluid, FluidStack fluid2, FluidStack newFluid, ItemStack output, int time) {
+    public RecipeVat(Object input, FluidStack fluid, FluidStack fluid2, FluidStack newFluid, ItemStack output,
+        int time) {
         this(fluid, time);
         inputItem = input;
         inputFluid2 = fluid2;
@@ -91,6 +93,8 @@ public class RecipeVat {
     }
 
     public ItemStack getItem() {
-        return inputItem instanceof ItemStack ? (ItemStack) inputItem : OreDictionary.getOres((String) inputItem).get(0);
+        return inputItem instanceof ItemStack ? (ItemStack) inputItem
+            : OreDictionary.getOres((String) inputItem)
+                .get(0);
     }
 }

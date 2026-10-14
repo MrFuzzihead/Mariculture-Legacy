@@ -1,5 +1,12 @@
 package maritech.extensions.blocks;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+
+import cofh.api.energy.IEnergyContainerItem;
 import mariculture.core.lib.MachineRenderedMultiMeta;
 import mariculture.core.lib.Modules;
 import mariculture.core.network.PacketHandler;
@@ -7,14 +14,9 @@ import maritech.extensions.modules.ExtensionDiving;
 import maritech.network.PacketCompressor;
 import maritech.tile.TileAirCompressor;
 import maritech.tile.TilePressureVessel;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import cofh.api.energy.IEnergyContainerItem;
 
 public class ExtensionRenderedMachineMulti extends ExtensionBlocksBase {
+
     @Override
     public String getName(int meta, String name) {
         switch (meta) {
@@ -90,7 +92,9 @@ public class ExtensionRenderedMachineMulti extends ExtensionBlocksBase {
         if (heldItem != null && tile instanceof TileAirCompressor) {
             TileAirCompressor te = (TileAirCompressor) ((TileAirCompressor) tile).getMaster();
             if (te != null) {
-                int rf = heldItem.getItem() instanceof IEnergyContainerItem ? ((IEnergyContainerItem) heldItem.getItem()).extractEnergy(heldItem, 5000, true) : 0;
+                int rf = heldItem.getItem() instanceof IEnergyContainerItem
+                    ? ((IEnergyContainerItem) heldItem.getItem()).extractEnergy(heldItem, 5000, true)
+                    : 0;
                 if (rf > 0) {
                     int drain = te.receiveEnergy(ForgeDirection.UP, rf, true);
                     if (drain > 0) {
@@ -115,7 +119,14 @@ public class ExtensionRenderedMachineMulti extends ExtensionBlocksBase {
                     }
 
                     if (changed && !world.isRemote) {
-                        PacketHandler.sendAround(new PacketCompressor(te.xCoord, te.yCoord, te.zCoord, te.storedAir, te.getEnergyStored(ForgeDirection.UP)), te);
+                        PacketHandler.sendAround(
+                            new PacketCompressor(
+                                te.xCoord,
+                                te.yCoord,
+                                te.zCoord,
+                                te.storedAir,
+                                te.getEnergyStored(ForgeDirection.UP)),
+                            te);
                     }
 
                     return true;

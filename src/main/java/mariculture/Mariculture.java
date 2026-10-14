@@ -7,15 +7,6 @@ import static mariculture.core.lib.MCModInfo.MODNAME;
 
 import java.io.File;
 
-import mariculture.api.fishery.Fishing;
-import mariculture.core.config.Config;
-import mariculture.core.lib.Modules;
-import mariculture.core.lib.Modules.Module;
-import mariculture.core.network.PacketHandler;
-import mariculture.fishery.Fish;
-import mariculture.fishery.FisheryEventHandler;
-import mariculture.plugins.PluginEE3;
-
 import com.google.common.collect.HashMultimap;
 
 import cpw.mods.fml.common.Mod;
@@ -28,9 +19,19 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import mariculture.api.fishery.Fishing;
+import mariculture.core.config.Config;
+import mariculture.core.lib.Modules;
+import mariculture.core.lib.Modules.Module;
+import mariculture.core.lib.Tags;
+import mariculture.core.network.PacketHandler;
+import mariculture.fishery.Fish;
+import mariculture.fishery.FisheryEventHandler;
+import mariculture.plugins.PluginEE3;
 
-@Mod(modid = MODID, name = MODNAME, dependencies = AFTER)
+@Mod(modid = MODID, name = MODNAME, version = Tags.VERSION, dependencies = AFTER)
 public class Mariculture {
+
     public static final String modid = "mariculture";
 
     @SidedProxy(clientSide = JAVAPATH + "MCClientProxy", serverSide = JAVAPATH + "MCCommonProxy")
@@ -49,7 +50,7 @@ public class Mariculture {
             for (Module module : Modules.modules) {
                 module.preInit();
             }
-    
+
             NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
         }
     }
@@ -57,7 +58,7 @@ public class Mariculture {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         PacketHandler.init();
-        //Fish need to be registered before, the recipes that use them are called
+        // Fish need to be registered before, the recipes that use them are called
         if (Modules.isActive(Modules.fishery)) {
             Fish.addOptionalFish();
             Fishing.fishHelper.registerFishies();
@@ -76,16 +77,16 @@ public class Mariculture {
 
         proxy.setupClient();
     }
-    
+
     public static boolean EE3 = false;
-    
+
     @EventHandler
     public void onComplete(FMLLoadCompleteEvent event) {
         if (EE3) {
             PluginEE3.load();
         }
     }
-    
+
     @EventHandler
     public void onServerStart(FMLServerStartingEvent event) {
         if (Modules.isActive(Modules.fishery)) {

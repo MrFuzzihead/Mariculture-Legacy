@@ -6,6 +6,7 @@ import mariculture.api.fishery.fish.FishDNABase;
 import mariculture.api.fishery.fish.FishSpecies;
 
 public class FishDNAGender extends FishDNABase {
+
     private Random rand = new Random();
 
     @Override
@@ -23,7 +24,7 @@ public class FishDNAGender extends FishDNABase {
     public Integer getDNAFromSpecies(FishSpecies species) {
         return rand.nextInt(2);
     }
-    
+
     @Override
     public int getCopyChance() {
         return 30;

@@ -1,6 +1,7 @@
 package mariculture.lib.helpers;
 
 public class AverageHelper {
+
     public static int getMode(int[] array) {
         int mode = -1;
         int modefreq = -1;
@@ -17,10 +18,9 @@ public class AverageHelper {
 
     private static int getNum(int[] array, int current) {
         int num = 0;
-        for (int element : array)
-            if (element == current) {
-                num++;
-            }
+        for (int element : array) if (element == current) {
+            num++;
+        }
         return num;
     }
 }

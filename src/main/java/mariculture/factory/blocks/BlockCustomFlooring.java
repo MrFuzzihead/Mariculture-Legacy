@@ -1,14 +1,16 @@
 package mariculture.factory.blocks;
 
-import mariculture.core.lib.PlansMeta;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.core.lib.PlansMeta;
 
 public class BlockCustomFlooring extends BlockCustomBase {
+
     public BlockCustomFlooring() {
         super(Material.carpet);
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
@@ -17,10 +19,12 @@ public class BlockCustomFlooring extends BlockCustomBase {
     }
 
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3, final int par4) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(final World par1World, final int par2, final int par3,
+        final int par4) {
         final byte b0 = 0;
         final float f = 0.0625F;
-        return AxisAlignedBB.getBoundingBox(par2 + minX, par3 + minY, par4 + minZ, par2 + maxX, par3 + b0 * f, par4 + maxZ);
+        return AxisAlignedBB
+            .getBoundingBox(par2 + minX, par3 + minY, par4 + minZ, par2 + maxX, par3 + b0 * f, par4 + maxZ);
     }
 
     @Override
@@ -34,7 +38,8 @@ public class BlockCustomFlooring extends BlockCustomBase {
     }
 
     @Override
-    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4) {
+    public void setBlockBoundsBasedOnState(final IBlockAccess par1IBlockAccess, final int par2, final int par3,
+        final int par4) {
         this.setBlockBounds(par1IBlockAccess.getBlockMetadata(par2, par3, par4));
     }
 
@@ -51,7 +56,8 @@ public class BlockCustomFlooring extends BlockCustomBase {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3, final int par4, final int par5) {
+    public boolean shouldSideBeRendered(final IBlockAccess par1IBlockAccess, final int par2, final int par3,
+        final int par4, final int par5) {
         return par5 == 1 ? true : super.shouldSideBeRendered(par1IBlockAccess, par2, par3, par4, par5);
     }
 }

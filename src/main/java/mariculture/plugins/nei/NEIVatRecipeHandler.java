@@ -4,14 +4,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
 
-import mariculture.Mariculture;
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.api.core.RecipeVat;
-import mariculture.core.gui.feature.FeatureTank.TankSize;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.helpers.ItemHelper;
-import mariculture.core.helpers.OreDicHelper;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -23,9 +15,19 @@ import org.lwjgl.opengl.GL11;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
+import mariculture.Mariculture;
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.api.core.RecipeVat;
+import mariculture.core.gui.feature.FeatureTank.TankSize;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.helpers.ItemHelper;
+import mariculture.core.helpers.OreDicHelper;
+import mariculture.core.util.MCTranslate;
 
 public class NEIVatRecipeHandler extends NEIBase {
+
     public class CachedVatRecipe extends CachedRecipe {
+
         RecipeVat recipe;
         PositionedStack input;
         PositionedStack output;
@@ -62,9 +64,9 @@ public class NEIVatRecipeHandler extends NEIBase {
         boolean isFluidSearch = isFluidSearch(outputId, results);
         if ((outputId.equals("vat") || isFluidSearch) && getClass() == NEIVatRecipeHandler.class) {
             for (RecipeVat vat : MaricultureHandlers.vat.getRecipes()) {
-                if (vat == null) continue; //Somehow null recipes added?
+                if (vat == null) continue; // Somehow null recipes added?
                 FluidStack fluid = vat.outputFluid;
-                if (!isFluidSearch || isFluidSearch && areFluidsEqual(fluid, (FluidStack)results[0])) {
+                if (!isFluidSearch || isFluidSearch && areFluidsEqual(fluid, (FluidStack) results[0])) {
                     arecipes.add(new CachedVatRecipe(vat));
                 }
             }
@@ -72,7 +74,7 @@ public class NEIVatRecipeHandler extends NEIBase {
             super.loadCraftingRecipes(outputId, results);
         }
     }
-    
+
     public boolean isEqual(FluidStack fluid1, FluidStack fluid2, FluidStack fluid3) {
         return areFluidsEqual(fluid1, fluid3) || areFluidsEqual(fluid2, fluid3);
     }
@@ -82,8 +84,9 @@ public class NEIVatRecipeHandler extends NEIBase {
         boolean isFluidSearch = isFluidSearch(inputId, ingredients);
         if ((inputId.equals("vat") || isFluidSearch) && getClass() == NEIVatRecipeHandler.class) {
             for (RecipeVat vat : MaricultureHandlers.vat.getRecipes()) {
-                if (vat == null) continue; //Somehow null recipes added?
-                if (!isFluidSearch || isFluidSearch && isEqual(vat.inputFluid1, vat.inputFluid2, (FluidStack) ingredients[0])) {
+                if (vat == null) continue; // Somehow null recipes added?
+                if (!isFluidSearch
+                    || isFluidSearch && isEqual(vat.inputFluid1, vat.inputFluid2, (FluidStack) ingredients[0])) {
                     arecipes.add(new CachedVatRecipe(vat));
                 }
             }
@@ -95,10 +98,11 @@ public class NEIVatRecipeHandler extends NEIBase {
     @Override
     public void loadCraftingRecipes(ItemStack result) {
         for (RecipeVat vat : MaricultureHandlers.vat.getRecipes()) {
-            if (vat == null) continue; //Somehow null recipes added?
+            if (vat == null) continue; // Somehow null recipes added?
             if (vat.outputItem != null) {
                 ItemStack item = vat.outputItem;
-                if (OreDicHelper.convert(result).equals(OreDicHelper.convert(item))) {
+                if (OreDicHelper.convert(result)
+                    .equals(OreDicHelper.convert(item))) {
                     arecipes.add(new CachedVatRecipe(vat));
                 }
             }
@@ -108,7 +112,11 @@ public class NEIVatRecipeHandler extends NEIBase {
                 continue;
             }
 
-            if (fluid.getFluid().getName().equals(vat.outputFluid.getFluid().getName())) {
+            if (fluid.getFluid()
+                .getName()
+                .equals(
+                    vat.outputFluid.getFluid()
+                        .getName())) {
                 arecipes.add(new CachedVatRecipe(vat));
             }
         }
@@ -117,7 +125,7 @@ public class NEIVatRecipeHandler extends NEIBase {
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
         for (RecipeVat vat : MaricultureHandlers.vat.getRecipes()) {
-            if (vat == null) continue; //Somehow null recipes added?
+            if (vat == null) continue; // Somehow null recipes added?
             if (vat.inputItem != null && ItemHelper.areEqual(ingredient, vat.inputItem)) {
                 arecipes.add(new CachedVatRecipe(vat, ingredient));
             }
@@ -127,13 +135,21 @@ public class NEIVatRecipeHandler extends NEIBase {
                 continue;
             }
 
-            if (vat.inputFluid1 != null) if (fluid.getFluid().getName().equals(vat.inputFluid1.getFluid().getName())) {
-                arecipes.add(new CachedVatRecipe(vat));
-            }
+            if (vat.inputFluid1 != null) if (fluid.getFluid()
+                .getName()
+                .equals(
+                    vat.inputFluid1.getFluid()
+                        .getName())) {
+                            arecipes.add(new CachedVatRecipe(vat));
+                        }
 
-            if (vat.inputFluid2 != null) if (fluid.getFluid().getName().equals(vat.inputFluid2.getFluid().getName())) {
-                arecipes.add(new CachedVatRecipe(vat));
-            }
+            if (vat.inputFluid2 != null) if (fluid.getFluid()
+                .getName()
+                .equals(
+                    vat.inputFluid2.getFluid()
+                        .getName())) {
+                            arecipes.add(new CachedVatRecipe(vat));
+                        }
         }
     }
 
@@ -161,7 +177,7 @@ public class NEIVatRecipeHandler extends NEIBase {
     }
 
     @Override
-    public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int id) {
+    public List<String> handleTooltip(GuiRecipe<?> gui, List<String> currenttip, int id) {
         currenttip = super.handleTooltip(gui, currenttip, id);
         Point mouse = getMouse(getGuiWidth(gui), getGuiHeight(gui));
         if (isOverItem(gui, id)) return currenttip;
@@ -301,6 +317,7 @@ public class NEIVatRecipeHandler extends NEIBase {
     @Override
     public boolean isOverItem(GuiRecipe gui, int id) {
         CachedVatRecipe cache = (CachedVatRecipe) arecipes.get(id);
-        return cache.input != null && gui.isMouseOver(cache.input, id) || cache.output != null && gui.isMouseOver(cache.output, id);
+        return cache.input != null && gui.isMouseOver(cache.input, id)
+            || cache.output != null && gui.isMouseOver(cache.output, id);
     }
 }

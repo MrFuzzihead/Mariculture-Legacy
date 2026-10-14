@@ -6,6 +6,7 @@ import mariculture.api.fishery.fish.FishDNABase;
 import mariculture.api.fishery.fish.FishSpecies;
 
 public class FishDNASpecies extends FishDNABase {
+
     @Override
     public String getEggString() {
         return "SpeciesList";
@@ -30,8 +31,10 @@ public class FishDNASpecies extends FishDNABase {
     public int[] getDominant(int option1, int option2, Random rand) {
         int[] ret = new int[2];
 
-        boolean species1 = FishSpecies.species.get(option1).isDominant();
-        boolean species2 = FishSpecies.species.get(option2).isDominant();
+        boolean species1 = FishSpecies.species.get(option1)
+            .isDominant();
+        boolean species2 = FishSpecies.species.get(option2)
+            .isDominant();
 
         if (species1 && !species2) {
             ret[0] = option1;
@@ -49,7 +52,7 @@ public class FishDNASpecies extends FishDNABase {
 
         return ret;
     }
-    
+
     @Override
     public int getCopyChance() {
         return 10;

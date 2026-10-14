@@ -2,12 +2,6 @@ package mariculture.core.items;
 
 import java.util.ArrayList;
 
-import mariculture.Mariculture;
-import mariculture.core.gui.ContainerStorage;
-import mariculture.core.gui.GuiStorage;
-import mariculture.core.gui.InventoryStorage;
-import mariculture.core.gui.feature.Feature;
-import mariculture.core.handlers.LogHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -17,7 +11,15 @@ import net.minecraft.world.World;
 
 import org.apache.logging.log4j.Level;
 
+import mariculture.Mariculture;
+import mariculture.core.gui.ContainerStorage;
+import mariculture.core.gui.GuiStorage;
+import mariculture.core.gui.InventoryStorage;
+import mariculture.core.gui.feature.Feature;
+import mariculture.core.handlers.LogHandler;
+
 public class ItemMCStorage extends ItemMCBaseSingle {
+
     public static final int GUI_ID = 16;
     public int size;
     public String gui;
@@ -80,16 +82,17 @@ public class ItemMCStorage extends ItemMCBaseSingle {
     public void save(EntityPlayer player, ItemStack[] inventory) {
         try {
             NBTTagList nbttaglist = new NBTTagList();
-            for (int i = 0; i < inventory.length; i++)
-                if (inventory[i] != null) {
-                    NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                    nbttagcompound1.setByte("Slot", (byte) i);
-                    inventory[i].writeToNBT(nbttagcompound1);
-                    nbttaglist.appendTag(nbttagcompound1);
-                }
+            for (int i = 0; i < inventory.length; i++) if (inventory[i] != null) {
+                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                nbttagcompound1.setByte("Slot", (byte) i);
+                inventory[i].writeToNBT(nbttagcompound1);
+                nbttaglist.appendTag(nbttagcompound1);
+            }
 
-            if (!player.getCurrentEquippedItem().hasTagCompound()) {
-                player.getCurrentEquippedItem().setTagCompound(new NBTTagCompound());
+            if (!player.getCurrentEquippedItem()
+                .hasTagCompound()) {
+                player.getCurrentEquippedItem()
+                    .setTagCompound(new NBTTagCompound());
             }
 
             player.getCurrentEquippedItem().stackTagCompound.setTag("Inventory", nbttaglist);

@@ -6,10 +6,13 @@ import java.util.Collections;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+
 import cofh.api.energy.IEnergyReceiver;
 
 public class PowerHelper {
-    public static Object[] getNextEnergyHandler(ForgeDirection from, World worldObj, int xCoord, int yCoord, int zCoord) {
+
+    public static Object[] getNextEnergyHandler(ForgeDirection from, World worldObj, int xCoord, int yCoord,
+        int zCoord) {
         ForgeDirection facing = ForgeDirection.UNKNOWN;
         IEnergyReceiver handler = null;
         Collections.shuffle(handlers);

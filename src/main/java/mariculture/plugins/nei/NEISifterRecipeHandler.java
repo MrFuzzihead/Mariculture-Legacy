@@ -6,11 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import mariculture.Mariculture;
-import mariculture.api.fishery.Fishing;
-import mariculture.api.fishery.RecipeSifter;
-import mariculture.core.helpers.OreDicHelper;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -21,9 +16,16 @@ import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.ItemList;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
+import mariculture.Mariculture;
+import mariculture.api.fishery.Fishing;
+import mariculture.api.fishery.RecipeSifter;
+import mariculture.core.helpers.OreDicHelper;
+import mariculture.core.util.MCTranslate;
 
 public class NEISifterRecipeHandler extends NEIBase {
+
     public class SifterResult {
+
         int id;
         RecipeSifter recipe;
         public ArrayList<PositionedStack> stacks;
@@ -46,8 +48,9 @@ public class NEISifterRecipeHandler extends NEIBase {
     }
 
     public class CachedSifterRecipe extends CachedRecipe {
+
         List<PositionedStack> inputs;
-        //PositionedStack input;
+        // PositionedStack input;
         List<SifterResult> outputs;
 
         public CachedSifterRecipe(ItemStack input, ArrayList<RecipeSifter> output) {
@@ -113,7 +116,7 @@ public class NEISifterRecipeHandler extends NEIBase {
         if (outputId.equals("sifter") && getClass() == NEISifterRecipeHandler.class) {
             HashMap<List<? extends Object>, ArrayList<RecipeSifter>> recipes = Fishing.sifter.getRecipes();
             for (Entry<List<? extends Object>, ArrayList<RecipeSifter>> recipe : recipes.entrySet()) {
-                if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
+                if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
                 arecipes.add(new CachedSifterRecipe(null, recipe.getValue()));
             }
         } else {
@@ -126,8 +129,9 @@ public class NEISifterRecipeHandler extends NEIBase {
         HashMap<List<? extends Object>, ArrayList<RecipeSifter>> recipes = Fishing.sifter.getRecipes();
         for (Entry<List<? extends Object>, ArrayList<RecipeSifter>> recipe : recipes.entrySet()) {
             for (RecipeSifter sifter : recipe.getValue()) {
-                if (recipe == null || recipe.getValue() == null) continue; //Somehow null recipes added?
-                if (OreDicHelper.convert(sifter.bait).equals(OreDicHelper.convert(result))) {
+                if (recipe == null || recipe.getValue() == null) continue; // Somehow null recipes added?
+                if (OreDicHelper.convert(sifter.bait)
+                    .equals(OreDicHelper.convert(result))) {
                     arecipes.add(new CachedSifterRecipe(null, recipe.getValue()));
                 }
             }
@@ -148,7 +152,8 @@ public class NEISifterRecipeHandler extends NEIBase {
         for (SifterResult recipe : cache.outputs) {
             GL11.glPushMatrix();
             GL11.glScalef(0.9F, 0.9F, 0.9F);
-            Minecraft.getMinecraft().fontRenderer.drawString(mariculture.lib.util.Text.GREY + recipe.recipe.chance + "%", 78 + recipe.id * 21, 38, 0);
+            Minecraft.getMinecraft().fontRenderer
+                .drawString(mariculture.lib.util.Text.GREY + recipe.recipe.chance + "%", 78 + recipe.id * 21, 38, 0);
             GL11.glPopMatrix();
         }
     }

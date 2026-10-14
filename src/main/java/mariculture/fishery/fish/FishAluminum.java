@@ -2,11 +2,13 @@ package mariculture.fishery.fish;
 
 import static mariculture.core.lib.MCLib.dropletAir;
 import static mariculture.core.lib.MCLib.dropletAluminum;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
 
 public class FishAluminum extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 8;
@@ -41,17 +43,17 @@ public class FishAluminum extends FishSpecies {
     public int getFertility() {
         return 500;
     }
-    
+
     @Override
     public int getBaseProductivity() {
         return 0;
     }
-    
+
     @Override
     public double getFishOilVolume() {
         return 0.0D;
     }
-    
+
     @Override
     public int getFoodStat() {
         return -1;
@@ -67,7 +69,7 @@ public class FishAluminum extends FishSpecies {
     public RodType getRodNeeded() {
         return RodType.SUPER;
     }
-    
+
     @Override
     public int getFishMealSize() {
         return 0;

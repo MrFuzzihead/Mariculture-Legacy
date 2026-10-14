@@ -2,6 +2,13 @@ package mariculture.plugins.nei;
 
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+
+import codechicken.nei.api.API;
+import cpw.mods.fml.common.Loader;
 import mariculture.api.core.MaricultureHandlers;
 import mariculture.api.fishery.Fishing;
 import mariculture.api.fishery.fish.FishSpecies;
@@ -47,19 +54,14 @@ import mariculture.magic.jewelry.parts.JewelryMaterial;
 import mariculture.plugins.PluginEnchiridion;
 import mariculture.plugins.nei.NEIAnvilRecipeHandler.RecipeJewelry;
 import mariculture.world.WorldPlus;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-import codechicken.nei.api.API;
-import cpw.mods.fml.common.Loader;
 
 public class NEICleanup {
+
     public static void cleanup() {
-        //Hide all Air Blocks
+        // Hide all Air Blocks
         API.hideItem(new ItemStack(Core.air, 1, OreDictionary.WILDCARD_VALUE));
 
-        //All the block metas
+        // All the block metas
         for (int meta = 0; meta < 16; meta++) {
             hide(meta, FoodMeta.COUNT, Core.food);
             hide(meta, GlassMeta.COUNT, Core.glass);
@@ -94,7 +96,7 @@ public class NEICleanup {
             }
         }
 
-        //Hide all the custom blocks
+        // Hide all the custom blocks
         if (Modules.isActive(Modules.factory)) {
             API.hideItem(new ItemStack(Factory.customBlock, 1, OreDictionary.WILDCARD_VALUE));
             API.hideItem(new ItemStack(Factory.customFence, 1, OreDictionary.WILDCARD_VALUE));
@@ -109,8 +111,8 @@ public class NEICleanup {
             API.hideItem(new ItemStack(Factory.customRFWall, 1, OreDictionary.WILDCARD_VALUE));
         }
 
-        //Hide the fish or show one
-        if (Modules.isActive(Modules.fishery)) { //Hide all off neon lamps
+        // Hide the fish or show one
+        if (Modules.isActive(Modules.fishery)) { // Hide all off neon lamps
             for (int i = 0; i < DropletMeta.COUNT; i++) {
                 if (((ItemDroplet) Fishery.droplet).isActive(i)) {
                     API.addItemListEntry(new ItemStack(Fishery.droplet, 1, i));
@@ -136,7 +138,7 @@ public class NEICleanup {
         add(UpgradeMeta.COUNT, Core.upgrade);
         add(BucketMeta.COUNT, Core.buckets);
 
-        //Add the jewelry
+        // Add the jewelry
         if (Modules.isActive(Modules.magic)) {
             addJewelry((ItemJewelry) Magic.ring);
             addJewelry((ItemJewelry) Magic.bracelet);
@@ -146,7 +148,8 @@ public class NEICleanup {
 
     private static void add(int max, Item item) {
         for (int i = 0; i < max; i++) {
-            if (!(item instanceof ItemBaseMeta) || ((item instanceof ItemBaseMeta && ((ItemBaseMeta) item).isActive(i)))) {
+            if (!(item instanceof ItemBaseMeta)
+                || ((item instanceof ItemBaseMeta && ((ItemBaseMeta) item).isActive(i)))) {
                 API.addItemListEntry(new ItemStack(item, 1, i));
             }
         }
@@ -179,7 +182,8 @@ public class NEICleanup {
                 ItemStack worked = JewelryHandler.createJewelry(item, bind, mat);
                 ItemStack output = JewelryHandler.createJewelry(item, binding.getValue(), material.getValue());
                 int hits = (int) (bind.getHitsBase(type) * mat.getHitsModifier(type));
-                NEIAnvilRecipeHandler.jewelry.put(output, new RecipeJewelry(MaricultureHandlers.anvil.createWorkedItem(worked, hits), hits));
+                NEIAnvilRecipeHandler.jewelry
+                    .put(output, new RecipeJewelry(MaricultureHandlers.anvil.createWorkedItem(worked, hits), hits));
             }
         }
     }

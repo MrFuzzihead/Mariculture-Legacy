@@ -2,18 +2,20 @@ package mariculture.lib.base;
 
 import java.util.List;
 
-import mariculture.lib.util.IHasMetaItem;
-import mariculture.lib.util.Text;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mariculture.lib.util.IHasMetaItem;
+import mariculture.lib.util.Text;
 
 public abstract class ItemBaseMeta extends Item implements IHasMetaItem {
+
     @SideOnly(Side.CLIENT)
     protected IIcon[] icons;
     protected String mod;
@@ -38,12 +40,15 @@ public abstract class ItemBaseMeta extends Item implements IHasMetaItem {
 
     @Override
     public String getUnlocalizedName() {
-        return mod + "." + super.getUnlocalizedName().replace("item.", "").replace("_", ".");
+        return mod + "."
+            + super.getUnlocalizedName().replace("item.", "")
+                .replace("_", ".");
     }
 
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2").toLowerCase();
+        String name = getName(stack).replaceAll("(.)([A-Z])", "$1$2")
+            .toLowerCase();
         return Text.localize(getUnlocalizedName() + "." + name);
     }
 
@@ -71,7 +76,7 @@ public abstract class ItemBaseMeta extends Item implements IHasMetaItem {
             icons[i] = register.registerIcon(path + getName(new ItemStack(this, 1, i)));
         }
     }
-    
+
     public boolean isValidTab(CreativeTabs tab, int meta) {
         return tab == getCreativeTab();
     }

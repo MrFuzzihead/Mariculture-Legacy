@@ -3,18 +3,21 @@ package mariculture.fishery.fish;
 import static mariculture.core.lib.MCLib.dropletAqua;
 import static mariculture.core.lib.MCLib.dropletEarth;
 import static mariculture.core.lib.MCLib.dropletZinc;
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+
 public class FishZinc extends FishSpecies {
+
     @Override
     public Block getWater2() {
         return Blocks.lava;
     }
-    
+
     @Override
     public int getTemperatureBase() {
         return 15;
@@ -49,22 +52,22 @@ public class FishZinc extends FishSpecies {
     public int getFertility() {
         return 1200;
     }
-    
+
     @Override
     public int getBaseProductivity() {
         return 0;
     }
-    
+
     @Override
     public double getFishOilVolume() {
         return 0.0D;
     }
-    
+
     @Override
     public int getFoodStat() {
         return -1;
     }
-    
+
     @Override
     public int getFishMealSize() {
         return 0;

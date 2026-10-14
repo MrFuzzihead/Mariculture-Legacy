@@ -1,6 +1,5 @@
 package mariculture.fishery.blocks.fluids;
 
-import mariculture.core.blocks.base.BlockFluid;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +7,10 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 
+import mariculture.core.blocks.base.BlockFluid;
+
 public class BlockMana extends BlockFluid {
+
     public BlockMana(Fluid fluid, Material material) {
         super(fluid, material);
         quantaPerBlock = 6;

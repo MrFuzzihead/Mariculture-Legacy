@@ -7,14 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.Mariculture;
-import mariculture.api.core.FuelInfo;
-import mariculture.api.core.MaricultureHandlers;
-import mariculture.api.core.RecipeSmelter;
-import mariculture.core.gui.feature.FeatureTank.TankSize;
-import mariculture.core.helpers.FluidHelper;
-import mariculture.core.helpers.cofh.CoFhItemHelper;
-import mariculture.core.util.MCTranslate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Items;
@@ -31,11 +23,21 @@ import codechicken.nei.NEIServerUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
+import mariculture.Mariculture;
+import mariculture.api.core.FuelInfo;
+import mariculture.api.core.MaricultureHandlers;
+import mariculture.api.core.RecipeSmelter;
+import mariculture.core.gui.feature.FeatureTank.TankSize;
+import mariculture.core.helpers.FluidHelper;
+import mariculture.core.helpers.cofh.CoFhItemHelper;
+import mariculture.core.util.MCTranslate;
 
 public class NEICrucibleRecipeHandler extends NEIBase {
+
     private static Random rand = new Random();
 
     public class CachedLiquifierRecipe extends CachedRecipe {
+
         RecipeSmelter recipe;
         PositionedStack input1;
         PositionedStack output;
@@ -66,6 +68,7 @@ public class NEICrucibleRecipeHandler extends NEIBase {
     }
 
     public static class LiquifierFuel {
+
         public PositionedStack stack;
         public FuelInfo info;
 
@@ -120,7 +123,7 @@ public class NEICrucibleRecipeHandler extends NEIBase {
         boolean isFluidSearch = isFluidSearch(outputId, results);
         if ((outputId.equals("liquifier") || isFluidSearch) && getClass() == NEICrucibleRecipeHandler.class) {
             for (RecipeSmelter recipe : MaricultureHandlers.crucible.getRecipeList()) {
-                if (recipe == null) continue; //Somehow null recipes added?
+                if (recipe == null) continue; // Somehow null recipes added?
                 if (!isFluidSearch || isFluidSearch && areFluidsEqual(recipe.fluid, (FluidStack) results[0])) {
                     arecipes.add(new CachedLiquifierRecipe(recipe));
                 }
@@ -133,7 +136,7 @@ public class NEICrucibleRecipeHandler extends NEIBase {
     @Override
     public void loadCraftingRecipes(ItemStack result) {
         for (RecipeSmelter recipe : MaricultureHandlers.crucible.getRecipeList()) {
-            if (recipe == null) continue; //Somehow null recipes added?
+            if (recipe == null) continue; // Somehow null recipes added?
             ItemStack item = recipe.output;
             if (NEIServerUtils.areStacksSameTypeCrafting(result, item)) {
                 arecipes.add(new CachedLiquifierRecipe(recipe));
@@ -144,7 +147,11 @@ public class NEICrucibleRecipeHandler extends NEIBase {
                 continue;
             }
 
-            if (fluid.getFluid().getName().equals(recipe.fluid.getFluid().getName())) {
+            if (fluid.getFluid()
+                .getName()
+                .equals(
+                    recipe.fluid.getFluid()
+                        .getName())) {
                 arecipes.add(new CachedLiquifierRecipe(recipe));
             }
         }
@@ -153,7 +160,7 @@ public class NEICrucibleRecipeHandler extends NEIBase {
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
         for (RecipeSmelter recipe : MaricultureHandlers.crucible.getRecipeList()) {
-            if (recipe == null) continue; //Somehow null recipes added?
+            if (recipe == null) continue; // Somehow null recipes added?
             ItemStack item = recipe.input;
             if (NEIServerUtils.areStacksSameTypeCrafting(ingredient, item)) {
                 arecipes.add(new CachedLiquifierRecipe(recipe));
@@ -186,12 +193,13 @@ public class NEICrucibleRecipeHandler extends NEIBase {
         if (recipe.recipe.output != null) {
             int chance = (int) ((float) 1 / recipe.recipe.chance * 100);
             int x = chance < 10 ? 143 : 139;
-            Minecraft.getMinecraft().fontRenderer.drawString(mariculture.lib.util.Text.GREY + "" + chance + "%", x, 44, 0);
+            Minecraft.getMinecraft().fontRenderer
+                .drawString(mariculture.lib.util.Text.GREY + "" + chance + "%", x, 44, 0);
         }
     }
 
     @Override
-    public List<String> handleItemTooltip(GuiRecipe gui, ItemStack stack, List<String> currenttip, int id) {
+    public List<String> handleItemTooltip(GuiRecipe<?> gui, ItemStack stack, List<String> currenttip, int id) {
         if (stack != null) {
             CachedLiquifierRecipe cache = (CachedLiquifierRecipe) arecipes.get(id);
             RecipeSmelter recipe = cache.recipe;
@@ -199,14 +207,19 @@ public class NEICrucibleRecipeHandler extends NEIBase {
                 if (gui.isMouseOver(cache.output, id)) {
                     if (recipe.output != null && CoFhItemHelper.areItemStacksEqualNoNBT(stack, recipe.output)) {
                         int chance = (int) ((float) 1 / recipe.chance * 100);
-                        currenttip.add(mariculture.lib.util.Text.GREY + chance + MCTranslate.translate("percent") + stack.getDisplayName());
+                        currenttip.add(
+                            mariculture.lib.util.Text.GREY + chance
+                                + MCTranslate.translate("percent")
+                                + stack.getDisplayName());
                     }
                 }
             }
 
             if (cache.recipe.input != null) {
                 if (gui.isMouseOver(cache.input1, id)) {
-                    currenttip.add(mariculture.lib.util.Text.ORANGE + MCTranslate.translate("melting") + ": " + cache.recipe.temp + "\u00B0" + "C");
+                    currenttip.add(
+                        mariculture.lib.util.Text.ORANGE + MCTranslate
+                            .translate("melting") + ": " + cache.recipe.temp + "\u00B0" + "C");
                 }
             }
 
@@ -220,13 +233,19 @@ public class NEICrucibleRecipeHandler extends NEIBase {
                 if (info != null) {
                     if (FluidContainerRegistry.isFilledContainer(stack)) {
                         currenttip.add(mariculture.lib.util.Text.DARK_AQUA + MCTranslate.translate("asFluid"));
-                        currenttip.add(mariculture.lib.util.Text.WHITE + MCTranslate.translate("perTempFluid") + ": " + info.maxTempPer + "\u00B0" + "C");
+                        currenttip.add(
+                            mariculture.lib.util.Text.WHITE + MCTranslate
+                                .translate("perTempFluid") + ": " + info.maxTempPer + "\u00B0" + "C");
                     } else {
                         currenttip.add(mariculture.lib.util.Text.DARK_GREEN + MCTranslate.translate("asSolid"));
-                        currenttip.add(mariculture.lib.util.Text.WHITE + MCTranslate.translate("perTempSolid") + ": " + info.maxTempPer + "\u00B0" + "C");
+                        currenttip.add(
+                            mariculture.lib.util.Text.WHITE + MCTranslate
+                                .translate("perTempSolid") + ": " + info.maxTempPer + "\u00B0" + "C");
                     }
 
-                    currenttip.add(mariculture.lib.util.Text.GREY + MCTranslate.translate("maxTemp") + ": " + info.maxTemp + "\u00B0" + "C");
+                    currenttip.add(
+                        mariculture.lib.util.Text.GREY + MCTranslate
+                            .translate("maxTemp") + ": " + info.maxTemp + "\u00B0" + "C");
                 }
             }
         }
@@ -235,7 +254,7 @@ public class NEICrucibleRecipeHandler extends NEIBase {
     }
 
     @Override
-    public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int id) {
+    public List<String> handleTooltip(GuiRecipe<?> gui, List<String> currenttip, int id) {
         currenttip = super.handleTooltip(gui, currenttip, id);
 
         Point mouse = getMouse(getGuiWidth(gui), getGuiHeight(gui));
@@ -246,12 +265,13 @@ public class NEICrucibleRecipeHandler extends NEIBase {
         int yHigh = id % 2 == 0 ? 79 : 144;
 
         String fluid = null;
-        if (recipe.fluid != null) if (recipe.fluid.amount > 0) if (recipe.rands != null && aFluid < recipe.random.length) {
-            FluidStack someFluid = recipe.random[aFluid];
-            fluid = FluidHelper.getFluidName(someFluid);
-        } else {
-            fluid = FluidHelper.getFluidName(recipe.fluid.getFluid());
-        }
+        if (recipe.fluid != null)
+            if (recipe.fluid.amount > 0) if (recipe.rands != null && aFluid < recipe.random.length) {
+                FluidStack someFluid = recipe.random[aFluid];
+                fluid = FluidHelper.getFluidName(someFluid);
+            } else {
+                fluid = FluidHelper.getFluidName(recipe.fluid.getFluid());
+            }
 
         if (mouse.x >= 97 && mouse.x <= 132 && mouse.y >= yLow && mouse.y <= yHigh) {
             currenttip.add(fluid);

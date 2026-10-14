@@ -3,6 +3,7 @@ package mariculture.api.fishery;
 import net.minecraft.item.ItemStack;
 
 public class RecipeSifter {
+
     public String name;
     public ItemStack bait;
     public ItemStack block;

@@ -2,6 +2,11 @@ package maritech.items;
 
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
+
 import mariculture.api.core.ISpecialSorting;
 import mariculture.api.core.MaricultureTab;
 import mariculture.api.fishery.fish.FishDNA;
@@ -15,12 +20,9 @@ import mariculture.lib.util.Text;
 import maritech.extensions.modules.ExtensionFishery;
 import maritech.lib.MTModInfo;
 import maritech.util.MTTranslate;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 
 public class ItemFishDNA extends ItemMCDamageable implements ISpecialSorting {
+
     public ItemFishDNA() {
         super(MTModInfo.MODPATH, MaricultureTab.tabFishery, 32);
     }
@@ -35,7 +37,8 @@ public class ItemFishDNA extends ItemMCDamageable implements ISpecialSorting {
                 return (isMatch(data, value, fish) || isMatch("lower" + data, value, fish));
             } else return isMatch(data, value, fish) && isMatch("lower" + data, value, fish);
         } else if (fish.getItem() instanceof ItemFishDNA) {
-            return fish.stackTagCompound.getString("DNAType").equals(data) && fish.stackTagCompound.getInteger("DNAValue") == value;
+            return fish.stackTagCompound.getString("DNAType")
+                .equals(data) && fish.stackTagCompound.getInteger("DNAValue") == value;
         }
 
         return false;
@@ -49,7 +52,8 @@ public class ItemFishDNA extends ItemMCDamageable implements ISpecialSorting {
     public String getItemStackDisplayName(ItemStack stack) {
         if (stack.hasTagCompound()) {
             for (FishDNABase dna : FishDNABase.DNAParts) {
-                if (dna.getHigherString().equals(stack.stackTagCompound.getString("DNAType"))) {
+                if (dna.getHigherString()
+                    .equals(stack.stackTagCompound.getString("DNAType"))) {
                     String format = MTTranslate.translate("dna.format");
                     format = format.replace("%D", MTTranslate.translate("dna"));
                     return format.replace("%N", dna.getScannedDisplay(stack)[0]);
@@ -63,32 +67,50 @@ public class ItemFishDNA extends ItemMCDamageable implements ISpecialSorting {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean bool) {
         if (stack.hasTagCompound()) {
             for (FishDNABase dna : FishDNABase.DNAParts) {
-                if (dna.getHigherString().equals(stack.stackTagCompound.getString("DNAType"))) {
+                if (dna.getHigherString()
+                    .equals(stack.stackTagCompound.getString("DNAType"))) {
                     int value = stack.stackTagCompound.getInteger("DNAValue");
                     if (dna == Fish.species) {
                         FishSpecies species = FishSpecies.species.get(value);
                         if (species.isDominant()) {
-                            list.add(MTTranslate.translate("dna.name") + ": " + Text.ORANGE + "(" + species.getName() + ")");
+                            list.add(
+                                MTTranslate.translate("dna.name") + ": " + Text.ORANGE + "(" + species.getName() + ")");
                         } else {
-                            list.add(MTTranslate.translate("dna.name") + ": " + Text.INDIGO + "(" + species.getName() + ")");
+                            list.add(
+                                MTTranslate.translate("dna.name") + ": " + Text.INDIGO + "(" + species.getName() + ")");
                         }
                     } else if (dna == Fish.gender) {
                         if (value == 0) {
-                            list.add(MTTranslate.translate("dna.name") + ": " + Text.DARK_AQUA + "(" + MCTranslate.translate("fish.data.gender.male") + ")");
+                            list.add(
+                                MTTranslate.translate("dna.name") + ": "
+                                    + Text.DARK_AQUA
+                                    + "("
+                                    + MCTranslate.translate("fish.data.gender.male")
+                                    + ")");
                         } else {
-                            list.add(MTTranslate.translate("dna.name") + ": " + Text.PINK + "(" + MCTranslate.translate("fish.data.gender.female") + ")");
+                            list.add(
+                                MTTranslate.translate("dna.name") + ": "
+                                    + Text.PINK
+                                    + "("
+                                    + MCTranslate.translate("fish.data.gender.female")
+                                    + ")");
                         }
                     } else if (dna instanceof FishDNA) {
                         String name = "";
-                        for (FishDNA dnaType : ((FishDNA)dna).types) {
+                        for (FishDNA dnaType : ((FishDNA) dna).types) {
                             if (value >= dnaType.minimum && value <= dnaType.maximum) {
-                                String prefix = dnaType.isDominant ? "\u00a76": "\u00a79";
-                                String middle = dna.getHigherString().toLowerCase().startsWith("area") ? "aoe": dna.getHigherString().toLowerCase();
-                                name = prefix + StatCollector.translateToLocal("mariculture.fish.data." + middle + "." + dnaType.name);
+                                String prefix = dnaType.isDominant ? "\u00a76" : "\u00a79";
+                                String middle = dna.getHigherString()
+                                    .toLowerCase()
+                                    .startsWith("area") ? "aoe"
+                                        : dna.getHigherString()
+                                            .toLowerCase();
+                                name = prefix + StatCollector
+                                    .translateToLocal("mariculture.fish.data." + middle + "." + dnaType.name);
                                 break;
                             }
                         }
-                        
+
                         list.add(MTTranslate.translate("dna.name") + ": " + name);
                     }
 
@@ -111,7 +133,7 @@ public class ItemFishDNA extends ItemMCDamageable implements ISpecialSorting {
         String type = dnaStack.stackTagCompound.getString("DNAType");
         for (FishDNABase dna : FishDNABase.DNAParts) {
             if (type.equals(dna.getHigherString())) {
-                //Found the matching dna
+                // Found the matching dna
                 dna.addDNA(ret, dnaStack.stackTagCompound.getInteger("DNAValue"));
                 dna.addLowerDNA(ret, dnaStack.stackTagCompound.getInteger("DNAValue"));
                 return ret;

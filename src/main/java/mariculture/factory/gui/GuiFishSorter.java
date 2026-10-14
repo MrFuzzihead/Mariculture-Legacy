@@ -1,11 +1,12 @@
 package mariculture.factory.gui;
 
+import net.minecraft.entity.player.InventoryPlayer;
+
 import mariculture.core.gui.GuiMariculture;
 import mariculture.core.gui.feature.FeatureEject;
 import mariculture.core.network.PacketClick;
 import mariculture.core.network.PacketHandler;
 import mariculture.factory.tile.TileFishSorter;
-import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiFishSorter extends GuiMariculture {
 
@@ -38,7 +39,8 @@ public class GuiFishSorter extends GuiMariculture {
         super.mouseClicked(par1, par2, par3);
 
         if (mouseX >= 8 && mouseX <= 25 && mouseY >= 53 && mouseY <= 70) {
-            PacketHandler.sendToServer(new PacketClick(tile.xCoord, tile.yCoord, tile.zCoord, TileFishSorter.DFT_SWITCH));
+            PacketHandler
+                .sendToServer(new PacketClick(tile.xCoord, tile.yCoord, tile.zCoord, TileFishSorter.DFT_SWITCH));
         }
     }
 }

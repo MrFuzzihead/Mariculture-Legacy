@@ -1,15 +1,17 @@
 package mariculture.magic.jewelry.parts;
 
-import mariculture.core.Core;
-import mariculture.core.lib.PearlColor;
-import mariculture.magic.jewelry.ItemJewelry.JewelryType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
+import mariculture.core.Core;
+import mariculture.core.lib.PearlColor;
+import mariculture.magic.jewelry.ItemJewelry.JewelryType;
+
 public class MaterialPearlRed extends JewelryMaterial {
+
     @Override
     public String getColor() {
         return mariculture.lib.util.Text.RED;
@@ -17,7 +19,8 @@ public class MaterialPearlRed extends JewelryMaterial {
 
     @Override
     public int onAttacked(LivingAttackEvent event, EntityPlayer player) {
-        if (event.source == DamageSource.inFire || event.source == DamageSource.onFire || event.source == DamageSource.lava) {
+        if (event.source == DamageSource.inFire || event.source == DamageSource.onFire
+            || event.source == DamageSource.lava) {
             event.setCanceled(true);
             player.extinguish();
         }
@@ -27,7 +30,8 @@ public class MaterialPearlRed extends JewelryMaterial {
 
     @Override
     public int onHurt(LivingHurtEvent event, EntityPlayer player) {
-        if (event.source == DamageSource.inFire || event.source == DamageSource.onFire || event.source == DamageSource.lava) {
+        if (event.source == DamageSource.inFire || event.source == DamageSource.onFire
+            || event.source == DamageSource.lava) {
             event.setCanceled(true);
             player.extinguish();
             return 5;

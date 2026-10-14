@@ -1,20 +1,25 @@
 package mariculture.plugins.enchiridion;
 
-import mariculture.core.helpers.NBTHelper;
-import mariculture.lib.helpers.ItemHelper;
-import mariculture.plugins.PluginEnchiridion;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.helpers.NBTHelper;
+import mariculture.lib.helpers.ItemHelper;
+import mariculture.plugins.PluginEnchiridion;
+
 public class BookSpawnHelper {
-    //Reads the nbt of a player and sets if this book has been collected or not
+
+    // Reads the nbt of a player and sets if this book has been collected or not
     public static void spawn(EntityPlayer player, int meta) {
-        if (!NBTHelper.getPlayerData(player).hasKey("BookCollected" + meta)) {
-            NBTHelper.getPlayerData(player).setBoolean("BookCollected" + meta, true);
+        if (!NBTHelper.getPlayerData(player)
+            .hasKey("BookCollected" + meta)) {
+            NBTHelper.getPlayerData(player)
+                .setBoolean("BookCollected" + meta, true);
             ItemStack book = new ItemStack(PluginEnchiridion.guides, 1, meta);
             if (!player.inventory.addItemStackToInventory(book)) {
                 if (!player.worldObj.isRemote) {
-                    ItemHelper.spawnItem(player.worldObj, (int) player.posX, (int) player.posY + 1, (int) player.posZ, book);
+                    ItemHelper
+                        .spawnItem(player.worldObj, (int) player.posX, (int) player.posY + 1, (int) player.posZ, book);
                 }
             }
         }

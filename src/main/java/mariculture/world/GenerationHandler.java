@@ -2,24 +2,27 @@ package mariculture.world;
 
 import java.util.Random;
 
-import mariculture.api.core.MaricultureHandlers;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunkProvider;
+
+import cpw.mods.fml.common.IWorldGenerator;
 import mariculture.api.core.Environment.Salinity;
+import mariculture.api.core.MaricultureHandlers;
 import mariculture.core.config.WorldGeneration.WorldGen;
 import mariculture.core.handlers.WorldEventHandler;
 import mariculture.world.decorate.WorldGenAncientSand;
 import mariculture.world.decorate.WorldGenKelp;
 import mariculture.world.decorate.WorldGenReef;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunkProvider;
-import cpw.mods.fml.common.IWorldGenerator;
 
 public class GenerationHandler implements IWorldGenerator {
+
     public static WorldGenReef coralGenerator = new WorldGenReef();
     public static WorldGenKelp kelpGenerator = new WorldGenKelp();
     public static WorldGenAncientSand sandGen = new WorldGenAncientSand();
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator,
+        IChunkProvider chunkProvider) {
         if (!WorldEventHandler.isBlacklisted(world.provider.dimensionId)) {
             try {
                 Salinity salinity = MaricultureHandlers.environment.getSalinity(world, chunkX * 16, chunkZ * 16);

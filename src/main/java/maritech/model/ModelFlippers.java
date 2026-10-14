@@ -9,6 +9,7 @@ import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 public class ModelFlippers extends ModelBiped {
+
     private ModelRenderer RFlipper;
     private ModelRenderer RBase;
     private ModelRenderer LFlipper;
@@ -60,7 +61,8 @@ public class ModelFlippers extends ModelBiped {
     }
 
     @Override
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity) {
+    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6,
+        Entity entity) {
         this.RFlipper.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
         this.RBase.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
         this.LFlipper.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float) Math.PI) * 1.4F * par2;

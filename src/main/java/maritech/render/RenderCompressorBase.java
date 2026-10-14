@@ -1,16 +1,18 @@
 package maritech.render;
 
+import net.minecraftforge.common.util.ForgeDirection;
+
+import org.lwjgl.opengl.GL11;
+
 import mariculture.core.Core;
 import mariculture.core.blocks.BlockRenderedMachineMulti;
 import mariculture.core.lib.MachineRenderedMultiMeta;
 import mariculture.core.lib.MetalMeta;
 import mariculture.core.render.RenderBase;
 import maritech.tile.TileAirCompressor;
-import net.minecraftforge.common.util.ForgeDirection;
-
-import org.lwjgl.opengl.GL11;
 
 public class RenderCompressorBase extends RenderBase {
+
     public RenderCompressorBase() {}
 
     @Override
@@ -46,7 +48,7 @@ public class RenderCompressorBase extends RenderBase {
             setTexture(Core.metals, MetalMeta.TITANIUM_BLOCK);
             renderBlock(0.15, 0, 0.15, 0.85, 0.2, 0.3);
 
-            //I am the master of the house! Let's render the bar
+            // I am the master of the house! Let's render the bar
             if (tile.isMaster()) {
                 double start = 0.25D + (1.5D - tile.getAirStored() * 1.5D / 480);
                 if (start >= 1.75D) {
@@ -55,7 +57,7 @@ public class RenderCompressorBase extends RenderBase {
 
                 setTexture(((BlockRenderedMachineMulti) Core.renderedMachinesMulti).bar1);
                 renderBlock(0.99, 0.4, start, 1, 0.8, 1.75);
-                //Opposite
+                // Opposite
                 start = 2D - (1.75D - (1.5D - tile.getAirStored() * 1.5D / 480));
                 if (start <= 0.25D) {
                     start = 0.2501D;
@@ -63,7 +65,7 @@ public class RenderCompressorBase extends RenderBase {
                 setTexture(Core.metals, MetalMeta.MAGNESIUM_BLOCK);
                 renderBlock(0.99, 0.4, 0.25, 1, 0.8, start);
 
-                //Side renders
+                // Side renders
                 setTexture(Core.metals, MetalMeta.TITANIUM_BLOCK);
                 renderBlock(0.99, 0.8, 0.2, 1, 0.85, 1.8);
                 renderBlock(0.99, 0.35, 0.2, 1, 0.4, 1.8);
@@ -75,11 +77,11 @@ public class RenderCompressorBase extends RenderBase {
                     start = 0.2501D;
                 }
 
-                //Side 2
+                // Side 2
                 setTexture(((BlockRenderedMachineMulti) Core.renderedMachinesMulti).bar1);
                 renderBlock(0, 0.4, 0.25, 0.0001, 0.8, start);
 
-                //Opposite
+                // Opposite
                 start = 2D - (0.25D + (1.5D - tile.getAirStored() * 1.5D / 480));
                 if (start >= 1.75D) {
                     start = 1.7499D;
@@ -87,7 +89,7 @@ public class RenderCompressorBase extends RenderBase {
                 setTexture(Core.metals, MetalMeta.MAGNESIUM_BLOCK);
                 renderBlock(0, 0.4, start, 0.0001, 0.8, 1.75);
 
-                //Side Renders number 2 :)
+                // Side Renders number 2 :)
                 setTexture(Core.metals, MetalMeta.TITANIUM_BLOCK);
                 renderBlock(0, 0.8, 0.2, 0.01, 0.85, 1.8);
                 renderBlock(0, 0.35, 0.2, 0.01, 0.4, 1.8);

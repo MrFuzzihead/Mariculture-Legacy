@@ -3,6 +3,7 @@ package mariculture.core.lib;
 import mariculture.lib.util.Text;
 
 public class PearlColor {
+
     public static final int COUNT = 12;
     public static final int WHITE = 0;
     public static final int GREEN = 1;

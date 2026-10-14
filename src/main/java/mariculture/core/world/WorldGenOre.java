@@ -2,14 +2,16 @@ package mariculture.core.world;
 
 import java.util.Random;
 
-import mariculture.core.helpers.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
+import mariculture.core.helpers.BlockHelper;
+
 public class WorldGenOre extends WorldGenerator {
+
     /** The block ID of the ore to be placed using this generator. */
     private Block mineableBlock;
     private int minableBlockMeta = 0;
@@ -72,7 +74,8 @@ public class WorldGenOre extends WorldGenerator {
 
                                 if (BlockHelper.chunkExists(par1World, k2, i3)) {
                                     Block block = par1World.getBlock(k2, l2, i3);
-                                    if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && block != null && block.isReplaceableOreGen(par1World, k2, l2, i3, blockToReplace)) {
+                                    if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && block != null
+                                        && block.isReplaceableOreGen(par1World, k2, l2, i3, blockToReplace)) {
                                         par1World.setBlock(k2, l2, i3, mineableBlock, minableBlockMeta, 2);
                                     }
                                 }

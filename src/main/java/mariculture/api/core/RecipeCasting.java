@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public abstract class RecipeCasting {
+
     public FluidStack fluid;
     public ItemStack output;
 
@@ -13,29 +14,34 @@ public abstract class RecipeCasting {
     }
 
     public static class RecipeNuggetCasting extends RecipeCasting {
+
         public RecipeNuggetCasting(FluidStack fluid, ItemStack output) {
             super(fluid, output);
         }
     }
 
     public static class RecipeIngotCasting extends RecipeCasting {
+
         public RecipeIngotCasting(FluidStack fluid, ItemStack output) {
             super(fluid, output);
         }
     }
 
     public static class RecipeBlockCasting extends RecipeCasting {
+
         public RecipeBlockCasting(FluidStack fluid, ItemStack output) {
             super(fluid, output);
         }
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((fluid == null) ? 0 : fluid.hashCode());
-        result = prime * result + ((output == null) ? 0 : output.getItem().hashCode());
+        result = prime * result + ((output == null) ? 0
+            : output.getItem()
+                .hashCode());
         result = prime * result + ((output == null) ? 0 : output.getItemDamage());
         return result;
     }
@@ -51,7 +57,8 @@ public abstract class RecipeCasting {
         } else if (!fluid.equals(other.fluid)) return false;
         if (output == null) {
             if (other.output != null) return false;
-        } else if (!output.getItem().equals(other.output.getItem()) || output.getItemDamage() != other.output.getItemDamage()) return false;
+        } else if (!output.getItem()
+            .equals(other.output.getItem()) || output.getItemDamage() != other.output.getItemDamage()) return false;
         return true;
     }
 }

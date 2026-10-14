@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityHopper;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.IFluidHandler;
+
 import mariculture.api.core.IBlacklisted;
 import mariculture.core.gui.feature.FeatureEject.EjectSetting;
 import mariculture.core.helpers.cofh.InventoryHelper;
@@ -17,15 +25,9 @@ import mariculture.core.util.ITank;
 import mariculture.fishery.gui.ContainerFishTank;
 import mariculture.fishery.tile.TileFishTank;
 import mariculture.lib.helpers.ItemHelper;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityHopper;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.IFluidHandler;
 
 public class BlockTransferHelper {
+
     private static List<Integer> sides;
     static {
         sides = new ArrayList<Integer>();
@@ -110,7 +112,7 @@ public class BlockTransferHelper {
         if (handler instanceof ITank) {
             ITank machine = (ITank) handler;
 
-            //If a MultiBlock Tank, then get the master to drain from instead :)
+            // If a MultiBlock Tank, then get the master to drain from instead :)
             if (handler instanceof TileMultiStorageTank) {
                 TileMultiStorageTank tile = (TileMultiStorageTank) handler;
                 if (tile.getMaster() != null) {
@@ -118,18 +120,19 @@ public class BlockTransferHelper {
                 }
             }
 
-            if (machine.getFluid(transfer) != null) if (tank.fill(from, machine.getFluid(transfer), false) >= transfer) {
-                tank.fill(from, machine.getFluid(transfer), true);
-                ((IFluidHandler) machine).drain(from, machine.getFluid(transfer), true);
-                return true;
-            }
+            if (machine.getFluid(transfer) != null)
+                if (tank.fill(from, machine.getFluid(transfer), false) >= transfer) {
+                    tank.fill(from, machine.getFluid(transfer), true);
+                    ((IFluidHandler) machine).drain(from, machine.getFluid(transfer), true);
+                    return true;
+                }
         }
 
         return false;
     }
 
     public ItemStack insertStack(ItemStack stack, int[] slots) {
-        //If the Block is instance of ejectable, try to insert in to nearby inventories OR throw the stack out
+        // If the Block is instance of ejectable, try to insert in to nearby inventories OR throw the stack out
         if (inventory instanceof IEjectable) {
             IEjectable ejectable = (IEjectable) inventory;
             if (ejectable instanceof TileMultiStorage) {
@@ -139,24 +142,26 @@ public class BlockTransferHelper {
                 }
             }
 
-            if (ejectable != null && EjectSetting.canEject(ejectable.getEjectSetting(), EjectSetting.ITEM)) if (inventory instanceof TileMultiBlock) {
-                TileMultiBlock tile = (TileMultiBlock) inventory;
-                if (tile.getMaster() != null) {
-                    TileMultiBlock master = tile.getMaster();
-                    ArrayList<MultiPart> cords = master.slaves;
+            if (ejectable != null && EjectSetting.canEject(ejectable.getEjectSetting(), EjectSetting.ITEM))
+                if (inventory instanceof TileMultiBlock) {
+                    TileMultiBlock tile = (TileMultiBlock) inventory;
+                    if (tile.getMaster() != null) {
+                        TileMultiBlock master = tile.getMaster();
+                        ArrayList<MultiPart> cords = master.slaves;
 
-                    Collections.shuffle(cords);
-                    for (MultiPart cord : cords)
-                        if (world.getTileEntity(cord.xCoord, cord.yCoord, cord.zCoord) != null) {
-                            BlockTransferHelper helper = new BlockTransferHelper(world.getTileEntity(cord.xCoord, cord.yCoord, cord.zCoord));
-                            stack = helper.ejectToSides(stack);
-                        }
+                        Collections.shuffle(cords);
+                        for (MultiPart cord : cords)
+                            if (world.getTileEntity(cord.xCoord, cord.yCoord, cord.zCoord) != null) {
+                                BlockTransferHelper helper = new BlockTransferHelper(
+                                    world.getTileEntity(cord.xCoord, cord.yCoord, cord.zCoord));
+                                stack = helper.ejectToSides(stack);
+                            }
 
-                    stack = new BlockTransferHelper(master).ejectToSides(stack);
+                        stack = new BlockTransferHelper(master).ejectToSides(stack);
+                    }
+                } else {
+                    stack = ejectToSides(stack);
                 }
-            } else {
-                stack = ejectToSides(stack);
-            }
         }
 
         if (stack != null) {
@@ -178,23 +183,28 @@ public class BlockTransferHelper {
                 if (!((IEjectable) thisTile).canEject(dir)) continue;
             }
 
-            TileEntity tile = world.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);    
-            //Attempt to place the fish in matching slots in a fish tank block
+            TileEntity tile = world.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
+            // Attempt to place the fish in matching slots in a fish tank block
             if (tile instanceof TileFishTank) {
                 TileFishTank tank = (TileFishTank) tile;
                 for (int i = 0; i < 54; i++) {
                     if (tank.getStackInSlot(i) == null) continue;
                     if (ContainerFishTank.isFishEqual(tank.getStackInSlot(i), stack)) {
-                        ItemStack newStack = tank.getStackInSlot(i).copy();
+                        ItemStack newStack = tank.getStackInSlot(i)
+                            .copy();
                         newStack.stackSize += stack.stackSize;
                         tank.setInventorySlotContents(i, newStack);
                         return null;
                     }
                 }
-            } 
-            
+            }
+
             if (tile instanceof IInventory && !(tile instanceof TileEntityHopper) && !isSameBlock(tile)) {
-                stack = InventoryHelper.insertItemStackIntoInventory((IInventory) tile, stack, dir.getOpposite().ordinal());
+                stack = InventoryHelper.insertItemStackIntoInventory(
+                    (IInventory) tile,
+                    stack,
+                    dir.getOpposite()
+                        .ordinal());
             }
         }
 
@@ -202,7 +212,8 @@ public class BlockTransferHelper {
     }
 
     private boolean isSameBlock(TileEntity tile) {
-        if (tile != null && inventory != null) if (tile.getClass().equals(thisTile.getClass())) return true;
+        if (tile != null && inventory != null) if (tile.getClass()
+            .equals(thisTile.getClass())) return true;
 
         return false;
     }

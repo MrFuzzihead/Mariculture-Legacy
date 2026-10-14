@@ -2,25 +2,24 @@ package maritech.handlers;
 
 import java.util.HashMap;
 
-import mariculture.core.blocks.BlockMachine;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mariculture.core.events.BlockEvent;
 import mariculture.core.events.BlockEvent.BlockBroken;
 import mariculture.core.events.BlockEvent.TilePlaced;
 import maritech.util.IBlockExtension;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockEvents {
+
     public static HashMap<Class, IBlockExtension> blocks = new HashMap();
-    
+
     public static void register(Class clazz, Class item, IBlockExtension extension) {
         blocks.put(clazz, extension);
         ItemEvents.register(item, extension);
     }
-    
+
     @SubscribeEvent
     public void getIsActive(BlockEvent.GetIsActive event) {
         IBlockExtension extension = blocks.get(event.block.getClass());
@@ -72,7 +71,9 @@ public class BlockEvents {
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent event) {
         if (event.action == Action.RIGHT_CLICK_BLOCK) {
-            IBlockExtension extension = blocks.get(event.world.getBlock(event.x, event.y, event.z).getClass());
+            IBlockExtension extension = blocks.get(
+                event.world.getBlock(event.x, event.y, event.z)
+                    .getClass());
             if (extension != null) {
                 extension.onRightClickBlock(event.world, event.x, event.y, event.z, event.entityPlayer);
             }

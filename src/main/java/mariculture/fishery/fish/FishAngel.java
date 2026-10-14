@@ -9,11 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.api.util.CachedCoords;
-import mariculture.core.helpers.cofh.InventoryHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,7 +19,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.api.util.CachedCoords;
+import mariculture.core.helpers.cofh.InventoryHelper;
+
 public class FishAngel extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 23;
@@ -95,12 +97,16 @@ public class FishAngel extends FishSpecies {
             for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
                 TileEntity tile = world.getTileEntity(x + dir.offsetX, y + dir.offsetY, z + dir.offsetZ);
                 if (tile instanceof IInventory) {
-                    List list = world.getEntitiesWithinAABB(EntityItem.class, Blocks.stone.getCollisionBoundingBoxFromPool(world, x, y - 1, z).expand(16D, 16D, 16D));
+                    List list = world.getEntitiesWithinAABB(
+                        EntityItem.class,
+                        Blocks.stone.getCollisionBoundingBoxFromPool(world, x, y - 1, z)
+                            .expand(16D, 16D, 16D));
                     for (Object i : list) {
                         EntityItem item = (EntityItem) i;
                         ItemStack stack = item.getEntityItem();
 
-                        ItemStack newStack = InventoryHelper.insertItemStackIntoInventory((IInventory) tile, stack, dir.ordinal());
+                        ItemStack newStack = InventoryHelper
+                            .insertItemStackIntoInventory((IInventory) tile, stack, dir.ordinal());
                         if (newStack == null) {
                             item.setDead();
                         } else {

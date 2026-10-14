@@ -2,14 +2,17 @@ package mariculture.fishery.fish;
 
 import static mariculture.api.core.Environment.Salinity.FRESH;
 import static mariculture.core.lib.MCLib.dropletWater;
+
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
+
 import mariculture.api.core.Environment.Salinity;
 import mariculture.api.fishery.RodType;
 import mariculture.api.fishery.fish.FishSpecies;
 import mariculture.core.util.Fluids;
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
 
 public class FishMinnow extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 10;
@@ -49,7 +52,7 @@ public class FishMinnow extends FishSpecies {
     public int getBaseProductivity() {
         return 2;
     }
-    
+
     @Override
     public Block getWater2() {
         return Fluids.getFluidBlock("custard");

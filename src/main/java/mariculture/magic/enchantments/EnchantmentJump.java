@@ -1,13 +1,15 @@
 package mariculture.magic.enchantments;
 
+import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.player.EntityPlayer;
+
 import mariculture.core.config.Enchantments;
 import mariculture.core.helpers.EnchantHelper;
 import mariculture.core.helpers.KeyHelper;
 import mariculture.magic.Magic;
-import net.minecraft.enchantment.EnumEnchantmentType;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class EnchantmentJump extends EnchantmentJewelry {
+
     public EnchantmentJump(int i, int weight, EnumEnchantmentType type) {
         super(i, weight, type);
         setName("jump");

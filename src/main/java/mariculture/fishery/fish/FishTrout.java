@@ -16,10 +16,6 @@ import static mariculture.core.lib.MCLib.yellowDye;
 
 import java.util.UUID;
 
-import mariculture.api.core.Environment.Salinity;
-import mariculture.api.fishery.RodType;
-import mariculture.api.fishery.fish.FishSpecies;
-import mariculture.core.util.Fluids;
 import net.minecraft.block.Block;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -27,7 +23,13 @@ import net.minecraft.world.World;
 
 import com.google.common.collect.Multimap;
 
+import mariculture.api.core.Environment.Salinity;
+import mariculture.api.fishery.RodType;
+import mariculture.api.fishery.fish.FishSpecies;
+import mariculture.core.util.Fluids;
+
 public class FishTrout extends FishSpecies {
+
     @Override
     public int getTemperatureBase() {
         return 17;
@@ -67,7 +69,7 @@ public class FishTrout extends FishSpecies {
     public int getWaterRequired() {
         return 40;
     }
-    
+
     @Override
     public Block getWater2() {
         return Fluids.getFluidBlock("custard");
@@ -96,7 +98,9 @@ public class FishTrout extends FishSpecies {
 
     @Override
     public Multimap getModifiers(UUID uuid, Multimap map) {
-        map.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(uuid, "Weapon modifier", 10.0F, 0));
+        map.put(
+            SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(),
+            new AttributeModifier(uuid, "Weapon modifier", 10.0F, 0));
         return map;
     }
 

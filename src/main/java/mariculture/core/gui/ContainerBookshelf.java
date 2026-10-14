@@ -1,13 +1,15 @@
 package mariculture.core.gui;
 
-import mariculture.core.tile.TileBookshelf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
+import mariculture.core.tile.TileBookshelf;
+
 public class ContainerBookshelf extends Container {
+
     private TileBookshelf tile;
 
     public ContainerBookshelf(TileBookshelf tile, InventoryPlayer playerInventory) {

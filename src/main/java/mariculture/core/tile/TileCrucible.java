@@ -2,6 +2,13 @@ package mariculture.core.tile;
 
 import java.util.ArrayList;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidHandler;
+
 import mariculture.api.core.Environment.Temperature;
 import mariculture.api.core.FuelInfo;
 import mariculture.api.core.MaricultureHandlers;
@@ -18,14 +25,9 @@ import mariculture.core.lib.MetalRates;
 import mariculture.core.network.PacketHandler;
 import mariculture.core.tile.base.TileMultiMachineTank;
 import mariculture.core.util.IHasNotification;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileCrucible extends TileMultiMachineTank implements IHasNotification {
+
     static final int MAX_TEMP = 25000;
     private int temp;
     private boolean canFuel;
@@ -138,8 +140,11 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
                 processed = 0;
             }
 
-            if (onTick(ejectRate) && tank.getFluidAmount() > 0 && RedstoneMode.canWork(this, mode) && EjectSetting.canEject(setting, EjectSetting.FLUID)) {
-                helper.ejectFluid(new int[] { 5000, MetalRates.BLOCK, 1000, MetalRates.ORE, MetalRates.INGOT, MetalRates.NUGGET, 1 });
+            if (onTick(ejectRate) && tank.getFluidAmount() > 0
+                && RedstoneMode.canWork(this, mode)
+                && EjectSetting.canEject(setting, EjectSetting.FLUID)) {
+                helper.ejectFluid(
+                    new int[] { 5000, MetalRates.BLOCK, 1000, MetalRates.ORE, MetalRates.INGOT, MetalRates.NUGGET, 1 });
             }
         }
     }
@@ -149,8 +154,12 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
         TileCrucible mstr = (TileCrucible) getMaster();
         if (mstr != null) {
             if (onTick(mstr.ejectRate)) {
-                if (mstr != null && mstr.tank.getFluidAmount() > 0 && RedstoneMode.canWork(this, mstr.mode) && EjectSetting.canEject(mstr.setting, EjectSetting.FLUID)) {
-                    helper.ejectFluid(new int[] { 5000, MetalRates.BLOCK, 1000, MetalRates.ORE, MetalRates.INGOT, MetalRates.NUGGET, 1 });
+                if (mstr != null && mstr.tank.getFluidAmount() > 0
+                    && RedstoneMode.canWork(this, mstr.mode)
+                    && EjectSetting.canEject(mstr.setting, EjectSetting.FLUID)) {
+                    helper.ejectFluid(
+                        new int[] { 5000, MetalRates.BLOCK, 1000, MetalRates.ORE, MetalRates.INGOT, MetalRates.NUGGET,
+                            1 });
                 }
             }
         }
@@ -199,7 +208,10 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
 
     private void coolDown() {
         if (cooling <= 0) {
-            cooling = Math.max(1, Temperature.getCoolingSpeed(MaricultureHandlers.environment.getBiomeTemperature(worldObj, xCoord, yCoord, zCoord)));
+            cooling = Math.max(
+                1,
+                Temperature.getCoolingSpeed(
+                    MaricultureHandlers.environment.getBiomeTemperature(worldObj, xCoord, yCoord, zCoord)));
         }
 
         if (onTick(20)) {
@@ -247,7 +259,11 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
 
     private boolean canMelt(int slot) {
         int other = slot == 0 ? 1 : 0;
-        RecipeSmelter recipe = MaricultureHandlers.crucible.getResult(inventory[in[slot]], inventory[in[other]], getTemperatureScaled(2000), MaricultureHandlers.upgrades.hasUpgrade("ethereal", this));
+        RecipeSmelter recipe = MaricultureHandlers.crucible.getResult(
+            inventory[in[slot]],
+            inventory[in[other]],
+            getTemperatureScaled(2000),
+            MaricultureHandlers.upgrades.hasUpgrade("ethereal", this));
         if (recipe == null) return false;
         int fluidAmount = recipe.fluid.amount;
         FluidStack fluid = recipe.fluid.copy();
@@ -255,7 +271,8 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
         if (tank.fill(fluid, false) < fluid.amount) return false;
         boolean ret = recipe.output == null || setting.canEject(EjectSetting.ITEM);
         if (ret == false) {
-            ret = inventory[out] == null || areStacksEqual(inventory[out], recipe.output) && inventory[out].stackSize + recipe.output.stackSize <= inventory[out].getMaxStackSize();
+            ret = inventory[out] == null || areStacksEqual(inventory[out], recipe.output)
+                && inventory[out].stackSize + recipe.output.stackSize <= inventory[out].getMaxStackSize();
         }
 
         if (ret == true) {
@@ -268,7 +285,11 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
 
     private void melt(int slot) {
         int other = slot == 0 ? 1 : 0;
-        RecipeSmelter recipe = MaricultureHandlers.crucible.getResult(inventory[in[slot]], inventory[in[other]], getTemperatureScaled(2000), MaricultureHandlers.upgrades.hasUpgrade("ethereal", this));
+        RecipeSmelter recipe = MaricultureHandlers.crucible.getResult(
+            inventory[in[slot]],
+            inventory[in[other]],
+            getTemperatureScaled(2000),
+            MaricultureHandlers.upgrades.hasUpgrade("ethereal", this));
         if (recipe == null) return;
         decrStackSize(in[slot], recipe.input.stackSize);
         int fluidAmount = recipe.fluid.amount;
@@ -387,14 +408,16 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
     }
 
     private void onBlockPlaced(int x, int y, int z) {
-        if (isPart(xCoord, yCoord + 1, zCoord) && !isPart(xCoord, yCoord - 1, zCoord) && !isPart(xCoord, yCoord + 2, zCoord)) {
+        if (isPart(xCoord, yCoord + 1, zCoord) && !isPart(xCoord, yCoord - 1, zCoord)
+            && !isPart(xCoord, yCoord + 2, zCoord)) {
             MultiPart mstr = new MultiPart(xCoord, yCoord, zCoord);
             ArrayList<MultiPart> parts = new ArrayList<MultiPart>();
             parts.add(setAsSlave(mstr, xCoord, yCoord + 1, zCoord));
             setAsMaster(mstr, parts);
         }
 
-        if (isPart(xCoord, yCoord - 1, zCoord) && !isPart(xCoord, yCoord + 1, zCoord) && !isPart(xCoord, yCoord - 2, zCoord)) {
+        if (isPart(xCoord, yCoord - 1, zCoord) && !isPart(xCoord, yCoord + 1, zCoord)
+            && !isPart(xCoord, yCoord - 2, zCoord)) {
             MultiPart mstr = new MultiPart(xCoord, yCoord - 1, zCoord);
             ArrayList<MultiPart> parts = new ArrayList<MultiPart>();
             parts.add(setAsSlave(mstr, xCoord, yCoord, zCoord));
@@ -404,6 +427,7 @@ public class TileCrucible extends TileMultiMachineTank implements IHasNotificati
 
     @Override
     public boolean isPart(int x, int y, int z) {
-        return worldObj.getBlock(x, y, z) == getBlockType() && worldObj.getBlockMetadata(x, y, z) == MachineMultiMeta.CRUCIBLE & !isPartnered(x, y, z);
+        return worldObj.getBlock(x, y, z) == getBlockType()
+            && worldObj.getBlockMetadata(x, y, z) == MachineMultiMeta.CRUCIBLE & !isPartnered(x, y, z);
     }
 }
