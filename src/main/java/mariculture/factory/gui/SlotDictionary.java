@@ -68,7 +68,7 @@ public class SlotDictionary extends SlotFake {
     }
 
     @Override
-    public ItemStack handle(EntityPlayer player, int mouseButton, Slot slot) {
+    public ItemStack handle(EntityPlayer player, int mouseButton, int modifier, Slot slot) {
         ItemStack filterCheck = player.inventory.getItemStack();
         ItemStack filterInSlot = slot.getStack();
         if (filterCheck != null && filterCheck.getItem() instanceof ItemFilter)

@@ -50,7 +50,9 @@ public class Modules {
                 .getBoolean(true));
         Mariculture.modules.setup(Plugins.class, true);
 
-        for (int i = 0; i < Plugins.plugins.size(); i++) {
+        // Iterate backwards: removing an entry shifts every later index down, so a forward loop skips the plugin
+        // that moves into the removed slot.
+        for (int i = Plugins.plugins.size() - 1; i >= 0; i--) {
             Plugin plugin = Plugins.plugins.get(i);
             if (config.get(
                 "Plugins",

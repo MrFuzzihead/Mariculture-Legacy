@@ -1,5 +1,7 @@
 package mariculture.fishery.gui;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -11,7 +13,6 @@ import mariculture.core.gui.ContainerMachine;
 import mariculture.core.gui.SlotFake;
 import mariculture.fishery.items.ItemFishy;
 import mariculture.fishery.tile.TileFishTank;
-import mariculture.lib.helpers.ClientHelper;
 
 public class ContainerFishTank extends ContainerMachine {
 
@@ -52,7 +53,13 @@ public class ContainerFishTank extends ContainerMachine {
         return false;
     }
 
-    long lastClick = 0L;
+    @Override
+    public void addItemToolTip(ItemStack stack, List<String> list) {
+        if (stack != null && stack.stackSize > 999) {
+            list.add("");
+            list.add(stack.stackSize + " " + stack.getDisplayName());
+        }
+    }
 
     @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int slotID) {
@@ -61,9 +68,6 @@ public class ContainerFishTank extends ContainerMachine {
         // So we look for the same fish item stack first, if we fail then we do the loop again, but look for an empty
         // slot
         if (itemShifting != null && itemShifting.getItem() instanceof ItemFishy) {
-            long thisClick = System.currentTimeMillis();
-            long difference = thisClick - lastClick;
-            lastClick = thisClick;
             // This is for slots outside the inventory
             if (slotID >= 54) {
                 for (int i = 0; i < tile.getInventory().length; i++) {
@@ -158,8 +162,8 @@ public class ContainerFishTank extends ContainerMachine {
         }
 
         @Override
-        public ItemStack handle(EntityPlayer player, int mouseButton, Slot slot) {
-            if (ClientHelper.isShiftPressed()) return slot.getStack();
+        public ItemStack handle(EntityPlayer player, int mouseButton, int modifier, Slot slot) {
+            if (modifier == 1) return slot.getStack();
             ItemStack held = player.inventory.getItemStack();
             ItemStack inSlot = slot.getStack();
 

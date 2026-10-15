@@ -1,19 +1,30 @@
 package mariculture.core.gui;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
+import mariculture.api.core.FuelInfo;
 import mariculture.api.core.IItemUpgrade;
 import mariculture.api.core.MaricultureHandlers;
+import mariculture.api.core.RecipeSmelter;
 import mariculture.core.helpers.FluidHelper;
 import mariculture.core.tile.TileCrucible;
+import mariculture.core.util.MCTranslate;
+import mariculture.lib.util.Text;
 
 public class ContainerCrucible extends ContainerMachine {
 
+    private final TileCrucible crucible;
+
     public ContainerCrucible(TileCrucible tile, InventoryPlayer inventory) {
         super(tile);
+        this.crucible = tile;
 
         addUpgradeSlots(tile);
 
@@ -72,5 +83,54 @@ public class ContainerCrucible extends ContainerMachine {
         }
 
         return itemstack;
+    }
+
+    @Override
+    public void addItemToolTip(ItemStack stack, List<String> currenttip) {
+        boolean ethereal = MaricultureHandlers.upgrades.hasUpgrade("ethereal", crucible);
+        if (stack != null) {
+            int meltingPoint = MaricultureHandlers.crucible.getMeltingPoint(stack, ethereal);
+            FuelInfo info = MaricultureHandlers.crucible.getFuelInfo(stack);
+            if (FluidContainerRegistry.isFilledContainer(stack)) {
+                FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(stack);
+                info = MaricultureHandlers.crucible.getFuelInfo(fluid);
+            }
+
+            if (meltingPoint > 0) {
+                currenttip.add(Text.ORANGE + MCTranslate.translate("melting") + ": " + meltingPoint + "\u00B0" + "C");
+            }
+
+            if (MaricultureHandlers.crucible.getResult(stack, null, -1, ethereal) != null) {
+                RecipeSmelter result = MaricultureHandlers.crucible.getResult(stack, null, -1, ethereal);
+                if (result.fluid.amount > 0) {
+                    if (result.rands != null) {
+                        currenttip.add(Text.INDIGO + MCTranslate.translate("randomMetal"));
+                    } else {
+                        currenttip
+                            .add(Text.INDIGO + FluidHelper.getName(result.fluid) + ": " + result.fluid.amount + "mB");
+                    }
+                }
+
+                if (result.output != null && result.chance > 0) {
+                    int chance = (int) ((float) 1 / result.chance * 100);
+                    currenttip
+                        .add(Text.GREY + chance + MCTranslate.translate("percent") + result.output.getDisplayName());
+                }
+            }
+
+            if (info != null) {
+                if (FluidContainerRegistry.isFilledContainer(stack)) {
+                    currenttip.add(Text.DARK_AQUA + MCTranslate.translate("asFluid"));
+                    currenttip.add(
+                        Text.WHITE + MCTranslate.translate("perTempFluid") + ": " + info.maxTempPer + "\u00B0" + "C");
+                } else {
+                    currenttip.add(Text.DARK_GREEN + MCTranslate.translate("asSolid"));
+                    currenttip.add(
+                        Text.WHITE + MCTranslate.translate("perTempSolid") + ": " + info.maxTempPer + "\u00B0" + "C");
+                }
+
+                currenttip.add(Text.GREY + MCTranslate.translate("maxTemp") + ": " + info.maxTemp + "\u00B0" + "C");
+            }
+        }
     }
 }

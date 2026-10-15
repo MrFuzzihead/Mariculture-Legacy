@@ -31,10 +31,8 @@ public class FishDNASpecies extends FishDNABase {
     public int[] getDominant(int option1, int option2, Random rand) {
         int[] ret = new int[2];
 
-        boolean species1 = FishSpecies.species.get(option1)
-            .isDominant();
-        boolean species2 = FishSpecies.species.get(option2)
-            .isDominant();
+        boolean species1 = isDominant(FishSpecies.species.get(option1));
+        boolean species2 = isDominant(FishSpecies.species.get(option2));
 
         if (species1 && !species2) {
             ret[0] = option1;
@@ -56,5 +54,14 @@ public class FishDNASpecies extends FishDNABase {
     @Override
     public int getCopyChance() {
         return 10;
+    }
+
+    /**
+     * Null-safe dominance lookup. Species ids can be stale after a fish config change or when a world is loaded
+     * without the mod that registered a species; previously this dereferenced the lookup result directly and NPE'd
+     * while a hatchery/feeder tried to breed a fish.
+     */
+    private static boolean isDominant(FishSpecies species) {
+        return species != null && species.isDominant();
     }
 }

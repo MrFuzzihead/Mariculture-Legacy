@@ -191,8 +191,10 @@ public class OreDicHandler {
         if (tag != null && tag.hasKey("OreDictionaryDisplay")) {
             NBTTagCompound display = tag.getCompoundTag("OreDictionaryDisplay");
             NBTTagList lore = display.getTagList("Lore", 8);
-            String old = lore.getStringTagAt(0) != null ? lore.getStringTagAt(0) : "";
-            if (!old.equals("")) return getNextValidEntry(stack, old);
+            if (lore.tagCount() > 0) {
+                String old = lore.getStringTagAt(0);
+                if (!old.isEmpty()) return getNextValidEntry(stack, old);
+            }
         }
 
         return getNextValidEntry(stack, OreDicHelper.getDictionaryName(stack));

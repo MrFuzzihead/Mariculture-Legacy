@@ -2,7 +2,6 @@ package mariculture.core.gui;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 import mariculture.core.items.ItemMCStorage;
@@ -31,7 +30,7 @@ public class GuiStorage extends GuiMariculture {
             ItemStack stack = storage.player.getCurrentEquippedItem();
             if (stack != null && stack.getItem() instanceof ItemMCStorage) {
                 ItemMCStorage item = (ItemMCStorage) stack.getItem();
-                return StatCollector.translateToLocal(item.getUnlocalizedName(stack) + ".name");
+                return item.getItemStackDisplayName(stack);
             }
         }
 

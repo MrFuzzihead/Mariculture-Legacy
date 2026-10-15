@@ -74,12 +74,21 @@ public class ShapelessFishRecipe implements IRecipe {
     }
 
     public ItemStack getRecipeOutput(ItemStack egg) {
-        if (egg.hasTagCompound()) {
-            int eggs = egg.stackTagCompound.getInteger("currentFertility");
-            output.stackSize = (int) Math.max(1, Math.ceil(eggs / 650));
+        ItemStack result = output.copy();
+        if (egg != null && egg.hasTagCompound()) {
+            result.stackSize = getCaviarCount(egg.stackTagCompound.getInteger("currentFertility"));
         }
 
-        return output.copy();
+        return result;
+    }
+
+    /**
+     * Number of caviar produced by an egg with the given remaining fertility. Uses floating point so the value is
+     * rounded up (the previous {@code Math.ceil(eggs / 650)} divided two ints first, so 651-1299 eggs produced one
+     * caviar instead of two).
+     */
+    static int getCaviarCount(int eggs) {
+        return Math.max(1, (int) Math.ceil(eggs / 650.0D));
     }
 
     @Override

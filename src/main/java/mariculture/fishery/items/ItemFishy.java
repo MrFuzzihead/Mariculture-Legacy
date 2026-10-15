@@ -148,7 +148,9 @@ public class ItemFishy extends ItemMCBaseSingle implements ISpecialSorting {
     public int getEntityLifespan(ItemStack stack, World world) {
         if (stack.getItem() == this && stack.hasTagCompound()) {
             FishSpecies fishy = Fishing.fishHelper.getSpecies(stack);
-            return fishy.getOnLandLifespan(fishy);
-        } else return 15;
+            if (fishy != null) return fishy.getOnLandLifespan(fishy);
+        }
+
+        return 15;
     }
 }

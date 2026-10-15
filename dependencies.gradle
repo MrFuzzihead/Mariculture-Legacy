@@ -72,4 +72,7 @@ dependencies {
     compileOnly(rfg.deobf("curse.maven:Highlands-221226:2227924"))
     compileOnly("curse.maven:EE3-65509:2305023")
     compileOnly(rfg.deobf("curse.maven:Aquaculture-60028:2285775"))
+
+    // Unit tests (plain JVM tests of self-contained logic; the game itself is validated in-game)
+    testImplementation("junit:junit:4.13.2")
 }

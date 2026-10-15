@@ -2,17 +2,14 @@ package mariculture.core.gui;
 
 import java.util.List;
 
-import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import mariculture.Mariculture;
 import mariculture.core.util.MCTranslate;
 
 public class GuiItemToolTip {
@@ -25,15 +22,11 @@ public class GuiItemToolTip {
             List list = event.toolTip;
             Container container = player.openContainer;
 
-            if (container instanceof ContainerMachine) {
-                TileEntity tile = (TileEntity) ((ContainerMachine) container).tile;
-                if (tile != null) {
-                    Gui gui = (Gui) Mariculture.proxy
-                        .getClientGuiElement(-1, player, tile.getWorldObj(), tile.xCoord, tile.yCoord, tile.zCoord);
-                    if (gui instanceof GuiMariculture) {
-                        ((GuiMariculture) gui).addItemToolTip(stack, list);
-                    }
-                }
+            // Dispatch to the open container directly. Building a throw-away Gui/Container here (as this used to
+            // do) ran for every tooltip frame and could recurse when another mod's GUI construction fired tooltip
+            // events.
+            if (container instanceof ContainerMariculture) {
+                ((ContainerMariculture) container).addItemToolTip(stack, list);
             }
 
             if (stack.hasTagCompound()) {

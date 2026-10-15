@@ -13,6 +13,11 @@ public class ItemBlockWater extends ItemBlockMariculture {
     }
 
     @Override
+    protected boolean hasTooltip() {
+        return true;
+    }
+
+    @Override
     public String getName(ItemStack stack) {
         switch (stack.getItemDamage()) {
             case WaterMeta.OYSTER:

@@ -15,6 +15,7 @@ import mariculture.lib.util.Library;
 public class GeneralStuff {
 
     public static boolean SPAWN_BOOKS;
+    public static boolean BLOCK_TOOLTIPS;
     public static int HARDCORE_DIVING;
     public static int METAL_RATE;
     public static boolean ENABLE_ENDER_SPAWN;
@@ -33,6 +34,11 @@ public class GeneralStuff {
         if (!Loader.isModLoaded("Enchiridion")) {
             GeneralStuff.SPAWN_BOOKS = false;
         }
+
+        BLOCK_TOOLTIPS = getBoolean(
+            "Functional Block Tooltips",
+            true,
+            "Show a one-line description of what a machine, tank or other functional block does in its item tooltip");
 
         HARDCORE_DIVING = getInt(
             "Hardcore Diving Setting",

@@ -69,16 +69,52 @@ public class EnvironmentHandler implements IEnvironmentHandler {
 
     @Override
     public int getTemperature(World world, int x, int y, int z) {
-        int temperature = getBiomeTemperature(world, x, y, z) - 3;
-        temperature += getSunBrightness(world, 1F) * 9 - 2;
-        if (y > 60) {
-            temperature = (int) ((60 - y) * 0.11255) + temperature;
-        } else if (y < 68) {
-            temperature = (int) (temperature - (68 - y) * 0.11255);
-        }
+        return calculateTemperature(
+            getBiomeTemperature(world, x, y, z),
+            getSunBrightness(world, 1F),
+            world.getRainStrength(1),
+            y);
+    }
 
-        temperature -= (int) (world.getRainStrength(1) * 0.15D);
+    /** Altitude band (inclusive) that keeps the biome's base temperature. */
+    private static final int PLATEAU_BOTTOM = 60;
+    private static final int PLATEAU_TOP = 68;
+    /** Temperature change per block outside the plateau (about 1 degree per 8.9 blocks). */
+    private static final double LAPSE_RATE = 0.11255D;
+    /**
+     * Explicit rain cooling at full rain strength. This is intentionally small because
+     * {@link #getSunBrightness(World, float)} already reduces the sun contribution while it rains; the point of
+     * this term is that it must actually be applied instead of being truncated to zero by an {@code (int)} cast.
+     */
+    private static final double RAIN_COOLING = 0.15D;
+
+    /**
+     * World-free version of {@link #getTemperature(World, int, int, int)}, used for testing the profile. The
+     * calculation stays in {@code double} and is rounded once at the end: the old code stored the result in an
+     * {@code int} through every step and truncated the altitude and rain terms toward zero, which collapsed the
+     * rain term to 0 and added a step at the altitude boundaries.
+     */
+    static int calculateTemperature(int biomeTemperature, float sunBrightness, float rainStrength, int y) {
+        return (int) Math.round(calculateTemperatureRaw(biomeTemperature, sunBrightness, rainStrength, y));
+    }
+
+    static double calculateTemperatureRaw(int biomeTemperature, float sunBrightness, float rainStrength, int y) {
+        double temperature = biomeTemperature - 3;
+        temperature += sunBrightness * 9 - 2;
+        temperature += getAltitudeOffset(y);
+        temperature -= rainStrength * RAIN_COOLING;
         return temperature;
+    }
+
+    /**
+     * Altitude adjustment: 0 inside the surface band, cooling with height above it and with depth below it. This
+     * is the intended shape of the two altitude branches; the previous code had the constants swapped
+     * ({@code y > 60} / {@code y < 68}), so the surface band never existed and the value stepped at its edge.
+     */
+    static double getAltitudeOffset(int y) {
+        if (y > PLATEAU_TOP) return (PLATEAU_TOP - y) * LAPSE_RATE;
+        if (y < PLATEAU_BOTTOM) return -(PLATEAU_BOTTOM - y) * LAPSE_RATE;
+        return 0.0D;
     }
 
     // Copied from world
@@ -115,7 +151,7 @@ public class EnvironmentHandler implements IEnvironmentHandler {
     public boolean matches(Salinity biomeSalinity, int biomeTemp, Salinity checkSaltBase, int checkSaltVariation,
         int checkTempBase, int checkTempVariation) {
         int minSalt = Math.max(0, checkSaltBase.ordinal() - checkSaltVariation);
-        int maxSalt = Math.max(2, checkSaltBase.ordinal() + checkSaltVariation);
+        int maxSalt = Math.min(2, checkSaltBase.ordinal() + checkSaltVariation);
         int minTemp = checkTempBase - checkTempVariation;
         int maxTemp = checkTempBase + checkTempVariation;
 

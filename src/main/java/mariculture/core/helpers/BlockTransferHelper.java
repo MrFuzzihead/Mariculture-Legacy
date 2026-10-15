@@ -1,6 +1,7 @@
 package mariculture.core.helpers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,17 +29,17 @@ import mariculture.lib.helpers.ItemHelper;
 
 public class BlockTransferHelper {
 
-    private static List<Integer> sides;
-    static {
-        sides = new ArrayList<Integer>();
-        for (int i = 0; i < 6; i++) {
-            sides.add(i);
-        }
-    }
+    private static final List<Integer> SIDES = Arrays.asList(0, 1, 2, 3, 4, 5);
 
+    /**
+     * Returns the six block sides in a random order. The returned list is a fresh copy, so shuffling it does not
+     * mutate shared state (the previous implementation shuffled one static list, which changed the iteration order
+     * of every other machine and could throw through nested ejection).
+     */
     public static List<Integer> getSides() {
-        Collections.shuffle(sides);
-        return sides;
+        List<Integer> shuffled = new ArrayList<Integer>(SIDES);
+        Collections.shuffle(shuffled);
+        return shuffled;
     }
 
     public TileEntity thisTile;
@@ -147,15 +148,20 @@ public class BlockTransferHelper {
                     TileMultiBlock tile = (TileMultiBlock) inventory;
                     if (tile.getMaster() != null) {
                         TileMultiBlock master = tile.getMaster();
-                        ArrayList<MultiPart> cords = master.slaves;
+                        // Copy the slave list: onBlockBreak can null it, and shuffling the master's live list would
+                        // reorder it for every other transfer.
+                        ArrayList<MultiPart> cords = master.slaves == null ? null
+                            : new ArrayList<MultiPart>(master.slaves);
 
-                        Collections.shuffle(cords);
-                        for (MultiPart cord : cords)
-                            if (world.getTileEntity(cord.xCoord, cord.yCoord, cord.zCoord) != null) {
-                                BlockTransferHelper helper = new BlockTransferHelper(
-                                    world.getTileEntity(cord.xCoord, cord.yCoord, cord.zCoord));
-                                stack = helper.ejectToSides(stack);
-                            }
+                        if (cords != null) {
+                            Collections.shuffle(cords);
+                            for (MultiPart cord : cords)
+                                if (world.getTileEntity(cord.xCoord, cord.yCoord, cord.zCoord) != null) {
+                                    BlockTransferHelper helper = new BlockTransferHelper(
+                                        world.getTileEntity(cord.xCoord, cord.yCoord, cord.zCoord));
+                                    stack = helper.ejectToSides(stack);
+                                }
+                        }
 
                         stack = new BlockTransferHelper(master).ejectToSides(stack);
                     }
@@ -175,8 +181,7 @@ public class BlockTransferHelper {
     }
 
     private ItemStack ejectToSides(ItemStack stack) {
-        Collections.shuffle(sides);
-        for (Integer side : sides) {
+        for (Integer side : getSides()) {
             ForgeDirection dir = ForgeDirection.getOrientation(side);
 
             if (thisTile instanceof IEjectable) {
