@@ -1051,3 +1051,18 @@ mariculture.tooltip.rotortitanium=The strongest turbine rotor; produces the most
 mariculture.tooltip.aircompressor=Part of an Air Compressor; holds the air it produces
 mariculture.tooltip.aircompressorpower=Part of an Air Compressor; converts RF into air
 mariculture.tooltip.pressurevessel=A modular fluid tank; connected vessels merge into one
+
+# Missing localisations found by a full registry name dump
+mariculture.limestone.pillar2=Limestone Pillar
+mariculture.limestone.pillar3=Limestone Pillar
+mariculture.limestone.pedestal2=Limestone Pedestal
+mariculture.limestone.pedestal3=Limestone Pedestal
+mariculture.limestone.pedestal4=Limestone Pedestal
+mariculture.limestone.pedestal5=Limestone Pedestal
+mariculture.limestone.pedestal6=Limestone Pedestal
+mariculture.air.naturalgas=Natural Gas
+mariculture.plans.unnamed=Plan
+tile.ender.molten.name=Molten Ender
+tile.blood.name=Blood
+tile.customSlabsDouble=Custom Double Slabs
+mariculture.tile.customSlabsDouble=Custom Double Slabs

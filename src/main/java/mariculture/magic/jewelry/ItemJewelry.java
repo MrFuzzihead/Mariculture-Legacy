@@ -99,7 +99,7 @@ public abstract class ItemJewelry extends ItemMCDamageable {
             return material.getColor() + format;
         }
 
-        return Text.localize(getUnlocalizedName(stack));
+        return Text.localize(getUnlocalizedName());
     }
 
     @Override
