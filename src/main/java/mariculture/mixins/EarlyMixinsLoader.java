@@ -14,7 +14,12 @@ public class EarlyMixinsLoader implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
     @Override
     public String[] getASMTransformerClass() {
-        return null;
+        // Patches FMLModContainer / the discoverers at class-load time so legacy
+        // "1.7.10-"-prefixed Mariculture ranges (issue #4) are satisfied by
+        // bare-semver releases. A mixin cannot do this: every FML class on that
+        // code path is already loaded before early mixins are registered in
+        // production packs (MixinTargetAlreadyLoadedException).
+        return new String[] { VersionParserTransformer.class.getName() };
     }
 
     @Override
