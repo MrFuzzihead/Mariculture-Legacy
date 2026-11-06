@@ -36,8 +36,7 @@ public final class LegacyMaricultureRange {
         String trimmed = range.trim();
         // Open-ended ranges only, e.g. "[1.7.10-1.2.4.2a-5,)". A bounded upper limit
         // is a real constraint and must not be silently dropped.
-        if (!trimmed.endsWith(",)")
-            || !(trimmed.startsWith("[1.7.10-") || trimmed.startsWith("(1.7.10-"))) {
+        if (!trimmed.endsWith(",)") || !(trimmed.startsWith("[1.7.10-") || trimmed.startsWith("(1.7.10-"))) {
             return version;
         }
         return new DefaultArtifactVersion(MCModInfo.MODID, true);
