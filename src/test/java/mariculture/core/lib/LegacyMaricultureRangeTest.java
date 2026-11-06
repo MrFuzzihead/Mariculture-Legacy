@@ -1,6 +1,7 @@
 package mariculture.core.lib;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -11,8 +12,8 @@ import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import cpw.mods.fml.common.versioning.VersionParser;
 
 /**
- * Tests for the legacy Mariculture version-range rewrite used by
- * {@code MixinFMLModContainer} (see issue #4).
+ * Tests for the legacy Mariculture version-range rewrite used by {@code MixinModDiscoverer}
+ * (see issue #4).
  *
  * <p>
  * The regression being pinned down: RTG declares
@@ -84,6 +85,12 @@ public class LegacyMaricultureRangeTest {
     }
 
     @Test
+    public void maricultureAsSubstringOfAnotherModIdIsLeftAlone() {
+        ArtifactVersion original = parse("MaricultureFoo@[1.7.10-1.0,)");
+        assertSame(original, LegacyMaricultureRange.rewrite(original));
+    }
+
+    @Test
     public void unversionedReferenceIsLeftAlone() {
         ArtifactVersion original = parse("Mariculture");
         assertSame(original, LegacyMaricultureRange.rewrite(original));
@@ -94,5 +101,16 @@ public class LegacyMaricultureRangeTest {
     @Test
     public void nullIsLeftAlone() {
         assertSame(null, LegacyMaricultureRange.rewrite(null));
+    }
+
+    @Test
+    public void stringDetectionMatchesArtifactVersionRewrite() {
+        String reference = "Mariculture@[1.7.10-1.2.4.2a-5,)";
+
+        assertTrue(LegacyMaricultureRange.isLegacyPrefixedMaricultureRange(reference));
+        assertEquals("Mariculture", LegacyMaricultureRange.rewriteReference(reference));
+        assertFalse(LegacyMaricultureRange.isLegacyPrefixedMaricultureRange("Mariculture@[1.2.4,)"));
+        assertFalse(LegacyMaricultureRange.isLegacyPrefixedMaricultureRange(null));
+        assertFalse(LegacyMaricultureRange.isLegacyPrefixedMaricultureRange(""));
     }
 }

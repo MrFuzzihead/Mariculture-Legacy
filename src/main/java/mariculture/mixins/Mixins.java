@@ -18,7 +18,7 @@ public enum Mixins implements IMixins {
     // before late mixins exist. Cannot be gated on RTG's presence in the early phase,
     // but no-ops unless a mod declares such a range.
     FML_DEPENDENCY_COMPAT(new MixinBuilder().setPhase(Phase.EARLY)
-        .addCommonMixins("MixinFMLModContainer"));
+        .addCommonMixins("MixinModDiscoverer"));
 
     private final MixinBuilder builder;
 
